@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value = "/project")
+@RequestMapping(value = "/Project")
 public class ProjectController {
 	
 	// JJ's Controller
