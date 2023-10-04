@@ -80,7 +80,12 @@
               </a>
             </li>
 
-        
+            <li class="menu-item active">
+              <a href="tables-basic.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">가입 대기</div>
+              </a>
+            </li>
 
        
 
@@ -91,14 +96,14 @@
             </li>
 
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/admin/invite;" class="menu-link">
+              <a href="javascript:void(0);" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Layouts">구성원 초대</div>
               </a>
             </li>
             
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/admin/list;" class="menu-link">
+              <a href="javascript:void(0);" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Layouts">구성원 관리</div>
               </a>
@@ -112,9 +117,7 @@
             </li>
 
       
-			<li class="menu-header small text-uppercase">
-              <span class="menu-header-text">통계/리포트</span>
-            </li>
+
 
             <li class="menu-item">
               <a href="../project/Project_Access_Stats" class="menu-link">

@@ -11,18 +11,8 @@
 	
     <title>구성원 관리</title>
     <meta name="description" content="" />
+ 	<script src="../resources/admin/js/status.js"></script>
  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
- 		<!-- CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
-		<!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-		<!-- Popper JS -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
-		<!-- Latest compiled JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
  	
  	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -63,28 +53,24 @@
       .tab1_style {width:800px; margin:0 auto; margin-top:50px;} 
  
  	  .nav-tabs .nav-item .nav-link:not(.active) {
-   		 background-color: white;
-   		 border: 1px solid #d9dee3 
+    background-color: white;
+    border: 1px solid #d9dee3 
 	}
 	
 	  .nav-tabs .nav-item .nav-link.active {
-	  	 border: 1px solid #d9dee3 
+	  border: 1px solid #d9dee3 
 	}
    
-      .card {
-   		 height: 80vh; /* 화면 높이에 80% 맞춤 */
-   		 width: 100%;
+     .card {
+   			 height: 80vh; /* 화면 높이에 80% 맞춤 */
+   			 width: 100%;
 	}
  	
-      
+ 
  	
-	  .col-lg-8 {
-    	 flex: 0 0 auto;
-    	 width: 100%;
-    }
-    
-    th {
-    	 text-align:center;
+	.col-lg-8 {
+    flex: 0 0 auto;
+    width: 100%;
     }
     </style>
   </head>
@@ -173,7 +159,6 @@
  					 <div class="tab-pane fade show active" id="useruse">
                			<table border="1"  width="100%" style=" border: 1px solid #d9dee3; color:#566a7f;">
                			     <tr>
-               			       <th>프로필</th>
                			   	   <th>사원번호</th>
                			       <th>이름</th>
                			       <th>부서</th>
@@ -187,7 +172,6 @@
                			  
                			  <c:forEach var="row" items="${list}">
                			    <tr>
-               			        <td></td>
                			    	<td></td>
                			    	<td></td>
                			    	<td></td>
@@ -204,7 +188,6 @@
              		 <div class="tab-pane fade" id="userstop">
 		                <table border="1" width="100%" style=" border: 1px solid #d9dee3; color:#566a7f;">
                			   <tr>
-               			       <th>프로필</th>
                			   	   <th>사원번호</th>
                			       <th>이름</th>
                			       <th>부서</th>
@@ -227,7 +210,6 @@
              		 <div class="tab-pane fade" id="userwait">
                 		 <table border="1" width="100%" style=" border: 1px solid #d9dee3; color:#566a7f;">
                			   <tr>
-               			       <th>프로필</th>
                			       <th>이름</th>
                			       <th>이메일</th>
                			       <th>가입요청일</th>
@@ -248,9 +230,7 @@
                   </div>
                  </div>
                 </div>
-               </div>
-              </div>    
-            
+                      
                       
             
 

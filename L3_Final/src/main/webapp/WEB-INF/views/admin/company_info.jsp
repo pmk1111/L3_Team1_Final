@@ -7,25 +7,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" 
     	  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
-	
+	<script src="../resources/admin/js/companyinfo.js"></script>
     <title>회사 정보</title>
     <meta name="description" content="" />
 
-
-	<!-- CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-	<!-- jQuery library (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-	<!-- Popper JS (necessary for some of Bootstrap's JavaScript plugins) -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
-	<!-- Latest compiled and minified Bootstrap JavaScript -->
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	
-	<script src="../resources/admin/js/companyinfo.js"></script>
-	
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../resources/mainboard/assets/img/favicon/favicon.ico" />
 
@@ -78,31 +63,12 @@
    					 background-color: transparent;
 					}
 	 .card {
-   			 height: 85vh; /* 화면 높이에 85% 맞춤 */
+   			 height: 80vh; /* 화면 높이에 80% 맞춤 */
 	}
 	
 	.card-body { padding:50px;}
 	
 	.form-label, .col-md-12  {padding-top: 20px}
-	
-	.changepassword { margin: 20px 0px 40px 0px}
-	.changepwd { background-color: white;
-				 border: 1px solid #d9dee3;
-				 color: #697a8d;
-				 border-radius: 5px;
-			
-	}
-	
-	#saveButton, #cancelButton,
-	#saveNameButton, #cancelNameButton {margin-top:50px;
-								border: 1px solid #d9dee3;
- 	  						    background-color: white;
- 	  						    color: #697a8d;
- 	  						    box-shadow:none;
-	 }
-	 
-	 #saveButton, #saveNameButton {color:white;
-	 							   background-color:#696cff;}
  
  	/* swal */
  	
@@ -142,32 +108,29 @@
                           
                           <!-- content -->
                           <form id="formCompanySetting" method="POST" >
-                           <div class="row">
-                            <div class="mb-3 col-md-6">
-                             <label for="companyName" class="form-label">회사명</label>
-                              <input
-                               class="form-control"
-                               type="text"
-                               id="companyName"
-                               name="companyName"
-                               value="${userinfo.companyName}"
-                               disabled="disabled"
-                              />
+                        <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="companyName" class="form-label">회사명</label>
+                             <input
+                              class="form-control"
+                              type="text"
+                              id="companyName"
+                              name="companyName"
+                              value="${userinfo.companyName}"
+                              disabled="disabled"
+                            />
                           
                         </div>
                        
                        <div class="mb-3 col-md-6">
-      					     <button type="button" class="btn" id="nameupdate">수정</button>
-      					     <button type="submit" class="btn btn-secondary d-none" id="saveNameButton">저장</button>
-       						 <button type="button" class="btn btn-secondary d-none" id="cancelNameButton">취소</button>
+      					     <button type="submit" class="btn" id="nameupdate">수정</button>
+      					     <button type="button" class="btn btn-secondary d-none" id="saveButton">저장</button>
+       						 <button type="button" class="btn btn-secondary d-none" id="cancelButton">취소</button>
   					   </div>
                        
-                       <div class="changepassword">
-                       		<button type="button" class="changepwd"> 비밀번호 변경</button>
-                       </div>
-                       
+                        
                          <div class="mb-3 col-md-6">
-                            <label for="companyDomain" class="form-label">전용 URL</label>
+                            <label for="email" class="form-label">전용 URL</label>
                              <input
                               class="form-control"
                               type="text"
@@ -180,25 +143,17 @@
                         </div>
                         
                         <div class="mb-3 col-md-6">
-      					     <button type="button" class="btn" id="urlupdate">수정</button>
-      					     <button type="submit" class="btn btn-secondary d-none" id="saveButton">저장</button>
-       						 <button type="button" class="btn btn-secondary d-none" id="cancelButton">취소</button>
+      					     <button type="submit" class="btn" id="urlupdate">수정</button>
   					   </div>
   					   
                          <div class="col-md-12">
-                         	<a> 직원 참여 옵션</a><br>
+                         	<label for="employeeParticipation">직원 참여 옵션</label><br>
                          	<br>
-                         	<div class="option_box">
-                         	<label for="participation1" style="padding-bottom: 15px;">
-   						    <input type="radio" id="participation1" name="employeeParticipation" value="1" checked>
-    						 <span>
-     							관리자의 가입 승인 완료 후, 참여하도록 설정합니다.</span>
-     						</label><br>
-   							<label for="participation2">
+   						    <input type="radio" id="participation1" name="employeeParticipation" value="1">
+    						<label for="participation1" style="padding-bottom: 15px;">
+     							관리자의 가입 승인 완료 후, 참여하도록 설정합니다.</label><br>
    							<input type="radio" id="participation2" name="employeeParticipation" value="2">
-    						<span>특정 도메인의 이메일로 가입시, 관리자 승인 없이도 바로 참여할 수 있도록 설정합니다.</span>
-    						</label><br><br>
-    					 </div>
+    						<label for="participation2">특정 도메인의 이메일로 가입시, 관리자 승인 없이도 바로 참여할 수 있도록 설정합니다.</label><br><br>
     			 		
     					<!-- 		이걸 넣을까 말까...
     						<div class="row">

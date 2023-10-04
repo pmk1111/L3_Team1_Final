@@ -46,8 +46,7 @@ public class UserController {
 //          User user= userservice.user_info(id);
 //          mv.setViewName("user/profile");
 //          mv.addObject("userinfo",user);
-//       }  
-	
+//       }
 	public String update() {
        return "user/profile";
     }
