@@ -74,7 +74,7 @@
     height: 31px;
 }
 
-#notifybtn, #contactbtn {
+#notifybtn, #notreadbtn {
     position: relative;
     height: 30px;
     top: 15px;
@@ -82,11 +82,11 @@
     font-size: 14px;
 }
 
-#notifybtn:hover, #contactbtn:hover {
+#notifybtn:hover, #notreadbtn:hover {
     cursor: pointer;
 }
 
-#notifybtn+#contactbtn {
+#notifybtn+#notreadbtn {
     margin-left: 10px;
 }
 

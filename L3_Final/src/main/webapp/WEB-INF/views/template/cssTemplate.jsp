@@ -34,7 +34,7 @@
 <!-- chat css-->
 <link rel="stylesheet" href="../resources/chat/css/chat.css">
 
-<link rel="stylesheet" href="../resources/chat/css/notify.css">
+<link rel="stylesheet" href="../resources/notify/css/notify.css">
 
 <!-- scrollbar css -->
 <link rel="stylesheet" href="../resources/common/css/scrollbar.css">
