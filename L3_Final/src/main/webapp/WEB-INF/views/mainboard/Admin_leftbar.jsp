@@ -120,7 +120,7 @@
 
 
             <li class="menu-item">
-              <a href="../project/Project_Access_Stats" class="menu-link">
+              <a href="${pageContext.request.contextPath}/project/Project_Access_Stats" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">프로젝트 접속 통계</div>
               </a>
