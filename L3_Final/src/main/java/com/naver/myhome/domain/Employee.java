@@ -1,6 +1,6 @@
 package com.naver.myhome.domain;
 
-public class Admin {
+public class Employee {
 	private String password;
 	private String name;
 	private String email;

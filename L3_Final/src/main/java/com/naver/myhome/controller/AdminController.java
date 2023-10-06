@@ -10,22 +10,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.naver.myhome.domain.User;
+import com.naver.myhome.service.AdminService;
 import com.naver.myhome.service.UserService;
 
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
 
-	
-
-
 		//지니
-//		private AdminService adminservice;
-//		
-//		@Autowired
-//		public AdminController(dminService adminService) {
-//			this.adminService = adminService;
-//		}
+		private AdminService adminservice;
+		
+		@Autowired
+		public AdminController(adminService adminService) {
+			this.adminService = adminService;
+		}
 		
 		@RequestMapping(value = "/companyinfo", method = RequestMethod.GET)
 //	    public ModelAndView user_update(Principal principal, ModelAndView mv) {
