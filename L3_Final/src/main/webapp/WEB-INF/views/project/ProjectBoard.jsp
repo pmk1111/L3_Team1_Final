@@ -129,6 +129,7 @@
             height: 45px;
             width: 105px;
             align-items: center;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, .3);
         }
 
         .memberlist-img {
@@ -1309,10 +1310,13 @@
     
       	.invite-empty-span {
         	opacity: 0;
-        	animation: fadeIn 0.01s ease-in-out 0.01s forwards;
+        	animation: fadeIn 0.5s ease-in-out 0.1s forwards;
         	font-family: inherit;
     	}
     	
+    	.badge {
+    		width: 80px; !important;
+    	}
     </style>
 
 </head>

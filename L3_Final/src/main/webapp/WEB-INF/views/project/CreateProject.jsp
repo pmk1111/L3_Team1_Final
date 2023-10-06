@@ -36,7 +36,7 @@
 	transform: translate(-50%, -50%);
 	z-index: 9;
 	width: 700px;
-	height: 450px;
+	height: 430px;
 	padding: 20px;
 	box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
 	border: 1.5px solid #ccc;
@@ -74,7 +74,7 @@
 }
 
 .create-input-info {
-	margin-top: 40px;
+	margin-top: 20px;
 }
 
 .create-inputbox {
@@ -106,21 +106,28 @@
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, .3);
 }
 
-.create-button {
-	width: 600px;
+.create-button, .invite-button {
+	width: 300px;
 	height: 60px;
 	border-radius: 6px;
-	border: 1px solid #9F7AB0;
-	margin-top: 35px;
-	background-color: #9F7AB0;
-	color: white;
+	margin-top: 25px;
+    border: 1px solid #9F7AB0;
+    background-color: #ffffff;
+    color: #9f7ab0;
+	font-family: inherit;
 	font-size: 15px;
 	font-weight: 550;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, .3);
 }
 
-.invite-button {
-	height: 30px;
+.on{
+	border: 1px solid #9F7AB0;
+	background-color: #9F7AB0;
+	color: white;
+}
+
+.invite-button+.create-button {
+	margin-left:10px;
 }
 </style>
 </head>
@@ -132,11 +139,8 @@
 
 	<div class="card">
 		<div class="CreateProject">
-			<div style="display: flex; justify-content: space-between;">
+			<div style="display:flex; justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 20px;">
 				<span id="header-span">프로젝트 만들기</span>
-				<div style="display:relative">
-					<button class="invite-button"></button>
-				</div>
 			</div>
 
 			<div class="create-input-info">
@@ -145,8 +149,11 @@
 					<textarea class="create-textarea" placeholder="프로젝트를 간단히 소개해보세요"></textarea>
 				</div>
 			</div>
-
-			<button class="create-button">프로젝트 생성</button>
+			
+			<div style="display:flex">
+				<button class="invite-button">팀원 초대하기</button>
+				<button class="create-button on">프로젝트 생성하기</button>
+			</div>
 		</div>
 	</div>
 
@@ -155,6 +162,19 @@
 			src="../resources/project/img/template-bg.png">
 	</div>
 
-
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+	$(function(){
+	    $('.invite-button').hover(function(){
+	    	$('.create-button').removeClass('on');
+	    	$(this).addClass('on');
+	    }),
+	    
+	    $('.create-button').hover(function(){
+	    	$('.invite-button').removeClass('on');
+	    	$(this).addClass('on');
+	    });
+	});
+	</script>
 </body>
 </html>
