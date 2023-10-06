@@ -62,6 +62,8 @@ public class AdminController {
 
 	//	
 		//지니 끝
+		
+		
 
 		
 	}
