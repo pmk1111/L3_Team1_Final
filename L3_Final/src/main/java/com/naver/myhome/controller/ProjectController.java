@@ -24,6 +24,11 @@ public class ProjectController {
 	public String CreateProject() {
 		return "project/CreateProject";
 	}
+
+	@RequestMapping(value = "/TeamInvite", method = RequestMethod.GET)
+	public String TeamInvite() {
+		return "project/Team_Invite";
+	}
 	
 	@RequestMapping(value = "/ProjectList", method = RequestMethod.GET)
 	public String ProjectList() {

@@ -82,10 +82,10 @@
 	height: 60px;
 	color: #6449fc;
 	font-weight: 700;
-	font-size: 16px;
+	font-size: 15px;
 	line-height: 25px;
-	border: 0.5px solid black;
-	border-radius: 6px;
+	border: 0.5px solid #555;
+	border-radius: 4px;
 	box-sizing: border-box;
 	font-family: inherit;
 	padding: 0 20px;
@@ -99,18 +99,18 @@
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 21px;
-	border: 0.5px solid black;
-	border-radius: 6px;
+	border: 0.5px solid #555;
+	border-radius: 4px;
 	box-sizing: border-box;
 	font-family: inherit;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, .3);
 }
 
 .create-button, .invite-button {
-	width: 300px;
+	width: 600px;
 	height: 60px;
 	border-radius: 6px;
-	margin-top: 25px;
+	margin-top: 15px;
     border: 1px solid #9F7AB0;
     background-color: #ffffff;
     color: #9f7ab0;
@@ -118,16 +118,17 @@
 	font-size: 15px;
 	font-weight: 550;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, .3);
+	transition: background-color 0.1s ease;
 }
 
-.on{
+.create-button:hover, .invite-button:hover {
 	border: 1px solid #9F7AB0;
 	background-color: #9F7AB0;
 	color: white;
 }
 
 .invite-button+.create-button {
-	margin-left:10px;
+	margin-left:15px;
 }
 </style>
 </head>
@@ -151,7 +152,7 @@
 			</div>
 			
 			<div style="display:flex">
-				<button class="invite-button">팀원 초대하기</button>
+<!-- 				<button class="invite-button">팀원 초대하기</button> -->
 				<button class="create-button on">프로젝트 생성하기</button>
 			</div>
 		</div>
@@ -163,18 +164,6 @@
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script>
-	$(function(){
-	    $('.invite-button').hover(function(){
-	    	$('.create-button').removeClass('on');
-	    	$(this).addClass('on');
-	    }),
-	    
-	    $('.create-button').hover(function(){
-	    	$('.invite-button').removeClass('on');
-	    	$(this).addClass('on');
-	    });
-	});
-	</script>
+
 </body>
 </html>
