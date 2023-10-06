@@ -194,6 +194,5 @@
 	<!-- issuecreate.js -->
 	<script src="../resources/issue/js/issuecreate.js"></script>
 
-
 </body>
 </html>
