@@ -65,7 +65,14 @@
    			 height: 80vh; /* 화면 높이에 80% 맞춤 */
    			 width: 100%;
 	}
- 	
+ 	.tab-pane {
+  		display: none;
+	}
+
+	/* 활성 탭 내용만 표시 */
+		.tab-pane.active {
+  		display: block;
+	}
  
  	
 	.col-lg-8 {
@@ -113,15 +120,15 @@
  					     <ul class="nav nav-tabs" >
              				 <li class="nav-item">
                				   <a class="nav-link active" data-toggle="tab" href="#useruse"><span>정상</span>
- 					 		    <c:if test="${count > 0}"> <!-- ${count}가 0보다 큰 경우 -->
-  								  <small><b>[&nbsp;<c:out value="${count}"/>&nbsp;]</b></small> 
+ 					 		    <c:if test="${employeecount > 0}"> <!-- ${count}가 0보다 큰 경우 -->
+  								  <small><b>[&nbsp;<c:out value="${employeecount}"/>&nbsp;]</b></small> 
 								</c:if>
 							   </a>
               				</li>
               				<li class="nav-item">
                				  <a class="nav-link" data-toggle="tab" href="#userstop"><span>이용중지</span>
- 					 		    <c:if test="${count > 0}"> <!-- ${count}가 0보다 큰 경우 -->
-  								  <small><b>[&nbsp;<c:out value="${count}"/>&nbsp;]</b></small> 
+ 					 		    <c:if test="${employeecount > 0}"> <!-- ${count}가 0보다 큰 경우 -->
+  								  <small><b>[&nbsp;<c:out value="${employeecount}"/>&nbsp;]</b></small> 
 								</c:if>
 							   </a>
               				</li>
@@ -156,9 +163,10 @@
 				   </div>
 				  	<br>
 					<div id="content">
- 					 <div class="tab-pane fade show active" id="useruse">
-               			<table border="1"  width="100%" style=" border: 1px solid #d9dee3; color:#566a7f;">
+ 					 	 <div class="tab-pane fade show active" id="useruse">
+               			<table class="table">
                			     <tr>
+               			       <th>프로필</th>
                			   	   <th>사원번호</th>
                			       <th>이름</th>
                			       <th>부서</th>
@@ -170,24 +178,26 @@
                			     </tr>
                			  
                			  
-               			  <c:forEach var="row" items="${list}">
+               			  <c:forEach var="emp" items="${employee}">
                			    <tr>
-               			    	<td></td>
-               			    	<td></td>
-               			    	<td></td>
-               			    	<td></td>
-               			    	<td></td>
-               			    	<td></td>
-               			    	<td></td>
-               			    	<td></td>
+               			        <td><c:out value="${emp.user_photo}" /></td>
+               			    	<td><c:out value="${emp.employee_no}" /></td>
+               			    	<td><c:out value="${emp.user_name}" /></td>
+               			    	<td><c:out value="${emp.department}" /></td>
+               			    	<td><c:out value="${emp.position}" /></td>
+               			    	<td><c:out value="${emp.user_email}" /></td>
+               			    	<td><c:out value="${emp.user_phone}" /></td>
+               			    	<td><c:out value="${emp.company_invited}" /></td>
+               			    	<td><c:out value="${emp.employee_auth}" /></td>
                			    </tr>
                			    </c:forEach>
                			    
                			 </table>
                		 </div>
              		 <div class="tab-pane fade" id="userstop">
-		                <table border="1" width="100%" style=" border: 1px solid #d9dee3; color:#566a7f;">
+		              <table class="table">
                			   <tr>
+               			       <th>프로필</th>
                			   	   <th>사원번호</th>
                			       <th>이름</th>
                			       <th>부서</th>
@@ -199,17 +209,26 @@
                			    </tr>
                			  
                			  
-               			  <c:forEach var="row" items="${list}">
+               			 <c:forEach var="emp" items="${employee}">
                			    <tr>
-               			    	
+               			        <td><c:out value="${emp.user_photo}" /></td>
+               			    	<td><c:out value="${emp.employee_no}" /></td>
+               			    	<td><c:out value="${emp.user_name}" /></td>
+               			    	<td><c:out value="${emp.department}" /></td>
+               			    	<td><c:out value="${emp.position}" /></td>
+               			    	<td><c:out value="${emp.user_email}" /></td>
+               			    	<td><c:out value="${emp.user_phone}" /></td>
+               			    	<td><c:out value="${emp.company_invited}" /></td>
+               			    	<td><c:out value="${emp.employee_auth}" /></td>
                			    </tr>
                			    </c:forEach>
                			    
                			 </table>
                		 </div>
              		 <div class="tab-pane fade" id="userwait">
-                		 <table border="1" width="100%" style=" border: 1px solid #d9dee3; color:#566a7f;">
+                		<table class="table">
                			   <tr>
+               			       <th>프로필</th>
                			       <th>이름</th>
                			       <th>이메일</th>
                			       <th>가입요청일</th>
@@ -217,13 +236,18 @@
                			    </tr>
                			  
                			  
-               			  <c:forEach var="row" items="${list}">
+               			 <c:forEach var="user" items="${user}">
                			    <tr>
+               			        <td><c:out value="${user.user_photo}" /></td>
+               			    	<td><c:out value="${user.user_name}" /></td>
+               			    	<td><c:out value="${user.user_email}" /></td>
+               			    	<td><c:out value="${sysdate}" /></td>
+               			    	<td><c:out value="${user.status}" /></td>
                			    	
                			    </tr>
                			    </c:forEach>
                			    
-               			 </table>
+               			 </table> 
                		 </div>
 					</div>
                    </div>

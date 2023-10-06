@@ -5,69 +5,36 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.naver.myhome.domain.Company;
+import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
+import com.naver.myhome.mybatis.mapper.AdminMapper;
 import com.naver.myhome.mybatis.mapper.UserMapper;
 
 @Service
-public class AdminServiceImpl implements UserService {
+public class AdminServiceImpl implements AdminService {
 
-	private UserMapper dao;
+	private AdminMapper dao;
 	
 	@Autowired
-	public AdminServiceImpl(UserMapper dao) {
+	public AdminServiceImpl(AdminMapper dao) {
 		this.dao = dao;
 	}
+
 	@Override
-	public int isId(String id) {
-		User ruser = dao.isId(id);
-		return (ruser == null) ? -1 : 1;
-	}
-	@Override
-	public int isId(String id, String pass) {
-		User dbuser = dao.isId(id);
-		int result = -1;
-		if(dbuser !=null) {
-			result = 1;
-		} else 
-			result = 0;
-	
-	return result;
-}
-	@Override
-	public int insert(User user) {
+	public Company company_info(String company_id) {
 		
-		return dao.insert(user);
-	}
-
-
-	@Override
-	public User user_info(String id) {
-		// TODO Auto-generated method stub
-		return dao.isId(id);
-	}
-
-	@Override
-	public void delete(String id) {
-		dao.delete(id);
-		
-	}
-
-	@Override
-	public int update(User user) {
-    	return	dao.update(user);
-		
-	}
-
-	@Override
-	public List<User> getSearchList(int index, String search_word, int page, int limit) {
-		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public List<Employee> findEmployee(String company_id){
+		return dao.findEmployee(company_id);
+	}
 
 	@Override
-	public int getSearchListCount(int index, String search_word) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int countEmployee(String company_id) {
+		return dao.countEmployee(company_id);
 	}
 
 }

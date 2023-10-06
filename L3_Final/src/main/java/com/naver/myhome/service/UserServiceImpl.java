@@ -17,57 +17,59 @@ public class UserServiceImpl implements UserService {
 	public UserServiceImpl(UserMapper dao) {
 		this.dao = dao;
 	}
-	@Override
-	public int isId(String id) {
-		User ruser = dao.isId(id);
-		return (ruser == null) ? -1 : 1;
-	}
-	@Override
-	public int isId(String id, String pass) {
-		User dbuser = dao.isId(id);
-		int result = -1;
-		if(dbuser !=null) {
-			result = 1;
-		} else 
-			result = 0;
-	
-	return result;
-}
-	@Override
-	public int insert(User user) {
-		
-		return dao.insert(user);
-	}
-
 
 	@Override
-	public User user_info(String id) {
+	public List<User> finduser(String company_id) {
 		// TODO Auto-generated method stub
-		return dao.isId(id);
+		return dao.finduser(company_id);
 	}
 
-	@Override
-	public void delete(String id) {
-		dao.delete(id);
-		
-	}
-
-	@Override
-	public int update(User user) {
-    	return	dao.update(user);
-		
-	}
-
-	@Override
-	public List<User> getSearchList(int index, String search_word, int page, int limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getSearchListCount(int index, String search_word) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+//	@Override
+//	public int isId(String id, String pass) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	public int insert(User user) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	public int isId(String id) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	public User user_info(String id) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public void delete(String id) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public int update(User m) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	public List<User> getSearchList(int index, String search_word, int page, int limit) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public int getSearchListCount(int index, String search_word) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
 
 }

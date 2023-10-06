@@ -3,6 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.UserMapper">
+
+	<!-- 지니 -->
+	<select id="finduser" resultType="user">
+		select user_photo, user_name, user_email, sysdate, user_status
+		from usr 
+		where 
+	</select>
+	
 	<select id="isId" resultType="user" parameterType="String"><!-- Member class를 
 			별칭 -->
 		select * from user where id = #{id}

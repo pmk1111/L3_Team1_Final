@@ -1,12 +1,21 @@
 package com.naver.myhome.domain;
 
+import java.sql.Date;
+
 public class Company {
+	private int company_id;
 	private String password;
 	private String name;
 	private String email;
-	private int phone;
-	private String status;
+	private String company_domain;
+	private Date company_created;
 	
+	public int getCompany_id() {
+		return company_id;
+	}
+	public void setCompany_id(int company_id) {
+		this.company_id = company_id;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -25,18 +34,19 @@ public class Company {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getPhone() {
-		return phone;
+	public String getCompany_domain() {
+		return company_domain;
 	}
-	public void setPhone(int phone) {
-		this.phone = phone;
+	public void setCompany_domain(String company_domain) {
+		this.company_domain = company_domain;
 	}
-	public String getStatus() {
-		return status;
+	public Date getCompany_created() {
+		return company_created;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setCompany_created(Date company_created) {
+		this.company_created = company_created;
 	}
+	
 	
 
 	

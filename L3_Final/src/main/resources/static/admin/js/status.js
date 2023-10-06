@@ -1,6 +1,5 @@
-<script>
+
 let key = "${param.key}";
-console.log(key);
 if(key === "useruse"){
 	
 	$("#user-stop").removeClass("active");
@@ -32,4 +31,4 @@ if(key === "useruse"){
 	$("#userwait").addClass("show active");
 	
 }
-</script>
+
