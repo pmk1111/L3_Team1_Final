@@ -19,6 +19,8 @@
 
         <div class="notify-list-area">
 
+
+
             <ul class="notify-list">
                 <li class="notify-room" data-room-id="1">
                     <div class="notify-img-user-latest">
