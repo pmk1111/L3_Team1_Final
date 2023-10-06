@@ -10,43 +10,15 @@
 
     <title>WidUs - 이슈 상세보기</title>
     <meta name="description" content="" />
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../resources/mainboard/assets/img/favicon/favicon.ico" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
     
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/fonts/boxicons.css" />
-
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../resources/mainboard/assets/css/demo.css" />
-
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/libs/apex-charts/apex-charts.css" />
-
-    <!-- Page CSS -->
+    <!-- JQuery cdn -->
+		<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	
+		<!-- css template -->
+		<jsp:include page="../template/cssTemplate.jsp"></jsp:include>    
     
     <!-- issue-detail CSS -->
     <link rel="stylesheet" href="../resources/issue/css/issue-detail.css">
-    <!-- Helpers -->
-    <script src="../resources/mainboard/assets/vendor/js/helpers.js"></script>
-
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../resources/mainboard/assets/js/config.js"></script>
-	
-	<!-- JQuery Lib -->
-	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
     <style>
       .leftbar-close{background-color: #9F7AB0; border-radius: 50%;}
@@ -81,13 +53,13 @@
 
                   <div class="card-body issue-card">
                     <div class="issue-location">
-                      프로젝트 / L3_Final Project / 이슈 게시글 클릭 시 자료실 게시판으로 페이지 이동됨
+                      프로젝트 / 테스트 프로젝트 / ${issuedata.issue_subject}
                     </div>
                     <hr class="issue-hr">
 
                     <div class="issue-write-info">
                       <img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto user-img" />
-                      <span class="issue-writer">MKP</span> <sup class="issue-create">2023-09-22 15:32:27</sup>
+                      <span class="issue-writer">${issuedata.create_user}</span> <sup class="issue-create">2023-09-22 15:32:27</sup>
                     </div>
                     <h3 class="issue-title">이슈 게시글 클릭 시 자료실 게시판으로 페이지 이동됨</h3>
                     <hr class="issue-hr">
@@ -103,12 +75,12 @@
                         </div>
                       </div>
                       <div class="issue-assigned-area">
-                        <span>담당자</span><span class="issue-assigned">홍길동</span>
+                        <span>담당자</span><span class="issue-assigned">${issuedata.issue_assigned}</span>
                       </div>
                       <hr class="issue-hr">
 
                       <div class="issue-content">
-                        프로젝트란,<br>
+                   <!--      프로젝트란,<br>
                         부서 또는 업무 주제별 공간을 만들어 구성원을 초대하여 소통하는 '업무 소통 방' 입니다.<br>
                         <br>
                         혹시.. 프로젝트를 어떻게 세팅을 해야 할지 몰라서 프로젝트 만들기를 미루고 있으신가요?<br>
@@ -123,13 +95,14 @@
                         ✅ 업무와 관련된 참여자를 모두 초대했나요?<br>
                         ✅ 프로젝트 관리자로 추가 지정할 사람은 없나요?<br>
                         <br>
-                        프로젝트 규칙 만드는 Tip 영상으로 확인하기 ▶ https://youtu.be/DwgWSLsLgpU
+                        프로젝트 규칙 만드는 Tip 영상으로 확인하기 ▶ https://youtu.be/DwgWSLsLgpU -->
+                        ${issuedata.issue_content}
                       </div>
                       <hr class="issue-hr">
 
                       <div class="issue-file-area">
                         <span>첨부파일</span><img class="folder-img" src="../resources/issue/img/folder.svg">
-                        <span class="attached-folder">프로젝트 작성 양식.txt</span>
+                        <span class="attached-folder">${issuedata.issue_file}</span>
                       </div>
                       <div class="subtask-wrap">
                         <span class="subtask-text">관련이슈</span>
@@ -176,10 +149,11 @@
                       <div class="comments create-comment">
                         
                         <img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto comment-writer-img" />
-                        <textarea id="comment-textarea" class="comment-input" maxlength="400" rows="10" cols="50"
-                          placeholder="댓글 내용을 입력하세요."></textarea>
-                        <button type="button" class="comment-submit-btn">댓글 작성</button>
-
+                        <div class="comment-input-submit">
+                        	<textarea id="comment-textarea" class="comment-input" maxlength="400" rows="10" cols="50"
+                          	placeholder="댓글 내용을 입력하세요."></textarea>
+                        	<button type="button" class="comment-submit-btn">댓글 작성</button>
+												</div>
                       </div> <!-- create-comment end -->
                     </div> <!-- comment-wrap end -->
                   </div>
@@ -205,24 +179,8 @@
     </div>
 	</div> <!-- Layout-Wrapper end -->
 
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="../resources/mainboard/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../resources/mainboard/assets/vendor/libs/popper/popper.js"></script>
-    <script src="../resources/mainboard/assets/vendor/js/bootstrap.js"></script>
-    <script src="../resources/mainboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
-    <script src="../resources/mainboard/assets/vendor/js/menu.js"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-    <script src="../resources/mainboard/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-
-    <!-- Main JS -->
-    <script src="../resources/mainboard/assets/js/main.js"></script>
-
-    <!-- Page JS -->
-    <script src="../resources/mainboard/assets/js/dashboards-analytics.js"></script>
+  	<!-- js template -->
+	<jsp:include page="../template/jsTemplate.jsp"></jsp:include>
     
     <!-- comment.js -->
 	<script src="../resources/issue/js/comment.js"></script>

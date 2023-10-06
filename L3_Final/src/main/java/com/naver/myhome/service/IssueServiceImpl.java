@@ -39,10 +39,24 @@ public class IssueServiceImpl implements IssueService{
 		return mapper.getFilteredIssueList(map);
 	}
 
+//	@Override
+//	public List<Project> getMyProjectList(String userId) {
+//		return mapper.getMyProjectList(userId);
+//	}
+	
 	@Override
 	public List<Issue> searchIssues(String searchText) {
 		return mapper.searchIssues(searchText);
 	}
 
+	@Override
+	public void issueAdd(Issue issue) {
+		mapper.issueAdd(issue);
+	}
+
+	@Override
+	public Issue getIssueDetail(int num) {
+		return mapper.getIssueDetail(num);
+	}
 
 }

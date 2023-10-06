@@ -145,7 +145,7 @@
 
 
 																	<span class="issuetype">${i.issue_type}</span> <a
-																		href="detail?num=${i.issue_id}"> <span
+																		href="issuedetail?num=${i.issue_id}"> <span
 																		class="issue-title">${i.issue_subject}</span>
 																	</a>
 																</div>

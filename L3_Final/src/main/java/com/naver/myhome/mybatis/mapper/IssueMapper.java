@@ -19,4 +19,9 @@ public interface IssueMapper {
 	
 	public List<Issue> searchIssues(String searchText);
 
+//	public List<Project> getMyProjectList(String userId);
+	
+	public void issueAdd(Issue issue);
+
+	public Issue getIssueDetail(int num);
 }

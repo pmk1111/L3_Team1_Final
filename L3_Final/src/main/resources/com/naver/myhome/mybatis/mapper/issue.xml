@@ -13,29 +13,61 @@
 	</select>
 	
 
-<select id="getFilteredIssueList" resultType="com.naver.myhome.domain.Issue">
+	<select id="getFilteredIssueList" resultType="com.naver.myhome.domain.Issue">
+  	SELECT * FROM issue
+		<where>
+  		<if test='issueType != "-"'>
+    		issue_status = #{issueType}
+  		</if>
+  		<if test='issuePriority != "-"'>
+    		AND issue_priority = #{issuePriority}
+  		</if>
+ 		</where>
+  	ORDER BY issue_created DESC
+	</select>
 
-  SELECT * FROM issue
-	<where>
-  <if test='issueType != "-"'>
-    issue_status = #{issueType}
-  </if>
-  <if test='issuePriority != "-"'>
-    AND issue_priority = #{issuePriority}
-  </if>
- </where>
-  ORDER BY issue_created DESC
-</select>
-
-
-<!-- IssueMapper.xml -->
-
-    <select id="searchIssues" resultType="com.naver.myhome.domain.Issue">
-      SELECT *
-			FROM issue
+	<select id="searchIssues" resultType="com.naver.myhome.domain.Issue">
+   	SELECT *
+		FROM issue
 			WHERE UPPER(issue_subject) LIKE '%' || UPPER(#{searchText}) || '%'
    		OR UPPER(create_user) LIKE '%' || UPPER(#{searchText}) || '%'
    		ORDER BY issue_created DESC
-    </select>
+  </select>
+  
+ <!--  <select id="getProjectList" resultType="com.naver.myhome.domain.Project">
+  	select project_name from project
+  	where project_joiner.user_id = #{user.id}
+  </select> -->
+  
+  <insert id="issueAdd">
+  	<selectKey order="BEFORE" keyProperty="issue_id" resultType="int">
+  	select issue_id.nextval from dual
+  	</selectKey>
+  	
+<!-- 다른 항목들이 완료되었을 때 사용할 쿼리
+		insert into issue
+  	values
+  	(#{issue_id},
+  	(select project_id from project where project_name = #{project_name}),
+  	(select user_name from user where user_id = #{user_id}),
+  	#{issue_type}, #{issue_priority}, #{issue_subject}, #{issue_content}, #{issue_status},
+  	#{issue_reporter}, #{issue_assigned}, #{issue_file}, SYSDATE) -->
+  	
+  	insert into issue
+  	values
+  	(#{issue_id}, 1, '마이콜', #{issue_type},
+  	#{issue_priority}, #{issue_subject}, #{issue_content},
+  	#{issue_status}, #{issue_reporter}, #{issue_assigned}, #{issue_file}, SYSDATE)
+  </insert>
 
+	<select id="getIssueDetail" resultType="issue">
+		<!-- select (select project_name from project where project_id = #{project_id}),
+		issue_subject, issue_content, issue_reporter, issue_assigned, issue_file
+		from issue -->
+		
+		select
+		issue_subject, issue_content, issue_reporter, issue_assigned, issue_file
+		from issue
+		where issue_id = #{issue_id}
+	</select>
 </mapper>
