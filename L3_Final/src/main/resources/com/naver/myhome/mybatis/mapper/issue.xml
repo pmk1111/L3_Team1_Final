@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.naver.myhome.mybatis.mapper.IssueMapper">
+	<select id="getListCount" resultType="int">
+		select count(*) from issue
+	</select>
+
+	<select id="getIssueList" resultType="issue">
+		select * from issue order
+		by issue_created desc
+	</select>
+	
+
+<select id="getFilteredIssueList" resultType="com.naver.myhome.domain.Issue">
+
+  SELECT * FROM issue
+	<where>
+  <if test='issueType != "-"'>
+    issue_status = #{issueType}
+  </if>
+  <if test='issuePriority != "-"'>
+    AND issue_priority = #{issuePriority}
+  </if>
+ </where>
+  ORDER BY issue_created DESC
+</select>
+
+
+<!-- IssueMapper.xml -->
+
+    <select id="searchIssues" resultType="com.naver.myhome.domain.Issue">
+      SELECT *
+			FROM issue
+			WHERE UPPER(issue_subject) LIKE '%' || UPPER(#{searchText}) || '%'
+   		OR UPPER(create_user) LIKE '%' || UPPER(#{searchText}) || '%'
+   		ORDER BY issue_created DESC
+    </select>
+
+</mapper>
