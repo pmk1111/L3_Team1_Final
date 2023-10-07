@@ -43,7 +43,9 @@
   	<selectKey order="BEFORE" keyProperty="issue_id" resultType="int">
   	select issue_id.nextval from dual
   	</selectKey>
-  	
+  	<!-- <selectKey order="BEFORE" keyProperty="user_name" resultType="String">
+		select user_name from usr where user_id=1 
+  	</selectKey> -->
 <!-- 다른 항목들이 완료되었을 때 사용할 쿼리
 		insert into issue
   	values
@@ -55,7 +57,7 @@
   	
   	insert into issue
   	values
-  	(#{issue_id}, 1, '마이콜', #{issue_type},
+  	(#{issue_id}, 1, '홍길동', #{issue_type},
   	#{issue_priority}, #{issue_subject}, #{issue_content},
   	#{issue_status}, #{issue_reporter}, #{issue_assigned}, #{issue_file}, SYSDATE)
   </insert>

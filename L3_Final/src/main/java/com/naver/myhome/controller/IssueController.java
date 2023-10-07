@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.naver.myhome.domain.Issue;
+import com.naver.myhome.service.CommentService;
 import com.naver.myhome.service.IssueService;
 
 @Controller
@@ -97,9 +98,7 @@ public class IssueController {
 			mv.addObject("url", request.getRequestURI());
 		} else {
 			logger.info("상세보기 성공");
-//			int count = commentService.getListCount(num);
 			mv.setViewName("issue/issuedetail");
-//			mv.addObject("count", count);
 			mv.addObject("issuedata", issue);
 		}
 		

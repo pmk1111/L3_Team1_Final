@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en"class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
       data-assets-path="../resources/mainboard/assets/" data-template="vertical-menu-template-free">
@@ -22,10 +23,13 @@
 
     <style>
       .leftbar-close{background-color: #9F7AB0; border-radius: 50%;}
+      pre{font-family: var(--bs-body-font-family) !important}
     </style>
   </head>
 
   <body>
+  	<input type="hidden" name="num" value="${param.num}"  id="issue_id">
+  
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -79,7 +83,7 @@
                       </div>
                       <hr class="issue-hr">
 
-                      <div class="issue-content">
+                      <div class="issue-content" >
                    <!--      프로젝트란,<br>
                         부서 또는 업무 주제별 공간을 만들어 구성원을 초대하여 소통하는 '업무 소통 방' 입니다.<br>
                         <br>
@@ -96,7 +100,7 @@
                         ✅ 프로젝트 관리자로 추가 지정할 사람은 없나요?<br>
                         <br>
                         프로젝트 규칙 만드는 Tip 영상으로 확인하기 ▶ https://youtu.be/DwgWSLsLgpU -->
-                        ${issuedata.issue_content}
+                        <pre>${issuedata.issue_content}</pre>
                       </div>
                       <hr class="issue-hr">
 
@@ -124,7 +128,8 @@
                   <div class="card comment-card">
                     <hr style="color: rgb(162, 162, 162); margin-bottom: 0px;">
                     <div class="comment-wrap">
-                      <div class="comments">
+                    
+                    <!--   <div class="comments">
                         <img src="../resources/mainboard/assets/img/avatars/1.png" alt="작성자 이미지" class="w-px-40 h-auto comment-writer-img" />
                         <span class="comment-writer">MKP</span> <sup class="comment-created">2023-09-22 15:32:27</sup>
                         <br>
@@ -144,17 +149,33 @@
                         </span>
                       </div>
                         <hr class="comment-hr">
+                      </div> -->
+                   <%--    <c:if test="${!empty commentlist}">
+                      	<c:forEach var="c" items="commentlist">
+                      		<div class="comments">
+                      			<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto comment-writer-img" />
+                      			<span class="comment-writer">${c.comment_user_id}</span> <sup class="comment-created">${c.comment.created }</sup>
+                      			<br>
+                        		<div class="comment-content">
+                        			<span>${c.comment_content}</span>
+                      			</div>
+                        	<hr class="comment-hr">
                       </div>
+                      	</c:forEach>
+                      </c:if> --%>
 
-                      <div class="comments create-comment">
-                        
-                        <img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto comment-writer-img" />
+                      <div class="comments create-comment" style="border-bottom: 1px solid lightgrey">
+                        <img src="../resources/mainboard/assets/img/avatars/1.png" class="w-px-40 h-auto comment-writer-img" />
                         <div class="comment-input-submit">
-                        	<textarea id="comment-textarea" class="comment-input" maxlength="400" rows="10" cols="50"
+                        	<textarea id="comment-textarea" class="comment-input" name="comment_content" maxlength="500" rows="10" cols="50"
                           	placeholder="댓글 내용을 입력하세요."></textarea>
                         	<button type="button" class="comment-submit-btn">댓글 작성</button>
 												</div>
                       </div> <!-- create-comment end -->
+                      
+                      <div class="comment-list">
+                      </div>
+                      
                     </div> <!-- comment-wrap end -->
                   </div>
                 </div>
@@ -184,5 +205,9 @@
     
     <!-- comment.js -->
 	<script src="../resources/issue/js/comment.js"></script>
+	
+	<script type="text/javascript">
+	console.log("게시글 번호 = " + $("#issue_id").val());
+	</script>
   </body>
 </html>

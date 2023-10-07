@@ -95,6 +95,15 @@ $(document).ready(function () {
       alert("중요도를 선택해주세요.");
       return false;
     }
+
+    // 줄바꿈 문자를 HTML 줄바꿈 태그 <br>로 변환
+    const issue_content_html = issue_content.replace(/\n/g, '<br>');
+
+    // issue_content_html를 폼의 hidden 필드에 저장
+    $('.hidden-issue-content').val(issue_content_html);
+
+    // 이후 폼을 서버로 제출
+    $('form[name="createIssue"]').submit();
   });
 
   // 파일 업로드 시 파일 명 영역 텍스트 변경
