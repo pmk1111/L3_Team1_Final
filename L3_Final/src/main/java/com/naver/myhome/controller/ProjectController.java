@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value = "/project")
+@RequestMapping(value = "/Project")
 public class ProjectController {
 	
 	// JJ's Controller
@@ -25,10 +25,10 @@ public class ProjectController {
 		return "project/CreateProject";
 	}
 
-	@RequestMapping(value = "/TeamInvite", method = RequestMethod.GET)
-	public String TeamInvite() {
-		return "project/Team_Invite";
-	}
+	/*
+	 * @RequestMapping(value = "/TeamInvite", method = RequestMethod.GET) public
+	 * String TeamInvite() { return "project/Team_Invite"; }
+	 */
 	
 	@RequestMapping(value = "/ProjectList", method = RequestMethod.GET)
 	public String ProjectList() {
@@ -39,7 +39,6 @@ public class ProjectController {
 	public String Project_Access_Stats() {
 		return "project/Project_Access_Stats";
 	}
-	
 	
 	// JJ's Controller End
 }
