@@ -5,13 +5,15 @@
 <mapper namespace="com.naver.myhome.mybatis.mapper.AdminMapper">
 
 	<!-- 지니 -->
+	<!-- 정상 -->
 	<select id="findEmployee" resultType="employee">
 		select u.user_photo, e.employee_no ,u.user_name, e.department, e.position, u.user_email, u.user_phone,
-		e.company_invited, e.employee_auth 
+		e.employee_auth 
 		from employee e
 			inner join
     			usr u on e.user_id = u.user_id
 		where e.company_id = #{company_id}
+		and e.employee_status = 0
 	</select>
 	
 	<select id="countEmployee" resultType="int">
@@ -20,6 +22,77 @@
 			inner join 
 			     usr u on e.user_id = u.user_id
 		WHERE e.company_id = #{company_id}
+	    and e.employee_status = 0
 	</select>
 	
+	<!-- 이용중지 -->
+	 <select id="stopEmployee" resultType="employee">
+		select u.user_photo, e.employee_no ,u.user_name, e.department, e.position, u.user_email, u.user_phone,
+		e.employee_auth 
+		from employee e
+			inner join
+    			usr u on e.user_id = u.user_id
+		where e.company_id = #{company_id}
+		and e.employee_status=1
+	</select>
+	
+	<select id="countStopEmployee" resultType="int">
+		select count (*) as countStopValue
+		from employee e
+			inner join 
+			     usr u on e.user_id = u.user_id
+		WHERE e.company_id = #{company_id}
+		and e.employee_status=1
+	</select>
+	
+	<!-- 이용중지 업데이트 -->
+	<update id="stopEmployeeStatus" parameterType="int">
+	update employee
+	set employee_status= 1
+	where employee_no=#{employee_no}
+	</update>
+	
+	<update id="useEmployeeStatus" parameterType="int">
+	update employee
+	set employee_status= 0
+	where employee_no=#{employee_no}
+	</update>
+	
+	<!-- 관리자 유무 업데이트 -->
+	<update id="noMoreAuth" parameterType="int">
+	update employee
+	set employee_Auth= 'N'
+	where employee_no=#{employee_no}
+	</update>
+	
+	<update id="addAuth" parameterType="int">
+	update employee
+	set employee_Auth= 'Y'
+	where employee_no=#{employee_no}
+	</update>
+	<!-- 
+	<select id="getSearchListCount" parameterType="map" resultType="int">
+			select count(*) from employee 
+			<include refid="search_"/>
+	</select>
+	
+	<select id="getSearchList" parameterType="map" resultType="Employee">
+			select * from (select b.*, rownum rnum from (select * from employee 
+			<include refid="search_"/>
+			) b where rownum <=#{end} ) where rnum >=#{start} and rnum <=#{end}
+	</select>
+	
+	<sql id="search_">
+		<if test="search_field != null">
+		and
+			<choose>
+				<when test="search_field=="user_name"">user_name</when>
+				<when test="search_field=="user_email"">user_email</when>
+				<when test="search_field=="department"">department</when>
+				<when test="search_field=="position"">position</when>
+			</choose>
+		like #{search_word}
+		</if>
+	</sql>
+ -->
 </mapper>

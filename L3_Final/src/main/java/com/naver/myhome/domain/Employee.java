@@ -7,8 +7,8 @@ public class Employee {
 	private String department;
 	private String position;
 	private String employee_auth;
-	private String status;
-	private int company_invited;
+	private int employee_status;
+	private String company_invited;
 	private String user_name;
 	private String user_email;
 	private String user_photo;
@@ -49,16 +49,16 @@ public class Employee {
 	public void setEmployee_auth(String employee_auth) {
 		this.employee_auth = employee_auth;
 	}
-	public String getStatus() {
-		return status;
+	public int getEmployee_status() {
+		return employee_status;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setEmployee_status(int employee_status) {
+		this.employee_status = employee_status;
 	}
-	public int getCompany_invited() {
+	public String getCompany_invited() {
 		return company_invited;
 	}
-	public void setCompany_invited(int company_invited) {
+	public void setCompany_invited(String company_invited) {
 		this.company_invited = company_invited;
 	}
 	public String getUser_name() {

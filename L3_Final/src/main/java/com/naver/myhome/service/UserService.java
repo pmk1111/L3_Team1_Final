@@ -22,5 +22,10 @@ public interface UserService {
 //
 //	public int getSearchListCount(int index, String search_word);
 
-	public List<User> finduser(String company_id);
+
+	public List<User> finduser(String company_invited);
+
+	public int countuser( String company_invited);
+
+
 }

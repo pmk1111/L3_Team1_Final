@@ -16,7 +16,9 @@ public interface UserMapper {
 
 		public List<User> getSearchList(Map<String, Object> map);
 
-		public List<User> finduser(String company_id);
+		public List<User> finduser(String company_invited);
+
+		public int countuser(String company_invited);
 
 	
 

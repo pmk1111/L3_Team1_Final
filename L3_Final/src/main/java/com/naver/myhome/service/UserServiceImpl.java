@@ -19,9 +19,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> finduser(String company_id) {
+	public List<User> finduser(String company_invited) {
 		// TODO Auto-generated method stub
-		return dao.finduser(company_id);
+		return dao.finduser(company_invited);
+	}
+
+	@Override
+	public int countuser(String company_invited) {
+		return dao.countuser(company_invited);
 	}
 
 //	@Override

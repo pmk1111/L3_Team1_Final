@@ -11,6 +11,7 @@ public class User {
 	private Date user_create;
 	private int user_status;
 	private String user_email;
+	private String company_invited;
 	public int getUser_id() {
 		return user_id;
 	}
@@ -58,6 +59,12 @@ public class User {
 	}
 	public void setUser_email(String user_email) {
 		this.user_email = user_email;
+	}
+	public String getCompany_invited() {
+		return company_invited;
+	}
+	public void setCompany_invited(String company_invited) {
+		this.company_invited = company_invited;
 	}
 	
 	
