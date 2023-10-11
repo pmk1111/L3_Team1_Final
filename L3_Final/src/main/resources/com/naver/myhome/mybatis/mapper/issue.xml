@@ -13,29 +13,108 @@
 	</select>
 	
 
-<select id="getFilteredIssueList" resultType="com.naver.myhome.domain.Issue">
+	<select id="getFilteredIssueList" resultType="com.naver.myhome.domain.Issue">
+  	SELECT * FROM issue
+		<where>
+  		<if test='issueType != "-"'>
+    		issue_status = #{issueType}
+  		</if>
+  		<if test='issuePriority != "-"'>
+    		AND issue_priority = #{issuePriority}
+  		</if>
+ 		</where>
+  	ORDER BY issue_created DESC
+	</select>
 
-  SELECT * FROM issue
-	<where>
-  <if test='issueType != "-"'>
-    issue_status = #{issueType}
-  </if>
-  <if test='issuePriority != "-"'>
-    AND issue_priority = #{issuePriority}
-  </if>
- </where>
-  ORDER BY issue_created DESC
-</select>
-
-
-<!-- IssueMapper.xml -->
-
-    <select id="searchIssues" resultType="com.naver.myhome.domain.Issue">
-      SELECT *
-			FROM issue
+	<select id="searchIssues" resultType="com.naver.myhome.domain.Issue">
+   	SELECT *
+		FROM issue
 			WHERE UPPER(issue_subject) LIKE '%' || UPPER(#{searchText}) || '%'
    		OR UPPER(create_user) LIKE '%' || UPPER(#{searchText}) || '%'
    		ORDER BY issue_created DESC
-    </select>
+  </select>
+  
+ <!--  <select id="getProjectList" resultType="com.naver.myhome.domain.Project">
+  	select project_name from project
+  	where project_joiner.user_id = #{user.id}
+  </select> -->
+  
+  <insert id="issueAdd">
+  	<selectKey order="BEFORE" keyProperty="issue_id" resultType="int">
+  	select issue_id.nextval from dual
+  	</selectKey>
+  	<!-- <selectKey order="BEFORE" keyProperty="user_name" resultType="String">
+		select user_name from usr where user_id=1 
+  	</selectKey> -->
+  	
+<!-- 다른 항목들이 완료되었을 때 사용할 쿼리
+		insert into issue
+  	values
+  	(#{issue_id},
+  	(select project_id from project where project_name = #{project_name}),
+  	(select name from user where id=#{create_user}),
+  	#{issue_type}, #{issue_priority}, #{issue_subject}, #{issue_content}, #{issue_status},
+  	#{create_user},
+  	#{issue_assigned}, #{issue_file}, SYSDATE) -->
+  	<!-- 사용자 식별번호를 세션에서 가져와서 그 값을 작성자, 보고자에 넣어야 함. 그 값을 통해 화면에 표시되는 값은 유저 이름-->
+  	
+  	insert into issue
+  	values
+  	(#{issue_id}, 1, 
+  	1, #{issue_type},
+  	#{issue_priority}, #{issue_subject}, #{issue_content},
+  	#{issue_status}, #{issue_reporter}, #{issue_assigned}, #{issue_file}, SYSDATE)
+  </insert>
 
+	<select id="getIssueDetail" resultType="issue">
+		<!-- select 
+		(select project_name from project where project_id = #{project_id}),
+		(select name from user where id=1),
+		issue_subject, issue_content, issue_reporter, issue_assigned, issue_file, issue_created
+		from issue -->
+		
+		select
+		*
+		from issue
+		where issue_id = #{issue_id}
+	</select>
+	
+<update id="updateStatus">
+  UPDATE issue
+  SET issue_status = #{status}
+  <if test="selectedUserName != null and selectedUserName != ''" >
+    , issue_assigned = #{selectedUserName}
+  </if>
+  WHERE issue_id = #{issueId}
+</update>
+	
+	<update id="issueUpdate" parameterType="issue">
+	<!-- 	update issue
+		set project_id = #{project_id},
+				issue_type = #{issue_type},
+				issue_priority = #{issue_priority},
+				issue_subject = #{issue_subject},
+				issue_content = #{issue_content},
+				issue_status = #{issue_status},
+				issue_assigned = #{issue_assigned},
+				issue_file = #{issue_file}
+		where issue_id = #{issue_id} -->
+		
+		update issue
+		set project_id = 1,
+				issue_type = #{issue_type},
+				issue_priority = #{issue_priority},
+				issue_subject = #{issue_subject},
+				issue_content = #{issue_content},
+				issue_status = #{issue_status},
+				issue_assigned = #{issue_assigned},
+				issue_file = #{issue_file}
+		where issue_id = #{issue_id}
+				
+	</update>
+	
+	<delete id="issueDelete">
+	delete from issue
+	where issue_id = #{issue_id}
+	</delete>
 </mapper>

@@ -24,6 +24,11 @@ public class ProjectController {
 	public String CreateProject() {
 		return "project/CreateProject";
 	}
+
+	/*
+	 * @RequestMapping(value = "/TeamInvite", method = RequestMethod.GET) public
+	 * String TeamInvite() { return "project/Team_Invite"; }
+	 */
 	
 	@RequestMapping(value = "/ProjectList", method = RequestMethod.GET)
 	public String ProjectList() {
@@ -34,7 +39,6 @@ public class ProjectController {
 	public String Project_Access_Stats() {
 		return "project/Project_Access_Stats";
 	}
-	
 	
 	// JJ's Controller End
 }

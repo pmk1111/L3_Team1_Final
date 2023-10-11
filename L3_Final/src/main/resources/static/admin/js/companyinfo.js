@@ -6,24 +6,24 @@ $(document).ready(function() {
         $("#companyName").prop("disabled", false);
         // 버튼 변경
         $("#nameupdate").addClass("d-none");
-        $("#saveButton, #cancelButton").removeClass("d-none");
+        $("#saveNameButton, #cancelNameButton").removeClass("d-none");
     });
 
     // 저장 버튼 클릭 시
-    $("#saveButton").click(function() {
+    $("#saveNameButton").click(function() {
         // 입력 필드 비활성화
         $("#companyName").prop("disabled", true);
         // 버튼 변경
-        $("#saveButton, #cancelButton").addClass("d-none");
+        $("#saveNameButton, #cancelNameButton").addClass("d-none");
         $("#nameupdate").removeClass("d-none");
     });
 
     // 취소 버튼 클릭 시
-    $("#cancelButton").click(function() {
+    $("#cancelNameButton").click(function() {
         // 입력 필드 비활성화
         $("#companyName").prop("disabled", true);
         // 버튼 변경
-        $("#saveButton, #cancelButton").addClass("d-none");
+        $("#saveNameButton, #cancelNameButton").addClass("d-none");
         $("#nameupdate").removeClass("d-none");
     });
 });

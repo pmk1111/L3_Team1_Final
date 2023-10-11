@@ -7,9 +7,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" 
     	  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
-	<script src="../resources/admin/js/companyinfo.js"></script>
+
     <title>회사 정보</title>
     <meta name="description" content="" />
+
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+	<!-- jQuery library (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<!-- Popper JS (necessary for some of Bootstrap's JavaScript plugins) -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+	<!-- Latest compiled and minified Bootstrap JavaScript -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	<script src="../resources/admin/js/companyinfo.js"></script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../resources/mainboard/assets/img/favicon/favicon.ico" />
@@ -21,7 +36,7 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
     />
-    
+
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="../resources/mainboard/assets/vendor/fonts/boxicons.css" />
 
@@ -44,8 +59,7 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../resources/mainboard/assets/js/config.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-    <style>
+ <style>
       .leftbar-close{background-color: #9F7AB0; border-radius: 50%;}
       .welcome-message{width:100%;}
  
@@ -63,13 +77,38 @@
    					 background-color: transparent;
 					}
 	 .card {
-   			 height: 80vh; /* 화면 높이에 80% 맞춤 */
+   			 height: 85vh; /* 화면 높이에 85% 맞춤 */
 	}
 	
 	.card-body { padding:50px;}
 	
 	.form-label, .col-md-12  {padding-top: 20px}
+	
+	.changepassword { margin: 20px 0px 40px 0px}
+	.changepwd { background-color: white;
+				 border: 1px solid #d9dee3;
+				 color: #697a8d;
+				 border-radius: 5px;
+			
+	}
+	.pwdsubmit {border: 1px solid #d9dee3;
+ 	  						    background-color: white;
+ 	  						    color: #697a8d;
+ 	  						    box-shadow:none;
+ 	  						    border-radius:5px;}
+	
+	#saveButton, #cancelButton,
+	#saveNameButton, #cancelNameButton {margin-top:50px;
+								border: 1px solid #d9dee3;
+ 	  						    background-color: white;
+ 	  						    color: #697a8d;
+ 	  						    box-shadow:none;
+	 }
+	 
+	 #saveButton, #saveNameButton {color:white;
+	 							   background-color:#696cff;}
  
+ 	.modal .modal-header .btn-close {transform: translate(23px,-25px)};
  	/* swal */
  	
     </style>
@@ -123,14 +162,65 @@
                         </div>
                        
                        <div class="mb-3 col-md-6">
-      					     <button type="submit" class="btn" id="nameupdate">수정</button>
-      					     <button type="button" class="btn btn-secondary d-none" id="saveButton">저장</button>
-       						 <button type="button" class="btn btn-secondary d-none" id="cancelButton">취소</button>
+      					     <button type="button" class="btn" id="nameupdate">수정</button>
+      					     <button type="submit" class="btn btn-secondary d-none" id="saveNameButton">저장</button>
+       						 <button type="button" class="btn btn-secondary d-none" id="cancelNameButton">취소</button>
   					   </div>
-                       
-                        
+  					   
+                       <div class="changepassword">
+                       		<button type="button" class="changepwd" data-bs-toggle="modal" data-bs-target="#changeModal"> 비밀번호 변경</button>
+                       		
+                       		<!-- Modal -->
+                       	
+                       		<div class="modal fade" id="changeModal" tabindex="-1"
+                       			aria-labelledby="changePwdModal" aria-hidden="true">
+                       			<div class="modal-dialog">
+                       				<div class="modal-content">
+                       				
+                       				<!-- Modal Header -->
+                       				<div class="modal-header">
+                       					<h5 class="modal-title" id="changePwdModal">비밀번호 변경</h5>
+                       					<button type="button" class="btn-close" data-bs-dismiss="modal"
+                       						aria-label="Close"></button>
+                       				</div>
+                       				
+                       				<!-- Modal Body -->
+                       					<div class="modal-body">
+                       					
+                       					<form method="post" action="/admin/companyinfo"
+                       						class="usedpassword">
+                       						
+                       						<div class="form-group">
+                       							<label for="usedpwd">비밀번호</label>
+                       							<input type="text" class="form-control" id="usedpwd" placeholder="비밀번호를 입력하세요"
+												name="usedpwd" required>
+                       						</div>	
+                       						
+                       						<div class="form-group">
+                       							<label for="newpwd">새로운 비밀번호</label>
+                       							<input type="text" class="form-control" id="newpwd" placeholder="비밀번호를 입력하세요"
+												name="newpwd" required>
+                       						</div>	
+                       						
+                       						<div class="form-group">
+                       							<label for="checkpwd">비밀번호</label>
+                       							<input type="text" class="form-control" id="checkpwd" placeholder="비밀번호를 입력하세요"
+												name="checkpwd" required>
+                       						</div>	
+                       					</form>
+                       					</div>
+                       				<!-- Modal Footer -->
+                       					<div class="modal-footer">
+                       						<button type="button" class="pwdsubmit"
+                       							data-bs-dismiss="modal">저장</button>
+                       					</div>
+                       				</div>
+                       			</div>
+                       			</div>
+                       </div>
+
                          <div class="mb-3 col-md-6">
-                            <label for="email" class="form-label">전용 URL</label>
+                            <label for="companyDomain" class="form-label">전용 URL</label>
                              <input
                               class="form-control"
                               type="text"
@@ -139,21 +229,24 @@
                               value="${userinfo.companyDomain}"
                               disabled="disabled"
                             />
-                          
+
                         </div>
-                        
+
                         <div class="mb-3 col-md-6">
-      					     <button type="submit" class="btn" id="urlupdate">수정</button>
+      					     <button type="button" class="btn" id="urlupdate">수정</button>
+      					     <button type="submit" class="btn btn-secondary d-none" id="saveButton">저장</button>
+       						 <button type="button" class="btn btn-secondary d-none" id="cancelButton">취소</button>
   					   </div>
   					   
                          <div class="col-md-12">
-                         	<label for="employeeParticipation">직원 참여 옵션</label><br>
+                         	<div class="employeeParticipation">직원 참여 옵션</div>
                          	<br>
-   						    <input type="radio" id="participation1" name="employeeParticipation" value="1">
     						<label for="participation1" style="padding-bottom: 15px;">
+   						    <input type="radio" id="participation1" name="employeeParticipation" value="1" checked>
      							관리자의 가입 승인 완료 후, 참여하도록 설정합니다.</label><br>
+    						<label for="participation2">
    							<input type="radio" id="participation2" name="employeeParticipation" value="2">
-    						<label for="participation2">특정 도메인의 이메일로 가입시, 관리자 승인 없이도 바로 참여할 수 있도록 설정합니다.</label><br><br>
+   								특정 도메인의 이메일로 가입시, 관리자 승인 없이도 바로 참여할 수 있도록 설정합니다.</label><br><br>
     			 		
     					<!-- 		이걸 넣을까 말까...
     						<div class="row">

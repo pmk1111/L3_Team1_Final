@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+.status-update-modal, .status-update-modal-resolved {
+	width: 100%;
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1100;
+}
+
+.status-update-modal-overlay {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	background-color: black;
+	opacity: 0.6;
+}
+
+/* .status-update-modal-resolved .status-update-modal-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	padding: 30px 15px;
+	width: 450px;
+	height: 250px;
+	overflow: auto;
+	background-color: white;
+	border-radius: 3px;
+} */
+
+.status-update-modal-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	padding: 40px 25px;
+	width: 650px;
+	height: 310px;
+	overflow: auto;
+	background-color: white;
+	border-radius: 3px;
+}
+
+.status-update-modal-resolved .status-update-modal-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	padding: 40px 25px;
+	width: 650px;
+	height: 350px;
+	overflow: auto;
+	background-color: white;
+	border-radius: 3px;
+}
+
+.status-update-modal-resolved .status-update-modal-btn-wrap {
+	margin-top: 40.5px;
+}
+
+.status-update-modal-btn-wrap {
+	margin-top: 50.5px;
+}
+
+.status-update-modal-btn{
+	width: 100%;
+	height: 50px;
+	background-color: #9F7AB0;
+	color: white;
+	border-radius: 3px;
+	border-style: none;
+	margin-bottom:10px;
+}
+
+.update-cancel-btn, .redirect-list {
+	width: 100%;
+	height: 50px;
+	border: 1.4px solid #9F7AB0;
+	color: #9F7AB0;
+	background-color: white;
+	border-radius: 3px;
+}
+
+
+.status-update-modal-btn:hover, .update-cancel-btn:hover, .redirect-list {
+	opacity:.7;
+	transition: .3s;
+}
+
+
+.choose-assigner-txt{
+	display:block;
+	font-size:14px;
+	color:red;
+}
+
+.choose-assigner{
+	display: block;
+	width: 90%;
+	height:40px;
+	outline:none;
+	border-style:none;
+	border-bottom:1px solid black;
+	margin:0 5%;
+	font-size:16px;
+	font-weight: bold;
+}
+
+.select-assign-dropdown{
+	display:none;
+	position:absolute;	
+	left:55px;
+	width: 540px;
+	padding:0;
+	border:1px solid lightgrey;
+	border-radius:5px;
+	list-style: none;
+	background-color:white;
+	z-index: 1111
+}
+
+.select-assign-dropdown li{
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+	padding:0 10px;
+	height: 50px;
+	border-bottom:1px solid lightgrey 
+}
+
+.select-assign-dropdown li img{
+	width: 40px;
+	height: 40px;
+}
