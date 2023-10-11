@@ -5,31 +5,14 @@
 <mapper namespace="com.naver.myhome.mybatis.mapper.UserMapper">
 
 	<!-- 지니 -->
+	
+	<!-- 가입대기자 -->
 	<select id="finduser" resultType="user">
 		select u.user_photo, u.user_name, u.user_email, u.user_create
 		from usr u
 		left join employee e on u.user_id = e.user_id
 		where u.company_invited = #{company_invited} and u.user_status = 0
-		</select>
-	    
-
-	    <!--  
-	    SELECT u.user_photo, u.user_name, u.user_photo, sysdate
-		FROM usr u
-		WHERE u.user_id NOT IN (
-   		 SELECT e.user_id
-    	FROM employee e
-    	WHERE e.company_invited = '1' // 여기에서 '0' 대신 '1'로 변경
-		);
-		
-		company_invited 로 묶을떄
-		select u.user_photo, u.user_name, u.user_email, u.user_create
-		from usr u
-		inner join employee e on u.company_invited = e.company_invited
-	    where e.company_invited = #{e.company_invited}
-	    and u.user_status = 0;
--->
-	
+	</select>
 	
 	<select id="countuser" resultType="int">
 	select count(*) as usercount
@@ -37,6 +20,18 @@
 	left join employee e on u.user_id = e.user_id
 	where u.company_invited = #{company_invited} and u.user_status = 0
 	</select>
+	
+	<!-- 가입대기 승인/거절 -->
+	<update id="approveuser" parameterType="int">
+		update usr
+		set user_status = 1
+		where company_invited = #{company_invited} and user_status = 0
+	</update>
+	
+	<delete id="rejectuser" parameterType="int">
+		delete usr
+		
+	</delete>
 	<!-- /지니 -->
 	<select id="isId" resultType="user" parameterType="String"><!-- Member class를 
 			별칭 -->
@@ -99,4 +94,6 @@
 		delete from user
 		where id =#{id}
 	</delete>
+	
+	
 </mapper>

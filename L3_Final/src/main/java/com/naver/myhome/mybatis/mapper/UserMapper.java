@@ -20,6 +20,10 @@ public interface UserMapper {
 
 		public int countuser(String company_invited);
 
+		public int approveuser(String company_invited);
+
+		public int rejectuser(String company_invited);
+
 	
 
 	}

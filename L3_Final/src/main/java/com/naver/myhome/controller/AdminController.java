@@ -113,60 +113,81 @@ public class AdminController {
 		    return mv;
 		}
 		
-		//[정상]탭 직원 상태 업데이트 
-	     @ResponseBody
+		//직원 상태 업데이트 
+	      @ResponseBody
 	      @RequestMapping(value = "/updateEmployeeStatus", method = RequestMethod.POST)
 	      public int updateEmployeeStatus(@RequestParam("employeeNo") int employeeNo,
+	                @RequestParam("employeeStatus") int employeeStatus,
+	                @RequestParam("tab") String tab,
 	            Model model, HttpServletRequest request, RedirectAttributes rattr) {
 	         
-	            int result = adminservice.stopEmployeeStatus(employeeNo);
+	            int result = 0;
 	            
-	              if(result == 1) {
-	                 result = adminservice.stopEmployeeStatus(employeeNo);
+	            if ("userstop".equals(tab)) {
 	             
-	              }
+	                 result = adminservice.stopEmployeeStatus(employeeNo);
+	              
+	            } else if ("useruse".equals(tab)) {
+	            	
+		                 result = adminservice.useEmployeeStatus(employeeNo);
+		              
+	            }
 	              System.out.println(result);
 	              
 	             return result;
 	      } 
 
 
-		//[정상]탭 관리자 유무 
+
+		//관리자 유무 
 		@ResponseBody
 		@RequestMapping(value = "/employeeAuth", method = RequestMethod.POST)
 		public int employeeAuth(@RequestParam("employeeNo") int employeeNo,
 							    @RequestParam("employeeAuth") String employeeAuth,
+							    @RequestParam("tab") String tab,
 				Model model, HttpServletRequest request, RedirectAttributes rattr) {
 			
 				int result = 0;
 				
-		        if(employeeAuth.equals("Y")) {
-		        	result=adminservice.noMoreAuth(employeeNo);
-		        }else if(employeeAuth.equals("N")) {
-		        	result = adminservice.addAuth(employeeNo);
-		        }
+				 if ("userstop".equals(tab)) {
+					 if(employeeAuth.equals("Y")) {
+						 result=adminservice.noMoreAuth(employeeNo);
+					 }else if(employeeAuth.equals("N")) {
+						 result = adminservice.addAuth(employeeNo);
+					 }
+				 }else if("useruse".equals(tab)) {
+					 if(employeeAuth.equals("Y")) {
+						 result=adminservice.noMoreAuth(employeeNo);
+					 }else if(employeeAuth.equals("N")) {
+						 result = adminservice.addAuth(employeeNo);
+					 }
+				 }
 		        System.out.println(result);
 		        
 		       return result;
 		} 
 		
-		//[이용중지]탭 직원 상태
-		 @ResponseBody
-	      @RequestMapping(value = "/updateEmployeeStatus2", method = RequestMethod.POST)
-	      public int updateEmployeeStatus2(@RequestParam("employeeNo") int employeeNo,
-	            Model model, HttpServletRequest request, RedirectAttributes rattr) {
-	         
-	            int result = adminservice.useEmployeeStatus(employeeNo);
-	            
-	              if(result == 1) {
-	                 result = adminservice.useEmployeeStatus(employeeNo);
-	             
-	              }
-	              System.out.println(result);
-	              
-	             return result;
-	      } 
-
+		//가입대기
+		@ResponseBody
+		@RequestMapping(value = "/regWait", method = RequestMethod.POST)
+		public int regWait(@RequestParam("userId") int userId,
+						   @RequestParam("action") String action,
+				Model model, HttpServletRequest request, RedirectAttributes rattr) {
+				String company_invited="widUs";
+				int result = 0;
+			    
+				
+				if("approve".equals(action)) {
+					result = userservice.approveuser(company_invited);
+				}else if("reject".equals(action)) {
+					result = userservice.rejectuser(company_invited);
+				}
+		     
+				System.out.println(result);
+				
+				return result;
+				
+		}
 
 		
 		

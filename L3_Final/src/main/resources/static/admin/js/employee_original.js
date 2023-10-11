@@ -1,39 +1,45 @@
 //tab 활성화
 
+
+
  $(function () {
             // 탭을 클릭할 때 이벤트 리스너 등록
             $(".nav-link").click(function () {
                 // 클릭한 탭의 data-tab 속성 값을 가져옴
-                var tabHref = $(this).attr("href");
+                var tabId = $(this).data("tab");
 
-                // URL 생성
-                var targetUrl = "../admin/list" + tabHref;
+                // URL 변경 (해시 태그를 이용)
+                window.location.hash = tabId;
             });
-          });
 
-       
+            // 페이지 로딩 시 URL에 따라 탭 활성화
+            var initialTab = window.location.hash.substring(1); // URL에서 해시 태그 가져오기
+            if (initialTab) {
+                // 해당 탭 활성화
+                $(".nav-link[data-tab='" + initialTab + "']").tab("show");
+            }
+        });
 
-// 직원 상태 업데이트
+// [정상]탭에서 직원 상태 업데이트
  $(function() {
 $(".user-stop").click(function() {
     var employeeNo = $(this).data("employee_no"); // 직원 번호 가져오기
-	var employeeStatus = $(this).data("employee_status");
-    var tab = $(this).data("tab"); // 탭 정보 가져오기
+	
 	console.log(employeeNo);
-	console.log(employeeStatus);
+	
     // 서버로 업데이트 요청 보내기
     $.ajax({
         url: "../admin/updateEmployeeStatus",
         type: "POST",
         data: {
             employeeNo: employeeNo,
-            employeeStatus: employeeStatus,
-            tab: tab 
+         
         },
         
         success: function(response) {
         	  if (response == 1) {
-                alert("직원의 활동이 변경되었습니다.");
+                alert("직원의 상태가 [이용중지] 되었습니다.");
+                location.href="../admin/list";
             } else {
                 alert("직원 상태 변경 실패");
             }
@@ -45,23 +51,21 @@ $(".user-stop").click(function() {
   });
 });
 
-// 관리자 유무
+// [정상]탭에서 관리자 유무
  $(function() {
 $(".auth-delete").click(function() {
     var employeeNo = $(this).data("employee_no"); // 직원 번호 가져오기
     var employeeAuth =  $(this).closest("td").find(".employee-auth-value").text().trim();
-	var tab = $(this).closest("tr").find(".user-stop").data("tab"); // 탭 정보 가져오기
 	console.log(employeeNo);
 	console.log(employeeAuth);
-	console.log(tab);
+	
     // 서버로 업데이트 요청 보내기
     $.ajax({
         url: "../admin/employeeAuth",
         type: "POST",
         data: {
             employeeNo: employeeNo,
-             employeeAuth: employeeAuth,
-             tab: tab
+             employeeAuth: employeeAuth
         },
         
         success: function(response) {
@@ -93,57 +97,62 @@ $(function() {
     });
 });
 
-// 가입 승인
+// [이용중지]탭에서 직원 상태 업데이트
  $(function() {
-$(".approveUser").click(function() {
-    var userId = $(this).data("user_id"); 
-	console.log(userId)
+$(".user-use").click(function() {
+    var employeeNo = $(this).data("employee_no"); // 직원 번호 가져오기
+	
+	console.log(employeeNo);
 	
     // 서버로 업데이트 요청 보내기
     $.ajax({
-        url: "../admin/regWait",
+        url: "../admin/updateEmployeeStatus2",
         type: "POST",
         data: {
-            userId: userId,
-            action: "approve"
+            employeeNo: employeeNo,
+         
         },
         
         success: function(response) {
-        	 
-        	 if (response == 1) {
-                alert("가입이 승인되었습니다.");
+        	  if (response == 1) {
+                alert("직원의 상태가 [정상]으로 변경되었습니다.");
                
+               location.reload();
+                    
             } else {
-                alert("가입 승인 실패.");
-       		}
+                alert("직원 상태 변경 실패");
+            }
         },
         error: function() {
             alert("업데이트에 실패했습니다.");
         }
     });
-});
+  });
 });
 
-// 가입 거절
- $(function(){	
-$(".rejectUser").click(function () {
-    var userId = $(this).data("user_id"); 
-   
+//[이용중지]탭에서 관리자 유무
+ $(function() {
+$(".auth-delete2").click(function() {
+    var employeeNo = $(this).data("employee_no"); // 직원 번호 가져오기
+    var employeeAuth =  $(this).closest("td").find(".employee-auth-value2").text().trim();
+	console.log(employeeNo);
+	console.log(employeeAuth);
+	
+    // 서버로 업데이트 요청 보내기
     $.ajax({
-        url: "../admin/regWait",
+        url: "../admin/employeeAuth2",
         type: "POST",
         data: {
-            userId: userId,
-            action: "reject"
+            employeeNo: employeeNo,
+             employeeAuth: employeeAuth
         },
         
         success: function(response) {
-        	  
-        	 if (response == 1) {
-                alert("가입이 거절되었습니다.");
-                
+        	  if (response == 1) {
+                alert("관리자 상태가 변경되었습니다.");
+               location.reload();
             } else {
-                alert("가입 거절 실패.");
+                alert("관리자 상태 변경 실패.");
             }
         },
         error: function() {
@@ -151,11 +160,20 @@ $(".rejectUser").click(function () {
         }
     });
 });
-}); 
-    
-
-
-
+});
+//관리자 유무 표시
+$(function() {
+    $(".auth-delete2").each(function() {
+        var employeeAuth =  $(this).closest("td").find(".employee-auth-value2").text().trim();// 직원 권한 값을 가져옴
+        console.log(employeeAuth);
+        
+        if (employeeAuth === "Y") {
+            $(this).text("[삭제]");
+        } else if (employeeAuth === "N") {
+            $(this).text("[등록]").css("color", "blue");
+        }
+    });
+});
 //프로필 사진
   const profile = this.user_photo;
 	 let src = 'img/profile.png';

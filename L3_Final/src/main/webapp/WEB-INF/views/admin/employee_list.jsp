@@ -118,7 +118,7 @@ button {
 	color: #697A8D;
 }
 
-.auth-delete {
+.auth-delete, .auth-delete2 {
 	color: red;
 	font-size: 12px;
 	padding-left: 6px;
@@ -274,7 +274,8 @@ button {
 																		<td><c:out value="${emp.user_phone}" /></td>
 																		<td>
 																			 <p>정상</p>
-																			<button class="user-stop" data-employee_no="${emp.employee_no }" >[이용중지]</button>
+																			<button class="user-stop" data-employee_no="${emp.employee_no }" data-employee_status="${emp.employee_status}"
+																						data-tab="userstop">[이용중지]</button>
 																		</td>
 																		<td>
 																			<span class="employee-auth-value"><c:out value="${emp.employee_auth}" /></span>
@@ -330,10 +331,11 @@ button {
 																		<td><c:out value="${stop.user_phone}" /></td>
 																		<td>
 																			<p>이용중지</p>
-																			<button class="user-use" data-employee_no="${stop.employee_no }" >[정상]</button>
+																			<button class="user-stop" data-employee_no="${stop.employee_no}" data-employee_status="${stop.employee_status}"
+																										data-tab="useruse">[정상]</button>
 																		</td>
 																		<td><span class="employee-auth-value"><c:out value="${stop.employee_auth}" /></span>
-																			<button class="auth-delete">[삭제]</button></td>
+																			<button class="auth-delete" data-employee_no="${stop.employee_no }">[삭제]</button></td>
 																	</tr>
 																</c:forEach>
 															</c:otherwise>
@@ -378,9 +380,9 @@ button {
 																		<td><c:out value="${user.user_create}" /></td>
 																		<td>
 																			<button class="approveUser"
-																				data-userid="${user.user_id}">[승인]</button>
+																				data-userid="${user.user_id}" >[승인]</button>
 																			<button class="rejectUser"
-																				data-userid="${user.user_id})">[거절]</button>
+																				data-userid="${user.user_id})" >[거절]</button>
 																		</td>
 
 																	</tr>

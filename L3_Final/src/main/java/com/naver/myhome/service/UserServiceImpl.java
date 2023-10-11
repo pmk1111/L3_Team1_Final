@@ -13,6 +13,7 @@ public class UserServiceImpl implements UserService {
 
 	private UserMapper dao;
 	
+	//지니
 	@Autowired
 	public UserServiceImpl(UserMapper dao) {
 		this.dao = dao;
@@ -29,6 +30,18 @@ public class UserServiceImpl implements UserService {
 		return dao.countuser(company_invited);
 	}
 
+	@Override
+	public int approveuser(String company_invited) {
+		return dao.approveuser(company_invited);
+	}
+
+	@Override
+	public int rejectuser(String company_invited) {
+		return dao.rejectuser(company_invited);
+	}
+
+	//지니 끝
+	
 //	@Override
 //	public int isId(String id, String pass) {
 //		// TODO Auto-generated method stub
