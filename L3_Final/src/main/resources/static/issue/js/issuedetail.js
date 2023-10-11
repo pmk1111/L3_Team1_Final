@@ -179,9 +179,10 @@ function addStatusUpdateHandler(clickedButton, newStatus, selectedUserName) {
                     clickedButton.addClass('current-status'); // 선택된 버튼에 current-status 클래스 추가
                     
                     $('.status-update-modal').fadeOut(200);
-                    $('.status-update-modal-resolved').fadeOut(200); 
-                    $('.issue-assigned').text($('.choose-assignerrr').val());
-                    
+                    $('.status-update-modal-resolved').fadeOut(200);
+                    if($('.choose-assignerrr').val()!=='' && $('.choose-assignerrr').val() === null){
+                    	$('.issue-assigned').text($('.choose-assignerrr').val());
+                    }
                     console.log("성공");
                     
                     
