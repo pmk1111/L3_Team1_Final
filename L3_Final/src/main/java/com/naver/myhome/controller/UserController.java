@@ -52,21 +52,21 @@ public class UserController {
     }
 	
 	// 수정처리
-	   @RequestMapping(value = "/updateProcess", method = RequestMethod.POST)
-	   public String updateProcess(User user, Model model, HttpServletRequest request, RedirectAttributes rattr) {
-
-	      int result = userservice.update(user);
-	      if (result == 1) {
-	         rattr.addFlashAttribute("result", "updateSuccess");
-	         return "redirect:/board/list";
-	      } else {
-	         model.addAttribute("url", request.getRequestURL());
-	         model.addAttribute("message", "정보 수정 실패");
-	         return "error/error";
-
-	      }
-
-	   }
+//	   @RequestMapping(value = "/updateProcess", method = RequestMethod.POST)
+//	   public String updateProcess(User user, Model model, HttpServletRequest request, RedirectAttributes rattr) {
+//
+//	      int result = userservice.update(user);
+//	      if (result == 1) {
+//	         rattr.addFlashAttribute("result", "updateSuccess");
+//	         return "redirect:/board/list";
+//	      } else {
+//	         model.addAttribute("url", request.getRequestURL());
+//	         model.addAttribute("message", "정보 수정 실패");
+//	         return "error/error";
+//
+//	      }
+//
+//	   }
 	   
 	   //파일 저장 경로
 //	   @Value("${file.path}")
