@@ -151,8 +151,8 @@
 																</div>
 
 																<div class="issuewriter-created">
-																	<span class="issue-writer">${i.create_user}</span> <span
-																		class="issue-created">${i.issue_created}</span>
+																	<span class="issue-writer">${i.create_user}</span> 
+																	<span class="issue-created">${i.issue_created}</span>
 																</div>
 															</li>
 														</c:forEach>

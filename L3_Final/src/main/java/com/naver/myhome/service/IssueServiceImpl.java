@@ -58,5 +58,22 @@ public class IssueServiceImpl implements IssueService{
 	public Issue getIssueDetail(int num) {
 		return mapper.getIssueDetail(num);
 	}
+	
+	@Override
+	public int updateStatus(int issueId, String status, String selectedUserName) {
+		return mapper.updateStatus(issueId, status, selectedUserName);
+		
+	}
+	
+	@Override
+	public int issueUpdate(Issue issue) {
+		return mapper.issueUpdate(issue);
+	}
+
+	@Override
+	public int issueDelete(int issueId) {
+		return mapper.issueDelete(issueId);
+	}
+
 
 }

@@ -20,10 +20,15 @@
     
     <!-- issue-detail CSS -->
     <link rel="stylesheet" href="../resources/issue/css/issue-detail.css">
+    <link rel="stylesheet" href="../resources/issue/css/issue-edit.css">
+    <link rel="stylesheet" href="../resources/issue/css/statusChange.css">
+    
 
     <style>
       .leftbar-close{background-color: #9F7AB0; border-radius: 50%;}
       pre{font-family: var(--bs-body-font-family) !important}
+      
+      
     </style>
   </head>
 
@@ -62,20 +67,47 @@
                     <hr class="issue-hr">
 
                     <div class="issue-write-info">
-                      <img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto user-img" />
-                      <span class="issue-writer">${issuedata.create_user}</span> <sup class="issue-create">2023-09-22 15:32:27</sup>
+                    	<div class="issue-writer-date">
+                      	<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto user-img" />
+                      	<span class="issue-writer">${issuedata.create_user}</span> <sup class="issue-create">${issuedata.issue_created}</sup>
+                      </div>
+                      
+                      
+                     <div class="issue-option">
+                      <img src="../resources/issue/img/settings.svg" class="issue-setting-icon">
+                      
+                      <ul class="issue-setting-dropdown">
+                      	<li class="issue-dropdown-item copy-url">
+                      		<img src="../resources/issue/img/copyurl.svg" class="issue-setting-icon link-copy-icon">
+                      		<span>링크 복사</span>
+                      	</li>
+                      	
+                      	<li class="issue-dropdown-item issue-edit">
+                      		<img src="../resources/issue/img/edit.svg" class="issue-setting-icon edit-icon">
+                      		<span>수정</span>
+                      	</li>
+                      	
+                      	<li class="issue-dropdown-item issue-delete">
+                      		<img src="../resources/issue/img/trash.svg" class="issue-setting-icon delete-icon">
+                      		<span>삭제</span>
+                      	</li>
+                      </ul>
+                      </div>
+                      
+                      
                     </div>
-                    <h3 class="issue-title">이슈 게시글 클릭 시 자료실 게시판으로 페이지 이동됨</h3>
+                    <h3 class="issue-title">${issuedata.issue_subject }</h3>
                     <hr class="issue-hr">
 
                     <div class="issue-info">
                       <div class="issue-status-area">
                         <span>상태</span>
                         <div class="status-select">
-                          <button type="button" class="status-btn">To Do</button>
-                          <button type="button" class="status-btn">In Progress</button>
-                          <button type="button" class="status-btn">Resolved</button>
-                          <button type="button" class="status-btn">Done</button>
+                        	<input type="hidden" class="this-status" value="${issuedata.issue_status}">
+                          <button type="button" class="status-btn" data-value="To Do">To Do</button>
+                          <button type="button" class="status-btn" data-value="In Progress">In Progress</button>
+                          <button type="button" class="status-btn" data-value="Resolved">Resolved</button>
+                          <button type="button" class="status-btn" data-value="Done">Done</button>
                         </div>
                       </div>
                       <div class="issue-assigned-area">
@@ -111,7 +143,7 @@
                       <div class="subtask-wrap">
                         <span class="subtask-text">관련이슈</span>
                         <button type="button" class="add-subtask-btn"><img
-                            src="../resources/issue/img/plus.svg">이슈추가
+                            src="../resources/issue/img/plus.svg">이슈추가</button>
                       </div><!-- subtask-wrap end-->
                       <div class="subtask">
                         <div class="subtask-item">
@@ -150,19 +182,6 @@
                       </div>
                         <hr class="comment-hr">
                       </div> -->
-                   <%--    <c:if test="${!empty commentlist}">
-                      	<c:forEach var="c" items="commentlist">
-                      		<div class="comments">
-                      			<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto comment-writer-img" />
-                      			<span class="comment-writer">${c.comment_user_id}</span> <sup class="comment-created">${c.comment.created }</sup>
-                      			<br>
-                        		<div class="comment-content">
-                        			<span>${c.comment_content}</span>
-                      			</div>
-                        	<hr class="comment-hr">
-                      </div>
-                      	</c:forEach>
-                      </c:if> --%>
 
                       <div class="comments create-comment" style="border-bottom: 1px solid lightgrey">
                         <img src="../resources/mainboard/assets/img/avatars/1.png" class="w-px-40 h-auto comment-writer-img" />
@@ -199,15 +218,104 @@
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 	</div> <!-- Layout-Wrapper end -->
+	
+<jsp:include page="issueEdit.jsp"></jsp:include>
+
+<div class="issue-delete-modal">
+	<div class="issue-delete-modal-overlay"></div>
+	<div class="issue-delete-modal-content">
+		<h4>정말 삭제하시겠습니까?</h4>
+		<div class="issue-delete-btn-wrap">
+			<button type="button" class="issue-delete-btn">삭제</button>
+			<button type="button" class="delete-cancel-btn">취소</button>
+		</div>
+	</div>
+</div>
+
+
+<div class="status-update-modal">
+	<div class="status-update-modal-overlay"></div>
+	<div class="status-update-modal-content">
+		<h4>상태를 변경하시겠습니까?</h4>
+		<p class=status-change-text>상태를 변경하시려면 확인을 눌러주세요</p>
+		<div class="status-update-modal-btn-wrap">
+			<button type="button" class="status-update-modal-btn">확인</button>
+			<button type="button" class="update-cancel-btn">취소</button>
+		</div>
+	</div>
+</div>
+
+<div class="status-update-modal-resolved">
+	<div class="status-update-modal-overlay"></div>
+	<div class="status-update-modal-content">
+		<h4>상태를 변경하시겠습니까?</h4>
+		<p class=status-change-text>상태를 변경하시려면 담당자 선택 후 확인을 눌러주세요</p>
+		<input type="text" class="choose-assigner">
+		<input type="hidden" class="choose-assignerrr" name="issue_assigned_name">
+		<input type="hidden" class="selected-assigner-id" name="issue_assigned_id">
+		<ul class="select-assign-dropdown">
+			<li class="assign-dropdown-item">
+				<div>
+					<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="h-auto user-img" />
+					<span class="user-name">직원 1</span>
+				</div>
+				<span class="user-id">@1</span>
+			</li>
+			<li class="assign-dropdown-item">
+				<div>
+					<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="h-auto user-img" />
+					<span class="user-name">직원 2</span>
+				</div>
+				<span class="user-id">@2</span>
+			</li>
+			<li class="assign-dropdown-item">
+				<div>
+					<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="h-auto user-img" />
+					<span class="user-name">직원 3</span>
+				</div>
+				<span class="user-id">@3</span>
+			</li>
+			<!-- 나중에 해당 프로젝트에 참여 중인 사용자를 불러온다. -->
+		</ul>
+		<div class="status-update-modal-btn-wrap">
+			<button type="button" class="status-update-modal-btn">확인</button>
+			<button type="button" class="update-cancel-btn">취소</button>
+		</div>
+	</div>
+</div>
+
+<!-- <div class="status-update-modal">
+	<div class="status-update-modal-overlay"></div>
+	<div class="status-update-modal-content">
+		<h4>상태를 변경하시겠습니까?</h4>
+		<div class="status-update-modal-btn-wrap">
+			<button type="button" class="status-update-modal-btn">확인</button>
+			<button type="button" class="update-cancel-btn">취소</button>
+		</div>
+	</div>
+</div> -->
+
+<!-- <div class="status-update-modal">
+	<div class="status-update-modal-overlay"></div>
+	<div class="status-update-modal-content">
+		<h4>상태가 변경되었습니다.</h4>
+		<div class="status-update-modal-btn-wrap">
+			<button type="button" class="confirm-btn">확인</button>
+		</div>
+	</div>
+</div> -->
 
   	<!-- js template -->
 	<jsp:include page="../template/jsTemplate.jsp"></jsp:include>
     
-    <!-- comment.js -->
+    <!-- issuedetail & comment.js -->
+  <script src="../resources/issue/js/issuedetail.js"></script>  
 	<script src="../resources/issue/js/comment.js"></script>
-	
-	<script type="text/javascript">
-	console.log("게시글 번호 = " + $("#issue_id").val());
-	</script>
+	<script src="../resources/issue/js/issueEdit.js"></script>
+
+
+<script type="text/javascript">
+
+</script>
   </body>
 </html>

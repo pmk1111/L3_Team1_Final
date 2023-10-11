@@ -35,43 +35,41 @@ $(document).ready(function () {
    });
 
    function getCommentList() {
-      $.ajax({
-         type: "POST",
-         url: "../comment/commentList",
-         data: { "issue_id": $("#issue_id").val() },
-         success: function (rdata) {
-            if (rdata.length > 0) { // 배열에 데이터가 있는지 확인
-               $('.comment-list').empty();
-               $(rdata).each(function () {
-                  let str = '';
-                  str += '<div class="comments" data-comment-id="' + this.comment_id + '">';
-                  str += '<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto comment-writer-img" />';
-                  // 나중에 해당 유저의 사진 가져옴
-                  str += '<span class="comment-writer">' + this.comment_user_name + '</span> <sup class="comment-created">' + this.comment_created + '</sup>';
-                  str += '<sup class="comment-edit">수정</sup><sup class="comment-delete">삭제</sup>'
-                  str += '<br><div class="comment-content">';
-                  str += '<span>' + this.comment_content + '</span></div>';
-                  str += '</div>';
+   $.ajax({
+      type: "POST",
+      url: "../comment/commentList",
+      data: { "issue_id": $("#issue_id").val() },
+      success: function (rdata) {
+         $('.comment-list').empty();
+         if (rdata.length > 0) { // 배열에 데이터가 있는지 확인
+            $(rdata).each(function () {
+               let str = '';
+               str += '<div class="comments" data-comment-id="' + this.comment_id + '">';
+               str += '<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto comment-writer-img" />';
+               // 나중에 해당 유저의 사진 가져옴
+               str += '<span class="comment-writer">' + this.comment_user_name + '</span> <sup class="comment-created">' + this.comment_created + '</sup>';
+               str += '<sup class="comment-edit">수정</sup><sup class="comment-delete">삭제</sup>'
+               str += '<br><div class="comment-content">';
+               str += '<span>' + this.comment_content + '</span></div>';
+               str += '</div>';
 
-                  $('.comment-list').append(str);
-               });
-            } else {
-               // 댓글 데이터가 없을 경우 처리
-               console.log('작성된 댓글이 없습니다.');
-            }
-         },
-         error: function (error) {
-            console.error("댓글 출력 오류: " + error);
-         },
-      });
-   }
+               $('.comment-list').append(str);
+            });
+         } else if(rdata.length === 0){
+            console.log('작성된 댓글이 없습니다.');
+          	
+         }
+      },
+      error: function (error) {
+         console.error("댓글 출력 오류: " + error);
+      },
+   });
+}
 
    getCommentList();
 
    $('.comment-submit-btn').click(function () {
       var content = $('#comment-textarea').val().replace(/\n/g, "<br>");
-
-      // AJAX 요청을 보내기 전에 입력 데이터를 검증하거나 필요한 조치를 취할 수 있습니다.
 
       $.ajax({
          type: "POST",
@@ -97,9 +95,9 @@ $(document).ready(function () {
 
    // 수정 버튼 클릭 시
    $(document).on('click', '.comment-edit', function () {
-      var commentElement = $(this).closest('.comments'); // 댓글 엘리먼트 선택
-      var commentId = commentElement.data('comment-id'); // 댓글 식별 번호 가져오기
-      var commentContentElement = commentElement.find('.comment-content span'); // 댓글 내용 엘리먼트 선택
+      var commentElement = $(this).closest('.comments'); 
+      var commentId = commentElement.data('comment-id'); 
+      var commentContentElement = commentElement.find('.comment-content span');
       var commentContent = commentContentElement.text();
 
       // <br> 태그를 줄바꿈으로 변환
@@ -116,26 +114,20 @@ $(document).ready(function () {
         </div>
     `;
 
-      // 수정 요청을 받은 댓글 엘리먼트를 숨김
       commentElement.hide();
 
-      // 수정 양식을 삽입
       commentElement.after(editForm);
 
-      // 수정 버튼 클릭 시
       $('.comment-submit-btn').click(function () {
          var editedContent = $(`#edit-comment-textarea-${commentId}`).val();
 
-         // 줄바꿈을 <br> 태그로 변환
          editedContent = editedContent.replace(/\n/g, "<br>");
 
-         // 댓글 내용이 비어 있는지 확인
          if (editedContent.trim() === '') {
             alert("댓글 내용을 작성하세요.");
             return;
          }
 
-         // AJAX 요청을 보내서 댓글 수정
          $.ajax({
             type: "POST",
             url: "../comment/commentUpdate",
@@ -147,10 +139,8 @@ $(document).ready(function () {
                if (rdata == 1) {
                   alert("댓글이 수정되었습니다.");
 
-                  // 수정 양식을 숨김
                   $(`#edit-comment-textarea-${commentId}`).closest('.create-comment').remove();
 
-                  // 수정 요청을 받은 댓글 엘리먼트를 다시 표시
                   commentElement.show();
                   getCommentList();
                } else {
@@ -165,30 +155,32 @@ $(document).ready(function () {
    });
 
    // 댓글 삭제
-   $(document).on('click', '.comment-delete', function () {
-      var commentElement = $(this).closest('.comments'); // 댓글 엘리먼트 선택
-      var commentId = commentElement.data('comment-id'); // 댓글 식별 번호 가져오기
+  // 댓글 삭제
+$(document).on('click', '.comment-delete', function () {
+   var commentElement = $(this).closest('.comments'); 
+   var commentId = commentElement.data('comment-id'); 
 
-      // 댓글 삭제를 확인하는 메시지 표시
-      if (confirm("댓글을 삭제하시겠습니까?")) {
-         $.ajax({
-            type: "POST",
-            url: "../comment/commentDelete",
-            data: {
-               "commentId": commentId,
-            },
-            success: function (rdata) {
-               if (rdata === 1) {
-                  alert("댓글이 삭제되었습니다.");
-                  getCommentList();
-               } else {
-                  alert("댓글 삭제 실패");
-               }
-            },
-            error: function (error) {
-               console.error("댓글 삭제 오류: " + error);
+   if (confirm("댓글을 삭제하시겠습니까?")) {
+      $.ajax({
+         type: "POST",
+         url: "../comment/commentDelete",
+         data: {
+            "commentId": commentId,
+         },
+				cache: false, 
+         success: function (rdata) {
+            if (rdata === 1) {
+               alert("댓글이 삭제되었습니다.");
+               getCommentList();
+
+            } else {
+               alert("댓글 삭제 실패");
             }
-         });
-      }
-   }); // 댓글 삭제 
+         },
+         error: function (error) {
+            console.error("댓글 삭제 오류: " + error);
+         }
+      });
+   }
+	}); // 댓글 삭제 
 });

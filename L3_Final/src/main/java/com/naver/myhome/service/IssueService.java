@@ -19,4 +19,11 @@ public interface IssueService {
 	public void issueAdd(Issue issue);
 
 	public Issue getIssueDetail(int num);
+	
+	public int updateStatus(int issueId, String status, String selectedUserName);
+	
+	public int issueUpdate(Issue issue);
+
+	public int issueDelete(int issueId);
+
 }
