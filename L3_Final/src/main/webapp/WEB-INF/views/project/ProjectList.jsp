@@ -19,10 +19,7 @@
 <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
 
 <style>
-.leftbar-close {
-	background-color: #9F7AB0;
-	border-radius: 50%;
-}
+.row { justify-content: center; }
 
 /* project list */
 .issue-list{width:100%;}
@@ -291,5 +288,6 @@
 		});
 	});
 </script>
+
 </body>
 </html>

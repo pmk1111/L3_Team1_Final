@@ -564,7 +564,7 @@
 /* 珥덈� 紐⑤떖 */
 #modal-background-invite {
 	position: fixed;
-	z-index: 1;
+	z-index: 9999;
 	left: 0;
 	top: 0;
 	background-color: rgba(0, 0, 0, .8);
@@ -751,8 +751,8 @@
 
 .modal-member-role-span {
 	position: absolute;
-	top: 55%;
-	left: 24%;
+    top: 51%;
+    left: 23%;
 	transform: translateY(-50%);
 	font-family: inherit;
 }
@@ -870,42 +870,15 @@
 	align-items: center;
 }
 
-@
-keyframes fadeIn { 0% {
-	opacity: 0;
+@keyframes fadeIn { 
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
-100
-
-
-
-
-
-
-%
-{
-opacity
-
-
-
-
-
-
-:
-
-
-
-
-
-
-1
-
-
-
-
-;
-}
-}
 .invite-empty-span {
 	opacity: 0;
 	animation: fadeIn 0.5s ease-in-out 0.1s forwards;
