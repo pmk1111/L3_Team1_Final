@@ -29,5 +29,5 @@
 
 <!-- chat js -->
 <script src="../resources/chat/js/chat.js"></script>
-<script src="../resources/chat/js/notify.js"></script>
+<script src="../resources/notify/js/notify.js"></script>
 

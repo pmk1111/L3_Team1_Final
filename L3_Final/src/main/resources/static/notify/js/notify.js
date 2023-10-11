@@ -20,9 +20,9 @@ $(document).ready(function() {
         notifyLayer.fadeOut(100);
     });
 
-    $('#contactbtn2').click(function() {
+    $('#notreadbtn').click(function() {
        $('.on').removeClass('on');
-        $('.contact2').addClass('on');
+        $('.notread').addClass('on');
        $('.notify-contact-area').show();
         $('.notify-list-area').hide();
     });
