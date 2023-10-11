@@ -1,15 +1,19 @@
-$(document).ready(function () {
-  const issue_modal_btn = $('.create-issue');
-  const issue_modal = $('.issue-modal');
-  const overlay = $('.modal-overlay');
+	$('.issue-edit').click(function(){
+	
+		if($('.issue-setting-dropdown').css('display') === 'block'){
+			$('.issue-setting-dropdown').fadeOut(200);
+		}
+		
+		if($('.issue-edit-modal').css('display') === 'none'){
+			$('.issue-edit-modal').fadeIn(200);
+		}
+	
+	}) //issue-edit
 
-  issue_modal_btn.click(function () {
-    issue_modal.fadeIn(200);
-  }); //modal open click end
 
-  overlay.click(function () {
-    if ($('.issue-modal').css('display') === 'block') {
-      issue_modal.fadeOut(200);
+$('modal-overlay').click(function () {
+    if ($('.issue-edit-modal').css('display') === 'block') {
+      $('.issue-edit-modal').fadeOut(200);
     }
   });
 
@@ -60,14 +64,14 @@ $(document).ready(function () {
   });
 
   $('.submit-btn').click(function () {
-    const project_name = $('.project-name').val();
-    const issue_type = $('.issue-type').val();
-    const issue_status = $('.issue-status').val();
+    const project_name = $('.project-name-seleted').val();
+    const issue_type = $('.issue-type-selected').val();
+    const issue_status = $('.issue-status-selected').val();
     const issue_title_area = $('.issue-title-area').val();
-    const issue_content = $('.issue-content').val();
-    const issue_reporter = $('.issue-reporter').val();
-    const issue_assigned = $(".issue-assigned").val();
-    const issue_priority = $('.issue-priority').val()
+    const issue_content = $('.issue-content-txtarea').val();
+    const issue_reporter = $('.issue-reporter-selected').val();
+    const issue_assigned = $(".issue-assigned-selected").val();
+    const issue_priority = $('.issue-priority-selected').val()
 
     if (project_name === "") {
       alert("프로젝트를 선택해주세요.");
@@ -117,12 +121,17 @@ $(document).ready(function () {
       $("#fileNameDisplay").text("파일을 선택하세요.");
     }
   });
+  
+
+ $('.submit-btn').click(function(){
+ 	console.log("게시글 번호 = " + $("#issue_id").val());
+ })
+
+
 
   // issueModal close
   $('.close-btn').on("click", function () {
-    if ($(".issue-modal").css('display') === 'block') {
-      $(".issue-modal").fadeOut(200);
+    if ($(".issue-edit-modal").css('display') === 'block') {
+      $(".issue-edit-modal").fadeOut(200);
     }
   });
-
-}); //document end

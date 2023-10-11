@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-    .issue-modal {
+    .issue-edit-modal {
       width: 100%;
       display: none;
       position: fixed;
@@ -87,10 +87,10 @@
     }
    
 
-    .issue-content {
+    .issue-content-txtarea {
       width: 99%;
       height: 300px;
-      /* border: 1.2px solid lightgrey; */
+      border: 1.2px solid lightgrey; 
       border-radius: 3px;
       resize: none;
       padding: 10px 0px 0px 10px;
@@ -103,12 +103,13 @@
       color: #A0A0A0;
     }
 
-    .issue-reporter,
+    .issue-reporter-selected,
     .issue-related {
       width: calc(100% - 110px);
       height: 45px;
       border: 1px solid lightgrey;
       border-radius: 3px;
+      padding:10px;
     }
 
 

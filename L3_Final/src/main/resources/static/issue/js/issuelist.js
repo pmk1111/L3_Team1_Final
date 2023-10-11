@@ -68,7 +68,7 @@ function getFilteredData(data) {
                     }
 
                     str += '<span class="issuetype" style="margin-left:20px !important">' + item.issue_type + '</span>';
-                    str += '<a href="detail?num=' + item.issue_id + '">';
+                    str += '<a href="issuedetail?num=' + item.issue_id + '">';
                     str += '<span class="issue-title" style="margin-left:5px !important">' + item.issue_subject + '</span></a></div>';
                     str += '<div class="issuewriter-created">';
                     str += '<span class="issue-writer">' + item.create_user + '</span>';
@@ -115,7 +115,7 @@ function getFilteredData(data) {
 						}
 						
 						str += '<span class="issuetype" style="margin-left:20px !important">' + item.issue_type + '</span>';
-						str += '<a href="detail?num=' + item.issue_id + '">';
+						str += '<a href="issuedetail?num=' + item.issue_id + '">';
 						str += '<span class="issue-title" style="margin-left:5px !important">' + item.issue_subject + '</span></a></div>';
 						str += '<div class="issuewriter-created">';
 						str += '<span class="issue-writer">' + item.create_user + '</span>';

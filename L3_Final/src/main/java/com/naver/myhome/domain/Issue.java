@@ -89,5 +89,14 @@ public class Issue {
 		this.issue_created = issue_created.substring(0, 10);
 	}
 	
+	@Override
+	public String toString() {
+		return "Issue [issue_id=" + issue_id + ", project_id=" + project_id + ", create_user=" + create_user
+				+ ", issue_type=" + issue_type + ", issue_priority=" + issue_priority + ", issue_subject="
+				+ issue_subject + ", issue_content=" + issue_content + ", issue_status=" + issue_status
+				+ ", issue_reporter=" + issue_reporter + ", issue_assigned=" + issue_assigned + ", issue_file="
+				+ issue_file + ", issue_created=" + issue_created + "]";
+	}
+	
 	
 }
