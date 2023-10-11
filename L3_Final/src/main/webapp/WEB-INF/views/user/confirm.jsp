@@ -1,44 +1,146 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>회원가입 선택페이지</title>
- <link rel="stylesheet" href="../resources/user/css/confirm.css" />
-</head>
+<meta content="" name="description">
+<meta content="" name="keywords">
+<link rel="stylesheet" href="../resources/user/css/confirm.css" />
+<!-- Favicons -->
+<link href="../resources/home/assets/img/favicon.png" rel="icon">
+<link href="../resources/home/assets/img/apple-touch-icon.png"
+	rel="apple-touch-icon">
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+	rel="stylesheet">
+<!-- Vendor CSS Files -->
+<link href="../resources/home/assets/vendor/aos/aos.css"
+	rel="stylesheet">
+<link
+	href="../resources/home/assets/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="../resources/home/assets/vendor/bootstrap-icons/bootstrap-icons.css"
+	rel="stylesheet">
+<link
+	href="../resources/home/assets/vendor/boxicons/css/boxicons.min.css"
+	rel="stylesheet">
+<link
+	href="../resources/home/assets/vendor/glightbox/css/glightbox.min.css"
+	rel="stylesheet">
+<link href="../resources/home/assets/vendor/remixicon/remixicon.css"
+	rel="stylesheet">
+<link
+	href="../resources/home/assets/vendor/swiper/swiper-bundle.min.css"
+	rel="stylesheet">
+<!-- Template Main CSS File -->
+<link href="../resources/home/assets/css/home.css" rel="stylesheet">
+ <style>
+  .footer-top{
+  margin-top: 200px;}
+  </style>
+  </head>
 <body>
-<div class="join-wrap2">
-    <div class="jm-cont4">
-        효율적인 업무관리?
-        <a href="#"><span>Widus!</span></a>
-    </div>
-</div>    
+<jsp:include page="header.jsp"></jsp:include>
 
-<div class="join-wrap">
-    <div class="join-main-container">
-        <div class="jm-cont1">
-            <a href="1">
-                <img src="../resources/user/img/joinmain2.png" alt="#">
-            </a>
-        </div>
+<div class="auth-section after-contets"> <div class="accont-wrap">
+  <div class="account">회원가입
+  </div>
+  <div class="jm-cont0">
+		<a href="0"> <img src="../resources/user/img/newcompany.png"
+			alt="#">
+		</a>
+	</div>
+	<div class="join-main-container">
+		<div class="jmcont1">
+			<a href="1"> <img src="../resources/user/img/joinmain2.png"
+				alt="#" style=" width: 330px; height:350px; margin-right:20px;">
+			</a>
+		</div>
 
-        <div class="jm-cont2">
-            <a href="2">
-                <img src="../resources/user/img/joinmain1.png" alt="#">
-            </a>
-        </div>
-    </div>
-    <div class="jm-cont3">
-        계정이 있으신가요?
-        
-        <a href="#"><span>로그인 하기</span></a>
-       
-    </div>
+		<div class="jmcont2">
+			<a href="2"> <img src="../resources/user/img/joinmain1.png"
+				alt="#" style=" width: 330px; height:350px;">
+			</a>
+		</div>
+	</div>
+		
+
+
 </div>
 
-<script src="js경로"></script>
-<script src="js경로"></script>
+</div>
+<div id="signupFooterArea" style="display: block;"> 
+<!-- ======= Footer ======= --> 
+<footer id="footer">
+<div class="footer-top">
+  <div class="container">
+    <div class="row">
 
-</body>
-</html>
+      <div class="col-lg-3 col-md-6 footer-contact">
+        <h3>WidUs</h3>
+        <p>
+          서울 종로구 율곡로10길 <br>
+          105 디아망 4층<br>
+          봉익동 10-1 03134<br><br>
+          <strong>Phone:</strong> 010-1234-1234<br>
+          <strong>Email:</strong> WidUs1004@naver.com<br>
+        </p>
+      </div>
+
+      <div class="col-lg-3 col-md-6 footer-links">
+        <h4>다음으로 이동</h4>
+        <ul>
+          <li><i class="bx bx-chevron-right"></i> <a href="#">홈</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#">소개</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#">솔루션</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#">서비스 약관</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#">개인정보 이용약관</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-3 col-md-6 footer-links">
+        <h4>Our Services</h4>
+        <ul>
+          <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-3 col-md-6 footer-links">
+        <h4>SNS</h4>
+        <p>WidUs 팀원들의 SNS 계정을 방문해 보세요.</p>
+        <div class="social-links mt-3">
+          <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+          <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+          <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+          <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container footer-bottom clearfix">
+  <div class="copyright">
+    &copy; Copyright <strong><span>WidUs</span></strong>. All Rights Reserved
+  </div>
+  <div class="credits">
+    <!-- All the links in the footer should remain intact. -->
+    <!-- You can delete the links only if you purchased the pro version. -->
+    <!-- Licensing information: https://bootstrapmade.com/license/ -->
+    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ -->
+    Designed by <a href="https://bootstrapmade.com/">JHTA_L3_1</a>
+  </div>
+</div>
+</footer><!-- End Footer --> </div> <!-- Vendor JS Files --> <script src="../resources/home/assets/vendor/aos/aos.js"></script> <script src="../resources/home/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> <script src="../resources/home/assets/vendor/glightbox/js/glightbox.min.js"></script> <script src="../resources/home/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script> <script src="../resources/home/assets/vendor/swiper/swiper-bundle.min.js"></script> <script src="../resources/home/assets/vendor/waypoints/noframework.waypoints.js"></script> <script src="../resources/home/assets/vendor/php-email-form/validate.js"></script> <!-- Template Main JS File --> <script src="../resources/home/assets/js/main.js"></script> </body> </html>

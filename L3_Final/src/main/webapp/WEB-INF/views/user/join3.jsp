@@ -9,8 +9,7 @@
 <title>WidUs</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
-<link rel="stylesheet" href="../resources/user/css/join.css" />
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<link rel="stylesheet" href="../resources/user/css/join3.css" />
 <!-- Favicons -->
 <link href="../resources/home/assets/img/favicon.png" rel="icon">
 <link href="../resources/home/assets/img/apple-touch-icon.png"
@@ -42,7 +41,38 @@
 <!-- Template Main CSS File -->
 <link href="../resources/home/assets/css/home.css" rel="stylesheet">
 <!-- ======================================================== * Template Name: Arsha * Updated: Jul 27 2023 with Bootstrap v5.3.1 * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ * Author: BootstrapMade.com * License: https://bootstrapmade.com/license/ ======================================================== -->
-<style>
+<style type="text/css">
+.companyName, .eid{
+	color: #333;
+	font-size: 16px;
+	padding: 0 0 0 20px;
+	background: #FFFFFF;
+	width: 640px;
+	padding: 16px 20px;
+	color: #333;
+	border: 1px solid #ddd;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin-top:10px;}
+	
+	.errMsg {
+	text-align: left;
+	margin-top: 10px;
+	color: #ff6b6b;
+	font-size: 14px;
+	line-height: 21px;
+}
+.errMsg{
+margin-top:5px;
+margin-bottom:5px;
+visibility: hidden;
+}
+.btn-join{
+margin-top:20px;
+margin-bottom: 200px;}
 </style>
 </head>
 <body>
@@ -50,84 +80,36 @@
 
 	<div class="auth-section after-contets">
 		<div class="accont-wrap">
-			<form id="joinform" name="joinform" action="joinProcess.net"
-				method="post">
-				<div class="account">개인회원</div>
-				<div class="formDiv">
-					<div>
-						<b class="bTxt">이메일 주소</b><br> <input type="text" id="email"
-							class="email" name="email" maxLength="30"
-							placeholder="이메일을 입력하세요" required>
-						<p class="errMsg" id="email_message">오류메세지 영역</p>
-					</div>
-					<div>
-						<b class="bTxt">이름</b><br> <input type="text" id="userName"
-							class="name" name="name" placeholder="이름을 입력하세요" maxLength="15"
+			<div id="companyJoinMain" class="login-wrap">
+				<div class="login-text">회사 계정 만들기</div>
+				<div class="join-contets">
+				<div>
+						<b class="bTxt">회사명</b><br> <input type="text" id="companyName"
+							class="companyName" name="companyName" placeholder="회사이름을 입력하세요" maxLength="30"
 							required>
 						<p class="errMsg" id="name_message">오류메세지 영역</p>
 					</div>
-					<div>
-						<b class="bTxt">비밀번호</b><br> <input type="password"
-							id="password" placeholder="비밀번호를 입력하세요" class="pw" name="pass"
-							required>
-						<p class="errMsg" id="pw_message">오류메세지 영역</p>
+					<p class="url-tit">회사 URL</p>
+					<div class="url-wr">
+						<span>https://</span> <input id="joinInput" type="text"
+							class="join-input" autocomplete="off" placeholder="회사 URL">
+						<span>.widus.team</span>
+						<p class="errMsg" id="url_message">오류메세지 영역</p>
 					</div>
-
-					<div class="mt10">
-						<div>
-							<input type="checkbox" id="policyCheckbox" class="policy"
-								name="policy" value="필수"> <label for="policy"
-								class="policyLabel"> <b class="require">(필수)</b>&nbsp; <a
-								href="Service.net" style="color: #7C00B6; text-decoration: dash">
-									서비스 이용약관</a>,<a href="PrivatePolicy.net"
-								style="color: #7C00B6; text-decoration: dash">개인정보 처리방침</a>에
-								동의합니다.
-							</label>
-						</div>
-						<br>
-						<div>
-							<input type="checkbox" id="benefits" class="benefits"
-								name="benefits" value="선택"> <label for="benefits"
-								class="benefitsLabel"> <b>(선택)</b>&nbsp;혜택 수신에 동의합니다.
-							</label>
-						</div>
+					<p id="helpMsg" class="join-company-url" style="display: block;">
+						회사URL 주소는 관리자를 통해 확인할 수 있습니다.
+				</div>
+				
+				<div>
+						<b class="bTxt">사업자 등록번호</b><br> <input type="text" id="eid"
+							class="eid" name="eid" maxLength="10"
+							placeholder="-없이 10자리를 입력하세요" required>
+						<p class="errMsg" id="email_message">오류메세지 영역</p>
 					</div>
-				</div>
-
-				<div class="clearfix">
-					<button type="button" id="confirmBtn" class="submitbtn"
-						onclick="openModal();">
-						<strong>가입하기</strong>
-					</button>
-				</div>
-			</form>
-			
-			<input type="hidden" id="authRandNum" name="authRandNum" />
-			<input type="hidden" id="isChkPassword" name="isChkPassword" value="N" />
-			<input type="hidden" id="isChkEmail" name="isChkEmail" value="N" /> 
-			<input type="hidden" id="isChkverify" name="isChkverify" value="N" />
-			<input type="hidden" id="isChkpolicy" name="isChkpolicy" value="N" />
+				<button id="companyJoinBtn" class="btn-join">다음</button>
+			</div>
 		</div>
-
 	</div>
-	
-	<div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>인증번호 입력</h2>
-            <form id="authChkForm">
-                <label for="authDescription">이메일주소로 <br>
-                6자리 인증번호가 전송되었습니다</label><br>
-                
-                <input type="text" id="authNum"
-							class="authNum" name="authNum" placeholder="인증번호를 입력하세요" maxLength="6"
-							required>
-                
-                
-                <button class="save" type="submit" onclick="saveSchedule()">저장</button> 
-            </form>
-        </div>
-    </div>
 	<div id="signupFooterArea" style="display: block;">
 		<!-- ======= Footer ======= -->
 		<footer id="footer">
@@ -220,20 +202,5 @@
 		src="../resources/home/assets/vendor/php-email-form/validate.js"></script>
 	<!-- Template Main JS File -->
 	<script src="../resources/home/assets/js/main.js"></script>
-	<script>
-	 // 모달 창 열기
-    function openModal() {
-        var modal = document.getElementById('myModal');
-        modal.style.display = 'block';
-    }
-
-    // 모달 창 닫기
-    function closeModal() {
-        var modal = document.getElementById('myModal');
-        modal.style.display = 'none';
-    }
-	</script>
-	
-	
 </body>
 </html>
