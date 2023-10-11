@@ -116,7 +116,7 @@
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/issue/issuelist" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Layouts">프로젝트 이슈</div>
               </a>

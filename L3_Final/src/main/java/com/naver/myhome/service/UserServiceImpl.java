@@ -13,61 +13,81 @@ public class UserServiceImpl implements UserService {
 
 	private UserMapper dao;
 	
+	//지니
 	@Autowired
 	public UserServiceImpl(UserMapper dao) {
 		this.dao = dao;
 	}
+
 	@Override
-	public int isId(String id) {
-		User ruser = dao.isId(id);
-		return (ruser == null) ? -1 : 1;
+	public List<User> finduser(String company_invited) {
+		// TODO Auto-generated method stub
+		return dao.finduser(company_invited);
 	}
+
 	@Override
-	public int isId(String id, String pass) {
-		User dbuser = dao.isId(id);
-		int result = -1;
-		if(dbuser !=null) {
-			result = 1;
-		} else 
-			result = 0;
+	public int countuser(String company_invited) {
+		return dao.countuser(company_invited);
+	}
+
+	@Override
+	public int approveuser(String company_invited) {
+		return dao.approveuser(company_invited);
+	}
+
+	@Override
+	public int rejectuser(String company_invited) {
+		return dao.rejectuser(company_invited);
+	}
+
+	//지니 끝
 	
-	return result;
-}
-	@Override
-	public int insert(User user) {
-		
-		return dao.insert(user);
-	}
-
-
-	@Override
-	public User user_info(String id) {
-		// TODO Auto-generated method stub
-		return dao.isId(id);
-	}
-
-	@Override
-	public void delete(String id) {
-		dao.delete(id);
-		
-	}
-
-	@Override
-	public int update(User user) {
-    	return	dao.update(user);
-		
-	}
-
-	@Override
-	public List<User> getSearchList(int index, String search_word, int page, int limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getSearchListCount(int index, String search_word) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+//	@Override
+//	public int isId(String id, String pass) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	public int insert(User user) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	public int isId(String id) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	public User user_info(String id) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public void delete(String id) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public int update(User m) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	public List<User> getSearchList(int index, String search_word, int page, int limit) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public int getSearchListCount(int index, String search_word) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
 
 }
