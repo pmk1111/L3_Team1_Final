@@ -5,9 +5,7 @@
   #header {
     background-color: #9F7AB0;
     }
-    
-
-
+   
   </style>
 <!-- ======= Header ======= -->
   <header id="header" class="">

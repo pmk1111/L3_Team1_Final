@@ -1,122 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
-<!DOCTYPE html> <html> <head> <meta charset="utf-8"> <meta content="width=device-width, initial-scale=1.0" name="viewport">
- <title>회원가입 선택페이지</title>
-  <meta content="" name="description">
-   <meta content="" name="keywords">
-    <link rel="stylesheet" href="../resources/user/css/join4.css" />
-     <!-- Favicons -->
-      <link href="../resources/home/assets/img/favicon.png" rel="icon">
-       <link href="../resources/home/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i
-        Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-         <!-- Vendor CSS Files -->
-          <link href="../resources/home/assets/vendor/aos/aos.css" rel="stylesheet">
-          <link href="../resources/home/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-          <link href="../resources/home/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-          <link href="../resources/home/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-          <link href="../resources/home/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-          <link href="../resources/home/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-          <link href="../resources/home/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-          
-           <!-- Template Main CSS File -->
-            <link href="../resources/home/assets/css/home.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>회원가입 선택페이지</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
+<link rel="stylesheet" href="../resources/user/css/confirm.css" />
+<!-- Favicons -->
+<link href="../resources/home/assets/img/favicon.png" rel="icon">
+<link href="../resources/home/assets/img/apple-touch-icon.png"
+	rel="apple-touch-icon">
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+	rel="stylesheet">
+<!-- Vendor CSS Files -->
+<link href="../resources/home/assets/vendor/aos/aos.css"
+	rel="stylesheet">
+<link
+	href="../resources/home/assets/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="../resources/home/assets/vendor/bootstrap-icons/bootstrap-icons.css"
+	rel="stylesheet">
+<link
+	href="../resources/home/assets/vendor/boxicons/css/boxicons.min.css"
+	rel="stylesheet">
+<link
+	href="../resources/home/assets/vendor/glightbox/css/glightbox.min.css"
+	rel="stylesheet">
+<link href="../resources/home/assets/vendor/remixicon/remixicon.css"
+	rel="stylesheet">
+<link
+	href="../resources/home/assets/vendor/swiper/swiper-bundle.min.css"
+	rel="stylesheet">
+<!-- Template Main CSS File -->
+<link href="../resources/home/assets/css/home.css" rel="stylesheet">
  <style>
-  .account {
-   padding: 6px 0 16px;
-   font-size: 36px;
-   color: #333;
-   font-weight: 700;
-   text-align: center;
-   margin-bottom: 15px; }
-   
-   .errMsg {
-    text-align: left;
-    margin-top: 10px;
-    color: #ff6b6b;
-    font-size: 14px;
-    line-height: 21px;
-    }
-    
-    .email, .pw, .pw_check, .name, .verify{
-    color: #333;
-    font-size: 16px;
-    padding: 0 0 0 20px;
-    background: #FFFFFF;
-    width: 500px;
-    padding: 16px 20px;
-    margin: 0 px;
-    color: #333;
-    border: 1px solid #ddd;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    } 
-    #emailAuthBtn{
-    margin : 20px 0 0 0;
-    color:#fff;
-    text-align: center;
-    background: #9F7AB0;
-    line-height:52px;
-    height:52px;
-    width:130px;
-    border-radius:8px;
-    font-size: 16xp;
-    font-wdight: 500;
-    border:none;
-    outline:none;
-    }
-    
-    #verify_check{
-    margin : 20px 0 0 0;
-    color:#fff;
-    text-align: center;
-    background: #9F7AB0;
-    line-height:52px;
-    height:52px;
-    width:130px;
-    border-radius:8px;
-    font-size: 16xp;
-    font-wdight: 500;
-    border:none;
-    outline:none;
-    }
-     #confirmBtn{
-     margin : 20px 0 0 0;
-     color:#fff;
-     text-align: center;
-     background: #9F7AB0;
-     line-height:52px;
-     height:52px;
-     width:680px;
-     border-radius:8px;
-     font-size: 16xp;
-     font-wdight: 500;
-     border:none;
-     outline:none;
-     display: block;
-     margin: auto;
-     margin-top:40px;
-     }
-     .join-main-container {
-  display: flex;
-  justify-content: center; /* 가로 방향 가운데 정렬 */
-  align-items: center; /* 세로 방향 가운데 정렬 */
-}
-
-.jmcont1, .jmcont2, .jm-cont0 {
-  text-align: center; /* 이미지를 중앙에 정렬 */
-}
-.jm-cont0{
-margin-bottom: 20px;
-}
-.account{
-margin-top: 100px;
-}
+  .footer-top{
+  margin-top: 200px;}
   </style>
   </head>
 <body>

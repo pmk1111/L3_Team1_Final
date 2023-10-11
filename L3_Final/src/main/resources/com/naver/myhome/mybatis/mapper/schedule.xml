@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.naver.myhome.mybatis.mapper.ScheduleMapper">
+	<!-- Insert -->
+	<select id="insertSchedule" resultType="int">
+		INSERT INTO SCHEDULE VALUES(#{schedule_id}, #{schedule_user_id},#{schedule_subject}, #{schedule_start_date}, #{schedule_end_date} ,
+		 #{schedule_category} , #{schedule_place}, #{schedule_content})
+	</select>
+	 
+	<!-- Update -->
+	 <update id="updateSchedule" parameterType="int">
+        UPDATE SCHEDULE SET schedule_user_id = #{schedule_user_id},
+        schedule_subject = #{schedule_subject},
+        schedule_start_date = #{schedule_start_date},
+        schedule_end_date = #{schedule_end_date},
+        schedule_category =  #{schedule_category},
+        schedule_place =  #{schedule_place},
+        schedule_content =  #{schedule_content}
+        WHERE schedule_id =  #{id}
+    </update>
+
+    <!-- Delete -->
+    <delete id="deleteSchedule" parameterType="int">
+       DELETE FROM SCHEDULE WHERE schedule_id= # {id}
+    </delete>
+    
+</mapper>

@@ -143,6 +143,14 @@ public class UserController {
 	public String join2() {
 		return "user/join2";
 	}
+	@RequestMapping(value = "/join3", method = RequestMethod.GET)
+	public String join3() {
+		return "user/join3";
+	}
+	@RequestMapping(value = "/join4", method = RequestMethod.GET)
+	public String join4() {
+		return "user/join4";
+	}
 	@RequestMapping(value = "/confirm", method = RequestMethod.GET)
 	public String confirm() {
 		return "user/confirm";
