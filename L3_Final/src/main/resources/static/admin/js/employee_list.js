@@ -19,6 +19,7 @@ $(".user-stop").click(function() {
     var employeeNo = $(this).data("employee_no"); // 직원 번호 가져오기
 	var employeeStatus = $(this).data("employee_status");
     var tab = $(this).data("tab"); // 탭 정보 가져오기
+    let removetr=$(this).parent().parent()
 	console.log(employeeNo);
 	console.log(employeeStatus);
     // 서버로 업데이트 요청 보내기
@@ -31,18 +32,64 @@ $(".user-stop").click(function() {
             tab: tab 
         },
         
+         async: false,
         success: function(response) {
-        	  if (response == 1) {
-                alert("직원의 활동이 변경되었습니다.");
+        	 
+        	 if (response == 1) {
+                alert("직원 상태를 변경하였습니다.");
+                
+                $.ajax({
+                   url: "../admin/useruselist",
+                   data: {
+                   		company_id: "1"
+                	},
+                	success: function(data){
+                		let count=data.length;
+                		console.log(count)
+                		$('#head-tab > ul > li:nth-child(1) > a > small > b').text(count);
+                		let output="";
+                		if( count == 0){
+                			output += '<tr><td colspan="10" style="border-bottom: none">조회된데이터가 없습니다.</td></tr>'
+                		} else {
+                			
+                		$(data).each(function(index, item){
+                			let img = '<img src="/img/profile.png" alt="프로필 사진" width="25" height="25">'
+                			if(item.user_photo){
+                				img = '<img src="/usrupload"' + item.user_photo + ' alt="프로필 사진" width="25" height="25">'
+                				}
+                		   output += '<tr><td>' + img + '</td>';
+                		   output += '<td>' + item.employee_no + '</td>';
+                		   output += '<td>' + item.user_name + '</td>';
+                		   output += '<td>' + item.department + '</td>';
+                		   output += '<td>' + item.position + '</td>';
+                		   output += '<td>' + item.user_email + '</td>';
+                		   output += '<td>' + item.user_phone + '</td>';
+                		   output += '<td><p>정상</p><button class="user-stop" data-employee_no="${emp.employee_no }" data-employee_status="${emp.employee_status}"'
+									+ 'data-tab="userstop">[이용중지]</button> </td>';
+						   output += '<td><span class="employee-auth-value=">' + item.employee_auth +' </span>'
+										+ '<button class="auth-delete" data-employee_no="' +item.employee_no + '">[삭제]</button></td></tr>'
+                		   
+                		})//.each 끝
+                		$('#useruse > table > tbody').html(output);
+                		removetr.remove();
+                		console.log($('#head-tab > ul > li:nth-child(2) > a > small > b span').text());
+                		let stopcount = $('#head-tab > ul > li:nth-child(2) > a > small > b span').text()-1;
+                		$('#head-tab > ul > li:nth-child(2) > a > small > b span').text(stopcount);
+                		
+                		} // else 의 끝
+                	}
+             
+                	})
+               
             } else {
-                alert("직원 상태 변경 실패");
-            }
+                alert("가입 승인 실패.");
+       		}
         },
         error: function() {
             alert("업데이트에 실패했습니다.");
         }
     });
-  });
+});
 });
 
 // 관리자 유무
@@ -96,22 +143,66 @@ $(function() {
 // 가입 승인
  $(function() {
 $(".approveUser").click(function() {
-    var userId = $(this).data("user_id"); 
-	console.log(userId)
+    var userid = $(this).data("userid"); 
+	console.log(userid)
 	
+	let removetr=$(this).parent().parent()
     // 서버로 업데이트 요청 보내기
     $.ajax({
         url: "../admin/regWait",
         type: "POST",
         data: {
-            userId: userId,
+            userid: userid,
             action: "approve"
         },
-        
+        async: false,
         success: function(response) {
         	 
         	 if (response == 1) {
                 alert("가입이 승인되었습니다.");
+                
+                $.ajax({
+                   url: "../admin/useruselist",
+                   data: {
+                   		company_id: "1"
+                	},
+                	success: function(data){
+                		let count=data.length;
+                		console.log(count)
+                		$('#head-tab > ul > li:nth-child(1) > a > small > b').text(count);
+                		let output="";
+                		if( count == 0){
+                			output += '<tr><td colspan="10" style="border-bottom: none">조회된데이터가 없습니다.</td></tr>'
+                		} else {
+                			
+                		$(data).each(function(index, item){
+                			let img = '<img src="/img/profile.png" alt="프로필 사진" width="25" height="25">'
+                			if(item.user_photo){
+                				img = '<img src="/usrupload"' + item.user_photo + ' alt="프로필 사진" width="25" height="25">'
+                				}
+                		   output += '<tr><td>' + img + '</td>';
+                		   output += '<td>' + item.employee_no + '</td>';
+                		   output += '<td>' + item.user_name + '</td>';
+                		   output += '<td>' + item.department + '</td>';
+                		   output += '<td>' + item.position + '</td>';
+                		   output += '<td>' + item.user_email + '</td>';
+                		   output += '<td>' + item.user_phone + '</td>';
+                		   output += '<td><p>정상</p><button class="user-stop" data-employee_no="${emp.employee_no }" data-employee_status="${emp.employee_status}"'
+									+ 'data-tab="userstop">[이용중지]</button> </td>';
+						   output += '<td><span class="employee-auth-value">' + item.employee_auth +'</span>'
+										+ '<button class="auth-delete" data-employee_no="' +item.employee_no + '">[삭제]</button></td></tr>'
+                		   
+                		})//.each 끝
+                		$('#useruse > table > tbody').html(output);
+                		removetr.remove();
+                		console.log($('#head-tab > ul > li:nth-child(3) > a > small > b span').text());
+                		let waitcount = $('#head-tab > ul > li:nth-child(3) > a > small > b span').text()-1;
+                		$('#head-tab > ul > li:nth-child(3) > a > small > b span').text(waitcount);
+                		
+                		} // else 의 끝
+                	}
+             
+                	})
                
             } else {
                 alert("가입 승인 실패.");
@@ -127,13 +218,14 @@ $(".approveUser").click(function() {
 // 가입 거절
  $(function(){	
 $(".rejectUser").click(function () {
-    var userId = $(this).data("user_id"); 
+    var userid = $(this).data("userid"); 
+    console.log(userid);
    
     $.ajax({
         url: "../admin/regWait",
         type: "POST",
         data: {
-            userId: userId,
+            userid: userid,
             action: "reject"
         },
         
@@ -153,8 +245,18 @@ $(".rejectUser").click(function () {
 });
 }); 
     
+//ajax null값 대체
+var responseData = {
+	position: null,
+	department: null
+};
 
-
+for (var key in responseData) {
+    if (responseData[key] == null) {
+        responseData[key] = "";
+    }
+}
+console.log(responseData);
 
 //프로필 사진
   const profile = this.user_photo;
@@ -165,29 +267,38 @@ $(".rejectUser").click(function () {
 
 //검색
  $(function() {
-		//검색 클릭 후 응답화면에는 검색시 선택한 필드가 선택되도록 합니다.
-		let selectedValue = '${search_field}'
-		if (selectedValue != '-1')
-			$("#viewcount").val(selectedValue);
+    // 데이터 속성 값을 가져옴
+    let selectedValue = $("#viewcount").data("search-field");
+    
+    if (selectedValue !== '-1') {
+        $("#viewcount").val(selectedValue);
+    } else {
+        selectedValue = '0';
+    }
+    
+    const $input = $("input[name=search_word]");
+		 $input.val('');
+ 
 		
-			
-		const $input = $("input[name=search_word]")
-	
-		
-		//검색 버튼 클릭한 경우
-	       $("#searchBtn").click(function() {
-	          //검색어  공백 유효성 검사합니다.
-	          if ($input.val() == ''){
-	             alert("검색어를 입력하세요.");
-	             $input.focus();
-	             return false;
-	          }
+	     // 검색 버튼 클릭한 경우
+			$("#searchBtn").click(function() {
+   			 // 검색어 공백 유효성 검사합니다.
+   			 if ($input.val() == '') {
+     	     alert("검색어를 입력하세요.");
+       		 $input.focus();
+       		 return false;
+    }
 	          
 			});//button click end
 	       
-	     //  $("#searchBtn").change(function(){
-	    	//   $search_field.val() === '4';
-	       //})
+	    $("#viewcount").change(function(){
+    		selectedValue = $(this).val();
+   		 // input 요소에 선택된 값을 설정
+  		    console.log(selectedValue);
+  		    const $input = $("input[name=search_word]");
+   		
+		});
+	       
 			
 	
 			

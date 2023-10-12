@@ -50,11 +50,8 @@ public class AdminController {
 	    }
 		
 		
-		@RequestMapping(value = "/list", method = RequestMethod.GET)
-		public ModelAndView employeelist(@RequestParam(value = "page", defaultValue = "1", required = false) int page,
-	         @RequestParam(value = "limit", defaultValue = "3", required = false) int limit, ModelAndView mv,
-	         @RequestParam(value = "search_field", defaultValue = "-1", required = false) int index,
-	         @RequestParam(value = "search_word", defaultValue = "", required = false) String search_word){
+		@RequestMapping(value = "/list")
+		public ModelAndView employeelist( ModelAndView mv){
 			String company_id = "1"; //회사번호
 			String company_invited= "widUs" ;//직원 초대
 			
@@ -84,31 +81,7 @@ public class AdminController {
 		    
 		    System.out.println(count);
 		    
-		    //검색 
-//		    int listcount = adminservice.getSearchListCount(index, search_word);
-//		    List<Employee> list = adminservice.getSearchList(index, search_word, page, limit);
-//            
-//		      int maxpage = (listcount + limit - 1) / limit;
-//
-//		      //                                     (1, 11, 21   ...)
-//		      int startpage = ((page - 1) / 10) * 10 + 1;
-//
-//		      //                                       (10, 20, 30   ...)
-//		      int endpage = startpage + 10 - 1;
-//
-//		      if (endpage > maxpage)
-//		         endpage = maxpage;
-//
-//		      mv.setViewName("member/member_list");
-//		      mv.addObject("page", page);
-//		      mv.addObject("maxpage", maxpage);
-//		      mv.addObject("startpage", startpage);
-//		      mv.addObject("endpage", endpage);
-//		      mv.addObject("listcount", listcount);
-//		      mv.addObject("memberlist", list);
-//		      mv.addObject("search_field", index);
-//		      mv.addObject("search_word", search_word);
-
+		  
 		      
 		    return mv;
 		}
@@ -170,18 +143,28 @@ public class AdminController {
 		//가입대기
 		@ResponseBody
 		@RequestMapping(value = "/regWait", method = RequestMethod.POST)
-		public int regWait(@RequestParam("userId") int userId,
+		public int regWait(@RequestParam("userid") int userid,
 						   @RequestParam("action") String action,
 				Model model, HttpServletRequest request, RedirectAttributes rattr) {
 				String company_invited="widUs";
+				String company_id = "1";
+				
 				int result = 0;
 			    
 				
 				if("approve".equals(action)) {
-					result = userservice.approveuser(company_invited);
+					result = userservice.approveuser(userid);
+					
+					 if (result == 1) {
+				          int addEmployee = adminservice.addEmployee(userid,company_id,company_invited);
+				          return addEmployee;
+				        }
+					
 				}else if("reject".equals(action)) {
-					result = userservice.rejectuser(company_invited);
+					result = userservice.rejectuser(userid);
 				}
+				
+				
 		     
 				System.out.println(result);
 				
@@ -189,14 +172,27 @@ public class AdminController {
 				
 		}
 
-		
+		//정상리스트 가져오기
+		@ResponseBody
+		@RequestMapping(value = "/useruselist", method = RequestMethod.GET)
+		public List<Employee> useruselist(@RequestParam("company_id")  String company_id){
+			 
+			
+			// 회사의 직원 목록을 가져와서 모델에 추가
+		    List<Employee> employee = adminservice.findEmployee(company_id);
+		     
+		    
+		    return employee;
+			
+		}
+
 		
 		@RequestMapping(value = "/invite", method = RequestMethod.GET)
 		public String invite() {
 		       return "admin/invite_employee";
 		    }
 		
-		@RequestMapping(value = "/regwait", method = RequestMethod.GET)
+		@RequestMapping(value = "/waitapprove", method = RequestMethod.GET)
 		public String regwait() {
 		       return "admin/reg_wait";
 		    }

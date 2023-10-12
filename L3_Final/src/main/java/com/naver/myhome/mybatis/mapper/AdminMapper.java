@@ -18,8 +18,6 @@ public interface AdminMapper {
 
 		public int countEmployee(String company_id);
 
-		public List<Employee> getSearchList(Map<String, Object> map);
-
 		public List<Employee> stopEmployee(String company_id);
 
 		public int countStopEmployee(String company_id);
@@ -32,7 +30,8 @@ public interface AdminMapper {
 
 		public int useEmployeeStatus(int employeeNo);
 
-	//	public int getSearchListCount(Map<String, String> map);
+		public int addEmployee(int user_id, String company_id, String company_invited);
+
 
 	}
 

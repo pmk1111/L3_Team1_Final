@@ -14,6 +14,7 @@
     			usr u on e.user_id = u.user_id
 		where e.company_id = #{company_id}
 		and e.employee_status = 0
+		order by u.user_name
 	</select>
 	
 	<select id="countEmployee" resultType="int">
@@ -34,6 +35,7 @@
     			usr u on e.user_id = u.user_id
 		where e.company_id = #{company_id}
 		and e.employee_status=1
+		order by u.user_name
 	</select>
 	
 	<select id="countStopEmployee" resultType="int">
@@ -70,29 +72,13 @@
 	set employee_Auth= 'Y'
 	where employee_no=#{employee_no}
 	</update>
-	<!-- 
-	<select id="getSearchListCount" parameterType="map" resultType="int">
-			select count(*) from employee 
-			<include refid="search_"/>
-	</select>
 	
-	<select id="getSearchList" parameterType="map" resultType="Employee">
-			select * from (select b.*, rownum rnum from (select * from employee 
-			<include refid="search_"/>
-			) b where rownum <=#{end} ) where rnum >=#{start} and rnum <=#{end}
-	</select>
+	<!-- 가입승인 후 직원 추가 -->
+	<insert id="addEmployee" >
+	INSERT INTO employee (employee_no, company_id, company_invited, user_id)
+    VALUES (employee_seq.nextval, #{company_id}, #{company_invited}, #{user_id} )
+	</insert>
 	
-	<sql id="search_">
-		<if test="search_field != null">
-		and
-			<choose>
-				<when test="search_field=="user_name"">user_name</when>
-				<when test="search_field=="user_email"">user_email</when>
-				<when test="search_field=="department"">department</when>
-				<when test="search_field=="position"">position</when>
-			</choose>
-		like #{search_word}
-		</if>
-	</sql>
- -->
+
+ 
 </mapper>

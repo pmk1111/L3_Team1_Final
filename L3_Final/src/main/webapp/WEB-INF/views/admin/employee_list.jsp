@@ -79,7 +79,7 @@
 }
 
 .card {
-	height: 80vh; /* 화면 높이에 80% 맞춤 */
+	height:auto ; /* 화면 높이에 80% 맞춤 */
 	width: 100%;
 }
 
@@ -106,6 +106,12 @@
 .tab1_style {
     width: 100%;
 }
+
+#filterSelect { padding:3px 0px 4px 0px;
+				color:#697A8D;}
+
+#searchInput {color: #697A8D;
+			  border: 1px solid #d9dee3;}
 tbody tr {
 	text-align: center;
 }
@@ -173,8 +179,8 @@ button {
 													<li class="nav-item"><a class="nav-link active"
 														data-toggle="tab" data-tab="useruse" href="#useruse"><span>정상</span> <c:choose>
 																<c:when test="${employeecount > 0}">
-																	<small><b>[&nbsp;<c:out
-																				value="${employeecount}" />&nbsp;]
+																	<small><b>[&nbsp;<span><c:out
+																				value="${employeecount}" /></span>&nbsp;]
 																	</b></small>
 																</c:when>
 																<c:otherwise>
@@ -184,8 +190,8 @@ button {
 													<li class="nav-item"><a class="nav-link"
 														data-toggle="tab" data-tab="userstop" href="#userstop"><span>이용중지</span> <c:choose>
 																<c:when test="${stopemployeecount > 0}">
-																	<small><b>[&nbsp;<c:out
-																				value="${stopemployeecount}" />&nbsp;]
+																	<small><b>[&nbsp;<span><c:out
+																				value="${stopemployeecount}" /></span>&nbsp;]
 																	</b></small>
 																</c:when>
 																<c:otherwise>
@@ -195,7 +201,7 @@ button {
 													<li class="nav-item"><a class="nav-link"
 														data-toggle="tab" data-tab="userwait" href="#userwait"><span>가입대기</span> <c:choose>
 																<c:when test="${count > 0}">
-																	<small><b>[&nbsp;<c:out value="${count}" />&nbsp;]
+																	<small><b>[&nbsp;<span><c:out value="${count}" /></span>&nbsp;]
 																	</b></small>
 																</c:when>
 																<c:otherwise>
@@ -209,28 +215,24 @@ button {
 											<br>
 											<!-- 검색 -->
 											<div id="search">
-												<form action="list" method="post">
-													<div class="input-group" style="width: 50%">
-														<select id="viewcount" name="search_field"
-															style="border: 1px solid #d9dee3;">
-															<option value="4" selected>전체</option>
-															<option value="0" >이름</option>
-															<option value="1">이메일</option>
-															<option value="2">부서</option>
-															<option value="3">직책</option>
-														</select> <input name="search_word" type="text"
-															class="form-control" style="height: 38.55px;"
-															placeholder="검색어를 입력하세요" value="${search_word}">
-														<button class="btn btn-primary" id="searchBtn" type="submit">검색</button>
-													</div>
+												<form >
+													<select id="filterSelect" name="search_field" 
+															 style="border: 1px solid #d9dee3;">
+															<option>이름</option>
+															<option>이메일</option>
+															<option>부서</option>
+															<option>직책</option>
+															</select>
+														<input class="search-bar" type="text" id="searchInput"
+                                                placeholder="검색어 입력">
+                                                	
 												</form>
-								
-
-
+						
 											<br>
 											<div id="content">
 												<div class="tab-pane fade show active" id="useruse">
 													<table class="table">
+													<thead>
 														<tr>
 															<th>프로필</th>
 															<th>사원번호</th>
@@ -242,9 +244,9 @@ button {
 															<th>상태</th>
 															<th>관리자</th>
 														</tr>
+													</thead>
 
-
-
+													<tbody>
 														<c:choose>
 															<c:when test="${empty employee}">
 																<tr>
@@ -256,13 +258,13 @@ button {
 																<c:forEach var="emp" items="${employee}">
 																	<tr>
 																			<td><c:choose>
-																				<c:when test="${empty stop.user_photo}">
+																				<c:when test="${empty emp.user_photo}">
 																					<!-- user_photo가 비어있을 때, 기본 이미지 표시 -->
 																				<img src="<c:url value='/img/profile.png' />" alt="프로필 사진" width="25" height="25">
 																				</c:when>
 																				<c:otherwise>
 																					<!-- user_photo가 비어있지 않을 때, 사용자의 이미지 표시 -->
-																					  <img src="<c:url value='/usrupload/' />${emp.user_photo}" alt="프로필 사진" width="25" height="25">
+																					  <img src="<c:url value='/usrupload/' />${emp.user_photo}" alt="프로필 사진" width="25" height="25"
 																						프로필 사진" width="25" height="25">
 																				</c:otherwise>
 																			</c:choose></td>
@@ -284,10 +286,12 @@ button {
 																</c:forEach>
 															</c:otherwise>
 														</c:choose>
+														</tbody>
 													</table>
 												</div>
 												<div class="tab-pane fade" id="userstop">
 													<table class="table">
+													  <thead>
 														<tr>
 															<th>프로필</th>
 															<th>사원번호</th>
@@ -299,7 +303,9 @@ button {
 															<th>상태</th>
 															<th>관리자</th>
 														</tr>
-
+														</thead>
+														
+														<tbody>
 														<c:choose>
 															<c:when test="${empty stopEmployee}">
 																<tr>
@@ -340,10 +346,12 @@ button {
 																</c:forEach>
 															</c:otherwise>
 														</c:choose>
+													  </tbody>
 													</table>
 												</div>
 												<div class="tab-pane fade" id="userwait">
 													<table class="table">
+													  <thead>
 														<tr>
 															<th>프로필</th>
 															<th>이름</th>
@@ -351,7 +359,9 @@ button {
 															<th>가입요청일</th>
 															<th>설정</th>
 														</tr>
-
+													  </thead>
+													  
+													  <tbody>
 														<c:choose>
 															<c:when test="${empty user}">
 																<tr>
@@ -382,13 +392,14 @@ button {
 																			<button class="approveUser"
 																				data-userid="${user.user_id}" >[승인]</button>
 																			<button class="rejectUser"
-																				data-userid="${user.user_id})" >[거절]</button>
+																				data-userid="${user.user_id}" >[거절]</button>
 																		</td>
 
 																	</tr>
 																</c:forEach>
 															</c:otherwise>
 														</c:choose>
+														</tbody>
 													</table>
 												</div>
 											</div>
@@ -467,5 +478,61 @@ button {
 
 	<!-- Place this tag in your head or just before your close body tag. -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
+	
+	<script>
+//검색
+function searchTable() {
+   var filterText = document
+         .getElementById("searchInput").value
+         .toUpperCase();
+   var filterType = document
+         .getElementById("filterSelect").value;
+   var rows = document
+         .querySelectorAll("table tbody tr");
+
+   rows
+         .forEach(function(row) {
+            var cells = row
+                  .getElementsByTagName("td");
+            var shouldHide = true;
+
+            for (var i = 0; i < cells.length; i++) {
+               var cellText = cells[i].textContent
+                     .toUpperCase();
+
+               if ((filterType === "이름" && i === 2)
+                     || (filterType === "이메일" && i === 5)
+                     || (filterType === "부서" && i === 3)
+                     || (filterType === "직책" && i === 4)) {
+                  if (cellText
+                        .indexOf(filterText) > -1) {
+                     shouldHide = false;
+                     break;
+                  }
+               }
+            }
+
+            if (shouldHide) {
+               row.style.display = "none";
+            } else {
+               row.style.display = "";
+            }
+         });
+}
+
+document.getElementById(
+      "searchInput")
+      .addEventListener("input",
+            searchTable);
+document.getElementById(
+      "filterSelect")
+      .addEventListener("change",
+            searchTable);
+
+
+
+</script>
+
+
 </body>
 </html>
