@@ -15,6 +15,10 @@ public interface IssueMapper {
 	
 	public List<Issue> getIssueList();
 	
+	public List<Issue> getStatusCount();
+	
+	public List<Issue> getMyWork(String status);
+	
 	public List<Issue> getFilteredIssueList(Map<String, String> map);
 	
 	public List<Issue> searchIssues(String searchText);
