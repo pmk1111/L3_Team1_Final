@@ -16,6 +16,12 @@ public class Issue {
 	private String issue_file;
 	private String issue_created;
 	
+    private int totalcount;
+    private int todocount;
+    private int progresscount;
+    private int resolvedcount;
+    private int donecount;
+	
 	public String getIssue_priority() {
 		return issue_priority;
 	}
@@ -87,6 +93,36 @@ public class Issue {
 	}
 	public void setIssue_created(String issue_created) {
 		this.issue_created = issue_created.substring(0, 10);
+	}
+	public int getTotalcount() {
+		return totalcount;
+	}
+	public void setTotalcount(int totalcount) {
+		this.totalcount = totalcount;
+	}
+	public int getTodocount() {
+		return todocount;
+	}
+	public void setTodocount(int todocount) {
+		this.todocount = todocount;
+	}
+	public int getProgresscount() {
+		return progresscount;
+	}
+	public void setProgresscount(int progresscount) {
+		this.progresscount = progresscount;
+	}
+	public int getResolvedcount() {
+		return resolvedcount;
+	}
+	public void setResolvedcount(int resolvedcount) {
+		this.resolvedcount = resolvedcount;
+	}
+	public int getDonecount() {
+		return donecount;
+	}
+	public void setDonecount(int donecount) {
+		this.donecount = donecount;
 	}
 	
 	@Override

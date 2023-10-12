@@ -3,6 +3,18 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.IssueMapper">
+
+	<resultMap id="IssueResultMap" type="com.naver.myhome.domain.Issue">
+    <id property="id" column="id"/>
+    <!-- 다른 필드에 대한 매핑 -->
+    <result property="totalcount" column="totalcount"/>
+    <result property="todocount" column="todocount"/>
+    <result property="progresscount" column="progresscount"/>
+    <result property="resolvedcount" column="resolvedcount"/>
+    <result property="donecount" column="donecount"/>
+</resultMap>
+	
+
 	<select id="getListCount" resultType="int">
 		select count(*) from issue
 	</select>
@@ -10,6 +22,16 @@
 	<select id="getIssueList" resultType="issue">
 		select * from issue order
 		by issue_created desc
+	</select>
+	
+	<select id="getStatusCount" resultType="issue">
+		SELECT
+    	count(*) AS totalcount,
+    	SUM(CASE WHEN issue_status = 'To Do' THEN 1 ELSE 0 END) AS todocount,
+    	SUM(CASE WHEN issue_status = 'In Progress' THEN 1 ELSE 0 END) AS progresscount,
+    	SUM(CASE WHEN issue_status = 'Resolved' THEN 1 ELSE 0 END) AS resolvedcount,
+    	SUM(CASE WHEN issue_status = 'Done' THEN 1 ELSE 0 END) AS donecount
+		FROM issue
 	</select>
 	
 
@@ -32,6 +54,17 @@
 			WHERE UPPER(issue_subject) LIKE '%' || UPPER(#{searchText}) || '%'
    		OR UPPER(create_user) LIKE '%' || UPPER(#{searchText}) || '%'
    		ORDER BY issue_created DESC
+  </select>
+  
+  <select id="getMyWork" resultType="com.naver.myhome.domain.Issue">
+  SELECT * FROM issue
+		<where>
+  		<if test='status != "" and status != null'>
+    		issue_status = #{status}
+  		</if>
+ 		</where>
+ 		<!-- and user_id = #{user_id} -->
+  	ORDER BY issue_created DESC
   </select>
   
  <!--  <select id="getProjectList" resultType="com.naver.myhome.domain.Project">
