@@ -106,17 +106,113 @@ $(document).ready(function () {
     $('form[name="createIssue"]').submit();
   });
 
-  // 파일 업로드 시 파일 명 영역 텍스트 변경
-  $("#upfile").change(function () {
-    const selectedFile = this.files[0];
 
-    if (selectedFile) {
-      const fileName = selectedFile.name;
-      $("#fileNameDisplay").text(fileName);
-    } else {
-      $("#fileNameDisplay").text("파일을 선택하세요.");
+
+
+
+
+
+
+
+
+
+   function initializeFileUpload() {
+    const fileInput = $('.add-file');
+    const uploadedFilesContainer = $('.uploaded-files');
+    let fileCount = 0; // 초기 파일 갯수 변수
+    const MAX_SINGLE_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+    const MAX_TOTAL_SIZE = 50 * 1024 * 1024; // 50MB
+    let totalUploadedSize = 0;
+
+    fileInput.on('change', handleFileUpload);
+
+    function handleFileUpload(event) {
+        const files = event.target.files;
+        let canUpload = true;
+
+        $.each(files, function(index, file) {
+
+            if (file.size > MAX_SINGLE_FILE_SIZE) {
+                alert("한 번에 최대 10MB의 파일만 업로드 할 수 있습니다.");
+                canUpload = false;
+                return false;
+            }
+
+            totalUploadedSize += file.size;
+            if (totalUploadedSize > MAX_TOTAL_SIZE) {
+                alert("최대 50MB까지 업로드 가능합니다.");
+                canUpload = false;
+                return false;
+            }
+
+            createFileElement(file);
+            fileCount++; // 파일 추가 시 카운트 증가
+        });
+
+        if (!canUpload) {
+            event.target.value = ''; // 파일 업로드 중단 시 파일 입력 필드 초기화
+            return;
+        }
+
+        event.target.value = ''; // Clear the file input to allow re-uploading the same file.
+        updateUploadedFilesContainerHeight();
     }
-  });
+
+    function createFileElement(file) {
+        const originalFileName = file.name; // 원본 파일 이름 저장
+        const upfile = $('<div class="upfile" data-value="' + originalFileName + '"></div>');
+
+        const fileName = $('<span class="file-name"></span>');
+        fileName.text(truncateFileName(originalFileName, 25)); // 파일 이름을 25자로 제한
+
+        const deleteButton = $('<button type="button" class="delete-file">x</button>');
+
+        deleteButton.on('click', function() {
+            upfile.remove();
+            fileCount--; // 파일 삭제 시 카운트 감소
+            updateUploadedFilesContainerHeight();
+        });
+
+        // 원본 파일 이름을 data-value 속성에 저장
+        upfile.data('value', originalFileName);
+
+        upfile.append(fileName);
+        upfile.append(deleteButton);
+
+        uploadedFilesContainer.append(upfile);
+        updateUploadedFilesContainerHeight(); // 파일 추가 시 높이 조정
+    }
+
+    function updateUploadedFilesContainerHeight() {
+        if (fileCount > 1) {
+            uploadedFilesContainer.css('height', fileCount * 40 + 'px');
+        } else if (fileCount === 1) {
+            uploadedFilesContainer.css('height', '40px'); // 파일이 1개일 때 높이를 고정
+        } else {
+            uploadedFilesContainer.css('height', 'auto'); // 파일이 없을 때 "auto"
+        }
+    }
+
+    function truncateFileName(fileName, maxLength) {
+        if (fileName.length > maxLength) {
+            const extension = fileName.split('.').pop(); // 파일 확장자 유지
+            const truncatedName = fileName.substring(0, maxLength - 3);
+            return truncatedName + '...' + extension;
+        }
+        return fileName;
+    }
+
+    // 초기화된 파일 업로드 기능을 반환
+    return {
+        initialize: initializeFileUpload,
+    };
+}
+
+// 파일 업로드 초기화
+const fileUpload = initializeFileUpload();
+fileUpload.initialize();
+
+
 
   // issueModal close
   $('.close-btn').on("click", function () {
@@ -124,5 +220,6 @@ $(document).ready(function () {
       $(".issue-modal").fadeOut(200);
     }
   });
+  
 
 }); //document end

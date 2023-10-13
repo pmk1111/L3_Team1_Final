@@ -338,9 +338,9 @@ window.addEventListener('load', function () {
 			data: {
 				status: selectedWorkType
 			},
-			success: function (mywork) {
+			success: function (mywork) {4
+				$('.board').empty();
 				if (mywork.length > 0) {
-					$('.board').empty();
 					mywork.forEach(function (item) {
 						let str = '<li><div class="type-title">'
 						if (item.issue_type === '버그') {
@@ -357,7 +357,8 @@ window.addEventListener('load', function () {
 						$('.board').append(str);
 					});
 				} else {
-					console.log('내 작업을 가져오는 중에 오류가 발생하였습니다.');
+					console.log('작업이 없습니다.');
+					$('.board').append('<h3>작업이 없습니다.</h3>')
 				}
 			},
 			error: function (error) {

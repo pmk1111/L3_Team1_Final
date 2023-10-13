@@ -6,6 +6,8 @@ import com.naver.myhome.domain.Issue;
 
 public interface IssueService {
 	
+	public int getIssueId();
+	
 	public int getListCount();
 	
 	public List<Issue> getStatusCount();

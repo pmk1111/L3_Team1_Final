@@ -17,20 +17,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.naver.myhome.domain.Issue;
-import com.naver.myhome.service.CommentService;
+import com.naver.myhome.service.FileService;
 import com.naver.myhome.service.IssueService;
 
+import lombok.Getter;
+import lombok.Setter;
+import oracle.jdbc.proxy.annotation.Post;
+
+@Getter
+@Setter
 @Controller
 @RequestMapping(value = "/issue")
 public class IssueController {
@@ -38,10 +44,14 @@ public class IssueController {
 	private static final Logger logger = LoggerFactory.getLogger(IssueController.class);
 
 	private IssueService issueService;
+	private FileService fileService;
+//    private FileUtils fileUtils;
 
 	@Autowired
 	public IssueController(IssueService issueService) {
 		this.issueService = issueService;
+//		this.fileService = fileService;
+//		this.fileUtils = fileUtils;
 	}
 
 	@GetMapping(value = "/issuelist")
@@ -82,12 +92,44 @@ public class IssueController {
 	}
 
 	@PostMapping("issue_add")
-	public String issueAdd(Issue issue, HttpServletRequest request) throws Exception{
+	public String issueAdd(Issue issue, HttpServletRequest request, MultipartFile[] uploadfiles) throws Exception{
+		
+		/* List<MultipartFile> fileList = mtfRequest.getFiles("uploadFiles"); */
+		int id = issueService.getIssueId();
+		//issue_id는 다음 시퀀스 번호를 가져오니, 
+		//select issue_id.nextval from dual로 가져온 값을 id에 할당해 saveFile의 매개변수로 넣어도 되는가...?
 		
 		issueService.issueAdd(issue);
+
+        
 		logger.info(issue.toString());
 		return "redirect:issuelist";
 	}
+	
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	   public ModelAndView fileupload(ModelAndView mv, MultipartFile[] uploadfiles) {
+	      
+	      for(MultipartFile file : uploadfiles) {
+	         
+	         logger.info("업로드 파일: " + file.getOriginalFilename());
+	      }
+	      
+	      
+	      return mv;
+	   }
+	
+	@GetMapping("/test")
+	public String test(MultipartFile[] uploadfiles) {
+		
+		for(MultipartFile file :  uploadfiles) {
+			logger.info("업로드 파일: " + file.getOriginalFilename());
+		}
+		return "issue/test";
+	}
+	
+	
+	
+	
 
 	@GetMapping("/issuedetail")
 	public ModelAndView issuedetail(int num, ModelAndView mv, HttpServletRequest request, 
@@ -152,6 +194,7 @@ public class IssueController {
 	        return 0;
 	    }
 	}
+
 
 
 }

@@ -79,6 +79,15 @@
    			 <artifactId>commons-fileupload</artifactId>
  		     <version>1.4</version>
 		</dependency>
+		
+		
+		<!-- lombok Annotation -->
+		<dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <scope>provided</scope>
+    </dependency>
+    
 	</dependencies>
 
 	<build>

@@ -21,6 +21,11 @@ import com.naver.myhome.domain.Memo;
 import com.naver.myhome.service.IssueService;
 import com.naver.myhome.service.MemoService;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Controller
 @RequestMapping("/mainboard")
 public class MyDashboardController {

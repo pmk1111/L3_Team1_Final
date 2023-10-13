@@ -87,7 +87,7 @@
             </li>
 
             <li class="menu-item active">
-              <a href="${pageContext.request.contextPath}/mainboard/MyDashboard" class="menu-link">
+              <a href="${pageContext.request.contextPath}/mainboard/mydashboard" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">내 대시보드</div>
               </a>
