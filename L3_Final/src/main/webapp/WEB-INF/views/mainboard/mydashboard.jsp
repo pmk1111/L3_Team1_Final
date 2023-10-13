@@ -232,7 +232,7 @@
 										
 										<c:choose>
 												<c:when test="${empty issuelist}">
-													<h1>데이터가 없습니다.</h1>
+													<h3>작업이 없습니다.</h3>
 													</c:when>
 													<c:otherwise>
 														<c:forEach var="i" items="${issuelist}">
