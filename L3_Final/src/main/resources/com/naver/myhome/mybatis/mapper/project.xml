@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.naver.myhome.mybatis.mapper.ProjectMapper">
+
+    <insert id="Insert">
+        insert into project (TITLE, SUBTITLE)
+        values (#{TITLE}, #{SUBTITLE})
+    </insert>
+
+    <select id="getAllProjectList" resultType="com.naver.myhome.domain.Project">
+        select project.*, ROUND((sysdate-created_at)*24*60) as CURRENTTIME
+        from project
+        ORDER BY created_at DESC
+    </select>
+    
+    <select id="getFavoritProjectList" resultType="com.naver.myhome.domain.Project">
+        SELECT p.*
+        FROM project p
+        JOIN favorites f ON p.num = f.project_num
+        WHERE f.employee_num = #{employeeNum}
+    </select>
+    
+    <select id="getPartProjectList" resultType="com.naver.myhome.domain.Project">
+		SELECT p.*
+		FROM project p
+		JOIN team t ON p.num = t.project_num
+		WHERE t.employee_num = 1
+		AND p.num NOT IN (
+		    SELECT f.project_num 
+		    FROM favorites f 
+		)
+    </select>
+
+    <select id="getDetail" parameterType="int" resultType="Project">
+        select *
+        from project
+        where NUM = #{NUM}
+    </select>
+
+    <update id="updateColor">
+        update project
+        set COLOR = #{color}
+        where NUM = #{num}
+    </update>
+
+    <select id="checkFavorite" resultType="integer">
+        select num
+        from favorites
+        where project_num = #{projectNum} AND employee_num = #{employeeNum}
+    </select>
+
+    <insert id="addFavorite">
+        insert into favorites (employee_num, project_num)
+        values (#{employeeNum}, #{projectNum})
+    </insert>
+
+    <delete id="removeFavorite">
+        DELETE FROM favorites
+        WHERE employee_num = #{employeeNum} AND project_num = #{projectNum}
+    </delete>
+
+</mapper>

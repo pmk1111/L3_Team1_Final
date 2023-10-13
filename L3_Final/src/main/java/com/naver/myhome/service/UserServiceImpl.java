@@ -31,13 +31,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int approveuser(String company_invited) {
-		return dao.approveuser(company_invited);
+	public int approveuser(int userid) {
+		return dao.approveuser(userid);
 	}
 
 	@Override
-	public int rejectuser(String company_invited) {
-		return dao.rejectuser(company_invited);
+	public int rejectuser(int userid) {
+		return dao.rejectuser(userid);
 	}
 
 	//지니 끝

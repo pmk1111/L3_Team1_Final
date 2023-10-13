@@ -8,6 +8,10 @@ public interface IssueService {
 	
 	public int getListCount();
 	
+	public List<Issue> getStatusCount();
+	
+	public List<Issue> getMyWork(String status);
+
 	public List<Issue> getIssueList();
 	
 	public List<Issue> getFilteredIssueList(String issueType, String issuePriority);
@@ -25,5 +29,6 @@ public interface IssueService {
 	public int issueUpdate(Issue issue);
 
 	public int issueDelete(int issueId);
+
 
 }

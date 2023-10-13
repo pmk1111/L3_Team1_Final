@@ -302,6 +302,7 @@ select::-ms-expand {
 												<li class="nav-item"><a class="nav-link" href="#"
 													onclick="showGraph('dailyGraph')">일별</a></li>
 											</ul>
+
 											<!-- 차트 -->
 
 											<div id="graphs">
@@ -666,6 +667,7 @@ select::-ms-expand {
 
 
 										<script>
+
                     
 										function formatYearMonth(date) {
 											var year = date.getFullYear();
