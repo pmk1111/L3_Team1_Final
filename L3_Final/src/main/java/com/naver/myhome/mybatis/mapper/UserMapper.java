@@ -14,15 +14,13 @@ public interface UserMapper {
 
 		
 
-		public List<User> getSearchList(Map<String, Object> map);
-
 		public List<User> finduser(String company_invited);
 
 		public int countuser(String company_invited);
 
-		public int approveuser(String company_invited);
+		public int approveuser(int userid);
 
-		public int rejectuser(String company_invited);
+		public int rejectuser(int userid);
 
 	
 

@@ -4,35 +4,34 @@ import java.sql.Date;
 
 public class Company {
 	private int company_id;
-	private String password;
-	private String name;
-	private String email;
+	private String company_password;
+	private String company_name;
+	private String company_email;
 	private String company_domain;
 	private Date company_created;
-	
 	public int getCompany_id() {
 		return company_id;
 	}
 	public void setCompany_id(int company_id) {
 		this.company_id = company_id;
 	}
-	public String getPassword() {
-		return password;
+	public String getCompany_password() {
+		return company_password;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setCompany_password(String company_password) {
+		this.company_password = company_password;
 	}
-	public String getName() {
-		return name;
+	public String getCompany_name() {
+		return company_name;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
 	}
-	public String getEmail() {
-		return email;
+	public String getCompany_email() {
+		return company_email;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCompany_email(String company_email) {
+		this.company_email = company_email;
 	}
 	public String getCompany_domain() {
 		return company_domain;
@@ -46,6 +45,8 @@ public class Company {
 	public void setCompany_created(Date company_created) {
 		this.company_created = company_created;
 	}
+	
+	
 	
 	
 

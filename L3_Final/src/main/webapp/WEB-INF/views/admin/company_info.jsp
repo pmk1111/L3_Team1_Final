@@ -146,7 +146,7 @@
                           <p class="mb-4">
                           
                           <!-- content -->
-                          <form id="formCompanySetting" method="POST" >
+                          <form id="formCompanySetting" method="POST" action = "../admin/companyinfo">
                         <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="companyName" class="form-label">회사명</label>
@@ -155,7 +155,7 @@
                               type="text"
                               id="companyName"
                               name="companyName"
-                              value="${userinfo.companyName}"
+                              value="${companyinfo.company_name}"
                               disabled="disabled"
                             />
                           
@@ -226,7 +226,7 @@
                               type="text"
                               id="companyDomain"
                               name="companyDomain"
-                              value="${userinfo.companyDomain}"
+                              value= "${companyinfo.company_domain}"
                               disabled="disabled"
                             />
 

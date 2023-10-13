@@ -12,13 +12,9 @@ public interface AdminService {
 
 	public List<Employee> findEmployee(String company_id);
 
-	Company company_info(String company_id);
+	Company companyInfo(String company_id);
 
 	public int countEmployee(String company_id);
-
-//	public int getSearchListCount(int index, String search_word);
-
-	public List<Employee> getSearchList(int index, String search_word, int page, int limit);
 
 	public List<Employee> stopEmployee(String company_id);
 
@@ -31,5 +27,12 @@ public interface AdminService {
 	public int addAuth(int employeeNo);
 
 	public int useEmployeeStatus(int employeeNo);
+
+	public int addEmployee(int user_id, String company_id, String company_invited);
+
+	public int updateCompanyName(String company_id);
+
+
+	
 	
 }

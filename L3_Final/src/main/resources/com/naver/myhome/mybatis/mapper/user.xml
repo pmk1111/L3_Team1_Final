@@ -8,10 +8,11 @@
 	
 	<!-- 가입대기자 -->
 	<select id="finduser" resultType="user">
-		select u.user_photo, u.user_name, u.user_email, u.user_create
+		select u.user_photo, u.user_name, u.user_email, u.user_create, u.user_id
 		from usr u
 		left join employee e on u.user_id = e.user_id
 		where u.company_invited = #{company_invited} and u.user_status = 0
+		order by u.user_name
 	</select>
 	
 	<select id="countuser" resultType="int">
@@ -22,14 +23,17 @@
 	</select>
 	
 	<!-- 가입대기 승인/거절 -->
-	<update id="approveuser" parameterType="int">
+	<update id="approveuser" >
 		update usr
 		set user_status = 1
-		where company_invited = #{company_invited} and user_status = 0
+		where user_id= #{user_id} and user_status = 0
 	</update>
 	
-	<delete id="rejectuser" parameterType="int">
-		delete usr
+	
+	
+	<delete id="rejectuser" >
+		delete usr 
+		where user_id=#{user_id}
 		
 	</delete>
 	<!-- /지니 -->
@@ -61,32 +65,18 @@
 		<include refid="search_" />
 	</select>
 	
-	<select id="getSearchList" parameterType="map"
-		resultType="user">
-		select *
-		from (select rownum rnum, b.*
-		from (select *
-		from user
-		where id != 'admin'
-		<include refid="search_" />
-		order by id
-		) b
-		where rownum &lt;= #{end}
-		)
-		where rnum between #{start} and #{end}
-		<!-- where rnum &gt;= #{start} and rnum &lt;= #{end} -->
-	</select>
+
 	
-	<sql id="search_">
-		<if test='search_field != null'>
-			and
+		<sql id="search_">
+		<if test="search_field != null">
+		and
 			<choose>
-				<when test='search_field=="id"'>id</when>
-				<when test='search_field=="name"'>name</when>
-				<when test='search_field=="age"'>age</when>
-				<when test='search_field=="gender"'>gender</when>
+				<when test='search_field=="user_name"'>user_name</when>
+				<when test='search_field=="user_email"'>user_email</when>
+				<when test='search_field=="department"'>department</when>
+				<when test='search_field=="position"'>position</when>
 			</choose>
-			like #{search_word}
+		like #{search_word}
 		</if>
 	</sql>
 
