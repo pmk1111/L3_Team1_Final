@@ -24,6 +24,17 @@ public class IssueServiceImpl implements IssueService{
 	public int getListCount() {
 		return mapper.getListCount();
 	}
+	
+	@Override
+	public List<Issue> getStatusCount() {
+		return mapper.getStatusCount();
+	}
+	
+	@Override
+	public List<Issue> getMyWork(String status) {
+		return mapper.getMyWork(status);
+	}
+
 
 	@Override
 	public List<Issue> getIssueList() {
@@ -74,6 +85,7 @@ public class IssueServiceImpl implements IssueService{
 	public int issueDelete(int issueId) {
 		return mapper.issueDelete(issueId);
 	}
+
 
 
 }

@@ -362,6 +362,7 @@ display: none;
                     </div>
                     </div>
                     <script>
+
                  // Chart 생성
                     var ctx = document.getElementById('lineChart').getContext('2d');
                     var ctx2 = document.getElementById('lineChart2').getContext('2d');
