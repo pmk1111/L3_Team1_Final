@@ -112,7 +112,7 @@
 
 #searchInput {color: #697A8D;
 			  border: 1px solid #d9dee3;}
-tbody tr {
+thead tr, tbody tr {
 	text-align: center;
 }
 
@@ -135,6 +135,13 @@ button {
 	font-size:13px;
 }
 
+.blue {
+color:blue;
+}
+
+.red {
+color:red;
+}
 </style>
 
 </head>
@@ -277,11 +284,17 @@ button {
 																		<td>
 																			 <p>정상</p>
 																			<button class="user-stop" data-employee_no="${emp.employee_no }" data-employee_status="${emp.employee_status}"
-																						data-tab="userstop">[이용중지]</button>
+																						data-tab="useruse">[이용중지]</button>
 																		</td>
+																			<c:set var = "color" value = "blue" />
+																			<c:set var = "adminAuth" value = "[등록]" />
+																		<c:if test = "${emp.employee_auth.trim() =='Y' }">
+																			<c:set var = "color" value = "red" />
+																			<c:set var = "adminAuth" value = "[삭제]" />
+																		</c:if>
 																		<td>
 																			<span class="employee-auth-value"><c:out value="${emp.employee_auth}" /></span>
-																			<button class="auth-delete" data-employee_no="${emp.employee_no }">[삭제]</button></td>
+																			<button class="auth-delete <c:out value='${color }'/>" data-employee_no="${emp.employee_no }"><c:out value = "${adminAuth}"/></button></td>
 																	</tr>
 																</c:forEach>
 															</c:otherwise>
@@ -338,10 +351,16 @@ button {
 																		<td>
 																			<p>이용중지</p>
 																			<button class="user-stop" data-employee_no="${stop.employee_no}" data-employee_status="${stop.employee_status}"
-																										data-tab="useruse">[정상]</button>
-																		</td>
-																		<td><span class="employee-auth-value"><c:out value="${stop.employee_auth}" /></span>
-																			<button class="auth-delete" data-employee_no="${stop.employee_no }">[삭제]</button></td>
+																										data-tab="userstop">[정상]</button>
+																		<c:set var = "color" value = "blue" />
+																			<c:set var = "adminAuth" value = "[등록]" />
+																		<c:if test = "${stop.employee_auth.trim() =='Y' }">
+																			<c:set var = "color" value = "red" />
+																			<c:set var = "adminAuth" value = "[삭제]" />
+																		</c:if>
+																		<td>
+																			<span class="employee-auth-value"><c:out value="${stop.employee_auth}" /></span>
+																			<button class="auth-delete <c:out value='${color}'/>" data-employee_no="${stop.employee_no }"><c:out value = "${adminAuth}"/></button></td>
 																	</tr>
 																</c:forEach>
 															</c:otherwise>

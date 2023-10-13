@@ -23,10 +23,11 @@ public class AdminServiceImpl implements AdminService {
 		this.dao = dao;
 	}
 
+	//구성원 관리
 	@Override
-	public Company company_info(String company_id) {
+	public Company companyInfo(String company_id) {
 		
-		return null;
+		return dao.companyInfo(company_id);
 	}
 	
 	@Override
@@ -72,6 +73,12 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int addEmployee(int userid, String company_id, String company_invited) {
 				return dao.addEmployee(userid, company_id, company_invited);
+	}
+
+	//회사정보 수정
+	@Override
+	public int updateCompanyName(String company_id) {
+		return dao.updateCompanyName(company_id);
 	}
 	
 	

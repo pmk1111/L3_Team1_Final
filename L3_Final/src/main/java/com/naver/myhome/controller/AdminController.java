@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.naver.myhome.domain.Company;
 import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
 import com.naver.myhome.service.AdminService;
@@ -45,8 +46,19 @@ public class AdminController {
 //	          mv.setViewName("admin/company_info");
 //	          mv.addObject("companyinfo",company);
 //	       }
-		public String companyinfo() {
-	       return "admin/company_info";
+		public ModelAndView companyinfo( ModelAndView mv) {
+				String company_id ="1";
+				
+				Company company = adminservice.companyInfo(company_id);
+				mv.addObject("companyinfo", company);
+				
+				int updateCompanyName = adminservice.updateCompanyName(company_id);
+				
+			//	int updateCompanyDomain = adminservice.updateCompanyDomain(company_id);
+				
+			//	int updateCompanyPwd = adminservice.updateCompanyPwd(company_id);
+			    mv.setViewName("admin/company_info");
+			return mv;
 	    }
 		
 		
@@ -96,11 +108,11 @@ public class AdminController {
 	         
 	            int result = 0;
 	            
-	            if ("userstop".equals(tab)) {
+	            if ("useruse".equals(tab)) { //정상 -> 이용중지
 	             
 	                 result = adminservice.stopEmployeeStatus(employeeNo);
 	              
-	            } else if ("useruse".equals(tab)) {
+	            } else if ("userstop".equals(tab)) { //이용중지 -> 정상
 	            	
 		                 result = adminservice.useEmployeeStatus(employeeNo);
 		              
@@ -183,6 +195,19 @@ public class AdminController {
 		     
 		    
 		    return employee;
+			
+		}
+		
+		//이용중지 리스트 가져오기
+		@ResponseBody
+		@RequestMapping(value = "/userstoplist", method = RequestMethod.GET)
+		public List<Employee> userstoplist(@RequestParam("company_id")  String company_id){
+			 
+			
+			// 회사의 직원 목록을 가져와서 모델에 추가
+		    List<Employee> stopEmployee = adminservice.stopEmployee(company_id);
+		    
+		    return stopEmployee;
 			
 		}
 

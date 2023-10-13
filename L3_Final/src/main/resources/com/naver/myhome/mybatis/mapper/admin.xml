@@ -79,6 +79,16 @@
     VALUES (employee_seq.nextval, #{company_id}, #{company_invited}, #{user_id} )
 	</insert>
 	
-
+	<!-- 회사 정보 -->
+	<select id="companyInfo" resultType="company">
+	select company_name, company_domain 
+	from company
+	where company_id = #{company_id}
+	</select>
  
+ 	<!-- 회사명 업데이트 -->
+ 	<update id ="updateCompanyName">
+ 	update company
+ 	set company_name = 
+ 	</update>
 </mapper>
