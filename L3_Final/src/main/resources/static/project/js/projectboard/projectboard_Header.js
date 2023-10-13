@@ -1,37 +1,71 @@
 $(document).ready(function() {
 
-    $(".star").click(function() {
+		    $('.star').each(function() {
+		        var $this = $(this);
+		        var projectNum = $this.data('projectNum');
+		       /* var employeeNum = $this.data('employeeNum'); */
+		        var employeeNum = 1;
+		        
+		        $.ajax({
+		            url: '../project/check',
+		            method: 'GET',
+		            data: {
+		                projectNum: projectNum,
+		                employeeNum: employeeNum
+		            },
+		            success: function(response) {
+		                if (response == -1) {
+		                    $this.attr('src', '../resources/project/img/projectboard/icon_star.png');
+		                } else {
+		                    $this.attr('src', '../resources/project/img/projectboard/icon_star_on.png');
+		                }
+		            },
+				    error: function(xhr, status, error) {
+				        console.error('Error:', error);
+				    }
+		        });
+		    });
+		
+		    $('.star').click(function() {
+		        var $this = $(this);
+		        var projectNum = $this.data('projectNum');
+		       /* var employeeNum = $this.data('employeeNum'); */
+		        var employeeNum = 1
+		
+			    $.ajax({
+			        url: '../project/favorite',
+			        method: 'POST',
+			        data: {
+			            projectNum: projectNum,
+			            employeeNum: employeeNum
+			        },
+			        success: function(response) {
+			        	console.log(response);
+			            if(response == -1) {
+			                $this.attr('src', '../resources/project/img/projectboard/icon_star.png');
+			            } else {
+			                $this.attr('src', '../resources/project/img/projectboard/icon_star_on.png');
+			            }
+			        }
+			    });
+		    });
 
-        var src = $(this).attr("src");
+			$(".star").hover(function() {
+			    var $parent = $(this).parent();
+			    var src = $(this).attr("src");
+			
+			    if (src === "../project/img/projectboard/icon_star.png") {
+			    	$(this).find(".star").attr("src", "../project/img/projectboard/icon_star_hover.png");
+			    }
+			}, function() {
+			    var $parent = $(this).parent();
+			    var src = $(this).attr("src");
+			
+			    if (src === "../project/img/projectboard/icon_star_hover.png") {
+			   		$(this).find(".star").attr("src", "../project/img/projectboard/icon_star.png");
+			    }
+			});
 
-        if (src === "../project/img/projectboard/icon_star_on.png") {
-            $(this).attr("src", "../project/img/projectboard/icon_star.png");
-        } else {
-            $(this).attr("src", "../project/img/projectboard/icon_star_on.png");
-        }
-
-    })
-
-    $(".star").hover(function() {
-        var $parent = $(this).parent();
-        var src = $(this).attr("src");
-
-        if (src === "../project/img/projectboard/icon_star.png") {
-            $parent.fadeIn(75, function() {
-                $(this).find(".star").attr("src", "../project/img/projectboard/icon_star_hover.png");
-            });
-        }
-    }, function() {
-        var $parent = $(this).parent();
-        var src = $(this).attr("src");
-
-        if (src === "../project/img/projectboard/icon_star_hover.png") {
-            $parent.fadeOut(75, function() {
-                $(this).find(".star").attr("src", "../project/img/projectboard/icon_star.png");
-                $(this).fadeIn(100);
-            });
-        }
-    });
 
             // 앵커 클릭 시 모달 보여주기
             $('.select-color').click(function(event) {
@@ -39,12 +73,6 @@ $(document).ready(function() {
                 $('#modal-background').fadeIn(300);
                 $('#modal-background').css('display', 'block');
 
-                // 서클애들이 눈에 튐 
-                $('.bi-circle-fill').addClass("darker-icon");
-                $('.activity-badge').addClass("light-border");
-
-                // 검색창 반짝이는거
-                $('#layout-navbar').css('box-shadow', '1px 1px 1px 2px #f0f0f0');
 
             });
 
@@ -53,9 +81,6 @@ $(document).ready(function() {
                 event.preventDefault();
                 $('#modal-background').css('display', 'none');
 
-                $('.bi-circle-fill').removeClass("darker-icon");
-                $('.activity-badge').removeClass("light-border");
-                $('#layout-navbar').css('box-shadow', '3px 3px 10px 5px #f0f0f0');
             });
 
             // radio
@@ -68,18 +93,22 @@ $(document).ready(function() {
             });
 
             // 색상 변경
-            $(".modal-submit").click(function() {
-                // .project-color-check-active-1 클래스가 적용된 요소의 부모 li 태그의 배경색을 가져옴
-                var activeColor = $(".project-color-check-active-1").closest('li').css("background-color");
-
-                // .select-color 요소의 background-color를 변경
-                $(".select-color").css("background", activeColor);
-
-                $("#modal-background").css('display', 'none');
-                $('.bi-circle-fill').removeClass("darker-icon");
-                $('.activity-badge').removeClass("light-border");
-                $('#layout-navbar').css('box-shadow', '3px 3px 10px 5px #f0f0f0');
-            });
+			$(".modal-submit").click(function() {
+			    // .project-color-check-active-1 클래스가 적용된 요소의 부모 li 태그의 배경색을 가져옴
+			    var activeColor = $(".project-color-check-active-1").closest('li').css("background-color");
+				var num = parseInt($("#detailSettingProjectSrno").text());
+				
+			    $("#modal-background").css('display', 'none');
+			    
+			    $.ajax({
+			        url: '../project/updateColor',
+			        type: 'POST',
+			        data: { color:activeColor, num:num },
+			        success: function(response) {
+			        $(".select-color").css("background", activeColor);
+			    }
+			    });
+			});
 
             /* 드롭다운 이미지 변경 */
             $('.setting-anchor').hover(
@@ -222,13 +251,6 @@ $(document).ready(function() {
                 event.preventDefault();
                 $('#modal-background-invite').fadeIn(300);
                 $('#modal-background-invite').css('display', 'block');
-
-                // 서클애들이 눈에 튐 
-                $('.bi-circle-fill').addClass("darker-icon");
-                $('.activity-badge').addClass("light-border");
-
-                // 검색창 반짝이는거
-                $('#layout-navbar').css('box-shadow', '1px 1px 1px 2px #f0f0f0');
             });
 
             $('.modal-close-invite, .modal-cancle-exit').click(function(event) {
@@ -277,10 +299,6 @@ $(document).ready(function() {
             $('.modal-submit-exit').click(function(event) {
                 event.preventDefault();
                 $('#modal-background-invite').css('display', 'none');
-
-                $('.bi-circle-fill').removeClass("darker-icon");
-                $('.activity-badge').removeClass("light-border");
-                $('#layout-navbar').css('box-shadow', '3px 3px 10px 5px #f0f0f0');
             });
             
 });

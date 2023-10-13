@@ -345,6 +345,9 @@ display: none;
                                 plugins: {
                                     title: {
                                         display: true,
+                                    },
+                                    legend: { // 추가
+                                        display: false, // 추가
                                     }
                                 }
                             }

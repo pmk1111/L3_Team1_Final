@@ -72,7 +72,7 @@
           <ul class="menu-inner py-1">
 
             <li class="menu-item" style="margin:15px 0px 25px 0px;">
-              <a href="index.html" class="menu-link" style="background-color: #9F7AB0; color: white; width: 228px;">
+              <a href="../project/CreateProject" class="menu-link" style="background-color: #9F7AB0; color: white; width: 228px;">
                 <i class="menu-icon tf-icons bx bx-home-circle create-project" style="margin-left: 22px;"></i>
                 <div class="create-project" style="font-weight: bold;">새 프로젝트 만들기</div>
               </a>
@@ -80,7 +80,7 @@
 
             <!-- Dashboard -->
             <li class="menu-item">
-              <a href="index.html" class="menu-link">
+              <a class="menu-link" href="../project/ProjectList">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">내 프로젝트</div>
               </a>
