@@ -11,31 +11,7 @@
     <title>캘린더</title>
     <meta name="description" content="" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../resources/mainboard/assets/img/favicon/favicon.ico" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
-    
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/fonts/boxicons.css" />
-
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../resources/mainboard/assets/css/demo.css" />
-
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/libs/apex-charts/apex-charts.css" />
-
-    <!-- Page CSS -->
+	<jsp:include page="../template/cssTemplate.jsp"></jsp:include>
 
     <!-- Helpers -->
     <script src="../resources/mainboard/assets/vendor/js/helpers.js"></script>
@@ -46,6 +22,10 @@
 
 
     <style>
+    #calendararea1{
+width:1414px;
+margin-top:30px;
+}
       .file-search{border:1px solid lightgrey; border-radius:3px; width:350px; height:35px; padding-left: 15px; color:#6a6192; font-weight: 700}
       .leftbar-close{background-color: #9F7AB0; border-radius: 50%;}
       .welcome-message{width:100%;}
@@ -54,6 +34,7 @@
     </style>
     <style type="text/css">
     /* 모달 스타일 */
+  
 .modal {
     display: none;
     position: fixed;
@@ -122,7 +103,24 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #45a049;
 }
-    
+.save, .modify, .remove{
+margin: 20px 0 0 0;
+	color: #fff;
+	text-align: center;
+	background: #9F7AB0;
+	line-height: 52px;
+	height: 52px;
+	width: 130px;
+	border-radius: 8px;
+	font-size: 16xp;
+	font-wdight: 500;
+	border: none;
+	outline: none;}    
+	#layout-navbar{
+	
+	margin-top: 0px;
+	}
+
 </style>    
   </head>
 
@@ -142,22 +140,27 @@ input[type="submit"]:hover {
         <jsp:include page="navbar.jsp"></jsp:include>
 
           <!-- / Navbar -->
+        <div class="container-xxl flex-grow-1 container-p-y" id="calendararea2">
+			<div class="row">  
+				<div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4 issue-list" id="calendararea1">
+					<div class="card">
 
+						<div class="card-body issue-list-card-body">
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
 
 	  <div class="container-xxl flex-grow-1 container-p-y">
-            
-            <body>
-    <button onclick="openModal()">일정 추가</button>
+            <div class="calendararea">
+            <jsp:include page="calendar.jsp"></jsp:include>
+  
 
     <!-- 일정 추가 모달 창 -->
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2>일정 추가</h2>
-            <form action="addEvent.jsp" method="post">
+            <h2>일정 등록</h2>
+            <form id="scheduleForm">
                 <label for="eventTitle">일정 제목:</label>
                 <input type="text" id="eventTitle" name="eventTitle" required><br>
                 
@@ -170,8 +173,6 @@ input[type="submit"]:hover {
                 <label for="eventLocation">장소:</label>
                 <input type="text" id="eventLocation" name="eventLocation"><br>
                 
-                <label for="eventAttendees">참석자:</label>
-                <input type="text" id="eventAttendees" name="eventAttendees"><br>
                 
                 <label for="eventAlarm">알람:</label>
                 <select id="eventAlarm" name="eventAlarm">
@@ -183,18 +184,26 @@ input[type="submit"]:hover {
                 
                 <label for="eventCategory">일정 구분</label>
                 <select id="eventCategory" name="eventCategory">
-                    <option value="업무">업무</option>
-                    <option value="일정">일정</option>
-                    <option value="선택안함">선택안함</option>
+                    <option value="1">업무</option>
+                    <option value="2">일정</option>
+                    <option value="0">선택안함</option>
                 </select><br>
                 <label for="eventDescription">설명:</label>
                 <textarea id="eventDescription" name="eventDescription"></textarea><br>
                 
-                <input type="submit" value="일정 추가">
+                <button class="save" type="button" onclick="saveSchedule()">저장</button> 
+                <button class="modify" type="button" onclick="modifySchedule()">수정</button>
+                <button class="remove" type="button" onclick="removeSchedule()">삭제</button>
             </form>
         </div>
     </div>
-
+			</div>
+			</div>
+			</div>
+			</div>
+	</div>
+	</div>
+	</div>	
     <script>
         // 모달 창 열기
         function openModal() {
@@ -207,6 +216,55 @@ input[type="submit"]:hover {
             var modal = document.getElementById('myModal');
             modal.style.display = 'none';
         }
+        function saveSchedule(){
+        	$.ajax({
+    			type: "POST", 
+    			url: "save_schedule", 
+    			data: $("#scheduleForm").serialize(),
+    			dataType: "json",
+    			success: function (data) {
+    				if(data.rsltCd == '0'){
+    					alert("일정이 정상적으로 추가되었습니다.");
+    					closeModal();
+    					calendar.addEvent({
+    						title  : data.scheduleTitle,
+    						start : data.scheduleStartDate,
+    						end : data.scheduleEndDate
+    					});
+    				}
+    			},
+    			error: function (error) {
+    				
+    			}
+    		});
+        	function modifySchedule() {
+                $.ajax({
+                    type: "POST",
+                    url: "modify_schedule",
+                    data: $("#scheduleForm").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        if(data.rsltCd == '0'){
+                            alert("일정이 정상적으로 수정되었습니다.");
+                            closeModal();
+                            calendar.addEvent({
+        						title  : data.scheduleTitle,
+        						start : data.scheduleStartDate,
+        						end : data.scheduleEndDate
+        					});
+                        }
+                    },
+                    error: function (error) {
+                        
+                    }
+                });
+            }
+
+          
+        	
+        }
+        
+       
     </script>
             
        </div>     
@@ -254,7 +312,6 @@ input[type="submit"]:hover {
 
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
-    </div>
     <!-- / Layout wrapper -->
 
     <!-- Core JS -->

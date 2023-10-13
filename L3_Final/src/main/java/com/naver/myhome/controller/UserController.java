@@ -52,21 +52,21 @@ public class UserController {
     }
 	
 	// 수정처리
-	   @RequestMapping(value = "/updateProcess", method = RequestMethod.POST)
-	   public String updateProcess(User user, Model model, HttpServletRequest request, RedirectAttributes rattr) {
-
-	      int result = userservice.update(user);
-	      if (result == 1) {
-	         rattr.addFlashAttribute("result", "updateSuccess");
-	         return "redirect:/board/list";
-	      } else {
-	         model.addAttribute("url", request.getRequestURL());
-	         model.addAttribute("message", "정보 수정 실패");
-	         return "error/error";
-
-	      }
-
-	   }
+//	   @RequestMapping(value = "/updateProcess", method = RequestMethod.POST)
+//	   public String updateProcess(User user, Model model, HttpServletRequest request, RedirectAttributes rattr) {
+//
+//	      int result = userservice.update(user);
+//	      if (result == 1) {
+//	         rattr.addFlashAttribute("result", "updateSuccess");
+//	         return "redirect:/board/list";
+//	      } else {
+//	         model.addAttribute("url", request.getRequestURL());
+//	         model.addAttribute("message", "정보 수정 실패");
+//	         return "error/error";
+//
+//	      }
+//
+//	   }
 	   
 	   //파일 저장 경로
 //	   @Value("${file.path}")
@@ -142,6 +142,14 @@ public class UserController {
 	@RequestMapping(value = "/join2", method = RequestMethod.GET)
 	public String join2() {
 		return "user/join2";
+	}
+	@RequestMapping(value = "/join3", method = RequestMethod.GET)
+	public String join3() {
+		return "user/join3";
+	}
+	@RequestMapping(value = "/join4", method = RequestMethod.GET)
+	public String join4() {
+		return "user/join4";
 	}
 	@RequestMapping(value = "/confirm", method = RequestMethod.GET)
 	public String confirm() {

@@ -221,6 +221,20 @@ display: none;
 }
 
 
+
+/* 탭 활성화 스타일 */
+.nav-tabs .nav-item.active a.nav-link {
+    background-color: #9F7AB0; /* 활성화된 탭 배경 색상 (연보라색) */
+    color:black;
+}
+
+/* 탭 비활성화 스타일 */
+.nav-tabs .nav-item a.nav-link {
+    background-color: white; /* 비활성화된 탭 배경 색상 */
+    font-weight: normal; /* 비활성화된 탭 텍스트 기본 굵기 */
+     color:black;
+}
+
     </style>
   </head>
 
@@ -254,12 +268,36 @@ display: none;
 
                         <!-- 탭 메뉴 -->
                         <ul class="nav nav-tabs">
-                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">월별</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">주별</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">일별</a></li>
-                        </ul>
+												<li class="nav-item"><a class="nav-link active"
+													aria-current="page" href="#"
+													onclick="showGraph('monthlyGraph')">월별</a></li>
+												<li class="nav-item"><a class="nav-link" href="#"
+													onclick="showGraph('weeklyGraph')">주별</a></li>
+												<li class="nav-item"><a class="nav-link" href="#"
+													onclick="showGraph('dailyGraph')">일별</a></li>
+											</ul>
                         <!-- 차트 -->
-                        <canvas id="lineChart" width="200px" height="50px" style="margin:auto; padding: 5px 20px 20px 20px; display: block; box-sizing: border-box;"></canvas>
+                        
+                            <div id="graphs">
+        <!-- 월별 그래프 -->
+        <div id="monthlyGraph">
+            <!-- 월별 그래프가 들어갈 자리 -->
+             <canvas id="lineChart" width="200px" height="50px" style="margin:auto; padding: 5px 20px 20px 20px; display: block; box-sizing: border-box;"></canvas>
+        </div>
+
+        <!-- 주별 그래프 -->
+        <div id="weeklyGraph">
+         <canvas id="lineChart2" width="200px" height="50px" style="margin:auto; padding: 5px 20px 20px 20px; display: block; box-sizing: border-box;"></canvas>
+            <!-- 주별 그래프가 들어갈 자리 -->
+        </div>
+
+        <!-- 일별 그래프 -->
+        <div id="dailyGraph">
+         <canvas id="lineChart3" width="200px" height="50px" style="margin:auto; padding: 5px 20px 20px 20px; display: block; box-sizing: border-box;"></canvas>
+            <!-- 일별 그래프가 들어갈 자리 -->
+        </div>
+    </div>
+                       
                         <!-- 검색 기능 및 테이블 -->
                         <div class="searchAndtable">
                     <div class="search">
@@ -269,10 +307,11 @@ display: none;
                             <option>번호</option>
                         </select>
                         <div class="search-content">
-                            <input class="search-bar" type="text" placeholder="검색어 입력">
-                            <img class="search-img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+                            <input class="search-bar" type="text" id="searchInput" placeholder="검색어 입력">
+                          
+                           <img class="search-img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="검색" onclick="searchTable()">
                         </div>
-                        <a class="exel" href="#">엑셀 다운로드</a>
+                        <a class="exel" href="#" id="downloadLink">엑셀 다운로드</a>
                         <select class="month-select">
                             <option>2023년7월</option>
                             <option>2023년8월</option>
@@ -323,39 +362,123 @@ display: none;
                     </div>
                     </div>
                     <script>
-                        const data = {
-                            labels: ['2023 4월', '2023 5월', '2023 6월', '2023 7월', '2023 8월', '2023 9월'],
-                            datasets: [
-                                {
-                                    label: 'Dataset',
-                                    data: [50, 20, 10, 40, 25, 60], // 원하는 데이터 값을 넣으세요.
-                                    borderColor: 'lightblue',
-                                    backgroundColor: 'lightblue',
-                                    pointRadius: 10,
-                                    pointHoverRadius: 15
-                                }
-                            ]
-                        };
 
-                        const config2 = {
-                            type: 'line',
-                            data: data,
-                            options: {
-                                responsive: true,
-                                plugins: {
-                                    title: {
-                                        display: true,
-                                    },
-                                    legend: { // 추가
-                                        display: false, // 추가
-                                    }
+                 // Chart 생성
+                    var ctx = document.getElementById('lineChart').getContext('2d');
+                    var ctx2 = document.getElementById('lineChart2').getContext('2d');
+                    var ctx3 = document.getElementById('lineChart3').getContext('2d');
+
+                    const data = {
+                        labels: ['2023 4월', '2023 5월', '2023 6월', '2023 7월', '2023 8월', '2023 9월'],
+                        datasets: [
+                            {
+                                label: 'Dataset',
+                                data: [50, 20, 10, 0, 25, 60],
+                                borderColor: 'lightblue',
+                                backgroundColor: 'lightblue',
+                                pointRadius: 10,
+                                pointHoverRadius: 15
+                            }
+                        ]
+                    };
+
+                    const config2 = {
+                        type: 'line',
+                        data: data,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
                                 }
                             }
-                        };
+                        }
+                    };
 
-                        // Chart 생성
-                        const ctx = document.getElementById('lineChart').getContext('2d');
-                        new Chart(ctx, config2);
+                    var chart1 = new Chart(ctx, config2);
+                    var chart2 = new Chart(ctx2, config2);
+                    var chart3 = new Chart(ctx3, config2);
+
+                    function showGraph(graphType) {
+                        // 모든 탭의 active 클래스 제거
+                        var tabs = document.querySelectorAll('.nav-item');
+                        tabs.forEach(function(tab) {
+                            tab.classList.remove('active');
+                        });
+
+                        // 클릭한 탭에 active 클래스 추가
+                        var activeTab = document.querySelector('a[onclick="showGraph(\'' + graphType + '\')"]');
+                        activeTab.parentNode.classList.add('active');
+
+                        // 모든 그래프 숨기기
+                        document.getElementById('monthlyGraph').style.display = 'none';
+                        document.getElementById('weeklyGraph').style.display = 'none';
+                        document.getElementById('dailyGraph').style.display = 'none';
+
+                        // 선택한 그래프만 보이도록 설정
+                        document.getElementById(graphType).style.display = 'block';
+                        console.log("Showing graph of type: " + graphType);
+                    }
+
+                    // 초기로딩 시 월별 그래프를 보이도록 설정
+                    showGraph('monthlyGraph');
+                    function tableToExcel(table, name) {
+                        var uri = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8;base64,';
+                        var template =
+                            '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head>' +
+                            '<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>' +
+                            '<x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>' +
+                            '</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+                        var base64 = function(s) {
+                            return window.btoa(unescape(encodeURIComponent(s)));
+                        };
+                        var format = function(s, c) {
+                            return s.replace(/{(\w+)}/g, function(m, p) {
+                                return c[p];
+                            });
+                        };
+                        var ctx = {
+                            worksheet: name || 'Worksheet',
+                            table: table.innerHTML
+                        };
+                        var blob = new Blob([format(template, ctx)], {
+                            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
+                        });
+                        return uri + base64(format(template, ctx));
+                    }
+
+                    document.getElementById('downloadLink').addEventListener('click', function() {
+                        var table = document.querySelector('.table');
+                        var excelDataUri = tableToExcel(table, '테이블명');
+                        this.href = excelDataUri;
+                        this.download = '테이블명.xls';
+                    });
+                    
+                    function searchTable() {
+                    
+                    	 
+                    	  
+                    	  alert('검색 버튼이 클릭되었습니다.');
+                    	  var input, filter, table, tr, td, i, txtValue;
+                    	  input = document.getElementById("searchInput");
+                    	  filter = input.value.toUpperCase();
+                    	  table = document.querySelector(".table");
+                    	  tr = table.getElementsByTagName("tr");
+
+                    	  // 각 행을 반복하면서 검색어와 일치하는 행 표시/숨김 처리
+                    	  for (i = 1; i < tr.length; i++) { // i=1은 테이블 헤더를 건너뜁니다.
+                    	    td = tr[i].getElementsByTagName("td")[1]; // 검색을 원하는 열 선택 (이름 열)
+                    	    if (td) {
+                    	      txtValue = td.textContent || td.innerText;
+                    	      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    	        tr[i].style.display = ""; // 검색어와 일치하는 항목은 표시합니다.
+                    	      } else {
+                    	        tr[i].style.display = "none"; // 검색어와 일치하지 않는 항목은 숨깁니다.
+                    	      }
+                    	    }
+                    	  }
+                    	}
+                    document.getElementById('search-img').addEventListener('click', searchTable);
                     </script>
                 
                 </div>

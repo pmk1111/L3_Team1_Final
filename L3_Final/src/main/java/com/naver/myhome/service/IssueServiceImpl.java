@@ -24,6 +24,17 @@ public class IssueServiceImpl implements IssueService{
 	public int getListCount() {
 		return mapper.getListCount();
 	}
+	
+	@Override
+	public List<Issue> getStatusCount() {
+		return mapper.getStatusCount();
+	}
+	
+	@Override
+	public List<Issue> getMyWork(String status) {
+		return mapper.getMyWork(status);
+	}
+
 
 	@Override
 	public List<Issue> getIssueList() {
@@ -39,10 +50,42 @@ public class IssueServiceImpl implements IssueService{
 		return mapper.getFilteredIssueList(map);
 	}
 
+//	@Override
+//	public List<Project> getMyProjectList(String userId) {
+//		return mapper.getMyProjectList(userId);
+//	}
+	
 	@Override
 	public List<Issue> searchIssues(String searchText) {
 		return mapper.searchIssues(searchText);
 	}
+
+	@Override
+	public void issueAdd(Issue issue) {
+		mapper.issueAdd(issue);
+	}
+
+	@Override
+	public Issue getIssueDetail(int num) {
+		return mapper.getIssueDetail(num);
+	}
+	
+	@Override
+	public int updateStatus(int issueId, String status, String selectedUserName) {
+		return mapper.updateStatus(issueId, status, selectedUserName);
+		
+	}
+	
+	@Override
+	public int issueUpdate(Issue issue) {
+		return mapper.issueUpdate(issue);
+	}
+
+	@Override
+	public int issueDelete(int issueId) {
+		return mapper.issueDelete(issueId);
+	}
+
 
 
 }

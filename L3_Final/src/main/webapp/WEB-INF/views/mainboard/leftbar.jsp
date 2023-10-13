@@ -87,9 +87,9 @@
             </li>
 
             <li class="menu-item active">
-              <a href="tables-basic.html" class="menu-link">
+              <a href="${pageContext.request.contextPath}/mainboard/MyDashboard" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">대시보드</div>
+                <div data-i18n="Tables">내 대시보드</div>
               </a>
             </li>
 
@@ -116,7 +116,7 @@
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/issue/issuelist" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Layouts">프로젝트 이슈</div>
               </a>
