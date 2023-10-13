@@ -14,6 +14,9 @@
     <result property="donecount" column="donecount"/>
 </resultMap>
 	
+	<select id="getIssueId" resultType="int">
+		select issue_id.nextval from dual
+	</select>
 
 	<select id="getListCount" resultType="int">
 		select count(*) from issue
@@ -88,7 +91,7 @@
   	(select name from user where id=#{create_user}),
   	#{issue_type}, #{issue_priority}, #{issue_subject}, #{issue_content}, #{issue_status},
   	#{create_user},
-  	#{issue_assigned}, #{issue_file}, SYSDATE) -->
+  	#{issue_assigned}, SYSDATE) -->
   	<!-- 사용자 식별번호를 세션에서 가져와서 그 값을 작성자, 보고자에 넣어야 함. 그 값을 통해 화면에 표시되는 값은 유저 이름-->
   	
   	insert into issue
@@ -96,14 +99,14 @@
   	(#{issue_id}, 1, 
   	1, #{issue_type},
   	#{issue_priority}, #{issue_subject}, #{issue_content},
-  	#{issue_status}, #{issue_reporter}, #{issue_assigned}, #{issue_file}, SYSDATE)
+  	#{issue_status}, #{issue_reporter}, #{issue_assigned}, SYSDATE)
   </insert>
 
 	<select id="getIssueDetail" resultType="issue">
 		<!-- select 
 		(select project_name from project where project_id = #{project_id}),
 		(select name from user where id=1),
-		issue_subject, issue_content, issue_reporter, issue_assigned, issue_file, issue_created
+		issue_subject, issue_content, issue_reporter, issue_assigned, issue_created
 		from issue -->
 		
 		select
@@ -130,7 +133,6 @@
 				issue_content = #{issue_content},
 				issue_status = #{issue_status},
 				issue_assigned = #{issue_assigned},
-				issue_file = #{issue_file}
 		where issue_id = #{issue_id} -->
 		
 		update issue
@@ -141,7 +143,6 @@
 				issue_content = #{issue_content},
 				issue_status = #{issue_status},
 				issue_assigned = #{issue_assigned},
-				issue_file = #{issue_file}
 		where issue_id = #{issue_id}
 				
 	</update>

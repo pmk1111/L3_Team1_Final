@@ -3,7 +3,7 @@
 
 <div class="issue-modal">
 	<div class="modal-overlay"></div>
-	<form action="issue_add" name="createIssue" method="post">
+	<form action="../issue/upload" name="createIssue" method="post" enctype="multipart/form-data">
 		<div class="issue-modal-content">
 
 			<div class="create-issue-text">
@@ -111,9 +111,8 @@
     		</div>
     		
     		<label class="custom-file-upload">파일첨부
-    			<input type="file" class="add-file" name="issue_file">
+    			<input type="file" class="add-file" name="uploadfiles" multiple>
     		</label>
-    		<!-- <button type="button" class="deleteFileBtn">삭제</button> -->
 			</div>
 			<div class="uploaded-files"></div>
 
