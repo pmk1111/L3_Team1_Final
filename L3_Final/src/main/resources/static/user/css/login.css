@@ -1,269 +1,154 @@
 @charset "UTF-8";
-.g-signin2, .kakao-login-btn-img{
-    display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
+.formDiv {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
-.btn_login {
-    display: flex;
-    justify-content: center;
+.mt10 {
+   width: 100%;
+   text-align: left;
 }
-* {
-	margin: 0;
-	box-sizing: border-box;
-}
-
-body {
-	width: 100%;
-	height: 100vh;
-}
-form {
-	border: 1px solid #ccc; /* 테두리 추가 */
-    padding: 10px; /* 내용과 테두리 사이 간격 조절 */
-	background-color: #fefefe;
-	margin: 5% auto 15% auto;
-	width: 450px;
-	padding: 16px;
-}
-main{animation: slide_fade .7s linear;}
-@keyframes slide_fade {
-0% { opacity: 0; margin-top: -5px;}
-
-100% {opacity: 1; margin-top: 0px;}
+.accont-wrap{
+	height:900px;
 }
 
-#home_nav {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 60px;
-	background-color: white;
-	padding: 0px 20px 0px 12px;
-	box-shadow: 0px 0px 0.2em rgb(159, 159, 159);
-}
-
-.header_login_btn, .header_join_btn {
-	display: inline-block;
-	width: 90px;
-	height: 27px;
-	border-radius: 3px;
-}
-
-.header_login_btn:hover, .header_join_btn:hover {
-	cursor: pointer;
-	opacity: 0.8;
-	transition: 0.5s;
-}
-
-.header_login_btn {
-	border: 1px solid #8D52A9;
-	background-color: #8D52A9;
-	color: white;
-}
-
-.header_join_btn {
-	border: 1px solid #8D52A9;
-	background-color: white;
-	color: #8D52A9;
-}
-
-.home_logo {
-	width: 120px;
-	height: 45px;
-}
-
-#join_login_btn>ul>li>a {
-	width: 100px;
-	height: 30px;
-	/* text-align: center; */
-}
-
-#login_text {
-	margin-bottom: 30px;
-}
-
-ul {
-	margin: 0;
-	padding-left: 0;
-	line-height: 50px;
-}
-
-li {
-	float: right;
-	list-style: none;
-	padding: 0 10px;
-}
-
-li:first-child {
-	float: left;
-}
-
-li:second-child {
-	float: left;
-}
-
-li a {
-	border: 1px solid #8D52A9;
-	text-decoration: none;
-	background-color: #8D52A9;
-	border-radius: 3px;
-	color: white;
-	padding: 5px 20px;
-	font-size: 13px;
-}
-
-ul li:first-child a {
-	border: 1px solid #8D52A9;
-	background-color: white;
-	border-radius: 3px;
-	color: #8D52A9;
-}
-
-/* .logo {
-      display: inline;
-      width: 6.5rem; height: 2.5rem;
-      margin-left: 1.2rem; margin-top: 0.3rem;
-    } */
-h1 {
+.account {
+	padding: 6px 0 16px;
+	font-size: 36px;
+	color: #333;
+	font-weight: 700;
 	text-align: center;
-}
-/* .submit { background: #8D52A9;
-	   color:white;
-	   text-align:center;
-	   padding: 10px 30px;
-	   width: 100%;
-	   border: none;
-	   margin:0 auto;
-	   cursor: pointer; 손가락 커서 모양 
-	   } */
-.login_submit {
-	background: #8D52A9;
-	color: white;
-	text-align: center;
-	padding: 10px 30px;
-	width: 100%;
-	height: 50px;
-	border: none;
-	border-radius: 3px;
 	margin-bottom: 15px;
-	cursor: pointer;
+	margin-top: 100px;
 }
 
-.social-login-group {
-	position: absolute;
-	width: 340px;
-	display: inline-block;
-	left: 50%;
-	transform: translate(-50%, 0%);
-	padding-bottom: 25px;
+.errMsg {
+	text-align: left;
+	margin-top: 10px;
+	color: #ff6b6b;
+	font-size: 14px;
+	line-height: 21px;
 }
 
-.google, .kakao {
-	padding: 10px 30px;
-	margin: 8px 0;
-	border: 1px solid black;
-	cursor: pointer; /* 손가락 커서 모양 */
-	width: 100%;
-	height: 50px
+
+
+#emailAuthBtn {
+margin: 20px 0 0 0;
+    color: #9f7ab0;
+    text-align: center;
+    background: #fcfcfc;
+    line-height: 52px;
+    height: 45px;
+    width: 90px;
+    border-radius: 8px;
+    font-size: 16xp;
+    font-wdight: 500;
+    border: 1px solid #9f7ab0;
+    outline: none;
 }
 
-.kakao-login-btn-img {
-	width: 340px;
-	height: 51px;
-}
-
-div .abcRioButton {
-	height: 51px !important;
-	width: 340px !important;
-	margin-top: 20px;
-	border-radius: 5px;
-}
-
-.abcRioButtonSvg {
-	position: absolute;
-	width: 25px;
-	height: 25px;
-	top: 12.5px;
-}
-
-.abcRioButtonContents {
-	position: absolute;
-	top: 50%;
-	left: 49.5%;
-	transform: translate(-50%, -50%);
-}
-.abcRioButtonContents{font-size:16px !important; color:black !important; font-weight: normal !important}
-button:hover {
-	opacity: 0.8;
-}
-
-.hr {
-	display: flex;
-	flex-basis: 100%; /*가로 방향으로 flex 컨테이너의 전체 너비를 차지 */
-	align-items: center;
-	color: rgba(0, 0, 0, 0.35);
-	font-size: 12px;
-	margin: 8px 0px;
-}
-
-.hr::before, .hr::after {
-	content: "";
-	flex-grow: 1;
-	background: #8D52A9;
-	height: 1px;
-	margin: 0px 3px;
-}
-
-/* span {
-	color: #8D52A9;
-} */
-
-* {
-}
-
-/* input[type=text], input[type=password] {
-	width: 100%;
-	padding: 10px;
-	margin: 5px 0 22px 0;
-	display: inline-block;
-} */
-input[type=text], input[type=password] {
-	width: 100%;
-	height: 50px;
-	padding: 10px;
-	margin: 5px 0 15px 0;
-	display: inline-block;
-	border: 0.8px solid #8D52A9;
-	border-radius: 3px;
-}
-
-input[type=text]:focus, input[type=password]:focus {
-	box-shadow: 0 0 0 0.1rem rgb(205, 159, 208);;
+#verify_check {
+	margin: 20px 0 0 0;
+	color: #fff;
+	text-align: center;
+	background: #9F7AB0;
+	line-height: 52px;
+	height: 52px;
+	width: 130px;
+	border-radius: 8px;
+	font-size: 16xp;
+	font-wdight: 500;
+	border: none;
 	outline: none;
 }
-
-a {
-	color: white;
-	text-decoration: none;
+.auth-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* 이 부분은 전체 높이에 맞추기 위함입니다. 필요에 따라 조절하세요. */
+}
+#confirmBtn {
+    margin: 20px 0 0 0;
+    color: #fff;
+    text-align: center;
+    background: #9F7AB0;
+    line-height: 52px;
+    height: 52px;
+    width: 640px;
+    border-radius: 8px;
+    font-size: 16xp;
+    font-wdight: 500;
+    border: none;
+    outline: none;
+    display: block;
+    margin: auto;
+    margin-top: 40px;
+}
+.errMsg{
+margin-top:5px;
+margin-bottom:5px;
+visibility: hidden;
+}	
+#confirmBtn{
+	margin-top:20px;
+	margin-bottom: 20px;
+	font-size: 22px;
+	font-weight: 700;
+}
+.guest-or{
+	margin-bottom: 20px;
+}
+#kakaologin, #googlelogin {
+    border: 1px solid #000; 
+    margin: 16px 0 0 0;
+    color: #333;
+    text-align: center;
+    background: #FFF;
+    line-height: 52px;
+    height: 52px;
+    width: 640px;
+    border-radius: 8px;
+    font-size: 16xp; 
+    font-weight:500; 
+     outline:none; 
+     display:block; 
+     margin:auto; 
+}
+.email, .pw, .pw_check, .name, .verify {
+	color: #333;
+	font-size: 16px;
+	padding: 0 0 0 20px;
+	background: #FFFFFF;
+	width: 640px;
+	padding: 16px 20px;
+	color: #333;
+	border: 1px solid #ddd;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin-top:10px;
+	}
+.guest-or {
+  position: relative;
+  text-align: center;
 }
 
-.find_pw {
-	margin: 5px 0px 15px 0px;
-	color: #8D52A9;
-	font-size:13px;
+.guest-or::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -20px; /* adjust this value to move the line left or right */
+  height: 1px; /* adjust this value to change the line's thickness */
+  background-color: #000; /* adjust this color for the line color */
 }
 
-.remember_text {
-	display: inline-block;
-	margin: 5px 0px 3px 0px;
-	color: #8D52A9;
-	font-size: 13px;
-}
-
-#remember {
-	position:relative;
-	border-color: #8D52A9;
-	margin-left: 5px;
-	top:2px;
-	accent-color:#8D52A9;
+.guest-or::after {
+   content:"";
+   position:absolute;
+   top:50%;
+   right:-20px; /* Here we use 'right' instead of 'left' to place it on the right side. Adjust as needed.*/
+   height :1px ;
+   background-color:#000 ;
 }

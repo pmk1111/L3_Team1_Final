@@ -3,7 +3,7 @@
 
 <div class="issue-modal">
 	<div class="modal-overlay"></div>
-	<form action="issue_add" name="createIssue" method="post">
+	<form action="../issue/upload" name="createIssue" method="post" enctype="multipart/form-data">
 		<div class="issue-modal-content">
 
 			<div class="create-issue-text">
@@ -104,16 +104,18 @@
 					</div>
 
 
-					<div class="file-upload-wrap">
-						<div class="text">
-							<span>파일 첨부</span>
-						</div>
-							<input type="file" class="add-file" id="upfile" name="uploadfile" style="display: none;">
-    					<label for="upfile">
-        				<img class="file-img" src="../resources/issue/img/folder-add.svg">
-        				<span id="fileNameDisplay">파일을 선택하세요.</span>
-    					</label>
-					</div>
+			<!-- HTML -->
+			<div class="file-upload-wrap">
+    		<div class="text">
+        	<span>파일 첨부</span>
+    		</div>
+    		
+    		<label class="custom-file-upload">파일첨부
+    			<input type="file" class="add-file" name="uploadfiles" multiple>
+    		</label>
+			</div>
+			<div class="uploaded-files"></div>
+
 				
 
 	

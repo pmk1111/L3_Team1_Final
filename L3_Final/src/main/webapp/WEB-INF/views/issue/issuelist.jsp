@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr"
 	data-theme="theme-default"
@@ -31,6 +32,24 @@
 .leftbar-close {
 	background-color: #9F7AB0;
 	border-radius: 50%;
+}
+
+
+
+
+
+.custom-file-upload {
+  border: 2px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  text-align: center;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
 }
 </style>
 </head>
@@ -152,7 +171,7 @@
 
 																<div class="issuewriter-created">
 																	<span class="issue-writer">${i.create_user}</span> 
-																	<span class="issue-created">${i.issue_created}</span>
+																	<span class="issue-created">${i.issue_created.substring(0, 10)}</span>
 																</div>
 															</li>
 														</c:forEach>

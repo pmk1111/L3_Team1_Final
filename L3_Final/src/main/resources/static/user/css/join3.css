@@ -41,7 +41,7 @@
 	background: #9F7AB0;
 	line-height: 52px;
 	height: 52px;
-	width: 630px;
+	width: 640px;
 	border-radius: 8px;
 	font-size: 16xp;
 	font-wdight: 500;
@@ -73,4 +73,11 @@
 	color: #623ad6;
 	font-size: 14px;
 	line-height: 21px;
+}
+.login-text{
+	margin-top:100px;
+}
+.auth-section{
+	    padding-top: 0px;
+	
 }

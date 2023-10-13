@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+
 .account {
 	padding: 6px 0 16px;
 	font-size: 36px;
@@ -23,7 +24,7 @@
 	font-size: 16px;
 	padding: 0 0 0 20px;
 	background: #FFFFFF;
-	width: 480px;
+	width: 640px;
 	padding: 16px 20px;
 	color: #333;
 	border: 1px solid #ddd;
@@ -32,6 +33,7 @@
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	margin-top:10px;
 }
 
 #emailAuthBtn, #eidAuthBtn {
@@ -67,7 +69,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* 이 부분은 전체 높이에 맞추기 위함입니다. 필요에 따라 조절하세요. */
 }
 #confirmBtn {
     margin: 20px 0 0 0;
@@ -104,4 +105,6 @@
 margin-top:5px;
 margin-bottom:5px;
 visibility: hidden;
-}	
+}
+
+

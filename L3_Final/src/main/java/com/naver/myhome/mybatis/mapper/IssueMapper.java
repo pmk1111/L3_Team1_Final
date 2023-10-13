@@ -11,9 +11,15 @@ import com.naver.myhome.domain.Issue;
 @Mapper
 @Repository
 public interface IssueMapper {
+	public int getIssueId();
+	
 	public int getListCount(); 
 	
 	public List<Issue> getIssueList();
+	
+	public List<Issue> getStatusCount();
+	
+	public List<Issue> getMyWork(String status);
 	
 	public List<Issue> getFilteredIssueList(Map<String, String> map);
 	

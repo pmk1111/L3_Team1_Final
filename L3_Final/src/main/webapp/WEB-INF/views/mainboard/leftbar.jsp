@@ -72,7 +72,7 @@
           <ul class="menu-inner py-1">
 
             <li class="menu-item" style="margin:15px 0px 25px 0px;">
-              <a href="index.html" class="menu-link" style="background-color: #9F7AB0; color: white; width: 228px;">
+              <a href="../project/CreateProject" class="menu-link" style="background-color: #9F7AB0; color: white; width: 228px;">
                 <i class="menu-icon tf-icons bx bx-home-circle create-project" style="margin-left: 22px;"></i>
                 <div class="create-project" style="font-weight: bold;">새 프로젝트 만들기</div>
               </a>
@@ -80,16 +80,16 @@
 
             <!-- Dashboard -->
             <li class="menu-item">
-              <a href="index.html" class="menu-link">
+              <a class="menu-link" href="../project/ProjectList">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">내 프로젝트</div>
               </a>
             </li>
 
             <li class="menu-item active">
-              <a href="tables-basic.html" class="menu-link">
+              <a href="${pageContext.request.contextPath}/mainboard/mydashboard" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">대시보드</div>
+                <div data-i18n="Tables">내 대시보드</div>
               </a>
             </li>
 
@@ -188,7 +188,7 @@
             </li>
             <li class="menu-item">
               <a
-                href="AdminDashboard"
+                href="../mainboard/AdminDashboard"
                 target="_blank"
                 class="menu-link"
               >

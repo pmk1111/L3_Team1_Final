@@ -267,10 +267,10 @@ tbody td a:hover {
 
 tbody td a>span {
 	position: relative;
-	top: 4px;
+	top: 2px;
 }
 
-.on {
+.date-select {
 	background-color: #6449fc;
 	color: white !important;
 }

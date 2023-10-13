@@ -138,7 +138,7 @@
 
                       <div class="issue-file-area">
                         <span>첨부파일</span><img class="folder-img" src="../resources/issue/img/folder.svg">
-                        <span class="attached-folder">${issuedata.issue_file}</span>
+                        <span class="attached-folder"></span>
                       </div>
                       <div class="subtask-wrap">
                         <span class="subtask-text">관련이슈</span>
@@ -148,7 +148,7 @@
                       <div class="subtask">
                         <div class="subtask-item">
                           <div class="subtask-status">In Progress</div>
-                          <p class="subtask-title">채팅 기능 추가</span>
+                          <p class="subtask-title">채팅 기능 추가</p>
                         </div>
                       </div> <!-- subtask end-->
 

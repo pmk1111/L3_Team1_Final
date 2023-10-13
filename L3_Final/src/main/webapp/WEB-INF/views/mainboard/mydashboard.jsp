@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr"
 	data-theme="theme-default"
@@ -117,22 +118,22 @@
 													</thead>
 													<tbody id="tbl-month">
 														<tr>
-															<td class="sun"><a><span>1</span></a></td>
-															<td class=""><a><span>2</span></a></td>
-															<td class=""><a><span>3</span></a></td>
-															<td class=""><a><span>4</span></a></td>
-															<td class="today"><a><span>5</span></a></td>
-															<td class=""><a><span>6</span></a></td>
-															<td class="sat"><a><span>7</span></a></td>
+															<td class="sun"><a>1</a></td>
+															<td class=""><a>2</a></td>
+															<td class=""><a>3</a></td>
+															<td class=""><a>4</a></td>
+															<td class="today"><a>5</a></td>
+															<td class=""><a>6</a></td>
+															<td class="sat"><a>7</a></td>
 														</tr>
 														<!-- 행 반복 -->
 														<tr>
-															<td class="sun"><a><span>29</span></a></td>
-															<td class=""><a><span>30</span></a></td>
-															<td class=""><a><span>31</span></a></td>
-															<td class=""><a><span></span></a></td>
-															<td class=""><a><span></span></a></td>
-															<td class=""><a><span></span></a></td>
+															<td class="sun"><a>29</a></td>
+															<td class=""><a>30</a></td>
+															<td class=""><a>31</a></td>
+															<td class=""><a></a></td>
+															<td class=""><a></a></td>
+															<td class=""><a></a></td>
 															<td class="sat"><a></a></td>
 														</tr>
 													</tbody>
@@ -140,7 +141,7 @@
 											</div>
 										</div>
 										<div class="col-md-4">
-											<ul class="schedules">
+											<ul class="schedules">										
 												<li>
 													<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
 													<div class="schedule-title-date">
@@ -174,46 +175,6 @@
 												</li>
 												
 													<li>
-													<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
-													<div class="schedule-title-date">
-														<span class="schedule-title">일정을 등록하세요.</span>
-														<span class="schedule-date">2023-10-03(수)</span>
-													</div>
-												</li>
-												
-												<li>
-													<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
-													<div class="schedule-title-date">
-														<span class="schedule-title">일정을 등록하세요.</span>
-														<span class="schedule-date">2023-10-03(수)</span>
-													</div>
-												</li>
-												
-													<li>
-													<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
-													<div class="schedule-title-date">
-														<span class="schedule-title">일정을 등록하세요.</span>
-														<span class="schedule-date">2023-10-03(수)</span>
-													</div>
-												</li>
-												
-												<li>
-													<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
-													<div class="schedule-title-date">
-														<span class="schedule-title">일정을 등록하세요.</span>
-														<span class="schedule-date">2023-10-03(수)</span>
-													</div>
-												</li>
-												
-													<li>
-													<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
-													<div class="schedule-title-date">
-														<span class="schedule-title">일정을 등록하세요.</span>
-														<span class="schedule-date">2023-10-03(수)</span>
-													</div>
-												</li>
-												
-												<li>
 													<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
 													<div class="schedule-title-date">
 														<span class="schedule-title">일정을 등록하세요.</span>
@@ -237,7 +198,11 @@
 										<h5 class="card-title m-0 me-2">메모장</h5>
 									</div>
 									<div class="card-body">
-										<div id="memo-content" contenteditable="true"></div>
+										<div id="memo-content" contenteditable="true">
+											<c:forEach var="m" items="${memolist}">
+												${m.memo_content}
+											</c:forEach>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -256,68 +221,53 @@
 
 									<div class="card-body my-work">
 										<ul class="work-type">
-											<li>예정된 업무</li>
-											<li>진행 중인 업무</li>
-											<li>완료된 업무</li>
+											<li data-value="To Do">예정된 업무</li>
+											<li data-value="In Progress">진행 중인 업무</li>
+											<li data-value="Resolved">검토 중인 업무</li>
+											<li data-value="Done">완료된 업무</li>
 										</ul>
 
 										<ul class="board">
-											<li>
-												<div class="type-title">
-													<img src="../resources/issue/img/bug.svg"> <span>버그</span>
-													<span class="post-title">첫 번째 게시글 제목</span>
-												</div> <span class="post-date">2023-10-01</span>
-											</li>
-											<li>
-												<div class="type-title">
-													<img src="../resources/issue/img/epic.svg"> <span>에픽</span>
-													<span class="post-title">첫 번째 게시글 제목</span>
-												</div> <span class="post-date">2023-10-01</span>
-											</li>
-											<li>
-												<div class="type-title">
-													<img src="../resources/issue/img/task.svg"> <span>작업</span>
-													<span class="post-title">첫 번째 게시글 제목</span>
-												</div> <span class="post-date">2023-10-01</span>
-											</li>
+										
+										
+										<c:choose>
+												<c:when test="${empty issuelist}">
+													<h3>작업이 없습니다.</h3>
+													</c:when>
+													<c:otherwise>
+														<c:forEach var="i" items="${issuelist}">
+															<li>
+																<div class="type-title">
 
-											<li>
-												<div class="type-title">
-													<img src="../resources/issue/img/bug.svg"> <span>버그</span>
-													<span class="post-title">첫 번째 게시글 제목</span>
-												</div> <span class="post-date">2023-10-01</span>
-											</li>
-											<li>
-												<div class="type-title">
-													<img src="../resources/issue/img/epic.svg"> <span>에픽</span>
-													<span class="post-title">첫 번째 게시글 제목</span>
-												</div> <span class="post-date">2023-10-01</span>
-											</li>
-											<li>
-												<div class="type-title">
-													<img src="../resources/issue/img/task.svg"> <span>작업</span>
-													<span class="post-title">첫 번째 게시글 제목</span>
-												</div> <span class="post-date">2023-10-01</span>
-											</li>
-
-											<li>
-												<div class="type-title">
-													<img src="../resources/issue/img/bug.svg"> <span>버그</span>
-													<span class="post-title">첫 번째 게시글 제목</span>
-												</div> <span class="post-date">2023-10-01</span>
-											</li>
-											<li>
-												<div class="type-title">
-													<img src="../resources/issue/img/epic.svg"> <span>에픽</span>
-													<span class="post-title">첫 번째 게시글 제목</span>
-												</div> <span class="post-date">2023-10-01</span>
-											</li>
-											<li>
+																	<c:choose>
+																		<c:when test="${i.issue_type eq '버그'}">
+																			<img src="../resources/issue/img/bug.svg" class="issuetype-icon">
+																			<span>버그</span>
+																		</c:when>
+																		<c:when test="${i.issue_type eq '에픽'}">
+																			<img src="../resources/issue/img/epic.svg" class="issuetype-icon">
+																			<span>에픽</span>
+																		</c:when>
+																		<c:when test="${i.issue_type eq '작업'}">
+																			<img src="../resources/issue/img/task.svg" class="issuetype-icon">
+																			<span>작업</span>
+																		</c:when>
+																	</c:choose>
+																<a href="../issue/issuedetail?num=${i.issue_id}">
+																	<span class="post-title">${i.issue_subject}</span>
+																</a>
+															</div> <span class="post-date">${i.issue_created}</span>
+															</li>
+														</c:forEach>
+													</c:otherwise>
+												</c:choose>
+																		
+<!-- 											<li>
 												<div class="type-title">
 													<img src="../resources/issue/img/task.svg"> <span>작업</span>
 													<span class="post-title">첫 번째 게시글 제목</span>
 												</div> <span class="post-date">2023-10-01</span>
-											</li>
+											</li> -->
 
 										</ul>
 									</div>
@@ -334,13 +284,13 @@
 									<ul class="current-situation">
 										<li class="situation-list total-work">
 											<h4>
-												<em>전체 업무</em> <span>11</span>
+												<em>전체 업무</em> <span></span>
 											</h4>
 
 										</li>
 										<li class="situation-list ToDo-work">
 											<h4>
-												<em>To Do</em> <span>4</span>
+												<em>To Do</em> <span></span>
 											</h4>
 											<p>
 												<span class="js-chart-percent"></span>
@@ -348,7 +298,7 @@
 										</li>
 										<li class="situation-list Progress-work">
 											<h4>
-												<em>In Progress</em> <span>3</span>
+												<em>In Progress</em> <span></span>
 											</h4>
 											<p>
 												<span class="js-chart-percent"></span>
@@ -356,7 +306,7 @@
 										</li>
 										<li class="situation-list Resolved-work">
 											<h4>
-												<em>Resolved</em> <span>2</span>
+												<em>Resolved</em> <span></span>
 											</h4>
 											<p>
 												<span class="js-chart-percent"></span>
@@ -364,7 +314,7 @@
 										</li>
 										<li class="situation-list Done-work">
 											<h4>
-												<em>Done</em> <span>2</span>
+												<em>Done</em> <span></span>
 											</h4>
 											<p>
 												<span class="js-chart-percent"></span>
@@ -416,6 +366,13 @@
 	<script src="../resources/mydashboard/js/mydashboard.js"></script>
 
 
-
+<script type="text/javascript">
+	$('.work-type li').click(function(){
+		const data = $(this).data('value');
+		console.log(data);
+	})
+	
+	console.log($('#memo-content').text());
+</script>
 </body>
 </html>

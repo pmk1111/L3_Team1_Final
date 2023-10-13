@@ -3,6 +3,21 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.IssueMapper">
+
+	<resultMap id="IssueResultMap" type="com.naver.myhome.domain.Issue">
+    <id property="id" column="id"/>
+    <!-- 다른 필드에 대한 매핑 -->
+    <result property="totalcount" column="totalcount"/>
+    <result property="todocount" column="todocount"/>
+    <result property="progresscount" column="progresscount"/>
+    <result property="resolvedcount" column="resolvedcount"/>
+    <result property="donecount" column="donecount"/>
+</resultMap>
+	
+	<select id="getIssueId" resultType="int">
+		select issue_id.nextval from dual
+	</select>
+
 	<select id="getListCount" resultType="int">
 		select count(*) from issue
 	</select>
@@ -10,6 +25,16 @@
 	<select id="getIssueList" resultType="issue">
 		select * from issue order
 		by issue_created desc
+	</select>
+	
+	<select id="getStatusCount" resultType="issue">
+		SELECT
+    	count(*) AS totalcount,
+    	SUM(CASE WHEN issue_status = 'To Do' THEN 1 ELSE 0 END) AS todocount,
+    	SUM(CASE WHEN issue_status = 'In Progress' THEN 1 ELSE 0 END) AS progresscount,
+    	SUM(CASE WHEN issue_status = 'Resolved' THEN 1 ELSE 0 END) AS resolvedcount,
+    	SUM(CASE WHEN issue_status = 'Done' THEN 1 ELSE 0 END) AS donecount
+		FROM issue
 	</select>
 	
 
@@ -34,6 +59,17 @@
    		ORDER BY issue_created DESC
   </select>
   
+  <select id="getMyWork" resultType="com.naver.myhome.domain.Issue">
+  SELECT * FROM issue
+		<where>
+  		<if test='status != "" and status != null'>
+    		issue_status = #{status}
+  		</if>
+ 		</where>
+ 		<!-- and user_id = #{user_id} -->
+  	ORDER BY issue_created DESC
+  </select>
+  
  <!--  <select id="getProjectList" resultType="com.naver.myhome.domain.Project">
   	select project_name from project
   	where project_joiner.user_id = #{user.id}
@@ -55,7 +91,7 @@
   	(select name from user where id=#{create_user}),
   	#{issue_type}, #{issue_priority}, #{issue_subject}, #{issue_content}, #{issue_status},
   	#{create_user},
-  	#{issue_assigned}, #{issue_file}, SYSDATE) -->
+  	#{issue_assigned}, SYSDATE) -->
   	<!-- 사용자 식별번호를 세션에서 가져와서 그 값을 작성자, 보고자에 넣어야 함. 그 값을 통해 화면에 표시되는 값은 유저 이름-->
   	
   	insert into issue
@@ -63,14 +99,14 @@
   	(#{issue_id}, 1, 
   	1, #{issue_type},
   	#{issue_priority}, #{issue_subject}, #{issue_content},
-  	#{issue_status}, #{issue_reporter}, #{issue_assigned}, #{issue_file}, SYSDATE)
+  	#{issue_status}, #{issue_reporter}, #{issue_assigned}, SYSDATE)
   </insert>
 
 	<select id="getIssueDetail" resultType="issue">
 		<!-- select 
 		(select project_name from project where project_id = #{project_id}),
 		(select name from user where id=1),
-		issue_subject, issue_content, issue_reporter, issue_assigned, issue_file, issue_created
+		issue_subject, issue_content, issue_reporter, issue_assigned, issue_created
 		from issue -->
 		
 		select
@@ -97,7 +133,6 @@
 				issue_content = #{issue_content},
 				issue_status = #{issue_status},
 				issue_assigned = #{issue_assigned},
-				issue_file = #{issue_file}
 		where issue_id = #{issue_id} -->
 		
 		update issue
@@ -108,7 +143,6 @@
 				issue_content = #{issue_content},
 				issue_status = #{issue_status},
 				issue_assigned = #{issue_assigned},
-				issue_file = #{issue_file}
 		where issue_id = #{issue_id}
 				
 	</update>

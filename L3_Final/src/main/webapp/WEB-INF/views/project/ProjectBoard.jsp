@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../resources/mainboard/assets/" data-template="vertical-menu-template-free">
 
@@ -15,9 +17,15 @@
 
     <!-- ProjectBaord CSS -->
     <link href="../resources/project/css/bootstrap-icons.css" rel="stylesheet">
+    <link href="../resources/project/css/projectboard/style.css" rel="stylesheet">
     <link href="../resources/project/css/projectboard/projectboard_Header.css" rel="stylesheet">
     <link href="../resources/project/css/projectboard/projectboard_chart.css" rel="stylesheet">
     <link href="../resources/project/css/projectboard/board_activity.css" rel="stylesheet">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
 </head>
 
 <body>
@@ -48,8 +56,7 @@
 
                                     <!-- Project Information -->
                                     <div class="project-left">
-
-                                        <a class="select-color"></a>
+                                        <a class="select-color" style="background-color: ${project.COLOR};"></a>
 
                                         <!-- 색 선택 모달 -->
                                         <div id="modal-background">
@@ -89,7 +96,7 @@
 
                                                 <!-- 프로젝트 색 선택 -->
                                                 <div class="favorite-project">
-                                                    <img class="star" src="../resources/project/img/projectboard/icon_star.png">
+                                                    <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-num="${project.NUM}">
                                                 </div>
 
                                                 <!-- 프로젝트 설정 -->
@@ -103,7 +110,7 @@
                                                         <div class="dropdown-menu" aria-labelledby="cardOpt3">
                                                             <div class="project-setup-header">
                                                                 <span>프로젝트 번호</span>
-                                                                <em id="detailSettingProjectSrno">1997</em>
+                                                                <em id="detailSettingProjectSrno">${project.NUM}</em>
                                                             </div>
 
                                                             <div class="setting-menu">
@@ -139,11 +146,11 @@
 
                                                 <!-- 프로젝트 정보 -->
                                                 <div class="project-name">
-                                                    <span class="project-name-span">[전사관리] 프로젝트 이름</span>
+                                                    <span class="project-name-span">${project.TITLE}</span>
                                                 </div>
                                             </div>
                                             <div class="discription">
-                                                <span>프로젝트 관리 어쩌구저쩌구</span>
+                                                <span>${project.SUBTITLE}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -748,18 +755,19 @@
     </div>
     <!-- / Layout wrapper -->
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../resources/mainboard/assets/vendor/js/bootstrap.js"></script>
+    <jsp:include page="../template/jsTemplate.jsp"></jsp:include>
+    
     <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
+    
+    <script src="../resources/project/js/projectboard/simple-datatables.js"></script>
+    <script src="../resources/project/js/projectboard/tinymce.min.js"></script>
+    <script src="../resources/project/js/projectboard/main.js"></script>
 
 	<!-- ProjectBoard JS -->
     <script src="../resources/project/js/projectboard/projectboard_Header.js"></script>
     <script src="../resources/project/js/projectboard/projectboard_chart.js"></script>
     <script src="../resources/project/js/projectboard/projectboard_barchart.js"></script>
     <script src="../resources/project/js/projectboard/projectboard_table.js"></script>
-    
-    <jsp:include page="../template/jsTemplate.jsp"></jsp:include>
 
 </body>
 
