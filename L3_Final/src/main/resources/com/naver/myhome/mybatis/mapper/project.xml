@@ -3,10 +3,13 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.ProjectMapper">
 
-    <insert id="Insert">
-        insert into project (TITLE, SUBTITLE)
-        values (#{TITLE}, #{SUBTITLE})
-    </insert>
+<insert id="Insert" parameterType="com.naver.myhome.domain.Project">
+    <selectKey keyProperty="NUM" resultType="int" order="BEFORE">
+        SELECT project_num_seq.NEXTVAL FROM DUAL
+    </selectKey>
+    INSERT INTO project (NUM, TITLE, SUBTITLE)
+    VALUES (#{NUM}, #{TITLE}, #{SUBTITLE})
+</insert>
 
     <select id="getAllProjectList" resultType="com.naver.myhome.domain.Project">
         select project.*, ROUND((sysdate-created_at)*24*60) as CURRENTTIME

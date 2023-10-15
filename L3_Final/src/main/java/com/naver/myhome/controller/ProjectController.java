@@ -2,10 +2,9 @@ package com.naver.myhome.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -17,17 +16,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.naver.myhome.domain.Project;
 import com.naver.myhome.service.ProjectService;
+import com.naver.myhome.service.TeamService;
 
 @Controller
-@RequestMapping(value = "/project")
+@RequestMapping(value = "/Project")
 public class ProjectController {
 	
 	// JJ's Controller
 	private ProjectService projectService;
+	private TeamService teamService;
 	
 	@Autowired
-	public ProjectController(ProjectService projectService) {
+	public ProjectController(ProjectService projectService, TeamService teamService) {
 		this.projectService = projectService;
+		this.teamService = teamService;
 	}
 	
 	@GetMapping(value = "/GanttChart")
@@ -41,9 +43,16 @@ public class ProjectController {
 	}
 	
 	@GetMapping(value = "/Create")
-	public String Create(Project project, HttpServletRequest request) throws Exception {
-		projectService.insertProject(project);
-		return "redirect:ProjectList";
+	@Transactional
+	public String Create(Project project) throws Exception {
+	    projectService.insertProject(project);
+
+	    int projectNum = project.getNUM();
+	    int employeeNum = 1;
+
+	    teamService.addTeam(projectNum, employeeNum);
+
+	    return "redirect:ProjectList";
 	}
     
 	@GetMapping(value = "/ProjectList")
@@ -61,6 +70,7 @@ public class ProjectController {
 	    mv.addObject("partProjectList", partProjectList);
 	    
 	    return mv;
+	    
 	}
 	
 	@GetMapping(value = "/Project")

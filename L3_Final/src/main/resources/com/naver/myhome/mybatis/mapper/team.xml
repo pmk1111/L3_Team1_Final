@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.naver.myhome.mybatis.mapper.TeamMapper">
+
+	<insert id="addTeam" >
+		INSERT INTO team (employee_num, project_num)
+		VALUES (#{employeeNum}, #{projectNum})
+	</insert>
+
+</mapper>
