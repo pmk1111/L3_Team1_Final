@@ -111,7 +111,7 @@
     		</div>
     		
     		<label class="custom-file-upload">파일첨부
-    			<input type="file" class="add-file" name="uploadFiles" multiple>
+    			<input type="file" class="add-file" name="uploadfiles" multiple>
     		</label>
 			</div>
 			<div class="uploaded-files"></div>

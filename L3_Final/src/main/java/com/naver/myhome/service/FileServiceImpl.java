@@ -19,8 +19,8 @@ public class FileServiceImpl implements FileService{
 	}
 	
 	@Override
-	public List<Files> uploadFile(List<Files> files) {
-		return mapper.uploadFile(files);
+	public void uploadFile(List<Files> files) {
+		mapper.uploadFile(files);
 	}
 	
 	@Override
@@ -33,6 +33,8 @@ public class FileServiceImpl implements FileService{
 		mapper.deleteFile(fileId);
 		
 	}
+
+
 
 	
 }

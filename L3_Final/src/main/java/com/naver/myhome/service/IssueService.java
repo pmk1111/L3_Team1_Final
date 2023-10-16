@@ -22,7 +22,7 @@ public interface IssueService {
 	
 	public List<Issue> searchIssues(String searchText);
 	
-	public void issueAdd(Issue issue);
+	public void createIssue(Issue issue);
 
 	public Issue getIssueDetail(int num);
 	

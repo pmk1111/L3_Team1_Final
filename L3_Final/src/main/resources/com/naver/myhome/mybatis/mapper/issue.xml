@@ -75,10 +75,7 @@
   	where project_joiner.user_id = #{user.id}
   </select> -->
   
-  <insert id="issueAdd">
-  	<selectKey order="BEFORE" keyProperty="issue_id" resultType="int">
-  	select issue_id.nextval from dual
-  	</selectKey>
+  <insert id="createIssue">
   	<!-- <selectKey order="BEFORE" keyProperty="user_name" resultType="String">
 		select user_name from usr where user_id=1 
   	</selectKey> -->

@@ -66,8 +66,8 @@ public class IssueServiceImpl implements IssueService{
 	}
 
 	@Override
-	public void issueAdd(Issue issue) {
-		mapper.issueAdd(issue);
+	public void createIssue(Issue issue) {
+		mapper.createIssue(issue);
 	}
 
 	@Override

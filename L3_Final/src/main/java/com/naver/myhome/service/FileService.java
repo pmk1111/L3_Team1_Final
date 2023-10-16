@@ -6,11 +6,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.naver.myhome.domain.Files;
 
-@Mapper
 public interface FileService {
-	public List<Files> uploadFile(List<Files> files);
+	public void uploadFile(List<Files> files);
 	
 	public List<Files> getFileList(int num);
 	
 	public void deleteFile(int fileId);
+
 }

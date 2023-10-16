@@ -8,7 +8,7 @@ import com.naver.myhome.domain.Files;
 
 @Mapper
 public interface FileMapper {
-	public List<Files> uploadFile(List<Files> files);
+	public void uploadFile(List<Files> files);
 	
 	public List<Files> getFileList(int num);
 	

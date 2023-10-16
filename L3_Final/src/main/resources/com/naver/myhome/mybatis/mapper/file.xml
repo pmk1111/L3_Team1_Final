@@ -3,97 +3,81 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.FileMapper">
-	<sql id="files">
+	<sql id="fileColumns">
 		file_id,
 		issue_id,
-		user_id,
-		original_file,
-		save_file,
+		original_name,
+		save_name,
 		file_size,
 		delete_yn,
 		created_date,
 		deleted_date
 	</sql>
-	
-	<insert id="uploadFile" parameterType="list">
-<!-- 		<selectkey order="BEFORE" keyProperty="file_id" resultType="int">
-		SELECT file_id.nextval from DUAL
-		</selectkey> -->
-    INSERT INTO files (
-        <include refid="files" />
-    	) VALUES
-    	<foreach item="file" collection="list" separator=",">
-        (
-            #{file_id},
-            <choose>
-                <when test="file.issue_id != null and issue_id !='' and issue_id != -1">
-                    #{file.issue_id}
-                </when>
-                <when test="file.user_id != null and user_id !='' and user_id != -1">
-                    #{file.user_id}
-                </when>
-                <otherwise>
-                    NULL
-                </otherwise>
-            </choose>,
-            #{file.original_name},
-            #{file.save_name},
-            #{file.file_size},
-            0,
-            SYSDATE,
-            NULL
-        )
-    	</foreach>
-	</insert>
 
-    <!-- 파일 리스트 조회 -->
-    <select id="findAllByPostId" parameterType="int" resultType="com.naver.myhome.domain.Files">
-        SELECT
-            <include refid="files" />
-        FROM
-            files
-        WHERE
-            delete_yn = 0
-            <choose>
-                <when test="file.issue_id != null and issue_id !='' and issue_id != -1">
-                 	AND issue_id = #{file.issue_id}
-                </when>
-                <when test="file.user_id != null and user_id !='' and user_id != -1">
-                  AND user_id = #{file.user_id}
-                </when>
-            </choose>
-        ORDER BY id
-    </select>
+  <insert id="uploadFile" parameterType="list">
+  INSERT INTO files (
+    <include refid="fileColumns" />
+  )
+  SELECT
+    file_id.nextval, A.*
+  FROM (
+    <foreach item="file" index="index" collection="list" separator="UNION ALL">
+      SELECT
+        #{file.issue_id},
+        #{file.original_name},
+        #{file.save_name},
+        #{file.file_size},
+        0,
+        SYSDATE,
+        NULL
+      FROM DUAL
+    </foreach>
+  ) A
+</insert>
+
+	<!-- 파일 리스트 조회 -->
+	<select id="getFileList" parameterType="int"
+		resultType="com.naver.myhome.domain.Files">
+		SELECT
+		*
+		FROM files
+		WHERE delete_yn = 0
+		AND issue_id = #{num}
+		ORDER BY file_id
+	</select>
 
 
-    <!-- 파일 리스트 조회 -->
-    <select id="findAllByIds" parameterType="list" resultType="com.naver.myhome.domain.Files">
-        SELECT
-            <include refid="files" />
-        FROM
-            tb_file
-        WHERE
-            delete_yn = 0
-            AND id IN
-            <foreach item="id" collection="list" open="(" separator="," close=")">
-            #{id}
-            </foreach>
-        ORDER BY
-            id
-    </select>
+	<!-- 파일 리스트 조회 -->
+	<select id="findAllByIds" parameterType="list"
+		resultType="com.naver.myhome.domain.Files">
+		SELECT
+		<include refid="fileColumns" />
+		FROM
+		tb_file
+		WHERE
+		delete_yn = 0
+		AND id IN
+		<foreach item="id" collection="list" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+		ORDER BY
+		id
+	</select>
 
 
-    <!-- 파일 삭제 -->
-    <delete id="deleteAllByIds" parameterType="list">
-        UPDATE files
-        SET
-              delete_yn = 1
-            , deleted_date = NOW()
-        WHERE
-            id IN
-            <foreach item="id" collection="list" open="(" separator="," close=")">
-            #{id}
-            </foreach>
-    </delete>
+	<!-- 파일 삭제 -->
+	<delete id="deleteAllByIds" parameterType="list">
+		UPDATE files
+		SET
+		delete_yn = 1
+		, deleted_date = NOW()
+		WHERE
+		id IN
+		<foreach item="id" collection="list" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
 
 </mapper>
