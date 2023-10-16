@@ -253,7 +253,7 @@
 																			<span>작업</span>
 																		</c:when>
 																	</c:choose>
-																<a href="../issue/issuedetail?num=${i.issue_id}">
+																<a href="../issue/issue-detail?num=${i.issue_id}">
 																	<span class="post-title">${i.issue_subject}</span>
 																</a>
 															</div> <span class="post-date">${i.issue_created}</span>
@@ -262,13 +262,6 @@
 													</c:otherwise>
 												</c:choose>
 																		
-<!-- 											<li>
-												<div class="type-title">
-													<img src="../resources/issue/img/task.svg"> <span>작업</span>
-													<span class="post-title">첫 번째 게시글 제목</span>
-												</div> <span class="post-date">2023-10-01</span>
-											</li> -->
-
 										</ul>
 									</div>
 								</div>
