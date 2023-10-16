@@ -164,7 +164,7 @@
 
 
 																	<span class="issuetype">${i.issue_type}</span> <a
-																		href="issuedetail?num=${i.issue_id}"> <span
+																		href="issue-detail?num=${i.issue_id}"> <span
 																		class="issue-title">${i.issue_subject}</span>
 																	</a>
 																</div>
@@ -201,7 +201,7 @@
 
 	</div>
 
-	<jsp:include page="issuecreate.jsp"></jsp:include>
+	<jsp:include page="issue-create.jsp"></jsp:include>
 
 	<!-- common js -->
 	<jsp:include page="../template/jsTemplate.jsp"></jsp:include>

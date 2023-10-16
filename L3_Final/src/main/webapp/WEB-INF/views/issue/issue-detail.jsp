@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html lang="en"class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
       data-assets-path="../resources/mainboard/assets/" data-template="vertical-menu-template-free">
@@ -29,6 +31,11 @@
       pre{font-family: var(--bs-body-font-family) !important}
       
       
+      
+      .upload-file-content{display:flex; align-items:center; margin: 15px 0px; width: 100%; height: 60px; border:1.4px solid #d9dee3; border-radius: 5px; padding:0 10px}
+      .file-item{margin:10px 0;}
+      .file-item{border-style:none; background-color: white}
+      .extension-icon{width:30px;}
     </style>
   </head>
 
@@ -134,23 +141,69 @@
                         프로젝트 규칙 만드는 Tip 영상으로 확인하기 ▶ https://youtu.be/DwgWSLsLgpU -->
                         <pre>${issuedata.issue_content}</pre>
                       </div>
-                      <hr class="issue-hr">
-
+                     <!--  <hr class="issue-hr"> -->
+											
+											<p>첨부파일</p>
                       <div class="issue-file-area">
-                        <span>첨부파일</span><img class="folder-img" src="../resources/issue/img/folder.svg">
-                        <span class="attached-folder"></span>
+                        	<c:choose>
+													<c:when test="${empty filelist}">
+														<h3></h3>
+													</c:when>
+													<c:otherwise>
+														<c:forEach var="f" items="${filelist}">
+														<div class="upload-file-content">
+															<form method="get" action="down">
+																<input type="hidden" value="${f.save_name}" name="saveName">
+																<input type="hidden" value="${f.original_name}" name="originalName">
+																
+																<c:set var="split" value="${fn:split(f.original_name, '.')}"/>
+																<c:set var="extension" value="${fn:toLowerCase(split[fn:length(split) - 1])}"/>
+																																
+																<c:choose>
+    															<c:when test="${extension eq 'txt'}">
+        														<img class="extension-icon" src="../resources/issue/img/txt-icon.png" alt="Text Icon">
+    															</c:when>
+    															<c:when test="${extension eq 'jpg' || extension eq 'jpeg' || extension eq 'png' || extension eq 'gif' || extension eq 'svg' || extension eq 'bmp'}">
+        														<img class="extension-icon" src="../resources/issue/img/img-icon.png" alt="IMG Icon">
+    															</c:when>
+   																<c:when test="${extension eq 'xlsx' || extension eq 'xlsm' || extension eq 'xls' || extension eq 'xlsb' || extension eq 'xltx'}">
+   																	<img class="extension-icon" src="../resources/issue/img/exel-icon.png" alt="exel Icon">
+   																</c:when>
+   																<c:when test="${extension eq 'hwp'}">
+   																	<img class="extension-icon" src="../resources/issue/img/hwp-icon.png" alt="hwp Icon">
+   																</c:when>
+   																<c:when test="${extension eq 'pptx' || extension eq 'pptm' || extension eq 'ppt'}">
+   																	<img class="extension-icon" src="../resources/issue/img/ppt-icon.png" alt="ppt Icon">
+   																</c:when>
+   																<c:when test="${extension eq 'pdf'}">
+   																	<img class="extension-icon" src="../resources/issue/img/pdf-icon.png" alt="pdf Icon">
+   																</c:when>
+   																
+    															<c:otherwise>
+        														<img class="extension-icon" src="../resources/issue/img/default-icon.png" alt="Default Icon">
+    															</c:otherwise>
+																</c:choose>	
+																
+																<input type="submit" class="file-item" data-value="${f.file_id}" value="${f.original_name}"> 
+															</form>
+															</div>
+														</c:forEach>
+													</c:otherwise>
+												</c:choose>
                       </div>
-                      <div class="subtask-wrap">
+                      
+                  <!--     <div class="subtask-wrap">
                         <span class="subtask-text">관련이슈</span>
                         <button type="button" class="add-subtask-btn"><img
                             src="../resources/issue/img/plus.svg">이슈추가</button>
-                      </div><!-- subtask-wrap end-->
+                      </div>subtask-wrap end
                       <div class="subtask">
                         <div class="subtask-item">
                           <div class="subtask-status">In Progress</div>
                           <p class="subtask-title">채팅 기능 추가</p>
                         </div>
-                      </div> <!-- subtask end-->
+                      </div>  -->
+                      <!-- subtask end-->
 
                     </div> <!-- issue-info end -->
 
@@ -160,28 +213,6 @@
                   <div class="card comment-card">
                     <hr style="color: rgb(162, 162, 162); margin-bottom: 0px;">
                     <div class="comment-wrap">
-                    
-                    <!--   <div class="comments">
-                        <img src="../resources/mainboard/assets/img/avatars/1.png" alt="작성자 이미지" class="w-px-40 h-auto comment-writer-img" />
-                        <span class="comment-writer">MKP</span> <sup class="comment-created">2023-09-22 15:32:27</sup>
-                        <br>
-                        <div class="comment-content">
-                        <span>확인해주세요.</span>
-                      </div>
-                        <hr class="comment-hr">
-                      </div>
-
-                      <div class="comments">
-                        <img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto comment-writer-img" />
-                        <span class="comment-writer">MKP</span> <sup class="comment-created">2023-09-22 15:32:27</sup>
-                        <br>
-                        <div class="comment-content">
-                        <span>오늘은 해야 할 업무가 있습니다.<br>
-                              내일까지 완료하겠습니다.
-                        </span>
-                      </div>
-                        <hr class="comment-hr">
-                      </div> -->
 
                       <div class="comments create-comment" style="border-bottom: 1px solid lightgrey">
                         <img src="../resources/mainboard/assets/img/avatars/1.png" class="w-px-40 h-auto comment-writer-img" />
@@ -219,7 +250,7 @@
     </div>
 	</div> <!-- Layout-Wrapper end -->
 	
-<jsp:include page="issueEdit.jsp"></jsp:include>
+<jsp:include page="issue-edit.jsp"></jsp:include>
 
 <div class="issue-delete-modal">
 	<div class="issue-delete-modal-overlay"></div>
@@ -263,14 +294,14 @@
 			</li>
 			<li class="assign-dropdown-item">
 				<div>
-					<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="h-auto user-img" />
+					<img src="../resources/mainboard/assets/img/avatars/1.png" class="h-auto user-img" />
 					<span class="user-name">직원 2</span>
 				</div>
 				<span class="user-id">@2</span>
 			</li>
 			<li class="assign-dropdown-item">
 				<div>
-					<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="h-auto user-img" />
+					<img src="../resources/mainboard/assets/img/avatars/1.png" class="h-auto user-img" />
 					<span class="user-name">직원 3</span>
 				</div>
 				<span class="user-id">@3</span>
@@ -284,26 +315,6 @@
 	</div>
 </div>
 
-<!-- <div class="status-update-modal">
-	<div class="status-update-modal-overlay"></div>
-	<div class="status-update-modal-content">
-		<h4>상태를 변경하시겠습니까?</h4>
-		<div class="status-update-modal-btn-wrap">
-			<button type="button" class="status-update-modal-btn">확인</button>
-			<button type="button" class="update-cancel-btn">취소</button>
-		</div>
-	</div>
-</div> -->
-
-<!-- <div class="status-update-modal">
-	<div class="status-update-modal-overlay"></div>
-	<div class="status-update-modal-content">
-		<h4>상태가 변경되었습니다.</h4>
-		<div class="status-update-modal-btn-wrap">
-			<button type="button" class="confirm-btn">확인</button>
-		</div>
-	</div>
-</div> -->
 
   	<!-- js template -->
 	<jsp:include page="../template/jsTemplate.jsp"></jsp:include>
@@ -315,7 +326,6 @@
 
 
 <script type="text/javascript">
-
 </script>
   </body>
 </html>
