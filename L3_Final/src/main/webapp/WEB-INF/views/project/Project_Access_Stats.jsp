@@ -294,13 +294,13 @@ select::-ms-expand {
 
 											<!-- 탭 메뉴 -->
 											<ul class="nav nav-tabs">
-												<li class="nav-item"><a class="nav-link active"
+												<li class="nav-item"><a class="nav-link active monthly"
 													aria-current="page" href="#"
-													onclick="showGraph('monthlyGraph')">월별</a></li>
-												<li class="nav-item"><a class="nav-link" href="#"
-													onclick="showGraph('weeklyGraph')">주별</a></li>
-												<li class="nav-item"><a class="nav-link" href="#"
-													onclick="showGraph('dailyGraph')">일별</a></li>
+													onclick="handleTabClick('monthly')">월별</a></li>
+												<li class="nav-item"><a class="nav-link weekly" href="#"
+													onclick="handleTabClick('weekly')">주별</a></li>
+												<li class="nav-item"><a class="nav-link daily" href="#"
+													onclick="handleTabClick('daily')">일별</a></li>
 											</ul>
 
 											<!-- 차트 -->
@@ -413,7 +413,138 @@ select::-ms-expand {
 										<script
 											src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
 										<script>
-											// Chart 생성
+										let can='';
+										handleTabClick('monthly');
+										  function handleTabClick(tabType) {
+										    console.log(tabType);
+										      if (tabType === 'monthly') {
+										    	  
+											        settings('lineChart',"monthlyGraph");
+											      } else if (tabType === 'weekly') {
+											        settings('lineChart2',"weeklyGraph");
+											      } else if (tabType === 'daily') {
+											        settings('lineChart3',"dailyGraph");
+											      }
+
+										      // 모든 탭에서 'active' 클래스 제거
+										      const tabElements = document.querySelectorAll('.nav-item a.nav-link');
+										      tabElements.forEach((tabElement) => {
+										        tabElement.classList.remove('active');
+										      });
+										      
+										      // 선택된 탭에 'active' 클래스 추가
+										      const selector = "a[onclick=handleTabClick('" + tabType +"')]"
+										      console.log(selector);
+										      const activeTabElement = document.querySelector('.' + tabType);
+										      
+										      console.log(activeTabElement);
+										      activeTabElement.classList.add('active');
+										      
+										    
+										    }//handleTabClick
+										  
+
+										    function settings(charttype,graphsid) {
+										      // Chart 생성
+										      let ctx = document.getElementById(charttype).getContext('2d');
+										      
+										      let labels = [];
+										      let data = [];
+
+										      if (charttype === 'lineChart') {
+										        // JavaScript로 6개월 간격의 날짜를 계산
+										        var today = new Date();
+										        var sixMonthsAgo = new Date();
+										        sixMonthsAgo.setMonth(today.getMonth() - 5);
+
+										        // 날짜를 원하는 형식으로 포맷
+										        function formatDate(date) {
+										          var year = date.getFullYear();
+										          var month = date.getMonth() + 1;
+										          return year + '년' + month + '월';
+										        }
+
+										        // 레이블을 계산된 날짜로 업데이트
+										        labels = [
+										          formatDate(sixMonthsAgo),
+										          formatDate(new Date(today.getFullYear(), today.getMonth() - 4)),
+										          formatDate(new Date(today.getFullYear(), today.getMonth() - 3)),
+										          formatDate(new Date(today.getFullYear(), today.getMonth() - 2)),
+										          formatDate(new Date(today.getFullYear(), today.getMonth() - 1)),
+										          formatDate(new Date(today.getFullYear(), today.getMonth()))
+										        ];
+										        data = [50, 20, 10, 0, 25, 60];
+										      } else if (charttype === 'lineChart2') {
+									
+
+										      
+										    	  labels = ["1주", "2주", "3주", "4주"];
+										        data = [30, 40, 50, 25, 35, 45];
+										      } else if (charttype === 'lineChart3') {
+										        // 일별 데이터 설정
+										        labels = ["1일", "2일", "3일", "4일", "5일", "6일","7일"];
+										        data = [10, 20, 15, 30, 25, 40,55];
+										      }
+
+										      const chartData = {
+										        labels: labels, // 계산된 레이블을 사용
+										        datasets: [
+										          {
+										            data: data, // 실제 통계 데이터로 업데이트 필요
+										            borderColor: 'lightblue',
+										            backgroundColor: 'lightblue',
+										            pointRadius: 10,
+										            pointHoverRadius: 15
+										          }
+										        ]
+										      };
+
+										      const chartConfig = {
+										        type: 'line',
+										        data: chartData,
+										        options: {
+										          responsive: true,
+										          plugins: {
+										            title: {
+										              display: true
+										            },
+										            legend: {
+										              display: false
+										            }
+										          }
+										        }
+										      };
+
+										      // Chart 생성 및 설정
+										      if(can != '')
+										      can.destroy();
+										      
+										      
+										     can = new Chart(ctx, chartConfig);
+										      
+										      		  	document
+												.getElementById('monthlyGraph').style.display = 'none';
+										document
+												.getElementById('weeklyGraph').style.display = 'none';
+										document
+												.getElementById('dailyGraph').style.display = 'none';
+										
+										
+										
+
+										// 선택한 그래프만 보이도록 설정
+										document
+												.getElementById(graphsid).style.display = 'block';
+										document
+										.getElementById(graphsid).style.height = '250px';
+									
+										
+											  
+										    }//settings end
+										</script>
+										
+										<script>
+									 	/* 	// Chart 생성
 											var ctx = document.getElementById(
 													'lineChart').getContext(
 													'2d');
@@ -422,8 +553,10 @@ select::-ms-expand {
 													'2d');
 											var ctx3 = document.getElementById(
 													'lineChart3').getContext(
-													'2d');
-
+													'2d'); 
+										
+											
+											
 											// JavaScript로 6개월 간격의 날짜를 계산
 											var today = new Date();
 											var sixMonthsAgo = new Date();
@@ -524,10 +657,10 @@ select::-ms-expand {
 												console
 														.log("Showing graph of type: "
 																+ graphType);
-											}
+											} */
 
 											// 초기로딩 시 월별 그래프를 보이도록 설정
-											showGraph('monthlyGraph');
+											//showGraph('monthlyGraph');
 											/*  function tableToExcel(table, name) {
 											     var uri = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8;base64,';
 											     var template =
@@ -559,7 +692,7 @@ select::-ms-expand {
 											     this.href = excelDataUri;
 											     this.download = '테이블명.xls';
 											 });
-											 */
+											 */ 
 											function tableToExcel(table, name) {
 												var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head>'
 														+ '<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>'

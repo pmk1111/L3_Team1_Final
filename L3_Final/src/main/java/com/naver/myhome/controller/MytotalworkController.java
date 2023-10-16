@@ -48,7 +48,7 @@ public class MytotalworkController {
 
 
 	@ResponseBody
-	@PostMapping("/mywork")
+	@GetMapping("/mywork")
 	public List<Mytotalwork> searchMyTotalWork(@RequestParam String searchtitle) {
 		return myTotalWorkService.searchMyTotalWork(searchtitle);
 	}
