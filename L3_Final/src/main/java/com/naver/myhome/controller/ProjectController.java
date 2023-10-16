@@ -41,7 +41,7 @@ public class ProjectController {
 		return "project/create-project";
 	}
 	
-	@GetMapping(value = "/create")
+	@PostMapping(value = "/create")
 	@Transactional
 	public String create(Project project) throws Exception {
 	    projectService.insertProject(project);
@@ -85,7 +85,7 @@ public class ProjectController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/update-color")
+	@GetMapping("/update-color")
 	public void updateColor(@RequestParam(name="color", required=false) String color,
 	                        @RequestParam(name="num", required=true) int num){
 		projectService.updateColor(num, color);
@@ -93,12 +93,11 @@ public class ProjectController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/check")
+	@GetMapping("/participate")
 	public Integer favoritCheck(@RequestParam(name="projectNum", required=true) int projectNum,
 	                            @RequestParam(name="employeeNum", required=true) int employeeNum) {
 	    
 	    Integer result = projectService.checkFavorite(projectNum, employeeNum);
-	    System.out.println(result);
 	    
 	    return result == null ? -1 : result;
 	}
@@ -120,10 +119,10 @@ public class ProjectController {
 		
 	}
 	
+	// JJ's Controller End
+	
 	@RequestMapping(value = "/project-access-stats", method = RequestMethod.GET)
 	public String projectAccessStats() {
 		return "project/project-access-stats";
 	}
-	
-	// JJ's Controller End
 }

@@ -7,7 +7,7 @@ $(document).ready(function() {
 		        var employeeNum = 1;
 		        
 		        $.ajax({
-		            url: '../project/check',
+		            url: '../project/participate',
 		            method: 'GET',
 		            data: {
 		                projectNum: projectNum,
@@ -116,7 +116,7 @@ $(document).ready(function() {
 			    
 			    $.ajax({
 			        url: '../project/update-color',
-			        type: 'POST',
+			        type: 'GET',
 			        data: { color:activeColor, num:num },
 			        success: function(response) {
 			        $(".select-color").css("background", activeColor);
