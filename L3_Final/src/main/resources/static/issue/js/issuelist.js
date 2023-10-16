@@ -45,8 +45,8 @@ function getFilteredData(data) {
     console.log("Ajax 요청 issueType: " + data.issueType + ", issuePriority: " + data.issuePriority);
 
     $.ajax({
-    		type: "POST",
-        url: "list_ajax",
+    		type: "GET",
+        url: "getFilteredIssue",
         data: data,
         success: function (data) {
             $(".all-issue-list").empty();
@@ -68,7 +68,7 @@ function getFilteredData(data) {
                     }
 
                     str += '<span class="issuetype" style="margin-left:20px !important">' + item.issue_type + '</span>';
-                    str += '<a href="issuedetail?num=' + item.issue_id + '">';
+                    str += '<a href="issue-detail?num=' + item.issue_id + '">';
                     str += '<span class="issue-title" style="margin-left:5px !important">' + item.issue_subject + '</span></a></div>';
                     str += '<div class="issuewriter-created">';
                     str += '<span class="issue-writer">' + item.create_user + '</span>';
@@ -93,8 +93,8 @@ function getFilteredData(data) {
 //검색 AJAX
 	function getSearchList() {
 		$.ajax({
-			type: "POST", 
-			url: "issue_search", 
+			type: "Get", 
+			url: "getSearchedIssue", 
 			data: $("form[name=search-form]").serialize(),
 			dataType: "json",
 			success: function (data) {
@@ -115,7 +115,7 @@ function getFilteredData(data) {
 						}
 						
 						str += '<span class="issuetype" style="margin-left:20px !important">' + item.issue_type + '</span>';
-						str += '<a href="issuedetail?num=' + item.issue_id + '">';
+						str += '<a href="issue-detail?num=' + item.issue_id + '">';
 						str += '<span class="issue-title" style="margin-left:5px !important">' + item.issue_subject + '</span></a></div>';
 						str += '<div class="issuewriter-created">';
 						str += '<span class="issue-writer">' + item.create_user + '</span>';
