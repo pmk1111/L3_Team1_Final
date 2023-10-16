@@ -11,7 +11,7 @@
     <title>WidUs-join</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    <link rel="stylesheet" href="../resources/user/css/join2.css" />
+    <link rel="stylesheet" href="../resources/user/css/create-company2.css" />
     <!-- Favicons -->
     <link href="../resources/home/assets/img/favicon.png" rel="icon">
     <link href="../resources/home/assets/img/apple-touch-icon.png" rel="apple-touch-icon">

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,21 +10,17 @@
     <title>회원가입 선택페이지</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    <link rel="stylesheet" href="../resources/user/css/confirm.css" />
-    <!-- Favicons -->
+    <link rel="stylesheet" href="../resources/user/css/confirm.css" /> <!-- Favicons -->
     <link href="../resources/home/assets/img/favicon.png" rel="icon">
-    <link href="../resources/home/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-    <!-- Vendor CSS Files -->
+    <link href="../resources/home/assets/img/apple-touch-icon.png" rel="apple-touch-icon"> <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet"> <!-- Vendor CSS Files -->
     <link href="../resources/home/assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="../resources/home/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../resources/home/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="../resources/home/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
     <link href="../resources/home/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="../resources/home/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="../resources/home/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <!-- Template Main CSS File -->
+    <link href="../resources/home/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> <!-- Template Main CSS File -->
     <link href="../resources/home/assets/css/home.css" rel="stylesheet">
     <style>
         .footer-top {
@@ -35,32 +31,24 @@
 
 <body>
     <jsp:include page="header.jsp"></jsp:include>
-
-    <div class="auth-section after-contets">
-        <div class="accont-wrap">
-            <div class="account">회원가입
-            </div>
-            <div class="jm-cont0">
-                <a href="0"> <img src="../resources/user/img/newcompany.png" alt="#">
-                </a>
-            </div>
-            <div class="join-main-container">
-                <div class="jmcont1">
-                    <a href="1"> <img src="../resources/user/img/joinmain2.png" alt="#" style=" width: 330px; height:350px; margin-right:20px;">
-                    </a>
-                </div>
-
-                <div class="jmcont2">
-                    <a href="2"> <img src="../resources/user/img/joinmain1.png" alt="#" style=" width: 330px; height:350px;">
-                    </a>
+    <form id="submitForm"> <input type="hidden" id="joinType" name="joinType" />
+        <div class="auth-section after-contets">
+            <div class="accont-wrap">
+                <div class="account">회원가입 </div>
+                <div class="jm-cont0">
+                    <!-- 회사 계정생성 --> <img src="../resources/user/img/newcompany.png" alt="#" onclick="goUserJoin('0')"> </div>
+                <div class="join-main-container">
+                    <div class="jmcont1">
+                        <!-- 개인 계정생성 --> <img src="../resources/user/img/joinmain2.png" alt="#" style=" width: 330px; height:350px; margin-right:20px;" onclick="goUserJoin('1')"> </div>
+                    <div class="jmcont2">
+                        <!-- 회사 가입하기-->
+                        <img src="../resources/user/img/joinmain1.png" alt="#" style=" width: 330px; height:350px;" onclick="goUserJoin('2')">
+                    </div>
                 </div>
             </div>
-
-
 
         </div>
-
-    </div>
+    </form>
     <div id="signupFooterArea" style="display: block;">
         <!-- ======= Footer ======= -->
         <footer id="footer">
@@ -139,6 +127,24 @@
     <script src="../resources/home/assets/vendor/waypoints/noframework.waypoints.js"></script>
     <script src="../resources/home/assets/vendor/php-email-form/validate.js"></script> <!-- Template Main JS File -->
     <script src="../resources/home/assets/js/main.js"></script>
+
+    <script type="text/javascript">
+        function goUserJoin(type) {
+            $("#joinType").val(type);
+            var sendForm = $("#submitForm").serialize();
+
+            $.ajax({
+                type: "GET",
+                url: "userJoin",
+                dataType: "html",
+                data: sendForm,
+                success: function(data) {
+                    $('body').html(data);
+                },
+                error: function(error) {}
+            });
+        }
+    </script>
 </body>
 
 </html>

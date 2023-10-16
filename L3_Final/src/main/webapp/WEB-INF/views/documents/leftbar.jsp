@@ -129,14 +129,14 @@
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/calendar/calendar-list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Layouts">캘린더</div>
               </a>
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/documents/documents-list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-copy"></i>
                 <div data-i18n="Layouts">자료 공유실</div>
               </a>
