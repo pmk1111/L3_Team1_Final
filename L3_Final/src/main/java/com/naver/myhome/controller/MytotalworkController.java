@@ -26,30 +26,30 @@ public class MytotalworkController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MytotalworkController.class);
 
-	private MytotalworkService MytotalworkService;
+	private MytotalworkService myTotalWorkService;
 
 	@Autowired
-	public MytotalworkController(MytotalworkService MytotalworkService) {
+	public MytotalworkController(MytotalworkService myTotalWorkService) {
 	
-		this.MytotalworkService = MytotalworkService;
+		this.myTotalWorkService = myTotalWorkService;
 	}
 	
 	@GetMapping(value = "/mywork")
-	public ModelAndView issuelist(ModelAndView mv, HttpServletRequest request, Principal principal) {
+	public ModelAndView myTotalWorks(ModelAndView mv, HttpServletRequest request, Principal principal) {
 		
-		List<Mytotalwork> Mytotalworklist = MytotalworkService.getMytotalworkList();
+		List<Mytotalwork> myTotalWorks = myTotalWorkService.getMyTotalWorks();
 		
 
 		
 		mv.setViewName("total/mywork");
-		mv.addObject("Mytotalworklist" ,Mytotalworklist);
+		mv.addObject("myTotalWorks" ,myTotalWorks);
 		return mv;
 	}
 
 
 	@ResponseBody
 	@PostMapping("/mywork")
-	public List<Mytotalwork> searchmytotalwork(@RequestParam String searchtitle) {
-		return MytotalworkService.searchmytotalwork(searchtitle);
+	public List<Mytotalwork> searchMyTotalWork(@RequestParam String searchtitle) {
+		return myTotalWorkService.searchMyTotalWork(searchtitle);
 	}
 }

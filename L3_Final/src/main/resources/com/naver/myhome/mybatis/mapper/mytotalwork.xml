@@ -5,13 +5,17 @@
 <mapper namespace="com.naver.myhome.mybatis.mapper.MytotalworkMapper">
 	
 
-	<select id="mytotallist" resultType="com.naver.myhome.domain.Mytotalwork">
-    
-   SELECT P.title AS project_title, I.issue_subject AS issue_title, I.issue_status
-FROM project P
-JOIN issue I ON P.num = I.project_id
-WHERE I.create_user = #{I.create_user}
-   
+	<select id="getMyTotalWorks" resultType="com.naver.myhome.domain.Mytotalwork">
+		    
+		SELECT
+		  P.title AS project_title,
+		  I.issue_subject AS issue_title,
+		  I.issue_status
+		FROM
+		  project P
+		  JOIN issue I ON P.num = I.project_id
+		WHERE
+		  I.create_user = #{I.create_user}
  
   </select>
   

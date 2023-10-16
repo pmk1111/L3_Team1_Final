@@ -6,8 +6,8 @@ import com.naver.myhome.domain.Mytotalwork;
 
 public interface MytotalworkService {
 
-	public List<Mytotalwork> searchmytotalwork(String searchtitle);
+	public List<Mytotalwork> searchMyTotalWork(String searchtitle);
 
-	public List<Mytotalwork> getMytotalworkList();
+	public List<Mytotalwork> getMyTotalWorks();
 
 }
