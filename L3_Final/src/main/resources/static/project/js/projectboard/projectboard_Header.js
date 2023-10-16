@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+			
 		    $('.star').each(function() {
 		        var $this = $(this);
 		        var projectNum = $this.data('projectNum');
@@ -26,12 +26,12 @@ $(document).ready(function() {
 		        });
 		    });
 		
-		    $('.star').click(function() {
-		        var $this = $(this);
-		        var projectNum = $this.data('projectNum');
-		       /* var employeeNum = $this.data('employeeNum'); */
-		        var employeeNum = 1
-		
+			$('.star').click(function() {
+			    var $this = $(this);
+			    var projectNum = $this.data('projectNum');
+			    /* var employeeNum = $this.data('employeeNum'); */
+			    var employeeNum = 1
+			
 			    $.ajax({
 			        url: '../project/favorite',
 			        method: 'POST',
@@ -40,15 +40,29 @@ $(document).ready(function() {
 			            employeeNum: employeeNum
 			        },
 			        success: function(response) {
-			        	console.log(response);
+			            console.log(response);
 			            if(response == -1) {
+			                // 즐겨찾기 삭제 성공 시
 			                $this.attr('src', '../resources/project/img/projectboard/icon_star.png');
+			
+			                // 해당 프로젝트 아이템을 '즐겨찾기' 리스트에서 제거하고 '참여 중인 프로젝트' 리스트에 추가
+			                var listItem = $this.closest('.list');
+			                $('.partProject .all-project-list').append(listItem);
+			
 			            } else {
+			                // 즐겨찾기 추가 성공 시
 			                $this.attr('src', '../resources/project/img/projectboard/icon_star_on.png');
+			
+			                // 해당 프로젝트 아이템을 '참여 중인 프로젝트' 리스트에서 제거하고 '즐겨찾기' 리스트에 추가
+			                var listItem = $this.closest('.list');
+			                $('.favoritProject .all-project-list').append(listItem);
 			            }
-			        }
-			    });
-		    });
+			        },
+			        error: function(xhr, status, error) {
+			           console.error('Error:', error);
+			       }
+			   });
+			});
 
 			$(".star").hover(function() {
 			    var $parent = $(this).parent();
@@ -101,7 +115,7 @@ $(document).ready(function() {
 			    $("#modal-background").css('display', 'none');
 			    
 			    $.ajax({
-			        url: '../project/updateColor',
+			        url: '../project/update-color',
 			        type: 'POST',
 			        data: { color:activeColor, num:num },
 			        success: function(response) {

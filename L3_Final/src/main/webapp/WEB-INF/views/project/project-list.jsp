@@ -341,9 +341,9 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="project-name">
-                                                                                    <a href="Project?num=${favoritProject.NUM}"><span class="project-name-span">${favoritProject.TITLE}</span></a>
-                                                                                    <img src="">
-                                                                                    <span>1</span>
+                                                                                    <a href="project?num=${favoritProject.NUM}"><span class="project-name-span">${favoritProject.TITLE}</span></a>
+                                                                                    <img class="team_count" src="../resources/project/img/person.svg">
+                                                                                    <span>${favoritProject.teamCount}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -438,9 +438,9 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="project-name">
-                                                                                    <a href="Project?num=${partProject.NUM}"><span class="project-name-span">${partProject.TITLE}</span></a>
-                                                                                    <img src="">
-                                                                                    <span>1</span>
+                                                                                    <a href="project?num=${partProject.NUM}"><span class="project-name-span">${partProject.TITLE}</span></a>
+                                                                                    <img class="team_count" src="../resources/project/img/person.svg">
+                                                                                    <span>${partProject.teamCount}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -537,9 +537,9 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="project-name">
-                                                                                <a href="Project?num=${allProject.NUM}"><span class="project-name-span">${allProject.TITLE}</span></a>
-                                                                                <img src="">
-                                                                                <span>1</span>
+                                                                                <a href="project?num=${allProject.NUM}"><span class="project-name-span">${allProject.TITLE}</span></a>
+                                                                                <img class="team_count" src="../resources/project/img/person.svg">
+                                                                                <span>${teamCount}</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>

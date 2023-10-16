@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +18,7 @@ import com.naver.myhome.service.ProjectService;
 import com.naver.myhome.service.TeamService;
 
 @Controller
-@RequestMapping(value = "/Project")
+@RequestMapping(value = "/project")
 public class ProjectController {
 	
 	// JJ's Controller
@@ -32,19 +31,19 @@ public class ProjectController {
 		this.teamService = teamService;
 	}
 	
-	@GetMapping(value = "/GanttChart")
-	public String ProjectGanttChart() {
-		return "project/GanttChart";
+	@GetMapping(value = "/gantt-chart")
+	public String projectGanttChart() {
+		return "project/gantt-chart";
 	}
 	
-	@GetMapping(value = "/CreateProject") // board/write
-	public String CreateProject() {
-		return "project/CreateProject";
+	@GetMapping(value = "/create-project") // board/write
+	public String createProject() {
+		return "project/create-project";
 	}
 	
-	@GetMapping(value = "/Create")
+	@GetMapping(value = "/create")
 	@Transactional
-	public String Create(Project project) throws Exception {
+	public String create(Project project) throws Exception {
 	    projectService.insertProject(project);
 
 	    int projectNum = project.getNUM();
@@ -52,11 +51,11 @@ public class ProjectController {
 
 	    teamService.addTeam(projectNum, employeeNum);
 
-	    return "redirect:ProjectList";
+	    return "redirect:project-list";
 	}
     
-	@GetMapping(value = "/ProjectList")
-	public ModelAndView ProjectList(ModelAndView mv) {
+	@GetMapping(value = "/project-list")
+	public ModelAndView projectList(ModelAndView mv) {
 		
 		int employeeNum = 1;
 		
@@ -64,7 +63,7 @@ public class ProjectController {
 	    List<Project> favoritProjectList = projectService.getFavoritProjectList(employeeNum);
 	    List<Project> partProjectList = projectService.getPartProjectList(employeeNum);
 	    
-	    mv.setViewName("project/ProjectList");
+	    mv.setViewName("project/project-list");
 	    mv.addObject("allProjectlist", allProjectList);
 	    mv.addObject("favoritProjectList", favoritProjectList);
 	    mv.addObject("partProjectList", partProjectList);
@@ -73,21 +72,20 @@ public class ProjectController {
 	    
 	}
 	
-	@GetMapping(value = "/Project")
-	public ModelAndView ProjectBoard
-	(int num, ModelAndView mv,
-	 @RequestHeader(value="referer", required=false) String beforeURL) {
+	@GetMapping(value = "/project")
+	public ModelAndView projectBoard
+	(int num, ModelAndView mv) {
 		
 		Project project = projectService.getDetail(num);
 		
-		mv.setViewName("project/ProjectBoard");
+		mv.setViewName("project/project-board");
 	    mv.addObject("project", project);
 	      
 		return mv;
 	}
 	
 	@ResponseBody
-	@PostMapping("/updateColor")
+	@PostMapping("/update-color")
 	public void updateColor(@RequestParam(name="color", required=false) String color,
 	                        @RequestParam(name="num", required=true) int num){
 		projectService.updateColor(num, color);
@@ -122,9 +120,9 @@ public class ProjectController {
 		
 	}
 	
-	@RequestMapping(value = "/Project_Access_Stats", method = RequestMethod.GET)
-	public String Project_Access_Stats() {
-		return "project/Project_Access_Stats";
+	@RequestMapping(value = "/project-access-stats", method = RequestMethod.GET)
+	public String projectAccessStats() {
+		return "project/project-access-stats";
 	}
 	
 	// JJ's Controller End

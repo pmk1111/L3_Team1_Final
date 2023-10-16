@@ -7,5 +7,11 @@
 		INSERT INTO team (employee_num, project_num)
 		VALUES (#{employeeNum}, #{projectNum})
 	</insert>
+	
+	<select id="teamCount" resultType="int">
+		select count(*)
+		from team
+		where project_num = #{projectNum}
+	</select>
 
 </mapper>

@@ -3,32 +3,32 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.ProjectMapper">
 
-<insert id="Insert" parameterType="com.naver.myhome.domain.Project">
-    <selectKey keyProperty="NUM" resultType="int" order="BEFORE">
-        SELECT project_num_seq.NEXTVAL FROM DUAL
-    </selectKey>
-    INSERT INTO project (NUM, TITLE, SUBTITLE)
-    VALUES (#{NUM}, #{TITLE}, #{SUBTITLE})
-</insert>
+	<insert id="Insert" parameterType="com.naver.myhome.domain.Project">
+	    <selectKey keyProperty="NUM" resultType="int" order="BEFORE">
+	        SELECT project_num_seq.NEXTVAL FROM DUAL
+	    </selectKey>
+	    	INSERT INTO project (NUM, TITLE, SUBTITLE)
+	    	VALUES (#{NUM}, #{TITLE}, #{SUBTITLE})
+	</insert>
 
     <select id="getAllProjectList" resultType="com.naver.myhome.domain.Project">
-        select project.*, ROUND((sysdate-created_at)*24*60) as CURRENTTIME
+        select project.*, ROUND((sysdate-created_at)*24*60) as CURRENTTIME, ( select count(*) from team where project_num = project.num ) as teamCount
         from project
         ORDER BY created_at DESC
     </select>
     
     <select id="getFavoritProjectList" resultType="com.naver.myhome.domain.Project">
-        SELECT p.*
+        SELECT p.*, ROUND((sysdate-created_at)*24*60) as CURRENTTIME, ( select count(*) from team where project_num = p.num ) as teamCount
         FROM project p
         JOIN favorites f ON p.num = f.project_num
         WHERE f.employee_num = #{employeeNum}
     </select>
     
     <select id="getPartProjectList" resultType="com.naver.myhome.domain.Project">
-		SELECT p.*
+		SELECT p.*, ROUND((sysdate-created_at)*24*60) as CURRENTTIME, ( select count(*) from team where project_num = p.num ) as teamCount
 		FROM project p
 		JOIN team t ON p.num = t.project_num
-		WHERE t.employee_num = 1
+		WHERE t.employee_num = #{employeeNum}
 		AND p.num NOT IN (
 		    SELECT f.project_num 
 		    FROM favorites f 

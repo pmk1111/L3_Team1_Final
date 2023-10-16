@@ -19,5 +19,10 @@ public class TeamServiceImpl implements TeamService {
 	public void addTeam(int projectNum, int employeeNum) {
 		mapper.addTeam(projectNum, employeeNum);
 	}
+	
+	@Override
+	public int teamCount(int projectNum){
+		return mapper.teamCount(projectNum);
+	}
 
 }

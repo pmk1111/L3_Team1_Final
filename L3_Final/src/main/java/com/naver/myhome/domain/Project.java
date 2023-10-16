@@ -10,6 +10,7 @@ public class Project {
     private Date CREATE_AT;
     private Date UPDATE_AT;
     private String CURRENTTIME;
+    private int teamCount;
     
 	public int getNUM() {
 		return NUM;
@@ -53,4 +54,12 @@ public class Project {
 	public void setCURRENTTIME(String cURRENTTIME) {
 		CURRENTTIME = cURRENTTIME;
 	}
+	public int getTeamCount() {
+		return teamCount;
+	}
+	public void setTeamCount(int teamCount) {
+		this.teamCount = teamCount;
+	}
+	
+	
 }
