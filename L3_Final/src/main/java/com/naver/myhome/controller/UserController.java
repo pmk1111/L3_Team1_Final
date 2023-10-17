@@ -18,9 +18,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.naver.myhome.service.UserService;
@@ -137,35 +137,39 @@ public class UserController {
 //	
 	//지니 끝
 
+	@GetMapping("/confirm")
+	public String confirm() {
+	return "user/confirm";
+	}
 	
 	@GetMapping("/join")
 	public String join() {
 	return "user/join";
 	}
+	
 	@GetMapping("/create-company-domain")
 	public String createCompanyDomain() {
 	return "user/create-company-domain";
 	}
-	@GetMapping("/create-company-id")
+	
+	@PostMapping("/create-company-id")
 	public String createCompanyId() {
 		return "user/create-company-id";
 	}
+	
 	@GetMapping("/join-company")
 	public String joinCompany() {
 	return "user/join-company";
 	}
-	@GetMapping("/confirm")
-	public String confirm() {
-	return "user/confirm";
-	}
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	
+	@GetMapping("/login")
 	public String login() {
 	return "user/login";
 	}
 
 	
     @ResponseBody
-    @RequestMapping(value = "/send-mail-auth-code", method = RequestMethod.POST)
+    @PostMapping("/send-mail-auth-code")
     public String sendMailAuthCode(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws Exception {
 
 
@@ -215,7 +219,7 @@ public class UserController {
     } 
     
     @ResponseBody
-    @RequestMapping(value = "/chk-auth-code", method = RequestMethod.POST)
+    @PostMapping("/chk-auth-code")
     public String chkAuthCode(HttpServletRequest request, HttpServletResponse response , HttpSession session) throws Exception {
     	int verCode = (int) session.getAttribute("verificationCode");
     	int userAuthCode = Integer.parseInt(request.getParameter("authNum")); 
