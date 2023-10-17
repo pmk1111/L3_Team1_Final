@@ -41,6 +41,7 @@
                 if ( tab == "useruse" ){ 
                 $.ajax({
                    url: "../admin/userstoplist",
+                   type:"POST",
                    data: {
                    		company_id: "1"
                 	},
@@ -99,6 +100,7 @@
                 } else if(tab == "userstop"){
                 $.ajax({
                    url: "../admin/useruselist",
+                   type:"POST",
                    data: {
                    		company_id: "1"
                 	},
@@ -228,6 +230,7 @@ $(".auth-delete").click(function() {
                 
                 $.ajax({
                    url: "../admin/useruselist",
+                   type: "POST",
                    data: {
                    		company_id: "1"
                 	},
