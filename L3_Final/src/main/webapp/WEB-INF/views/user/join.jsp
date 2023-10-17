@@ -311,7 +311,7 @@
     	var sendForm = $("#joinform").serialize();
     	
     	 $.ajax({
-    	        url: "../user/sendMailAuthCode",
+    	        url: "../user/send-mail-auth-code",
     	        type: "POST",
     	        data: sendForm,
     	        async: false,
@@ -327,7 +327,7 @@
     	var sendForm = $("#joinform").serialize();
     	
 	   	 $.ajax({
-	   	        url: "../user/chkAuthCode",
+	   	        url: "../user/chk-auth-code",
 	   	        type: "POST",
 	   	        data: sendForm,
 	   	        async: false,

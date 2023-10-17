@@ -89,13 +89,62 @@
             padding-top: 0px;
 
         }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* 화면 전체 너비 */
+            height: 100%;
+            /* 화면 전체 높이 */
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            width: 475px;
+            height: 300px;
+            max-height: 70%;
+
+            padding: 20px;
+            border: 1px solid #888;
+
+            transform: translate(-50%, -50%);
+
+        }
+
+
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .authDescription {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
     </style>
 </head>
 
 <body>
     <jsp:include page="header.jsp"></jsp:include>
-
-    <div class="auth-section after-contets">
+	<form id="joinform" name="joinform">
+     <div class="auth-section after-contets">
         <div class="accont-wrap">
             <div id="companyJoinMain" class="login-wrap">
                 <div class="login-text">회사 계정 만들기</div>
@@ -130,14 +179,34 @@
                 </div>
 
                 <div class="clearfix">
-                    <button type="button" id="confirmBtn" class="submitbtn" onclick="validationcheck()">
+                    <button type="button" id="confirmBtn" class="submitbtn" onclick="sendMailAuthCode();">
                         <strong>가입하기</strong>
                     </button>
-
+					  <input type="hidden" id="authRandNum" name="authRandNum" />
+	          		  <input type="hidden" id="isChkPassword" name="isChkPassword" value="N" />
+	          		  <input type="hidden" id="isChkName" name="isChkName" value="N" />
+	          		  <input type="hidden" id="isChkEmail" name="isChkEmail" value="N" />
+	          		  <input type="hidden" id="isChkpolicy" name="isChkpolicy" value="N" />
                 </div>
             </div>
         </div>
     </div>
+     <div class="modalarea">
+	        <div id="myModal" class="modal">
+	
+	            <div class="modal-content">
+	                <span class="close">&times;</span>
+	                <strong style="padding-left: 40px; padding-bottom: 20px;">인증번호 입력</strong>
+	                 <label for="authDescription" class="authDescription"></label><br>
+	
+	                 <input type="text" id="authNum" class="authNum" name="authNum" placeholder="인증번호를 입력하세요" maxLength="6" required>
+	                 <p class="errMsg" id="auth_message">오류메세지 영역</p>
+	
+	                 <button class="save" type="button" onclick="chkAuthCode()">확인</button>
+	            </div>
+	        </div>
+	    </div>
+	  </form>
     <div id="signupFooterArea" style="display: block;">
         <!-- ======= Footer ======= -->
         <footer id="footer">
@@ -252,6 +321,7 @@
                     printErrMsg("name_message", "이름은 2글자 이상이어야 합니다.");
                 } else {
                     document.getElementById("name_message").style.visibility = "hidden";
+                    document.getElementById("isChkName").value = "Y";
                 }
             });
 
@@ -268,26 +338,76 @@
                 if (!this.checked) {
                     alert('서비스 이용약관 동의는 필수입니다.');
                     this.focus();
+                }else{
+                	document.getElementById("isChkpolicy").value = "Y";
                 }
             })
 
-            $("#confirmBtn").on('click', function(event) {
-                event.preventDefault();
-
-                var emailInput = document.getElementById('email');
-                var userNameInput = document.getElementById('userName');
-                var passwordInput = document.getElementById('password');
-
-                // All fields are valid
-                if (document.getElementById("isChkEmail") && userNameInput.value.length >= 2 && passwordInput.value.length >= 6 && policyCheckbox.checked) {
-                    $("#joinform").submit();
-                }
-
-                return false;
-
-            });
         });
     </script>
+    <script>
+    function openModal() {
+        var email = document.getElementById('email').value;
+        var modal = document.getElementById('myModal');
+        var authDescription = document.querySelector('.authDescription');
+
+        if (document.getElementById("isChkPassword").value == 'Y' &&
+            document.getElementById("isChkName").value == 'Y' &&
+            document.getElementById("isChkEmail").value == 'Y' &&
+            document.getElementById("isChkpolicy").value == 'Y') {
+
+            authDescription.innerHTML = email + '으로 <br> 6자리 인증번호가 전송되었습니다';
+            modal.style.display = 'block';
+            
+        } else {
+            alert('입력값을 확인해주세요.');
+        }
+    }
+    
+    function sendMailAuthCode(){
+    	var sendForm = $("#joinform").serialize();
+    	
+    	 $.ajax({
+    	        url: "../user/sendMailAuthCode",
+    	        type: "POST",
+    	        data: sendForm,
+    	        async: false,
+    	        success: function(response) {
+    	        	openModal();
+    	        },
+    	        error: function(error) {
+                }
+    	});
+    }
+    
+    function chkAuthCode(){
+    	var sendForm = $("#joinform").serialize();
+    	
+	   	 $.ajax({
+	   	        url: "../user/chkAuthCode",
+	   	        type: "POST",
+	   	        data: sendForm,
+	   	        async: false,
+	   	        success: function(data) {
+	   				debugger;
+	   	        },
+	   	        error: function(error) {
+	            }
+	   		});	
+    }
+    
+    
+    
+    
+    
+     var modal = document.getElementById('myModal');
+     var span = document.getElementsByClassName("close")[0];
+
+     span.onclick = function() {
+        modal.style.display = "none";
+     }
+    </script>
+
 </body>
 
 </html>

@@ -1,4 +1,41 @@
 @charset "UTF-8";
+
+.companyName, .eid {
+	color: #333;
+	font-size: 16px;
+	padding: 0 0 0 20px;
+	background: #FFFFFF;
+	width: 640px;
+	padding: 16px 20px;
+	color: #333;
+	border: 1px solid #ddd;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin-top: 10px;
+}
+
+.errMsg {
+	text-align: left;
+	margin-top: 10px;
+	color: #ff6b6b;
+	font-size: 14px;
+	line-height: 21px;
+}
+
+.errMsg {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	visibility: hidden;
+}
+
+.btn-join {
+	margin-top: 20px;
+	margin-bottom: 100px;
+}
+
 #header {
 	background-color: #9F7AB0;
 	heigh: 72.5px !important;
@@ -74,10 +111,11 @@
 	font-size: 14px;
 	line-height: 21px;
 }
-.login-text{
-	margin-top:100px;
+
+.login-text {
+	margin-top: 100px;
 }
-.auth-section{
-	    padding-top: 0px;
-	
+
+.auth-section {
+	padding-top: 0px;
 }

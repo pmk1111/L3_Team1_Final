@@ -36,13 +36,13 @@ pageEncoding="UTF-8"%>
             <div class="accont-wrap">
                 <div class="account">회원가입 </div>
                 <div class="jm-cont0">
-                    <!-- 회사 계정생성 --> <img src="../resources/user/img/newcompany.png" alt="#" onclick="goUserJoin('0')"> </div>
+                    <!-- 회사 계정생성 --> <img src="../resources/user/img/newcompany.png" alt="#" class="create-company"> </div>
                 <div class="join-main-container">
                     <div class="jmcont1">
-                        <!-- 개인 계정생성 --> <img src="../resources/user/img/joinmain2.png" alt="#" style=" width: 330px; height:350px; margin-right:20px;" onclick="goUserJoin('1')"> </div>
+                        <!-- 개인 계정생성 --> <img src="../resources/user/img/joinmain2.png" alt="#" style=" width: 330px; height:350px; margin-right:20px;" class="join-user"> </div>
                     <div class="jmcont2">
                         <!-- 회사 가입하기-->
-                        <img src="../resources/user/img/joinmain1.png" alt="#" style=" width: 330px; height:350px;" onclick="goUserJoin('2')">
+                        <img src="../resources/user/img/joinmain1.png" alt="#" style=" width: 330px; height:350px;" class="join-company">
                     </div>
                 </div>
             </div>
@@ -128,22 +128,20 @@ pageEncoding="UTF-8"%>
     <script src="../resources/home/assets/vendor/php-email-form/validate.js"></script> <!-- Template Main JS File -->
     <script src="../resources/home/assets/js/main.js"></script>
 
-    <script type="text/javascript">
-        function goUserJoin(type) {
-            $("#joinType").val(type);
-            var sendForm = $("#submitForm").serialize();
-
-            $.ajax({
-                type: "GET",
-                url: "userJoin",
-                dataType: "html",
-                data: sendForm,
-                success: function(data) {
-                    $('body').html(data);
-                },
-                error: function(error) {}
-            });
-        }
+    <script>
+	    $(function() {
+	        $(".create-company").click(function() {
+	            window.location.href = '../user/create-company-domain';
+	        });
+	        
+	        $(".join-user").click(function() {
+	            window.location.href = '../user/join';
+	        });
+	        
+	        $(".join-company").click(function() {
+	            window.location.href = '../user/join-company';
+	        });  
+	    });
     </script>
 </body>
 

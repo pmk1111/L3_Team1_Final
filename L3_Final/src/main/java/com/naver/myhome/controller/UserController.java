@@ -142,17 +142,17 @@ public class UserController {
 	public String join() {
 	return "user/join";
 	}
-	@GetMapping("/join2")
-	public String join2() {
-	return "user/join2";
+	@GetMapping("/create-company-domain")
+	public String createCompanyDomain() {
+	return "user/create-company-domain";
 	}
-	@GetMapping("/join3")
-	public String join3() {
-	return "user/join3";
+	@GetMapping("/create-company-id")
+	public String createCompanyId() {
+		return "user/create-company-id";
 	}
-	@GetMapping("/join4")
-	public String join4() {
-	return "user/join4";
+	@GetMapping("/join-company")
+	public String joinCompany() {
+	return "user/join-company";
 	}
 	@GetMapping("/confirm")
 	public String confirm() {
@@ -163,20 +163,9 @@ public class UserController {
 	return "user/login";
 	}
 
-	@RequestMapping(value = "/userJoin", method = RequestMethod.GET)
-	public String userJoin(@RequestParam("joinType")  String joinType) {
-		if(joinType.equals("0")) {
-			return "user/create-company1";
-		}else if(joinType.equals("1")) {
-			return "user/join";
-		}else if(joinType.equals("2")) {
-			return "user/join-company";
-		}
-		return "";
-	} 
 	
     @ResponseBody
-    @RequestMapping(value = "/sendMailAuthCode", method = RequestMethod.POST)
+    @RequestMapping(value = "/send-mail-auth-code", method = RequestMethod.POST)
     public String sendMailAuthCode(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws Exception {
 
 
@@ -226,7 +215,7 @@ public class UserController {
     } 
     
     @ResponseBody
-    @RequestMapping(value = "/chkAuthCode", method = RequestMethod.POST)
+    @RequestMapping(value = "/chk-auth-code", method = RequestMethod.POST)
     public String chkAuthCode(HttpServletRequest request, HttpServletResponse response , HttpSession session) throws Exception {
     	int verCode = (int) session.getAttribute("verificationCode");
     	int userAuthCode = Integer.parseInt(request.getParameter("authNum")); 
