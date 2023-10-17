@@ -2,16 +2,16 @@ $(document).ready(function() {
 			
 		    $('.star').each(function() {
 		        var $this = $(this);
-		        var projectNum = $this.data('projectNum');
-		       /* var employeeNum = $this.data('employeeNum'); */
-		        var employeeNum = 1;
+		        var projectId = $this.data('projectId');
+		       /* var employeeId = $this.data('employeeId'); */
+		        var employeeId = 1;
 		        
 		        $.ajax({
 		            url: '../project/participate',
 		            method: 'GET',
 		            data: {
-		                projectNum: projectNum,
-		                employeeNum: employeeNum
+		                projectId: projectId,
+		                employeeId: employeeId
 		            },
 		            success: function(response) {
 		                if (response == -1) {
@@ -28,16 +28,16 @@ $(document).ready(function() {
 		
 			$('.star').click(function() {
 			    var $this = $(this);
-			    var projectNum = $this.data('projectNum');
-			    /* var employeeNum = $this.data('employeeNum'); */
-			    var employeeNum = 1
+			    var projectId = $this.data('projectId');
+			    /* var employeeId = $this.data('employeeId'); */
+			    var employeeId = 1
 			
 			    $.ajax({
 			        url: '../project/favorite',
 			        method: 'POST',
 			        data: {
-			            projectNum: projectNum,
-			            employeeNum: employeeNum
+			            projectId: projectId,
+			            employeeId: employeeId
 			        },
 			        success: function(response) {
 			            console.log(response);
@@ -110,14 +110,14 @@ $(document).ready(function() {
 			$(".modal-submit").click(function() {
 			    // .project-color-check-active-1 클래스가 적용된 요소의 부모 li 태그의 배경색을 가져옴
 			    var activeColor = $(".project-color-check-active-1").closest('li').css("background-color");
-				var num = parseInt($("#detailSettingProjectSrno").text());
+				var id = parseInt($("#detailSettingProjectSrno").text());
 				
 			    $("#modal-background").css('display', 'none');
 			    
 			    $.ajax({
 			        url: '../project/update-color',
 			        type: 'GET',
-			        data: { color:activeColor, num:num },
+			        data: { color:activeColor, id:id },
 			        success: function(response) {
 			        $(".select-color").css("background", activeColor);
 			    }

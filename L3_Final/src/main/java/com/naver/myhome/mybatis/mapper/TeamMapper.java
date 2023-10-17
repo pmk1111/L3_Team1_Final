@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TeamMapper {
 
-	public void addTeam(int projectNum, int employeeNum);
+	public void addTeam(int projectId, int employeeId);
 	
-	public int teamCount(int projectNum);
+	public int teamCount(int projectId);
 	
 }

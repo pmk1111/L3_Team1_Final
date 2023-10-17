@@ -9,7 +9,7 @@
     <link href="../resources/project/css/createProject.css" rel="stylesheet">
 </head>
 <body>
-	<form action="Create" method="Post" name="projectform">
+	<form action="create" method="Post" name="projectform">
 	<div class="create-header">
 		<a class="create-close"></a>
 	</div>

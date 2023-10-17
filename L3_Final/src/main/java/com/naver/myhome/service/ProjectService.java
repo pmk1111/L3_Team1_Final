@@ -10,18 +10,18 @@ public interface ProjectService {
 	
 	public List<Project> getAllProjectList();
 	
-	public List<Project> getFavoritProjectList(int employeeNum);
+	public List<Project> getFavoritProjectList(int employeeId);
 
-	public List<Project> getPartProjectList(int employeeNum);
+	public List<Project> getPartProjectList(int employeeId);
 
-	public Project getDetail(int num);
+	public Project getDetail(int id);
 	
-	public int updateColor(int num, String color);
+	public int updateColor(int id, String color);
 
-	public Integer checkFavorite(int projectNum, int employeeNum);
+	public Integer checkFavorite(int projectId, int employeeId);
 
-	public void addFavorite(int projectNum, int employeeNum);
+	public void addFavorite(int projectId, int employeeId);
 
-	public void removeFavorite(int projectNum, int employeeNum);
+	public void removeFavorite(int projectId, int employeeId);
 
 }

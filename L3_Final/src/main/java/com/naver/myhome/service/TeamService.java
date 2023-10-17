@@ -2,8 +2,8 @@ package com.naver.myhome.service;
 
 public interface TeamService {
 
-	public void addTeam(int projectNum, int employeeNum);
+	public void addTeam(int projectId, int employeeId);
 	
-	public int teamCount(int projectNum);
+	public int teamCount(int projectId);
 	
 }

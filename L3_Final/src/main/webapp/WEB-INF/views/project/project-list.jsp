@@ -299,7 +299,7 @@
                                                                         <div class="project-information">
                                                                             <div class="project-up">
                                                                                 <div class="favorite-project" style="">
-                                                                                    <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-num="${favoritProject.NUM}">
+                                                                                    <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${favoritProject.ID}">
                                                                                 </div>
                                                                                 <div class="setting">
                                                                                     <div class="dropdown">
@@ -309,7 +309,7 @@
                                                                                         <div class="dropdown-menu" aria-labelledby="cardOpt3">
                                                                                             <div class="project-setup-header">
                                                                                                 <span>프로젝트 번호</span>
-                                                                                                <em id="detailSettingProjectSrno">${favoritProject.NUM}</em>
+                                                                                                <em id="detailSettingProjectSrno">${favoritProject.ID}</em>
                                                                                             </div>
 
                                                                                             <div class="setting-menu">
@@ -341,9 +341,9 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="project-name">
-                                                                                    <a href="project?num=${favoritProject.NUM}"><span class="project-name-span">${favoritProject.TITLE}</span></a>
+                                                                                    <a href="project?id=${favoritProject.ID}"><span class="project-name-span">${favoritProject.TITLE}</span></a>
                                                                                     <img class="team_count" src="../resources/project/img/person.svg">
-                                                                                    <span>${favoritProject.teamCount}</span>
+                                                                                    <span>${favoritProject.TEAMCOUNT}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -396,7 +396,7 @@
                                                                         <div class="project-information">
                                                                             <div class="project-up">
                                                                                 <div class="favorite-project" style="">
-                                                                                    <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-num="${partProject.NUM}">
+                                                                                    <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${partProject.ID}">
                                                                                 </div>
                                                                                 <div class="setting">
                                                                                     <div class="dropdown">
@@ -406,7 +406,7 @@
                                                                                         <div class="dropdown-menu" aria-labelledby="cardOpt3">
                                                                                             <div class="project-setup-header">
                                                                                                 <span>프로젝트 번호</span>
-                                                                                                <em id="detailSettingProjectSrno">${partProject.NUM}</em>
+                                                                                                <em id="detailSettingProjectSrno">${partProject.ID}</em>
                                                                                             </div>
 
                                                                                             <div class="setting-menu">
@@ -438,9 +438,9 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="project-name">
-                                                                                    <a href="project?num=${partProject.NUM}"><span class="project-name-span">${partProject.TITLE}</span></a>
+                                                                                    <a href="project?id=${partProject.ID}"><span class="project-name-span">${partProject.TITLE}</span></a>
                                                                                     <img class="team_count" src="../resources/project/img/person.svg">
-                                                                                    <span>${partProject.teamCount}</span>
+                                                                                    <span>${partProject.TEAMCOUNT}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -495,7 +495,7 @@
                                                                     <div class="project-information">
                                                                         <div class="project-up">
                                                                             <div class="favorite-project" style="">
-                                                                                <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-num="${allProject.NUM}">
+                                                                                <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${allProject.ID}">
                                                                             </div>
                                                                             <div class="setting">
                                                                                 <div class="dropdown">
@@ -505,7 +505,7 @@
                                                                                     <div class="dropdown-menu" aria-labelledby="cardOpt3">
                                                                                         <div class="project-setup-header">
                                                                                             <span>프로젝트 번호</span>
-                                                                                            <em id="detailSettingProjectSrno">${allProject.NUM}</em>
+                                                                                            <em id="detailSettingProjectSrno">${allProject.ID}</em>
                                                                                         </div>
 
                                                                                         <div class="setting-menu">
@@ -537,9 +537,9 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="project-name">
-                                                                                <a href="project?num=${allProject.NUM}"><span class="project-name-span">${allProject.TITLE}</span></a>
+                                                                                <a href="project?id=${allProject.ID}"><span class="project-name-span">${allProject.TITLE}</span></a>
                                                                                 <img class="team_count" src="../resources/project/img/person.svg">
-                                                                                <span>${teamCount}</span>
+                                                                                <span>${TEAMCOUNT}</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>

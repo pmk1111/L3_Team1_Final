@@ -46,10 +46,10 @@ public class ProjectController {
 	public String create(Project project) throws Exception {
 	    projectService.insertProject(project);
 
-	    int projectNum = project.getNUM();
-	    int employeeNum = 1;
+	    int projectId = project.getID();
+	    int employeeId = 1;
 
-	    teamService.addTeam(projectNum, employeeNum);
+	    teamService.addTeam(projectId, employeeId);
 
 	    return "redirect:project-list";
 	}
@@ -57,11 +57,11 @@ public class ProjectController {
 	@GetMapping(value = "/project-list")
 	public ModelAndView projectList(ModelAndView mv) {
 		
-		int employeeNum = 1;
+		int employeeId = 1;
 		
 	    List<Project> allProjectList = projectService.getAllProjectList();
-	    List<Project> favoritProjectList = projectService.getFavoritProjectList(employeeNum);
-	    List<Project> partProjectList = projectService.getPartProjectList(employeeNum);
+	    List<Project> favoritProjectList = projectService.getFavoritProjectList(employeeId);
+	    List<Project> partProjectList = projectService.getPartProjectList(employeeId);
 	    
 	    mv.setViewName("project/project-list");
 	    mv.addObject("allProjectlist", allProjectList);
@@ -74,9 +74,9 @@ public class ProjectController {
 	
 	@GetMapping(value = "/project")
 	public ModelAndView projectBoard
-	(int num, ModelAndView mv) {
+	(int id, ModelAndView mv) {
 		
-		Project project = projectService.getDetail(num);
+		Project project = projectService.getDetail(id);
 		
 		mv.setViewName("project/project-board");
 	    mv.addObject("project", project);
@@ -87,33 +87,33 @@ public class ProjectController {
 	@ResponseBody
 	@GetMapping("/update-color")
 	public void updateColor(@RequestParam(name="color", required=false) String color,
-	                        @RequestParam(name="num", required=true) int num){
-		projectService.updateColor(num, color);
+	                        @RequestParam(name="id", required=true) int id){
+		projectService.updateColor(id, color);
 		
 	}
 	
 	@ResponseBody
 	@GetMapping("/participate")
-	public Integer favoritCheck(@RequestParam(name="projectNum", required=true) int projectNum,
-	                            @RequestParam(name="employeeNum", required=true) int employeeNum) {
+	public Integer favoritCheck(@RequestParam(name="projectId", required=true) int projectId,
+	                            @RequestParam(name="employeeId", required=true) int employeeId) {
 	    
-	    Integer result = projectService.checkFavorite(projectNum, employeeNum);
+	    Integer result = projectService.checkFavorite(projectId, employeeId);
 	    
 	    return result == null ? -1 : result;
 	}
 	
 	@ResponseBody
 	@PostMapping("/favorite")
-	public Integer toggleFavorite(@RequestParam(name = "projectNum", required = true) int projectNum,
-								  @RequestParam(name = "employeeNum", required = true) int employeeNum) {
+	public Integer toggleFavorite(@RequestParam(name = "projectId", required = true) int projectId,
+								  @RequestParam(name = "employeeId", required = true) int employeeId) {
 
-		Integer result = projectService.checkFavorite(projectNum, employeeNum);
+		Integer result = projectService.checkFavorite(projectId, employeeId);
 
 		if (result == null) {
-			projectService.addFavorite(projectNum, employeeNum);
+			projectService.addFavorite(projectId, employeeId);
 			return 1;
 		} else {
-			projectService.removeFavorite(projectNum, employeeNum);
+			projectService.removeFavorite(projectId, employeeId);
 			return -1;
 		}
 		

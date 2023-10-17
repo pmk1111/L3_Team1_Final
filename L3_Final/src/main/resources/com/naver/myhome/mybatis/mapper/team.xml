@@ -4,14 +4,14 @@
 <mapper namespace="com.naver.myhome.mybatis.mapper.TeamMapper">
 
 	<insert id="addTeam" >
-		INSERT INTO team (employee_num, project_num)
-		VALUES (#{employeeNum}, #{projectNum})
+		INSERT INTO TEAM (EMPLOYEE_ID, PROJECT_ID)
+		VALUES (#{employeeId}, #{projectId})
 	</insert>
 	
 	<select id="teamCount" resultType="int">
-		select count(*)
-		from team
-		where project_num = #{projectNum}
+		SELECT COUNT(*)
+		FROM TEAM
+		WHERE PROJECT_ID = #{projectId}
 	</select>
 
 </mapper>
