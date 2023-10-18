@@ -31,6 +31,8 @@ $(document).ready(function() {
 			    var projectId = $this.data('projectId');
 			    /* var employeeId = $this.data('employeeId'); */
 			    var employeeId = 1
+		       let token = $("meta[name='_csrf']").attr("content");
+		       let header = $("meta[name='_csrf_header']").attr("content");			    
 			
 			    $.ajax({
 			        url: '../project/favorite',
@@ -39,24 +41,27 @@ $(document).ready(function() {
 			            projectId: projectId,
 			            employeeId: employeeId
 			        },
+			         beforeSend : function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+			            xhr.setRequestHeader(header, token);
+			         },
 			        success: function(response) {
 			            console.log(response);
 			            if(response == -1) {
-			                
+			
 			                $this.attr('src', '../resources/project/img/projectboard/icon_star.png');
 			
 			                var listItem = $this.closest('.list');
 			                listItem.hide();
-			                $('.partProject .all-project-list').append(listItem);
+			                $('.partProject .all-project-list').prepend(listItem);
 			                listItem.fadeIn(500);
 			
 			            } else {
 			                $this.attr('src', '../resources/project/img/projectboard/icon_star_on.png');
 			
 			                var listItem = $this.closest('.list');
-			                
+			
 						    listItem.hide();
-						    $('.favoritProject .all-project-list').append(listItem);
+						    $('.favoritProject .all-project-list').prepend(listItem); // prepend()
 						    listItem.fadeIn(500);
 						}
 					},
@@ -65,20 +70,21 @@ $(document).ready(function() {
 				   }
 			   });
 			});
+
 			
-			$(".star").hover(function() {
-			    var src = $(this).attr("src");
-			
-			    if (src === "../resources/project/img/projectboard/icon_star.png") {
-			        $(this).attr("src", "../resources/project/img/projectboard/icon_star_hover.png");
-			    }
-			}, function() {
-			    var src = $(this).attr("src");
-			
-			    if (src === "../resources/project/img/projectboard/icon_star_hover.png") {
-			        $(this).attr("src", "../resources/project/img/projectboard/icon_star.png");
-			    }
-			});
+            $(".star").hover(function() {
+                var src = $(this).attr("src");
+
+                if (src === "../resources/project/img/projectboard/icon_star.png") {
+                    $(this).attr("src", "../resources/project/img/projectboard/icon_star_hover.png");
+                }
+            }, function() {
+                var src = $(this).attr("src");
+
+                if (src === "../resources/project/img/projectboard/icon_star_hover.png") {
+                    $(this).attr("src", "../resources/project/img/projectboard/icon_star.png");
+                }
+            });
 
 
             // 앵커 클릭 시 모달 보여주기

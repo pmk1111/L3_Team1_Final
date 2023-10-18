@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../resources/mainboard/assets/" data-template="vertical-menu-template-free">
@@ -10,6 +11,8 @@
 
     <title>WidUs - ProjectList</title>
     <meta name="description" content="" />
+    <meta name="_csrf" content="${_csrf.token}">
+	<meta name="_csrf_header" content="${_csrf.headerName}">
 
     <!-- JQuery cdn -->
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -196,6 +199,11 @@
         .project-area {
             overflow: scroll;
             max-height: 377px;
+            padding:0 5px 0 5px;
+        }
+        
+        .all-project {
+        	max-height: 737px;
         }
 
         .project-area>ul {
@@ -256,12 +264,26 @@
         }
         .recent-modify {
         	margin-right:10px;
+        	font-size:12px;
+        	color :#999;
         }
         
 		.star {
 		    transition: opacity 0.5s ease-in-out;
 		}        
 		
+		.select-color {
+			cursor:auto;
+		}
+		
+		.team-count-img {
+			margin-left:5px;
+			width:21px;
+		}
+		
+		.team-count-span {
+			font-size:13px;
+		}
 		
     </style>
 </head>
@@ -378,8 +400,8 @@
                                                                                 </div>
                                                                                 <div class="project-name">
                                                                                     <a href="project?id=${favoritProject.ID}"><span class="project-name-span">${favoritProject.TITLE}</span></a>
-                                                                                    <img class="team_count" src="../resources/project/img/person.svg">
-                                                                                    <span>${favoritProject.TEAMCOUNT}</span>
+                                                                                    <img class="team-count-img" src="../resources/project/img/person.svg">
+                                                                                    <span class="team-count-span">${favoritProject.TEAMCOUNT}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -476,8 +498,8 @@
                                                                                 </div>
                                                                                 <div class="project-name">
                                                                                     <a href="project?id=${partProject.ID}"><span class="project-name-span">${partProject.TITLE}</span></a>
-                                                                                    <img class="team_count" src="../resources/project/img/person.svg">
-                                                                                    <span>${partProject.TEAMCOUNT}</span>
+                                                                                    <img class="team-count-img" src="../resources/project/img/person.svg">
+                                                                                    <span class="team-count-span">${partProject.TEAMCOUNT}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -522,7 +544,7 @@
                                                 </span>
                                             </div>
 
-                                            <div class="project-area">
+                                            <div class="project-area all-project">
                                                 <ul class="all-project-list">
                                                     <c:forEach var="allProject" items="${allProjectlist}">
                                                         <li class="list">
@@ -575,8 +597,8 @@
                                                                             </div>
                                                                             <div class="project-name">
                                                                                 <a href="project?id=${allProject.ID}"><span class="project-name-span">${allProject.TITLE}</span></a>
-                                                                                <img class="team_count" src="../resources/project/img/person.svg">
-                                                                                <span>${TEAMCOUNT}</span>
+                                                                                <img class="team-count-img" src="../resources/project/img/person.svg">
+                                                                                <span class="team-count-span">${allProject.TEAMCOUNT}</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -628,11 +650,21 @@
     <script>
         $(document).ready(function() {
             // tabs active
-            $('.part-tabs').click(function() {
-                $('.part-tabs').removeClass('is-active');
-                $(this).addClass('is-active');
-                
-            });
+			$('.tabs ul li').click(function() {
+			    var $this = $(this);
+			
+			    $('.tabs ul li').removeClass('is-active');
+			
+			    $this.addClass('is-active');
+			
+			    if ($this.hasClass('part-tabs')) {
+			        $('.personalProject').css('display', 'block');
+			        $('.allProject').css('display', 'none'); 
+			    } else if ($this.hasClass('all-tabs')) {
+			        $('.personalProject').css('display', 'none');
+			        $('.allProject').css('display', 'block');
+			    }
+			});
             
             // list-dropdown
             $('#favorit-arrow').click(function() {
@@ -677,20 +709,21 @@
                 }, 500);
             })
             
-            $(".star").hover(function() {
-                var src = $(this).attr("src");
+            $('#searchInput').on('keyup', function() {
+                var value = $(this).val().toLowerCase();
 
-                if (src === "../resources/project/img/projectboard/icon_star.png") {
-                    $(this).attr("src", "../resources/project/img/projectboard/icon_star_hover.png");
-                }
-            }, function() {
-                var src = $(this).attr("src");
+                if (value === '') {
+                    $('.list').show();
+                } else {
+                    var matchedItems = $('.list').filter(function() {
+                        var projectName = $(this).find('.project-name-span').text().toLowerCase();
+                        return projectName.indexOf(value) > -1;
+                    });
 
-                if (src === "../resources/project/img/projectboard/icon_star_hover.png") {
-                    $(this).attr("src", "../resources/project/img/projectboard/icon_star.png");
+                    $('.list').hide();
+                    matchedItems.show();
                 }
             });
-
         });
     </script>
 

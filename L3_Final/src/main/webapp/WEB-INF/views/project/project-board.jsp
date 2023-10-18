@@ -21,11 +21,16 @@
     <link href="../resources/project/css/projectboard/projectboard_Header.css" rel="stylesheet">
     <link href="../resources/project/css/projectboard/projectboard_chart.css" rel="stylesheet">
     <link href="../resources/project/css/projectboard/board_activity.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap">    
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    
+    <style>
+    	body {
+    		font-family: 'Nanum Gothic', sans-serif;
+    	}
+    </style>    
 </head>
 
 <body>
