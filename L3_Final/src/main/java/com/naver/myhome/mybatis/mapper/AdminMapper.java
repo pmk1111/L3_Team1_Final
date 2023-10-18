@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
+import com.naver.myhome.domain.Access;
 import com.naver.myhome.domain.Company;
 import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
@@ -42,6 +43,8 @@ public interface AdminMapper {
 		public String companyName(int companyId);
 
 		public String companyDomain(int companyId);
+
+		public List<Access> getAccesslist();
 
 
 	}

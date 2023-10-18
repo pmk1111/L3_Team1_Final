@@ -2,6 +2,7 @@ package com.naver.myhome.service;
 
 import java.util.List;
 
+import com.naver.myhome.domain.Access;
 import com.naver.myhome.domain.Company;
 import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
@@ -37,6 +38,8 @@ public interface AdminService {
 	public int updateName(int companyId, String companyName);
 
 	public int updateDomain(int companyId, String companyDomain);
+
+	public List<Access> getAccesslist();
 
 
 

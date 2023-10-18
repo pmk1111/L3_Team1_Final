@@ -111,4 +111,21 @@
  	set domain = #{companyDomain}
  	where id = #{companyId}
  	</update>
+ 	
+ 	<!-- 혜원 -->
+ 	<select id="getAccesslist" resultType="Access">
+
+SELECT COUNT(*), user_id, connectdate
+FROM connectlist
+WHERE connectdate LIKE '23/09%'
+GROUP BY user_id, connectdate
+UNION
+SELECT COUNT(*), user_id, connectdate
+FROM connectlist
+WHERE connectdate LIKE '23/10%'
+GROUP BY user_id, connectdate
+   
+   
+</select>
+ 	
 </mapper>

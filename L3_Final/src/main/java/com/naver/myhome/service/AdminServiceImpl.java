@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.naver.myhome.domain.Access;
 import com.naver.myhome.domain.Company;
 import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
@@ -97,6 +98,12 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int updateDomain(int companyId, String companyDomain) {
 		return dao.updateDomain(companyId, companyDomain);
+	}
+
+	@Override
+	public List<Access> getAccesslist() {
+		// TODO Auto-generated method stub
+		return dao.getAccesslist();
 	}
 
 		
