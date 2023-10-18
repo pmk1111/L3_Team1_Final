@@ -12,7 +12,7 @@
 
 <title>WidUs - 대시보드</title>
 <meta name="description" content="" />
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon"
 	href="../resources/mainboard/assets/img/favicon/favicon.ico" />
@@ -72,6 +72,8 @@
 
 <!-- Google Analytics (Optional) -->
 <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
 
 
 
@@ -264,7 +266,8 @@ select::-ms-expand {
 
 </head>
 
-<body>
+
+<body onload="updateMonthSelect()"> 
 	<!-- Layout wrapper -->
 	<div class="layout-wrapper layout-content-navbar">
 		<div class="layout-container">
@@ -294,13 +297,13 @@ select::-ms-expand {
 
 											<!-- 탭 메뉴 -->
 											<ul class="nav nav-tabs">
-												<li class="nav-item"><a class="nav-link active"
+												<li class="nav-item"><a class="nav-link active monthly"
 													aria-current="page" href="#"
-													onclick="showGraph('monthlyGraph')">월별</a></li>
-												<li class="nav-item"><a class="nav-link" href="#"
-													onclick="showGraph('weeklyGraph')">주별</a></li>
-												<li class="nav-item"><a class="nav-link" href="#"
-													onclick="showGraph('dailyGraph')">일별</a></li>
+													onclick="handleTabClick('monthly')">월별</a></li>
+												<li class="nav-item"><a class="nav-link weekly" href="#"
+													onclick="handleTabClick('weekly')">주별</a></li>
+												<li class="nav-item"><a class="nav-link daily" href="#"
+													onclick="handleTabClick('daily')">일별</a></li>
 											</ul>
 
 											<!-- 차트 -->
@@ -347,16 +350,15 @@ select::-ms-expand {
 
 														<div class="search-content">
 															<!-- <input class="search-bar" type="text" id="searchInput" placeholder="검색어 입력"> -->
-															<input class="search-bar" type="text" id="searchInput"
-																placeholder="검색어 입력">
+															<input class="search-bar" type="text" id="searchInput" placeholder="검색어 입력" oninput="searchTable()">
 
 															<!--   <img class="search-img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="검색" onclick="searchTable()"> -->
 														</div>
 													</div>
 
 													<div>
-														<a class="exel" href="#" id="downloadLink">엑셀 다운로드</a> <select
-															class="month-select"></select>
+														<a class="exel" href="#" id="downloadLink" onclick="tableToExcel(document.querySelector('table'), 'Worksheet')">엑셀 다운로드</a> 
+														<select class="month-select"></select>
 													</div>
 												</div>
 												<!-- 테이블 -->
@@ -412,248 +414,9 @@ select::-ms-expand {
 										</div>
 										<script
 											src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
-										<script>
-											// Chart 생성
-											var ctx = document.getElementById(
-													'lineChart').getContext(
-													'2d');
-											var ctx2 = document.getElementById(
-													'lineChart2').getContext(
-													'2d');
-											var ctx3 = document.getElementById(
-													'lineChart3').getContext(
-													'2d');
-
-											// JavaScript로 6개월 간격의 날짜를 계산
-											var today = new Date();
-											var sixMonthsAgo = new Date();
-											sixMonthsAgo.setMonth(today
-													.getMonth() - 5);
-
-											// 날짜를 원하는 형식으로 포맷
-											function formatDate(date) {
-												var year = date.getFullYear();
-												var month = date.getMonth() + 1;
-												return year + '년' + month + '월';
-											}
-
-											// 레이블을 계산된 날짜로 업데이트
-											var labels = [
-													formatDate(sixMonthsAgo),
-
-													formatDate(new Date(
-															today.getFullYear(),
-															today.getMonth() - 4)),
-													formatDate(new Date(
-															today.getFullYear(),
-															today.getMonth() - 3)),
-													formatDate(new Date(
-															today.getFullYear(),
-															today.getMonth() - 2)),
-													formatDate(new Date(
-															today.getFullYear(),
-															today.getMonth() - 1)),
-													formatDate(new Date(today
-															.getFullYear(),
-															today.getMonth())) ];
-
-											const data = {
-												labels : labels, // 계산된 레이블을 사용
-												datasets : [ {
-
-													data : [ 50, 20, 10, 0, 25,
-															60 ], // 실제 통계 데이터로 업데이트 필요
-													borderColor : 'lightblue',
-													backgroundColor : 'lightblue',
-													pointRadius : 10,
-													pointHoverRadius : 15
-												} ]
-											};
-
-											const config2 = {
-												type : 'line',
-												data : data,
-												options : {
-													responsive : true,
-													plugins : {
-														title : {
-															display : true
-														},
-														legend : { // 추가
-															display : false
-														// 추가
-														}
-													}
-												}
-											};
-
-											var chart1 = new Chart(ctx, config2);
-											var chart2 = new Chart(ctx2,
-													config2);
-											var chart3 = new Chart(ctx3,
-													config2);
-
-											function showGraph(graphType) {
-												// 모든 탭의 active 클래스 제거
-												var tabs = document
-														.querySelectorAll('.nav-item');
-												tabs.forEach(function(tab) {
-													tab.classList
-															.remove('active');
-												});
-
-												// 클릭한 탭에 active 클래스 추가
-												var activeTab = document
-														.querySelector('a[onclick="showGraph(\''
-																+ graphType
-																+ '\')"]');
-												activeTab.parentNode.classList
-														.add('active');
-
-												// 모든 그래프 숨기기
-												document
-														.getElementById('monthlyGraph').style.display = 'none';
-												document
-														.getElementById('weeklyGraph').style.display = 'none';
-												document
-														.getElementById('dailyGraph').style.display = 'none';
-
-												// 선택한 그래프만 보이도록 설정
-												document
-														.getElementById(graphType).style.display = 'block';
-												console
-														.log("Showing graph of type: "
-																+ graphType);
-											}
-
-											// 초기로딩 시 월별 그래프를 보이도록 설정
-											showGraph('monthlyGraph');
-											/*  function tableToExcel(table, name) {
-											     var uri = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8;base64,';
-											     var template =
-											         '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head>' +
-											         '<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>' +
-											         '<x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>' +
-											         '</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
-											     var base64 = function(s) {
-											         return window.btoa(unescape(encodeURIComponent(s)));
-											     };
-											     var format = function(s, c) {
-											         return s.replace(/{(\w+)}/g, function(m, p) {
-											             return c[p];
-											         });
-											     };
-											     var ctx = {
-											         worksheet: name || 'Worksheet',
-											         table: table.innerHTML
-											     };
-											     var blob = new Blob([format(template, ctx)], {
-											         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
-											     });
-											     return uri + base64(format(template, ctx));
-											 }
-
-											 document.getElementById('downloadLink').addEventListener('click', function() {
-											     var table = document.querySelector('.table');
-											     var excelDataUri = tableToExcel(table, '테이블명');
-											     this.href = excelDataUri;
-											     this.download = '테이블명.xls';
-											 });
-											 */
-											function tableToExcel(table, name) {
-												var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head>'
-														+ '<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>'
-														+ '<x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>'
-														+ '</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
-												var format = function(s, c) {
-													return s.replace(
-															/{(\w+)}/g,
-															function(m, p) {
-																return c[p];
-															});
-												};
-
-												var ctx = {
-													worksheet : name
-															|| 'Worksheet',
-													table : table.innerHTML
-												};
-
-												// Create a Blob with the data
-												var blob = new Blob(
-														[ '\ufeff'
-																+ format(
-																		template,
-																		ctx) ],
-														{
-															type : 'application/vnd.ms-excel'
-														});
-
-												// Use FileSaver.js to save the file
-												saveAs(blob, "테이블명.xls");
-											}
-
-											document
-													.getElementById(
-															'downloadLink')
-													.addEventListener(
-															'click',
-															function() {
-																var table = document
-																		.querySelector('.table');
-																tableToExcel(
-																		table,
-																		'테이블명');
-															});
-										</script>
-										<script>
-											function searchTable() {
-												var filterText = document
-														.getElementById("searchInput").value
-														.toUpperCase();
-												var filterType = document
-														.getElementById("filterSelect").value;
-												var rows = document
-														.querySelectorAll("table tbody tr");
-
-												rows
-														.forEach(function(row) {
-															var cells = row
-																	.getElementsByTagName("td");
-															var shouldHide = true;
-
-															for (var i = 0; i < cells.length; i++) {
-																var cellText = cells[i].textContent
-																		.toUpperCase();
-
-																if ((filterType === "번호" && i === 0)
-																		|| (filterType === "이름" && i === 1)
-																		|| (filterType === "아이디" && i === 3)) {
-																	if (cellText
-																			.indexOf(filterText) > -1) {
-																		shouldHide = false;
-																		break;
-																	}
-																}
-															}
-
-															if (shouldHide) {
-																row.style.display = "none";
-															} else {
-																row.style.display = "";
-															}
-														});
-											}
-
-											document.getElementById(
-													"searchInput")
-													.addEventListener("input",
-															searchTable);
-											document.getElementById(
-													"filterSelect")
-													.addEventListener("change",
-															searchTable);
-										</script>
+									
+									
+								
 
 
 
@@ -664,36 +427,6 @@ select::-ms-expand {
 
 
 
-
-
-										<script>
-
-                    
-										function formatYearMonth(date) {
-											var year = date.getFullYear();
-											var month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더합니다.
-											return year + '년'
-													+ (month < 12 ? '' : '')
-													+ month+'월';
-										}
-
-										// sixMonthsAgo 변수 정의
-										var sixMonthsAgo = new Date();
-										sixMonthsAgo.setMonth(sixMonthsAgo
-												.getMonth() - 6);
-
-										// <select> 요소 업데이트
-										var select = document
-												.querySelector('.month-select');
-										for (var i = 6; i > 0; i--) {
-											var option = document
-													.createElement('option');
-											option.text = formatYearMonth(new Date(
-													sixMonthsAgo.getFullYear(),
-													sixMonthsAgo.getMonth() + i));
-											select.add(option);
-										}
-									</script>
 
 
 									</div>
@@ -749,6 +482,9 @@ select::-ms-expand {
 		<!-- Overlay -->
 		<div class="layout-overlay layout-menu-toggle"></div>
 	</div>
+	<script src="../resources/access/js/access.js"></script>
+	
+	
 	<!-- / Layout wrapper -->
 
 	<!-- Core JS -->

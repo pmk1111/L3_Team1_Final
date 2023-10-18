@@ -110,24 +110,99 @@ $('modal-overlay').click(function () {
     $('form[name="createIssue"]').submit();
   });
 
-  // 파일 업로드 시 파일 명 영역 텍스트 변경
-  $("#upfile").change(function () {
-    const selectedFile = this.files[0];
+const fileInput = document.querySelector('.add-file');
+  const uploadedFilesContainer = $('.uploaded-files');
+  const maxSizePerFileInBytes = 10 * 1024 * 1024; // 10MB in bytes
+  const maxTotalSizeInBytes = 50 * 1024 * 1024; // 50MB in bytes
+  let selectedFiles = []; // 선택한 파일 목록
+  let totalSizeUploaded = 0; // 추적된 업로드된 파일 크기의 합
 
-    if (selectedFile) {
-      const fileName = selectedFile.name;
-      $("#fileNameDisplay").text(fileName);
-    } else {
-      $("#fileNameDisplay").text("파일을 선택하세요.");
+  fileInput.addEventListener('change', handleFileSelection);
+
+  function handleFileSelection(event) {
+    const files = event.target.files;
+
+    // 기존 업로드 파일 엘리먼트 모두 제거
+    uploadedFilesContainer.empty();
+
+    let validFiles = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const fileName = file.name;
+
+      if (file.size > maxSizePerFileInBytes) {
+        alert('파일 크기는 10MB를 초과할 수 없습니다.');
+        continue; // 파일 크기가 초과하면 다음 파일로 넘어감
+      }
+
+      if (totalSizeUploaded + file.size > maxTotalSizeInBytes) {
+        alert('파일 크기 합이 50MB를 초과할 수 없습니다.');
+        continue; // 파일 크기 합이 초과하면 다음 파일로 넘어감
+      }
+
+      if (isFileExtensionValid(fileName)) {
+        validFiles.push(file);
+        totalSizeUploaded += file.size;
+      }
     }
-  });
-  
 
- $('.submit-btn').click(function(){
- 	console.log("게시글 번호 = " + $("#issue_id").val());
- })
+    // 파일 선택(input)에서 유효하지 않은 확장자를 가진 파일을 제외하고, 유효한 파일만을 업로드
+    const dt = new DataTransfer();
+    validFiles.forEach(file => dt.items.add(file));
+    fileInput.files = dt.files;
 
+    // 나머지 코드는 유효한 파일에 대한 처리입니다.
+    for (let i = 0; i < validFiles.length; i++) {
+      createFileElement(validFiles[i]);
+    }
+    updateUploadedFilesContainerHeight();
+  }
 
+  function isFileExtensionValid(fileName) {
+    const fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'svg', 'bmp', 'txt', 'zip', 'tar', 'xlsx', 'xls', 'xlsm', 'xlsb', 'xltx', 'log', 'hwp', 'pptx', 'pptm', 'ppt', 'pdf'];
+    const extension = fileName.split('.').pop().toLowerCase();
+    if (!fileExtension.includes(extension)) {
+      alert('지원하지 않는 확장자입니다.');
+      return false; // 확장자가 허용되지 않을 때 false 반환
+    }
+    return true; // 확장자가 허용될 때 true 반환
+  }
+
+  function createFileElement(file) {
+    const originalFileName = file.name;
+    const upfile = $('<div class="upfile" data-value="' + originalFileName + '"></div>');
+
+    const fileName = $('<span class="file-name">' + truncateFileName(originalFileName, 25) + '</span>');
+
+    upfile.append(fileName);
+    uploadedFilesContainer.append(upfile);
+
+    if (selectedFiles.length > 0) {
+      updateUploadedFilesContainerHeight();
+    }
+  }
+
+  function updateUploadedFilesContainerHeight() {
+    const fileCount = selectedFiles.length;
+
+    if (fileCount > 1) {
+      uploadedFilesContainer.css('height', fileCount * 40 + 'px');
+    } else if (fileCount === 1) {
+      uploadedFilesContainer.css('height', '40px');
+    } else {
+      uploadedFilesContainer.css('height', 'auto');
+    }
+  }
+
+  function truncateFileName(fileName, maxLength) {
+    if (fileName.length > maxLength) {
+      const extension = fileName.split('.').pop();
+      const truncatedName = fileName.substring(0, maxLength - 3);
+      return truncatedName + '...' + extension;
+    }
+    return fileName;
+  }
 
   // issueModal close
   $('.close-btn').on("click", function () {

@@ -16,18 +16,18 @@
 // 직원 상태 업데이트
  $(function() {
 	$("body").on("click",".user-stop", function() {
-    var employeeNo = $(this).data("employee_no"); // 직원 번호 가져오기
-	var employeeStatus = $(this).data("employee_status");
+    var employeeId = $(this).attr("data-employeeId"); // 직원 번호 가져오기
+	var employeeStatus = $(this).attr("data-employeeStatus");
     var tab = $(this).data("tab"); // 탭 정보 가져오기
     let removetr=$(this).parent().parent()
-	console.log(employeeNo);
+	console.log(employeeId);
 	console.log(employeeStatus);
     // 서버로 업데이트 요청 보내기
     $.ajax({
-        url: "../admin/updateEmployeeStatus",
+        url: "../admin/update-employeeStatus",
         type: "POST",
         data: {
-            employeeNo: employeeNo,
+            employeeId: employeeId,
             employeeStatus: employeeStatus,
             tab: tab 
         },
@@ -40,9 +40,10 @@
                 
                 if ( tab == "useruse" ){ 
                 $.ajax({
-                   url: "../admin/userstoplist",
+                   url: "../admin/user-stoplist",
+                   type:"POST",
                    data: {
-                   		company_id: "1"
+                   		companyId: 1
                 	},
                 	success: function(data){
                 		let count=data.length;
@@ -55,31 +56,32 @@
                 			
                 		$(data).each(function(index, item){
                 			let img = '<img src="/img/profile.png" alt="프로필 사진" width="25" height="25">'
-                			if(item.user_photo){
-                				img = '<img src="/usrupload"' + item.user_photo + ' alt="프로필 사진" width="25" height="25">'
+                			if(item.pic){
+                				img = '<img src="/usrupload"' + item.pic + ' alt="프로필 사진" width="25" height="25">'
                 				}
                 		   output += '<tr><td>' + img + '</td>';
-                		   output += '<td>' + item.employee_no + '</td>';
-                		   output += '<td>' + item.user_name + '</td>';
-                		   if(item.department ==null ||item.position == null){
-                		   		item.department = '';
-                		   		item.position  = '';
-                		   }
+                		   output += '<td>' + item.id + '</td>';
+                		   output += '<td>' + item.name + '</td>';
+                		   if (item.department == null || item.position == null || item.phone == null) {
+  									item.department = '';
+  									item.position = '';
+  									item.phone = '';
+							}
                 		   output += '<td>' + item.department + '</td>';
                 		   output += '<td>' + item.position + '</td>';
-                		   output += '<td>' + item.user_email + '</td>';
-                		   output += '<td>' + item.user_phone + '</td>';
-                		   output += '<td><p>정상</p><button class="user-stop" data-employee_no='+item.employee_no +' data-employee_status='+item.employee_status
+                		   output += '<td>' + item.email + '</td>';
+                		   output += '<td>' + item.phone + '</td>';
+                		   output += '<td><p>정상</p><button class="user-stop" data-employeeId='+item.id +' data-employeeStatus='+item.status
 									+ ' data-tab="useruse">[이용중지]</button> </td>';
 							let color = "blue";
 							let deleteAuth = "[등록]";
-							console.log(item.employee_auth.trim());
-							if(item.employee_auth.trim() == "Y"){
+							console.log(item.auth);
+							if(item.auth.trim() == "Y"){
 								color = "red"; 
 								deleteAuth = "[삭제]";
 								}	
-						   output += '<td><span class="employee-auth-value=">' + item.employee_auth +'</span>'
-										+ '<button class="auth-delete '+ color + '" data-employee_no="' +item.employee_no + '">'+ deleteAuth + '</button></td></tr>';
+						   output += '<td><span class="employee-auth-value=">' + item.auth +'</span>'
+										+ '<button class="auth-delete '+ color + '" data-employeeId="' +item.id + '">'+ deleteAuth + '</button></td></tr>';
                 		   
                 		})//.each 끝
                 		$('#userstop > table > tbody').html(output);
@@ -98,9 +100,10 @@
                 	})
                 } else if(tab == "userstop"){
                 $.ajax({
-                   url: "../admin/useruselist",
+                   url: "../admin/user-uselist",
+                   type:"POST",
                    data: {
-                   		company_id: "1"
+                   		companyId: 1
                 	},
                 	success: function(data2){
                 		let count2=data2.length;
@@ -113,31 +116,32 @@
                 			
                 		$(data2).each(function(index, item){
                 			let img = '<img src="/img/profile.png" alt="프로필 사진" width="25" height="25">'
-                			if(item.user_photo){
-                				img = '<img src="/usrupload"' + item.user_photo + ' alt="프로필 사진" width="25" height="25">';
+                			if(item.pic){
+                				img = '<img src="/usrupload"' + item.pic + ' alt="프로필 사진" width="25" height="25">';
                 				}
                 		   output += '<tr><td>' + img + '</td>';
-                		   output += '<td>' + item.employee_no + '</td>';
-                		   output += '<td>' + item.user_name + '</td>';
-                		   if(item.department ==null ||item.position == null){
-                		   		item.department = '';
-                		   		item.position  = '';
-                		   }
+                		   output += '<td>' + item.id + '</td>';
+                		   output += '<td>' + item.name + '</td>';
+                		    if (item.department == null || item.position == null || item.phone == null) {
+  									item.department = '';
+  									item.position = '';
+  									item.phone = '';
+							}
                 		   output += '<td>' + item.department + '</td>';
                 		   output += '<td>' + item.position + '</td>';
-                		   output += '<td>' + item.user_email + '</td>';
-                		   output += '<td>' + item.user_phone + '</td>';
-                		   output += '<td><p>이용중지</p><button class="user-stop" data-employee_no='+item.employee_no + ' data-employee_status='+item.employee_status
+                		   output += '<td>' + item.email + '</td>';
+                		   output += '<td>' + item.phone + '</td>';
+                		   output += '<td><p>이용중지</p><button class="user-stop" data-employeeId='+item.id + ' data-employeeStatus='+item.status
 									+ ' data-tab="userstop">[정상]</button> </td>';
 						   let color = "blue";
 						   let deleteAuth = "[등록]";
-						   console.log(item.employee_auth.trim());
-							if(item.employee_auth.trim() == "Y"){
+						   console.log(item.auth.trim());
+							if(item.auth.trim() == "Y"){
 								color = "red"; 
 								deleteAuth = "[삭제]";
 								}	
-						   output += '<td><span class="employee-auth-value=">' + item.employee_auth +'</span>'
-										+ '<button class="auth-delete '+ color + '" data-employee_no="' +item.employee_no + '">'+ deleteAuth + '</button></td></tr>';
+						   output += '<td><span class="employee-auth-value=">' + item.auth +'</span>'
+										+ '<button class="auth-delete '+ color + '" data-employeeId="' +item.id + '">'+ deleteAuth + '</button></td></tr>';
 				
                 		   
                 		})//.each 끝
@@ -170,18 +174,18 @@
 // 관리자 유무
  $(function() {
 $(".auth-delete").click(function() {
-    var employeeNo = $(this).data("employee_no"); // 직원 번호 가져오기
+    var employeeId = $(this).attr("data-employeeId"); // 직원 번호 가져오기
     var employeeAuth =  $(this).closest("td").find(".employee-auth-value").text().trim();
 	var tab = $(this).closest("tr").find(".user-stop").data("tab"); // 탭 정보 가져오기
-	console.log(employeeNo);
+	console.log(employeeId);
 	console.log(employeeAuth);
 	console.log(tab);
     // 서버로 업데이트 요청 보내기
     $.ajax({
-        url: "../admin/employeeAuth",
+        url: "../admin/employee-auth",
         type: "POST",
         data: {
-            employeeNo: employeeNo,
+            employeeId: employeeId,
              employeeAuth: employeeAuth,
              tab: tab
         },
@@ -208,16 +212,17 @@ $(".auth-delete").click(function() {
 // 가입 승인
  $(function() {
  $("body").on("click",".approveUser", function() {
-    var userid = $(this).data("userid"); 
-	console.log(userid)
+  //  var userId = $(this).data("userId"); 
+    var userId = $(this).attr("data-userId");
+	console.log(userId)
 	
 	let removetr=$(this).parent().parent()
     // 서버로 업데이트 요청 보내기
     $.ajax({
-        url: "../admin/regWait",
+        url: "../admin/wait-reg",
         type: "POST",
         data: {
-            userid: userid,
+            userId: userId,
             action: "approve"
         },
         async: false,
@@ -227,9 +232,10 @@ $(".auth-delete").click(function() {
                 alert("가입이 승인되었습니다.");
                 
                 $.ajax({
-                   url: "../admin/useruselist",
+                   url: "../admin/user-uselist",
+                   type: "POST",
                    data: {
-                   		company_id: "1"
+                   		companyId: 1
                 	},
                 	success: function(data){
                 		let count=data.length;
@@ -242,30 +248,31 @@ $(".auth-delete").click(function() {
                 			
                 		$(data).each(function(index, item){
                 			let img = '<img src="/img/profile.png" alt="프로필 사진" width="25" height="25">'
-                			if(item.user_photo){
-                				img = '<img src="/usrupload"' + item.user_photo + ' alt="프로필 사진" width="25" height="25">'
+                			if(item.pic){
+                				img = '<img src="/usrupload"' + item.pic + ' alt="프로필 사진" width="25" height="25">'
                 				}
                 		   output += '<tr><td>' + img + '</td>';
-                		   output += '<td>' + item.employee_no + '</td>';
-                		   output += '<td>' + item.user_name + '</td>';
-                		   if(item.department ==null ||item.position == null){
-                		   		item.department = '';
-                		   		item.position  = '';
-                		   }
+                		   output += '<td>' + item.id + '</td>';
+                		   output += '<td>' + item.name + '</td>';
+                		     if (item.department == null || item.position == null || item.phone == null) {
+  									item.department = '';
+  									item.position = '';
+  									item.phone = '';
+							}
                 		   output += '<td>' + item.department + '</td>';
                 		   output += '<td>' + item.position + '</td>';
-                		   output += '<td>' + item.user_email + '</td>';
-                		   output += '<td>' + item.user_phone + '</td>';
-                		   output += '<td><p>정상</p><button class="user-stop" data-employee_no='+item.employee_no +' data-employee_status='+item.employee_status
+                		   output += '<td>' + item.email + '</td>';
+                		   output += '<td>' + item.phone + '</td>';
+                		   output += '<td><p>정상</p><button class="user-stop" data-employeeId='+item.id +' data-employeeStatus='+item.status
 									+ ' data-tab="userstop">[이용중지]</button> </td>';
 						   let color = "blue";
 							let deleteAuth = "[등록]";
-							if(item.employee_auth.trim() == "Y"){
+							if(item.auth.trim() == "Y"){
 								color = "red"; 
 								deleteAuth = "[삭제]";
 								}	
-						   output += '<td><span class="employee-auth-value=">' + item.employee_auth +'</span>'
-										+ '<button class="auth-delete '+ color + '" data-employee_no="' +item.employee_no + '">'+ deleteAuth + '</button></td></tr>';
+						   output += '<td><span class="employee-auth-value=">' + item.auth +'</span>'
+										+ '<button class="auth-delete '+ color + '" data-employeeId="' +item.id + '">'+ deleteAuth + '</button></td></tr>';
 						   
                 		   
                 		})//.each 끝
@@ -296,14 +303,14 @@ $(".auth-delete").click(function() {
 // 가입 거절
  $(function(){	
 $(".rejectUser").click(function () {
-    var userid = $(this).data("userid"); 
-    console.log(userid);
+    var userId = $(this).attr("data-userId");
+    console.log(userId);
    
     $.ajax({
-        url: "../admin/regWait",
+        url: "../admin/reg-wait",
         type: "POST",
         data: {
-            userid: userid,
+            userId: userId,
             action: "reject"
         },
         
@@ -325,7 +332,7 @@ $(".rejectUser").click(function () {
 
 
 //프로필 사진
-  const profile = this.user_photo;
+  const profile = this.userPhoto;
 	 let src = 'img/profile.png';
 		if(profile){
 			src='usrupload/' + profile;

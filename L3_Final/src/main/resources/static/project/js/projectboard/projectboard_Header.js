@@ -1,17 +1,17 @@
 $(document).ready(function() {
-
+			
 		    $('.star').each(function() {
 		        var $this = $(this);
-		        var projectNum = $this.data('projectNum');
-		       /* var employeeNum = $this.data('employeeNum'); */
-		        var employeeNum = 1;
+		        var projectId = $this.data('projectId');
+		       /* var employeeId = $this.data('employeeId'); */
+		        var employeeId = 1;
 		        
 		        $.ajax({
-		            url: '../project/check',
+		            url: '../project/participate',
 		            method: 'GET',
 		            data: {
-		                projectNum: projectNum,
-		                employeeNum: employeeNum
+		                projectId: projectId,
+		                employeeId: employeeId
 		            },
 		            success: function(response) {
 		                if (response == -1) {
@@ -26,43 +26,57 @@ $(document).ready(function() {
 		        });
 		    });
 		
-		    $('.star').click(function() {
-		        var $this = $(this);
-		        var projectNum = $this.data('projectNum');
-		       /* var employeeNum = $this.data('employeeNum'); */
-		        var employeeNum = 1
-		
+			$('.star').click(function() {
+			    var $this = $(this);
+			    var projectId = $this.data('projectId');
+			    /* var employeeId = $this.data('employeeId'); */
+			    var employeeId = 1
+			
 			    $.ajax({
 			        url: '../project/favorite',
 			        method: 'POST',
 			        data: {
-			            projectNum: projectNum,
-			            employeeNum: employeeNum
+			            projectId: projectId,
+			            employeeId: employeeId
 			        },
 			        success: function(response) {
-			        	console.log(response);
+			            console.log(response);
 			            if(response == -1) {
+			                
 			                $this.attr('src', '../resources/project/img/projectboard/icon_star.png');
+			
+			                var listItem = $this.closest('.list');
+			                listItem.hide();
+			                $('.partProject .all-project-list').append(listItem);
+			                listItem.fadeIn(500);
+			
 			            } else {
 			                $this.attr('src', '../resources/project/img/projectboard/icon_star_on.png');
-			            }
-			        }
-			    });
-		    });
-
+			
+			                var listItem = $this.closest('.list');
+			                
+						    listItem.hide();
+						    $('.favoritProject .all-project-list').append(listItem);
+						    listItem.fadeIn(500);
+						}
+					},
+					error: function(xhr, status, error) {
+					   console.error('Error:', error);
+				   }
+			   });
+			});
+			
 			$(".star").hover(function() {
-			    var $parent = $(this).parent();
 			    var src = $(this).attr("src");
 			
-			    if (src === "../project/img/projectboard/icon_star.png") {
-			    	$(this).find(".star").attr("src", "../project/img/projectboard/icon_star_hover.png");
+			    if (src === "../resources/project/img/projectboard/icon_star.png") {
+			        $(this).attr("src", "../resources/project/img/projectboard/icon_star_hover.png");
 			    }
 			}, function() {
-			    var $parent = $(this).parent();
 			    var src = $(this).attr("src");
 			
-			    if (src === "../project/img/projectboard/icon_star_hover.png") {
-			   		$(this).find(".star").attr("src", "../project/img/projectboard/icon_star.png");
+			    if (src === "../resources/project/img/projectboard/icon_star_hover.png") {
+			        $(this).attr("src", "../resources/project/img/projectboard/icon_star.png");
 			    }
 			});
 
@@ -96,14 +110,14 @@ $(document).ready(function() {
 			$(".modal-submit").click(function() {
 			    // .project-color-check-active-1 클래스가 적용된 요소의 부모 li 태그의 배경색을 가져옴
 			    var activeColor = $(".project-color-check-active-1").closest('li').css("background-color");
-				var num = parseInt($("#detailSettingProjectSrno").text());
+				var id = parseInt($("#detailSettingProjectSrno").text());
 				
 			    $("#modal-background").css('display', 'none');
 			    
 			    $.ajax({
-			        url: '../project/updateColor',
-			        type: 'POST',
-			        data: { color:activeColor, num:num },
+			        url: '../project/update-color',
+			        type: 'GET',
+			        data: { color:activeColor, id:id },
 			        success: function(response) {
 			        $(".select-color").css("background", activeColor);
 			    }

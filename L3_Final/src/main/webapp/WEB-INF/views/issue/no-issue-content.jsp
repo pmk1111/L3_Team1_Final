@@ -9,8 +9,8 @@
 <body>
 <script type="text/javascript">
 if (${showAlert}==true) {
-    alert('Á¸ÀçÇÏÁö ¾Ê´Â °Ô½Ã±ÛÀÔ´Ï´Ù.');
-    window.location.href = '../issue/issuelist';
+    alert('ì¡´ìž¬í•˜ì§€ ì•ŠëŠ” ê²Œì‹œê¸€ìž…ë‹ˆë‹¤.');
+    window.location.href = '../issue/issue-list';
 }
 </script>
 </body>

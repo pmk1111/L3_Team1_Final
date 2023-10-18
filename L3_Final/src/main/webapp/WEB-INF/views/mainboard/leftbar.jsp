@@ -72,7 +72,7 @@
           <ul class="menu-inner py-1">
 
             <li class="menu-item" style="margin:15px 0px 25px 0px;">
-              <a href="../project/CreateProject" class="menu-link" style="background-color: #9F7AB0; color: white; width: 228px;">
+              <a href="${pageContext.request.contextPath}/project/create-project" class="menu-link" style="background-color: #9F7AB0; color: white; width: 228px;">
                 <i class="menu-icon tf-icons bx bx-home-circle create-project" style="margin-left: 22px;"></i>
                 <div class="create-project" style="font-weight: bold;">새 프로젝트 만들기</div>
               </a>
@@ -87,7 +87,7 @@
             </li>
 
             <li class="menu-item active">
-              <a href="${pageContext.request.contextPath}/mainboard/mydashboard" class="menu-link">
+              <a href="${pageContext.request.contextPath}/mainboard/my-dashboard" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">내 대시보드</div>
               </a>
@@ -116,7 +116,7 @@
             </li>
 
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/issue/issuelist" class="menu-link">
+              <a href="${pageContext.request.contextPath}/issue/issue-list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Layouts">프로젝트 이슈</div>
               </a>
@@ -130,14 +130,14 @@
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/calendar/calendar-list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Layouts">캘린더</div>
               </a>
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/documents/documents-list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-copy"></i>
                 <div data-i18n="Layouts">자료 공유실</div>
               </a>

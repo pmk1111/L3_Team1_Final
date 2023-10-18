@@ -23,17 +23,18 @@
 	</select>
 
 	<select id="getIssueList" resultType="issue">
-		select * from issue order
-		by issue_created desc
+		select * from issue 
+		where project_id = 1
+		order by created_at desc
 	</select>
 	
 	<select id="getStatusCount" resultType="issue">
 		SELECT
     	count(*) AS totalcount,
-    	SUM(CASE WHEN issue_status = 'To Do' THEN 1 ELSE 0 END) AS todocount,
-    	SUM(CASE WHEN issue_status = 'In Progress' THEN 1 ELSE 0 END) AS progresscount,
-    	SUM(CASE WHEN issue_status = 'Resolved' THEN 1 ELSE 0 END) AS resolvedcount,
-    	SUM(CASE WHEN issue_status = 'Done' THEN 1 ELSE 0 END) AS donecount
+    	SUM(CASE WHEN status = 'To Do' THEN 1 ELSE 0 END) AS todocount,
+    	SUM(CASE WHEN status = 'In Progress' THEN 1 ELSE 0 END) AS progresscount,
+    	SUM(CASE WHEN status = 'Resolved' THEN 1 ELSE 0 END) AS resolvedcount,
+    	SUM(CASE WHEN status = 'Done' THEN 1 ELSE 0 END) AS donecount
 		FROM issue
 	</select>
 	
@@ -41,33 +42,33 @@
 	<select id="getFilteredIssueList" resultType="com.naver.myhome.domain.Issue">
   	SELECT * FROM issue
 		<where>
-  		<if test='issueType != "-"'>
-    		issue_status = #{issueType}
+  		<if test='issueStatus != "-"'>
+    		status = #{issueStatus}
   		</if>
   		<if test='issuePriority != "-"'>
-    		AND issue_priority = #{issuePriority}
+    		AND priority = #{issuePriority}
   		</if>
  		</where>
-  	ORDER BY issue_created DESC
+  	ORDER BY created_at DESC
 	</select>
 
 	<select id="searchIssues" resultType="com.naver.myhome.domain.Issue">
    	SELECT *
 		FROM issue
-			WHERE UPPER(issue_subject) LIKE '%' || UPPER(#{searchText}) || '%'
+			WHERE UPPER(subject) LIKE '%' || UPPER(#{searchText}) || '%'
    		OR UPPER(create_user) LIKE '%' || UPPER(#{searchText}) || '%'
-   		ORDER BY issue_created DESC
+   		ORDER BY created_at DESC
   </select>
   
   <select id="getMyWork" resultType="com.naver.myhome.domain.Issue">
   SELECT * FROM issue
 		<where>
   		<if test='status != "" and status != null'>
-    		issue_status = #{status}
+    		status = #{status}
   		</if>
  		</where>
  		<!-- and user_id = #{user_id} -->
-  	ORDER BY issue_created DESC
+  	ORDER BY created_at DESC
   </select>
   
  <!--  <select id="getProjectList" resultType="com.naver.myhome.domain.Project">
@@ -75,10 +76,7 @@
   	where project_joiner.user_id = #{user.id}
   </select> -->
   
-  <insert id="issueAdd">
-  	<selectKey order="BEFORE" keyProperty="issue_id" resultType="int">
-  	select issue_id.nextval from dual
-  	</selectKey>
+  <insert id="createIssue">
   	<!-- <selectKey order="BEFORE" keyProperty="user_name" resultType="String">
 		select user_name from usr where user_id=1 
   	</selectKey> -->
@@ -96,10 +94,10 @@
   	
   	insert into issue
   	values
-  	(#{issue_id}, 1, 
-  	1, #{issue_type},
-  	#{issue_priority}, #{issue_subject}, #{issue_content},
-  	#{issue_status}, #{issue_reporter}, #{issue_assigned}, SYSDATE)
+  	(#{id}, 1, 
+  	1, #{type},
+  	#{priority}, #{subject}, #{content},
+  	#{status}, #{reporter}, #{assigned}, SYSDATE)
   </insert>
 
 	<select id="getIssueDetail" resultType="issue">
@@ -112,16 +110,16 @@
 		select
 		*
 		from issue
-		where issue_id = #{issue_id}
+		where id = #{num}
 	</select>
 	
 <update id="updateStatus">
   UPDATE issue
-  SET issue_status = #{status}
+  SET status = #{status}
   <if test="selectedUserName != null and selectedUserName != ''" >
-    , issue_assigned = #{selectedUserName}
+    , assigned = #{selectedUserName}
   </if>
-  WHERE issue_id = #{issueId}
+  WHERE id = #{issueId}
 </update>
 	
 	<update id="issueUpdate" parameterType="issue">
@@ -137,18 +135,18 @@
 		
 		update issue
 		set project_id = 1,
-				issue_type = #{issue_type},
-				issue_priority = #{issue_priority},
-				issue_subject = #{issue_subject},
-				issue_content = #{issue_content},
-				issue_status = #{issue_status},
-				issue_assigned = #{issue_assigned},
-		where issue_id = #{issue_id}
+				type = #{type},
+				priority = #{priority},
+				subject = #{subject},
+				content = #{content},
+				status = #{status},
+				assigned = #{assigned}
+		where id = #{id}
 				
 	</update>
 	
 	<delete id="issueDelete">
 	delete from issue
-	where issue_id = #{issue_id}
+	where id = #{id}
 	</delete>
 </mapper>

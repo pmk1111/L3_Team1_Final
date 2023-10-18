@@ -16,8 +16,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+
+import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,15 +36,16 @@ public class UserController {
 	//주영
 	private PasswordEncoder passwordEncoder;
 	//지니
-	private UserService userservice;
+	private UserService userService;
 	
 	@Autowired
+
 	public UserController(UserService userservice,PasswordEncoder passwordEncoder) {
 		this.userservice = userservice;
 		this.passwordEncoder= passwordEncoder;
 	}
 	
-	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	@GetMapping(value = "/profile")
 //    public ModelAndView user_update(Principal principal, ModelAndView mv) {
 //          String id =S principal.getName();
 //        
@@ -57,10 +62,10 @@ public class UserController {
     }
 	
 	// 수정처리
-//	   @RequestMapping(value = "/updateProcess", method = RequestMethod.POST)
+//	   @PostMapping(value = "/update-process")
 //	   public String updateProcess(User user, Model model, HttpServletRequest request, RedirectAttributes rattr) {
 //
-//	      int result = userservice.update(user);
+//	      int result = userService.update(user);
 //	      if (result == 1) {
 //	         rattr.addFlashAttribute("result", "updateSuccess");
 //	         return "redirect:/board/list";

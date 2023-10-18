@@ -26,10 +26,9 @@ $(document).ready(function() {
         $("#saveNameButton, #cancelNameButton").addClass("d-none");
         $("#nameupdate").removeClass("d-none");
     });
-});
+
 
 //url 수정
-$(document).ready(function() {
     // 수정 버튼 클릭 시
     $("#urlupdate").click(function() {
         // 입력 필드 활성화
@@ -56,4 +55,69 @@ $(document).ready(function() {
         $("#saveButton, #cancelButton").addClass("d-none");
         $("#urlupdate").removeClass("d-none");
     });
+
+
+// 전용 URL 수정
+
+$("#saveButton").click(function(){
+	var companyId = 1
+	// var companyName = $("#companyName").val() ;
+	var companyDomain = $("#companyDomain").val(); 
+	if(!companyDomain){
+    		alert('전용 URL을 입력하세요');
+    		return false;
+		}	
+		else{
+    // 서버로 업데이트 요청 보내기
+    $.ajax({
+        url: "../admin/updateName",
+        type: "POST",
+        data: {
+            companyId: companyId,
+            companyDomain: companyDomain
+        },
+        async: false,
+        success: function(response) {
+         if(updateName == 1){
+         
+         	alert ("업데이트 완료");
+        }//if	 
+        	
+        }//success
+    }); //ajax end
+        }//else end
+   }); //click end  
+//회사명 수정
+
+
+		
+	$("#saveNameButton").click(function(){
+	var companyId = 1
+	var companyName = $("#companyName").val() ;
+	//var companyDomain = $("#companyDomain").val(); 
+	if(!companyName){
+    		alert('회사명을 입력하세요');
+    		return false;
+		}	else{
+    // 서버로 업데이트 요청 보내기
+    $.ajax({
+        url: "../admin/updateName",
+        type: "POST",
+        data: {
+            companyId: companyId,
+            companyName: companyName
+           
+        },
+        async: false,
+        success: function(response) {
+         if(updateName == 1){
+         
+         	alert ("업데이트 완료");
+        	} 
+        	
+        }//success end
+    }); //ajax end
+         }//else end
+   
+});
 });

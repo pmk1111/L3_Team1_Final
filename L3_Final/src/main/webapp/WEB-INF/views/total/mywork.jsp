@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr"
 	data-theme="theme-default"
 	data-assets-path="../resources/mainboard/assets/"
 	data-template="vertical-menu-template-free">
 <head>
+
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -51,6 +54,7 @@ table {
 
 .card {
 	box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
+	padding-bottom:20px;
 }
 
 .avatar.sm {
@@ -202,6 +206,10 @@ table th {
 .main-row {
 	cursor: pointer;
 }
+h6{
+ margin:auto;
+ padding:auto;
+}
 </style>
 <script>
  $(function(){
@@ -240,15 +248,14 @@ table th {
 														class="fas fa-search fa-xs text-secondary mb-1"></i>
 													</span> <input type="text" name="search_word" id="searchInput"
 														class="form-control bg-white border-0 px-1"
-														placeholder="도움 주제 검색..."> <span
+														placeholder="검색어를 입력하세요"> <span
 														class="input-group-text border-0 py-1 pe-2">
 														<button type="submit"
-															class="btn btn-primary text-uppercase-bold-sm">
-															검색</button>
+															class="btn btn-primary text-uppercase-bold-sm"
+															id="searchButton">검색</button>
 													</span>
-												</div>
-											</form>
-											<c:if test="${totalmywork > 0 }">
+ 													
+													<c:if test="${!empty myTotalWorks}">
 											<table class="table">
 												<thead>
 													<tr>
@@ -258,60 +265,64 @@ table th {
 														<th>상태</th>
 													</tr>
 												</thead>
+												
+											<c:forEach items="${myTotalWorks}" var="myTotalWorks">
 												<tbody>
 													<!-- 프로젝트 1 -->
 													<tr class="main-row">
-														<td class="main-cell">프로젝트 1</td>
-														<td>2023-01-15</td>
-														<td>2023-03-30</td>
-														<td>진행 중</td>
+														<td class="main-cell">${myTotalWorks.TITLE}</td>
+														<td>2013-01-01</td>
+														<td>2013-01-01</td>
+														<td>${myTotalWorks.STATUS}</td>
+														
 													</tr>
-													<!-- 이슈 1 -->
+															<!-- 이슈 1 -->
 													<tr class="sub-row" style="display: none;">
-														<td class="sub-cell">이슈 1</td>
-														<td>2023-01-15</td>
-														<td>2023-03-30</td>
-														<td>진행 중</td>
+														<td class="sub-cell">${myTotalWorks.SUBJECT}</td>
+														<td>2013-01-01</td>
+														<td>2013-01-01</td>
+														<td>${myTotalWorks.STATUS}</td>
+													
 													</tr>
-													<!-- 프로젝트 2 -->
-													<tr class="main-row">
-														<td class="main-cell">프로젝트 2</td>
-														<td>2023-02-10</td>
-														<td>2023-04-20</td>
-														<td>진행 중</td>
-													</tr>
-													<!-- 이슈 2 -->
-													<tr class="sub-row" style="display: none;">
-														<td class="sub-cell">이슈 2</td>
-														<td>2023-01-15</td>
-														<td>2023-03-30</td>
-														<td>진행 중</td>
-													</tr>
+													
+													
+									
 												</tbody>
+												</c:forEach>
 											</table>
 											</c:if>
+											
+												</div>
+											</form>
+											
+
 										</div>
-									</div>
-								</div>
 
 
 
 
-	                    <%-- 회원이 없는 경우 --%>
-	                    <c:if test="${totalmywork == 0 && empty search_word }">
-	                       <h1>내 업무가 없습니다.</h1>
+								  <!--   회원이 없는 경우 -->
+	                    <c:if test="${empty myTotalWorks && empty search_word }">
+	                       <h6>내 업무가 없습니다.</h6>
 	                    </c:if>
 	                    
-	                                <%-- 회원이 없는 경우 --%>
-	                    <c:if test="${totalmywork == 0 && !empty search_word }">
-	                       <h1>검색 결과가 없습니다.</h1>
+	                            <!--    회원이 없는 경우 -->
+	                    <c:if test="${empty myTotalWorks && !empty search_word }">
+	                       <h6>검색 결과가 없습니다.</h6>
 	                    </c:if>
-                       
+									
+					
+										
+											
+										</div>
+									</div>
 							</div>
 						</div>
 					</div>
 
 				</div>
+	                 
+                       
 
 
 				<!-- Footer -->
@@ -375,8 +386,22 @@ table th {
 	<script src="../resources/mainboard/assets/js/main.js"></script>
 	<!-- Page JS -->
 	<script src="../resources/mainboard/assets/js/dashboards-analytics.js"></script>
+	
     <script>
-                    // 클릭 이벤트 핸들러
+    document.getElementById("searchButton").addEventListener("click", function() {
+        var searchInput = document.getElementById("searchInput");
+
+        // 입력 필드의 값 확인
+        if (searchInput.value.trim() === "") {
+            alert("검색어를 입력하세요");
+        } 
+        return false;
+        
+    });
+
+    
+    
+    // 클릭 이벤트 핸들러
       document.addEventListener("click", function (e) {
        // 클릭한 요소가 .main-row 클래스를 가진 <tr> 또는 .main-cell 클래스를 가진 <td>인지 확인
        if (e.target.classList.contains('main-row') || e.target.classList.contains('main-cell')) {
