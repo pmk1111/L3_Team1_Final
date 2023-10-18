@@ -29,38 +29,38 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public List<Project> getFavoritProjectList(int employeeNum) {
-		return mapper.getFavoritProjectList(employeeNum);
+	public List<Project> getFavoritProjectList(int employeeId) {
+		return mapper.getFavoritProjectList(employeeId);
 	}
 
 	@Override
-	public List<Project> getPartProjectList(int employeeNum) {
-		return mapper.getPartProjectList(employeeNum);
+	public List<Project> getPartProjectList(int employeeId) {
+		return mapper.getPartProjectList(employeeId);
 	}
 	
 	@Override
-	public Project getDetail(int num) {
-		return mapper.getDetail(num);
+	public Project getDetail(int id) {
+		return mapper.getDetail(id);
 	}
 	
 	@Override
-	public int updateColor(int num, String color) {
-		return mapper.updateColor(num, color);
+	public int updateColor(int id, String color) {
+		return mapper.updateColor(id, color);
 	}
 
 	@Override
-	public Integer checkFavorite(int projectNum, int employeeNum) {
-		return mapper.checkFavorite(projectNum, employeeNum);
+	public Integer checkFavorite(int projectId, int employeeId) {
+		return mapper.checkFavorite(projectId, employeeId);
 	}
 
 	@Override
-	public void addFavorite(int projectNum, int employeeNum) {
-		mapper.addFavorite(projectNum, employeeNum);
+	public void addFavorite(int projectId, int employeeId) {
+		mapper.addFavorite(projectId, employeeId);
 	}
 
 	@Override
-	public void removeFavorite(int projectNum, int employeeNum) {
-		mapper.removeFavorite(projectNum, employeeNum);
+	public void removeFavorite(int projectId, int employeeId) {
+		mapper.removeFavorite(projectId, employeeId);
 	}
 
 }

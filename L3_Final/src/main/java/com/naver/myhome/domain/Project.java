@@ -3,19 +3,20 @@ package com.naver.myhome.domain;
 import java.util.Date;
 
 public class Project {
-	private int NUM;
+	private int ID;
     private String TITLE;
     private String SUBTITLE;
     private String COLOR;
     private Date CREATE_AT;
     private Date UPDATE_AT;
     private String CURRENTTIME;
+    private int TEAMCOUNT;
     
-	public int getNUM() {
-		return NUM;
+	public int getID() {
+		return ID;
 	}
-	public void setNUM(int nUM) {
-		NUM = nUM;
+	public void setID(int iD) {
+		ID = iD;
 	}
 	public String getTITLE() {
 		return TITLE;
@@ -53,4 +54,12 @@ public class Project {
 	public void setCURRENTTIME(String cURRENTTIME) {
 		CURRENTTIME = cURRENTTIME;
 	}
+	public int getTEAMCOUNT() {
+		return TEAMCOUNT;
+	}
+	public void setTEAMCOUNT(int tEAMCOUNT) {
+		TEAMCOUNT = tEAMCOUNT;
+	}
+	
+	
 }

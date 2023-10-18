@@ -1,12 +1,14 @@
 package com.naver.myhome.mybatis.mapper;
 
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public interface ScheduleMapper {
-	void insertSchedule(Map<String, String> map);
+public interface TeamMapper {
+
+	public void addTeam(int projectId, int employeeId);
+	
+	public int teamCount(int projectId);
+	
 }

@@ -27,7 +27,7 @@ public interface IssueMapper {
 
 //	public List<Project> getMyProjectList(String userId);
 	
-	public void issueAdd(Issue issue);
+	public void createIssue(Issue issue);
 
 	public Issue getIssueDetail(int num);
 	

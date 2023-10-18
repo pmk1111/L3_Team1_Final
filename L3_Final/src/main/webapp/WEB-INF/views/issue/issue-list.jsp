@@ -107,7 +107,7 @@
 												<ul class="dropdown-items">
 													<li><span>유형</span>
 														<div class="custom-select">
-															<div class="custom-selected"  id="issueType">-</div>
+															<div class="custom-selected"  id="issueStatus">-</div>
 															<div class="custom-options">
 																<div class="custom-option" data-value="-">-</div>
 																<div class="custom-option" data-value="To Do">To Do</div>
@@ -148,30 +148,30 @@
 																<div class="issuetype-wrap">
 
 																	<c:choose>
-																		<c:when test="${i.issue_type eq '버그'}">
+																		<c:when test="${i.type eq '버그'}">
 																			<img src="../resources/issue/img/bug.svg"
 																				class="issuetype-icon">
 																		</c:when>
-																		<c:when test="${i.issue_type eq '에픽'}">
+																		<c:when test="${i.type eq '에픽'}">
 																			<img src="../resources/issue/img/epic.svg"
 																				class="issuetype-icon">
 																		</c:when>
-																		<c:when test="${i.issue_type eq '작업'}">
+																		<c:when test="${i.type eq '작업'}">
 																			<img src="../resources/issue/img/task.svg"
 																				class="issuetype-icon">
 																		</c:when>
 																	</c:choose>
 
 
-																	<span class="issuetype">${i.issue_type}</span> <a
-																		href="issue-detail?num=${i.issue_id}"> <span
-																		class="issue-title">${i.issue_subject}</span>
+																	<span class="issuetype">${i.type}</span> <a
+																		href="issue-detail?num=${i.id}"> <span
+																		class="issue-title">${i.subject}</span>
 																	</a>
 																</div>
 
 																<div class="issuewriter-created">
 																	<span class="issue-writer">${i.create_user}</span> 
-																	<span class="issue-created">${i.issue_created.substring(0, 10)}</span>
+																	<span class="issue-created">${i.created_at.substring(0, 10)}</span>
 																</div>
 															</li>
 														</c:forEach>

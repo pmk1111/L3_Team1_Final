@@ -44,13 +44,13 @@ $(document).ready(function () {
          if (rdata.length > 0) { // 배열에 데이터가 있는지 확인
             $(rdata).each(function () {
                let str = '';
-               str += '<div class="comments" data-comment-id="' + this.comment_id + '">';
+               str += '<div class="comments" data-comment-id="' + this.id + '">';
                str += '<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto comment-writer-img" />';
                // 나중에 해당 유저의 사진 가져옴
-               str += '<span class="comment-writer">' + this.comment_user_name + '</span> <sup class="comment-created">' + this.comment_created + '</sup>';
+               str += '<span class="comment-writer">' + this.user_id + '</span> <sup class="comment-created">' + this.created_at + '</sup>';
                str += '<sup class="comment-edit">수정</sup><sup class="comment-delete">삭제</sup>'
                str += '<br><div class="comment-content">';
-               str += '<span>' + this.comment_content + '</span></div>';
+               str += '<span>' + this.content + '</span></div>';
                str += '</div>';
 
                $('.comment-list').append(str);
@@ -76,7 +76,7 @@ $(document).ready(function () {
          url: "../comment/commentAdd",
          data: {
             issue_id: $("#issue_id").val(),
-            comment_content: content
+            content: content
          },
          success: function (rdata) {
             if (rdata == 1) {
@@ -132,8 +132,8 @@ $(document).ready(function () {
             type: "POST",
             url: "../comment/commentUpdate",
             data: {
-               comment_id: commentId,
-               comment_content: editedContent
+               id: commentId,
+               content: editedContent
             },
             success: function (rdata) {
                if (rdata == 1) {

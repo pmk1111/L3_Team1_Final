@@ -5,13 +5,13 @@
 <html lang="en">
 
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>WidUs-join</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    <link rel="stylesheet" href="../resources/user/css/join2.css" />
+    <link rel="stylesheet" href="../resources/user/css/join-company.css" />
     <!-- Favicons -->
     <link href="../resources/home/assets/img/favicon.png" rel="icon">
     <link href="../resources/home/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -29,65 +29,21 @@
     <link href="../resources/home/assets/css/home.css" rel="stylesheet">
     <!-- ======================================================== * Template Name: Arsha * Updated: Jul 27 2023 with Bootstrap v5.3.1 * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ * Author: BootstrapMade.com * License: https://bootstrapmade.com/license/ ======================================================== -->
     <style type="text/css">
-        .login-text,
-        .login-company,
-        .btn-join {
-            text-align: center;
-        }
-
-        .login-text {
-            display: block;
-            font-size: 36px;
-            color: #333;
-            font-weight: 700;
-            margin: 0 auto 30px;
-        }
-
-        .email,
-        .name,
-        .pw {
-            color: #333;
-            font-size: 16px;
-            padding: 0 0 0 20px;
-            background: #FFFFFF;
-            width: 640px;
-            padding: 16px 20px;
-            color: #333;
-            border: 1px solid #ddd;
-            -webkit-border-radius: 8px;
-            border-radius: 8px;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            margin-top: 10px;
-        }
-
-        .errMsg {
-            text-align: left;
-            margin-top: 10px;
-            color: #ff6b6b;
-            font-size: 14px;
-            line-height: 21px;
-        }
-
         .errMsg {
             margin-top: 5px;
             margin-bottom: 5px;
             visibility: hidden;
         }
 
-        #confirmBtn {
-            margin-top: 20px;
+        .btn-join {
             margin-bottom: 100px;
         }
-
-        .login-text {
-            margin-top: 100px;
-        }
-
-        .auth-section {
-            padding-top: 0px;
-
+        .errMsg {
+            text-align: left;
+            margin-top: 10px;
+            color: #ff6b6b;
+            font-size: 14px;
+            line-height: 21px;
         }
     </style>
 </head>
@@ -98,43 +54,19 @@
     <div class="auth-section after-contets">
         <div class="accont-wrap">
             <div id="companyJoinMain" class="login-wrap">
-                <div class="login-text">회사 계정 만들기</div>
+                <div class="login-text">기존 회사 참여</div>
+                <div class="login-company">이미 회사에서 사용하고 있다면 회사 URL을 입력하여
+                    함께하세요.</div>
                 <div class="join-contets">
-
-                    <div>
-                        <b class="bTxt">이메일 주소</b><br> <input type="text" id="email" class="email" name="email" maxLength="30" placeholder="이메일을 입력하세요" required>
-                        <p class="errMsg" id="email_message">오류메세지 영역</p>
+                    <p class="url-tit">회사 URL</p>
+                    <div class="url-wr">
+                        <span>https://</span> <input id="joinInput" type="text" class="join-input" autocomplete="off" placeholder="회사 URL">
+                        <span>.widus.team</span>
                     </div>
-                    <div>
-                        <b class="bTxt">이름</b><br> <input type="text" id="userName" class="name" name="name" placeholder="이름을 입력하세요" maxLength="15" required>
-                        <p class="errMsg" id="name_message">오류메세지 영역</p>
-                    </div>
-                    <div>
-                        <b class="bTxt">비밀번호</b><br> <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="pass" required>
-                        <p class="errMsg" id="pw_message">오류메세지 영역</p>
-                    </div>
-
-                    <div class="mt10">
-                        <div>
-                            <input type="checkbox" id="policyCheckbox" class="policy" name="policy" value="필수"> <label for="policy" class="policyLabel"> <b class="require">(필수)</b>&nbsp; <a href="Service.net" style="color: #7C00B6; text-decoration: dash">
-                                    서비스 이용약관</a>,<a href="PrivatePolicy.net" style="color: #7C00B6; text-decoration: dash">개인정보 처리방침</a>에
-                                동의합니다.
-                            </label>
-                        </div>
-                        <br>
-                        <div>
-                            <input type="checkbox" id="benefits" class="benefits" name="benefits" value="선택"> <label for="benefits" class="benefitsLabel"> <b>(선택)</b>&nbsp;혜택 수신에 동의합니다.
-                            </label>
-                        </div>
-                    </div>
+                    <p id="helpMsg" class="join-company-url" style="display: block;">
+                        회사URL 주소는 관리자를 통해 확인할 수 있습니다.
                 </div>
-
-                <div class="clearfix">
-                    <button type="button" id="confirmBtn" class="submitbtn" onclick="validationcheck()">
-                        <strong>가입하기</strong>
-                    </button>
-
-                </div>
+                <button id="companyJoinBtn" class="btn-join">참여하기</button>
             </div>
         </div>
     </div>
@@ -222,72 +154,38 @@
     <script src="../resources/home/assets/vendor/php-email-form/validate.js"></script>
     <!-- Template Main JS File -->
     <script src="../resources/home/assets/js/main.js"></script>
-     <script type="text/javascript">
-        // 오류 메세지 출력
-        function printErrMsg(id, msg) {
-            const element = document.getElementById(id);
-            element.innerHTML = msg;
-            element.style.visibility = "visible";
-        }
-
-        // 이메일 유효성 검사
-        function validateEmail(email) {
-            var re = /\S+@\S+\.\S+/;
-            return re.test(email);
-        }
-
-        $(document).ready(function() {
-
-            $("#email").on('focusout', function() {
-                if (!validateEmail(this.value)) {
-                    printErrMsg("email_message", "유효한 이메일을 입력해주세요.");
-                } else {
-                    document.getElementById("email_message").style.visibility = "hidden";
-                    document.getElementById("isChkEmail").value = "Y";
-                }
-            });
-
-            $("#userName").on('focusout', function() {
-                if (this.value.length < 2) {
-                    printErrMsg("name_message", "이름은 2글자 이상이어야 합니다.");
-                } else {
-                    document.getElementById("name_message").style.visibility = "hidden";
-                }
-            });
-
-            $("#password").on('focusout', function() {
-                if (this.value.length < 6) {
-                    printErrMsg("pw_message", "비밀번호는 6글자 이상이어야 합니다.");
-                } else {
-                    document.getElementById("pw_message").style.visibility = "hidden";
-                    document.getElementById("isChkPassword").value = "Y";
-                }
-            });
-
-            $("#policyCheckbox").on('change', function() {
-                if (!this.checked) {
-                    alert('서비스 이용약관 동의는 필수입니다.');
-                    this.focus();
-                }
-            })
-
-            $("#confirmBtn").on('click', function(event) {
-                event.preventDefault();
-
-                var emailInput = document.getElementById('email');
-                var userNameInput = document.getElementById('userName');
-                var passwordInput = document.getElementById('password');
-
-                // All fields are valid
-                if (document.getElementById("isChkEmail") && userNameInput.value.length >= 2 && passwordInput.value.length >= 6 && policyCheckbox.checked) {
-                    $("#joinform").submit();
-                }
-
-                return false;
-
-            });
-        });
-    </script>
 </body>
+<script type='text/javascript'>
+    function validateURL(input){
+        var re = /^[a-zA-Z0-9-]{3,30}$/;
+        return re.test(input);
+    }
+  
+   $(document).ready(function() {
+     $("#joinInput").on('focusout', function() {
+         if (!validateURL(this.value)) {
+             document.getElementById("helpMsg").innerHTML = "회사 URL은 3~30글자의 영문자/숫자/하이픈(-)으로만 입력해야 합니다.";
+             document.getElementById("helpMsg").style.color = "red";
+         } else {
+             document.getElementById("helpMsg").innerHTML = "회사URL 주소는 관리자를 통해 확인할 수 있습니다.";
+             document.getElementById("helpMsg").style.color = "#623ad6";
+         }
+     });
+
+     $("#companyJoinBtn").on('click', function(event){
+          event.preventDefault();
+
+          var joinInputInput = document.getElementById('joinInput');
+
+          if (validateURL(joinInputInput.value)) {
+              $("#joinform").submit();
+          }
+
+           return false;
+
+       });
+  });
+
+</script>
 
 </html>

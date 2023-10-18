@@ -23,42 +23,18 @@ public class ScheduleServiceImpl implements ScheduleService{
 	public void insertSchedule(Map<String, Object> map) {
 		Map<String, String> paramMap = new HashMap<String, String>();
 //		 
-		paramMap.put("schedule_id", (String)map.get("scheduleId"));
-		paramMap.put("schedule_user_id", (String)map.get("scheduleUserId"));
-		paramMap.put("schedule_subject", (String)map.get("eventTitle"));
-		paramMap.put("schedule_start_date", (String)map.get("eventStartDate"));
-		paramMap.put("schedule_end_date", (String)map.get("eventEndDate"));
-		paramMap.put("schedule_category", (String)map.get("eventCategory"));
-		paramMap.put("schedule_place", (String)map.get("eventLocation"));
-		paramMap.put("schedule_content", (String)map.get("eventDescription"));
+		paramMap.put("scheduleId", (String)map.get("scheduleId"));
+		paramMap.put("scheduleUserId", (String)map.get("scheduleUserId"));
+		paramMap.put("scheduleSubject", (String)map.get("eventTitle"));
+		paramMap.put("scheduleStartDate", (String)map.get("eventStartDate"));
+		paramMap.put("scheduleEndDate", (String)map.get("eventEndDate"));
+		paramMap.put("scheduleCategory", (String)map.get("eventCategory"));
+		paramMap.put("schedulePlace", (String)map.get("eventLocation"));
+		paramMap.put("scheduleContent", (String)map.get("eventDescription"));
 		 
 		 mapper.insertSchedule(paramMap);
 		
 	}
 	
-	@Override
-    public void modifySchedule(Map<String, Object> map){
-        Map<String, String> paramMap = new HashMap<String, String>();
-        
-        paramMap.put("schedule_id", (String)map.get("scheduleId"));
-		paramMap.put("schedule_user_id", (String)map.get("scheduleUserId"));
-		paramMap.put("schedule_subject", (String)map.get("eventTitle"));
-		paramMap.put("schedule_start_date", (String)map.get("eventStartDate"));
-		paramMap.put("schedule_end_date", (String)map.get("eventEndDate"));
-		paramMap.put("schedule_category", (String)map.get("eventCategory"));
-		paramMap.put("schedule_place", (String)map.get("eventLocation"));
-		paramMap.put("schedule_content", (String)map.get("eventDescription"));
-
-        mapper.updateSchedule(paramMap);
-    }
-
-    @Override
-    public void deleteSchedule(Map<String, Object> map){
-        Map<String, String> paramMap = new HashMap<String, String>();
-        
-    	paramMap.put("schedule_user_id", (String)map.get("scheduleUserId"));
- 
-        mapper.deleteSchdule(paramMap);
-   }
 	
 }

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/documents")
 public class DocumentsController {
 	
-	@RequestMapping(value = "/documentslist", method = RequestMethod.GET)
+	@RequestMapping(value = "/documents-list", method = RequestMethod.GET)
 	public String documentslist() {
-		return "documents/documentslist";
+		return "documents/documents-list";
 	}
 }
