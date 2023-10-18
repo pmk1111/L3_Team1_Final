@@ -178,7 +178,6 @@
           var joinInputInput = document.getElementById('joinInput');
 
           if (validateURL(joinInputInput.value)) {
-              // Make sure to add a form with id 'joinform' in your HTML
               $("#joinform").submit();
           }
 

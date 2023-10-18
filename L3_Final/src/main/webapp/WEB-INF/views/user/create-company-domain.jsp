@@ -11,7 +11,7 @@
     <title>WidUs-join</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    <link rel="stylesheet" href="../resources/user/css/create-company1.css" />
+    <link rel="stylesheet" href="../resources/user/css/create-company-domain.css" />
     <!-- Favicons -->
     <link href="../resources/home/assets/img/favicon.png" rel="icon">
     <link href="../resources/home/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -27,7 +27,9 @@
     <link href="../resources/home/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
     <!-- Template Main CSS File -->
     <link href="../resources/home/assets/css/home.css" rel="stylesheet">
-    <!-- ======================================================== * Template Name: Arsha * Updated: Jul 27 2023 with Bootstrap v5.3.1 * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ * Author: BootstrapMade.com * License: https://bootstrapmade.com/license/ ======================================================== -->
+    <!-- ======================================================== * Template Name: Arsha * Updated: Jul 27 2023 with Bootstrap v5.3.1
+     * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ * Author: BootstrapMade.com *
+      License: https://bootstrapmade.com/license/ ======================================================== -->
     <style type="text/css">
         .companyName,
         .eid {
@@ -70,7 +72,7 @@
 
 <body>
     <jsp:include page="header.jsp"></jsp:include>
-
+	<form id="joinform" name="joinform" action="create-company-id" method="post">
     <div class="auth-section after-contets">
         <div class="accont-wrap">
             <div id="companyJoinMain" class="login-wrap">
@@ -83,7 +85,7 @@
                     </div>
                     <p class="url-tit">회사 URL</p>
                     <div class="url-wr">
-                        <span>https://</span> <input id="joinInput" type="text" class="join-input" autocomplete="off" placeholder="회사 URL" maxLength="30">
+                        <span>https://</span> <input id="companyDomain" name="companyDomain" type="text" class="companyDomain" autocomplete="off" placeholder="회사 URL" maxLength="30">
                         <span>.widus.team</span>
                     </div>
                     <p id="helpMsg" class="join-company-url" style="display: block;">
@@ -92,12 +94,15 @@
 
                 <div>
                     <b class="bTxt">사업자 등록번호</b><br> <input type="text" id="eid" class="eid" name="eid" maxLength="10" placeholder="-없이 10자리를 입력하세요" required>
-                    <p class="errMsg" id="email_message">오류메세지 영역</p>
+                    <p class="errMsg" id="eid_message">오류메세지 영역</p>
                 </div>
                 <button id="companyJoinBtn" class="btn-join"><strong>다음</strong></button>
             </div>
         </div>
     </div>
+	          		  <input type="hidden" id="isChkDomain" name="isChkDomain" value="N" />
+	          		  <input type="hidden" id="isChkEid" name="isChkEid" value="N" />
+    </form>
     <div id="signupFooterArea" style="display: block;">
         <!-- ======= Footer ======= -->
         <footer id="footer">
@@ -197,44 +202,56 @@
         }
 
         function validateEID(input) {
-          var re = /^\d+$/;
+          var re = /^\d{10}$/;
           return re.test(input);
        }
       
         $(document).ready(function() {
-            $("#joinInput").on('focusout', function() {
+            
+            $("#companyDomain").on('focusout', function() {
                 if (!validateURL(this.value)) {
                     document.getElementById("helpMsg").innerHTML = "회사 URL은 3~30글자의 영문자/숫자/하이픈(-)으로만 입력해야 합니다.";
                     document.getElementById("helpMsg").style.color = "red";
                 } else {
                     document.getElementById("helpMsg").innerHTML = "회사URL 주소는 관리자를 통해 확인할 수 있습니다.";
                     document.getElementById("helpMsg").style.color = "#623ad6";
+                    document.getElementById("isChkDomain").value = "Y";
                 }
             });
       
          $("#eid").on('focusout', function() { 
               if (!validateEID(this.value)) { 
-                  printErrMsg("email_message", "사업자 등록번호는 숫자로만 입력해야 합니다."); 
+                  printErrMsg("eid_message", "사업자 등록번호는 반드시 숫자 10자리로 입력해야 합니다."); 
               } else { 
-                  document.getElementById("email_message").style.visibility ="hidden"; 
+                  document.getElementById("eid_message").style.visibility ="hidden";
+                  document.getElementById("isChkEid").value = "Y";
               } 
          }); 
 
          $("#companyJoinBtn").on('click', function(event){
-              event.preventDefault();
+        	    event.preventDefault();
 
-              var companyNameInput = document.getElementById('companyName');
-              var joinInputInput = document.getElementById('joinInput');
-              var eidInput= document.getElementById('eid');
+        	    var companyNameInput = document.getElementById('companyName');
+        	    var companyDomain = document.getElementById('companyDomain');
+        	    var eidInput= document.getElementById('eid');
 
-              // All fields are valid
-              if (validateURL(companyNameInput.value) && validateURL(joinInputInput.value) && validateEID(eidInput.value)) {
-                  $("#joinform").submit();
-              }
+        	    if (!validateURL(companyNameInput.value)) {
+        	        console.log("Invalid company name");
+        	        return false;
+        	    }
 
-               return false;
+        	    if (!validateURL(companyDomain.value)) {
+        	        console.log("Invalid URL");
+        	        return false;
+        	    }
 
-           });
+        	    if (!validateEID(eidInput.value)) {
+        	        console.log("Invalid EID");
+        	        return false;
+        	    }
+
+        	   $("#joinform").submit();
+        	});
       });
 
 </script>

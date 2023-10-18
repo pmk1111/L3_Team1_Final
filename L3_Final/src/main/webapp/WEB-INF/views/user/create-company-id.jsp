@@ -5,13 +5,14 @@
 <html lang="en">
 
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>WidUs-join</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    <link rel="stylesheet" href="../resources/user/css/create-company2.css" />
+    <link rel="stylesheet" href="../resources/user/css/create-company-id.css" />
     <!-- Favicons -->
     <link href="../resources/home/assets/img/favicon.png" rel="icon">
     <link href="../resources/home/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -368,7 +369,7 @@
     	var sendForm = $("#joinform").serialize();
     	
     	 $.ajax({
-    	        url: "../user/sendMailAuthCode",
+    	        url: "../user/send-mail-auth-code",
     	        type: "POST",
     	        data: sendForm,
     	        async: false,
@@ -384,7 +385,7 @@
     	var sendForm = $("#joinform").serialize();
     	
 	   	 $.ajax({
-	   	        url: "../user/chkAuthCode",
+	   	        url: "../user/chk-auth-code",
 	   	        type: "POST",
 	   	        data: sendForm,
 	   	        async: false,
