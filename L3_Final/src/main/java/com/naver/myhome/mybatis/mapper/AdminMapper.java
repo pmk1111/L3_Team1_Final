@@ -15,27 +15,33 @@ public interface AdminMapper {
 
 	
 		
-		public List<Employee> findEmployee(String company_id);
+		public List<Employee> findEmployee(int companyId);
 
-		public int countEmployee(String company_id);
+		public int countEmployee(int companyId);
 
-		public List<Employee> stopEmployee(String company_id);
+		public List<Employee> stopEmployee(int companyId);
 
-		public int countStopEmployee(String company_id);
+		public int countStopEmployee(int companyId);
 
-		public int stopEmployeeStatus(int employeeNo);
+		public int stopEmployeeStatus(int employeeId);
 
-		public int noMoreAuth(int employeeNo);
+		public int noMoreAuth(int employeeId);
 
-		public int addAuth(int employeeNo);
+		public int addAuth(int employeeId);
 
-		public int useEmployeeStatus(int employeeNo);
+		public int useEmployeeStatus(int employeeId);
 
-		public int addEmployee(int user_id, String company_id, String company_invited);
+		public int addEmployee(int userId, int companyId);
 
-		public Company companyInfo(String company_id);
+		Company companyInfo(int companyId);
+		
+		public int updateName(int companyId,String companyName);
 
-		public int updateCompanyName(String company_id);
+		public int updateDomain(int companyId,String companyDomain);
+
+		public String companyName(int companyId);
+
+		public String companyDomain(int companyId);
 
 
 	}

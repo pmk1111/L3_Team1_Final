@@ -24,64 +24,82 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	//구성원 관리
-	@Override
-	public Company companyInfo(String company_id) {
-		
-		return dao.companyInfo(company_id);
-	}
+//	@Override
+//	public Company companyInfo(int companyId) {
+//		
+//		return dao.companyInfo(companyId);
+//	}
 	
 	@Override
-	public List<Employee> findEmployee(String company_id){
-		return dao.findEmployee(company_id);
+	public String companyName(int companyId) {
+		// TODO Auto-generated method stub
+		return dao.companyName(companyId);
 	}
 
 	@Override
-	public int countEmployee(String company_id) {
-		return dao.countEmployee(company_id);
+	public String companyDomain(int companyId) {
+		// TODO Auto-generated method stub
+		return dao.companyDomain(companyId);
+	}
+	
+	
+	@Override
+	public List<Employee> findEmployee(int companyId){
+		return dao.findEmployee(companyId);
 	}
 
 	@Override
-	public List<Employee> stopEmployee(String company_id) {
-		return dao.stopEmployee(company_id);
+	public int countEmployee(int companyId) {
+		return dao.countEmployee(companyId);
 	}
 
 	@Override
-	public int countStopEmployee(String company_id) {
-		return dao.countStopEmployee(company_id);
+	public List<Employee> stopEmployee(int companyId) {
+		return dao.stopEmployee(companyId);
 	}
 
 	@Override
-	public int stopEmployeeStatus(int employeeNo) {
-		return dao.stopEmployeeStatus(employeeNo);
+	public int countStopEmployee(int companyId) {
+		return dao.countStopEmployee(companyId);
 	}
 
 	@Override
-	public int noMoreAuth(int employeeNo) {
-		return dao.noMoreAuth(employeeNo);
+	public int stopEmployeeStatus(int employeeId) {
+		return dao.stopEmployeeStatus(employeeId);
 	}
 
 	@Override
-	public int addAuth(int employeeNo) {
-		return dao.addAuth(employeeNo);
+	public int noMoreAuth(int employeeId) {
+		return dao.noMoreAuth(employeeId);
 	}
 
 	@Override
-	public int useEmployeeStatus(int employeeNo) {
-		return dao.useEmployeeStatus(employeeNo);
+	public int addAuth(int employeeId) {
+		return dao.addAuth(employeeId);
 	}
 
 	@Override
-	public int addEmployee(int userid, String company_id, String company_invited) {
-				return dao.addEmployee(userid, company_id, company_invited);
+	public int useEmployeeStatus(int employeeId) {
+		return dao.useEmployeeStatus(employeeId);
+	}
+
+	@Override
+	public int addEmployee(int userId, int companyId) {
+				return dao.addEmployee(userId, companyId);
 	}
 
 	//회사정보 수정
 	@Override
-	public int updateCompanyName(String company_id) {
-		return dao.updateCompanyName(company_id);
+	public int updateName(int companyId,String companyName) {
+		return dao.updateName(companyId, companyName);
 	}
-	
-	
+
+	@Override
+	public int updateDomain(int companyId, String companyDomain) {
+		return dao.updateDomain(companyId, companyDomain);
+	}
+
+		
 
 
 }

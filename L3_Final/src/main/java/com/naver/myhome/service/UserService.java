@@ -23,13 +23,13 @@ public interface UserService {
 //	public int getSearchListCount(int index, String search_word);
 
 
-	public List<User> finduser(String company_invited);
+	public List<User> findUser(int companyInvited);
 
-	public int countuser( String company_invited);
+	public int countUser( int companyInvited);
 
-	public int approveuser(int userid);
+	public int approveUser(int userId);
 
-	public int rejectuser(int userid);
+	public int rejectUser(int userId);
 
 
 }

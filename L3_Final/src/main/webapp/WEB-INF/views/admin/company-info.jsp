@@ -148,15 +148,16 @@
                           <!-- content -->
                           <form id="formCompanySetting" method="POST" action = "../admin/companyinfo">
                         <div class="row">
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-6" id="name">
                             <label for="companyName" class="form-label">회사명</label>
                              <input
                               class="form-control"
                               type="text"
                               id="companyName"
                               name="companyName"
-                              value="${companyinfo.company_name}"
+                              value="${companyName}"
                               disabled="disabled"
+                              
                             />
                           
                         </div>
@@ -166,6 +167,7 @@
       					     <button type="submit" class="btn btn-secondary d-none" id="saveNameButton">저장</button>
        						 <button type="button" class="btn btn-secondary d-none" id="cancelNameButton">취소</button>
   					   </div>
+  					   <input type="hidden" name="updateType" id="updateType" value="updateName">
   					   
                        <div class="changepassword">
                        		<button type="button" class="changepwd" data-bs-toggle="modal" data-bs-target="#changeModal"> 비밀번호 변경</button>
@@ -187,8 +189,7 @@
                        				<!-- Modal Body -->
                        					<div class="modal-body">
                        					
-                       					<form method="post" action="/admin/companyinfo"
-                       						class="usedpassword">
+                       					<form method="post" action="/admin/companyinfo" class="usedpassword">
                        						
                        						<div class="form-group">
                        							<label for="usedpwd">비밀번호</label>
@@ -226,7 +227,7 @@
                               type="text"
                               id="companyDomain"
                               name="companyDomain"
-                              value= "${companyinfo.company_domain}"
+                              value= "${companyDomain}"
                               disabled="disabled"
                             />
 
@@ -237,7 +238,9 @@
       					     <button type="submit" class="btn btn-secondary d-none" id="saveButton">저장</button>
        						 <button type="button" class="btn btn-secondary d-none" id="cancelButton">취소</button>
   					   </div>
+  					   <input type="hidden" name="updateType" id="updateDomain" value="updateDomain">
   					   
+  					   <!-- 		이걸 넣을까 말까...
                          <div class="col-md-12">
                          	<div class="employeeParticipation">직원 참여 옵션</div>
                          	<br>
@@ -248,7 +251,7 @@
    							<input type="radio" id="participation2" name="employeeParticipation" value="2">
    								특정 도메인의 이메일로 가입시, 관리자 승인 없이도 바로 참여할 수 있도록 설정합니다.</label><br><br>
     			 		
-    					<!-- 		이걸 넣을까 말까...
+    					
     						<div class="row">
     						 <div class="col-md-6">  <!-- 왼쪽 컨텐츠 비워놓기 
     						</div>

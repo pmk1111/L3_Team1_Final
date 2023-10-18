@@ -78,6 +78,15 @@
     padding-left: 50px;}
     
     </style>
+    
+    <script>
+    function copy(){
+    	var copyText = document.getElementById("url_box");
+    	copyText.select();
+    	navigator.clipboard.writeText(copyText.value);
+    	alert("복사되었습니다");	
+    }
+    </script>
   </head>
 
   <body>
@@ -112,17 +121,17 @@
                           <p class="mb-4">
                           
                           <!-- content -->
-                          <form id="formInvite" method="POST" >
+                          <form id="formInvite" method="POST"  action="../admin/sendMail">
                         <div class="row">
                         <div class="mb-3 col-md-12">
                             <label for="companyName" class="form-label">전용 URL</label>
                              <p>전용 URL 주소를 전달하여 회사 직원들을 참여시킬 수 있습니다.
                              <div class="input_box">
                               <span>
-                                <input id="url_box" type="text" placeholder value="내꺼URL넣기"
+                                <input id="url_box" type="text"  value="${companyinfo.company_domain}"
                                 disabled style="width:320px; font-weight:bold; color:#307cff;">
                              
-                              <button class="btn_copy" title="Copy" type="button" value="내꺼url값"
+                              <button class="btn_copy" onclick="copy()" title="Copy" type="button" value="copy" id="copyBtn" 
       							style="border: none; background-color: white;">
                               	<img src="../resources/admin/image/copy.png" style="width:20px; height:20px;"/>
 							  </button>
@@ -143,6 +152,7 @@
                              <li>
                              <input
                               class="invite_box1"
+                              name ="invite_box1" 
                               type="text"
                               placeholder="example@widus.com"
                               maxlength="100"
@@ -152,6 +162,7 @@
                               <li>
                               <input
                               class="invite_box2"
+                              name ="invite_box1" 
                               type="text"
                               placeholder="example@widus.com"
                               maxlength="100"
@@ -161,6 +172,7 @@
                               <li>
                               <input
                               class="invite_box3"
+                              name ="invite_box1" 
                               type="text"
                               placeholder="example@widus.com"
                               maxlength="100"
@@ -170,6 +182,7 @@
                               <li>
                               <input
                               class="invite_box4"
+                              name ="invite_box1" 
                               type="text"
                               placeholder="example@widus.com"
                               maxlength="100"
