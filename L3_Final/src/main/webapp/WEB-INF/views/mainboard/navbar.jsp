@@ -79,16 +79,22 @@
 					<li>
 						<div class="dropdown-divider"></div>
 					</li>
-					<li><a class="dropdown-item" href="auth-login-basic.html">
-							<i class="bx bx-power-off me-2"></i> <span class="align-middle">Log
+					<li><form action="${pageContext.request.contextPath}/user/logout" method ="post"
+             style="margin-bottom:0px" name="logout">
+             <a class="dropdown-item" href="${pageContext.request.contextPath}/user/logout">
+							<i class="bx bx-power-off me-2"></i> <span id="logout"class="align-middle">Log
 								Out</span>
-					</a></li>
+					</a>
+					 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+					</form>
+					</li>
 				</ul></li>
 			<!--/ User -->
 		</ul>
 	</div>
 </nav>
 <script>
+
 	$(document).ready(function(){
 		const alarm = $('.alarm-icon').attr('src');
 		const chat = $('.chat-icon').attr('src');
@@ -114,5 +120,9 @@
 				    $('.chat-icon').attr('src', '../resources/mainboard/assets/img/chat.svg');
 				  }
 				);
+			$("#logout").click(function(event){
+				event.preventDefault();
+				$("form[name=logout]").submit();
+			})
 	}); // ready end
 </script>

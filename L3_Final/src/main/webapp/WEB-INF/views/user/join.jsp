@@ -10,7 +10,7 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
     <link rel="stylesheet" href="../resources/user/css/join.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Favicons -->
     <link href="../resources/home/assets/img/favicon.png" rel="icon">
     <link href="../resources/home/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -85,7 +85,7 @@
 <body>
     <jsp:include page="header.jsp"></jsp:include>
 
-    <form id="joinform" name="joinform">
+    <form id="joinform" name="joinform" action="joinProcess" method="post">
 	    <div class="auth-section after-contets">
 	        <div class="accont-wrap">
 	                <div class="account">개인회원</div>
@@ -99,7 +99,7 @@
 	                        <p class="errMsg" id="name_message">오류메세지 영역</p>
 	                    </div>
 	                    <div>
-	                        <b class="bTxt">비밀번호</b><br> <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="pass" required>
+	                        <b class="bTxt">비밀번호</b><br> <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="password" required>
 	                        <p class="errMsg" id="pw_message">오류메세지 영역</p>
 	                    </div>
 	
@@ -148,6 +148,7 @@
 	            </div>
 	        </div>
 	    </div>
+	     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     </form>
     
     <div id="signupFooterArea" style="display: block;">
@@ -235,6 +236,8 @@
     <!-- Template Main JS File -->
     <script src="../resources/home/assets/js/main.js"></script>
     <script type="text/javascript">
+   	 let token = $("meta[name='_csrf']").attr("content");
+   	 let header = $("meta[name='_csrf_header']").attr("content");
         // 오류 메세지 출력
         function printErrMsg(id, msg) {
             const element = document.getElementById(id);
@@ -308,13 +311,17 @@
     }
     
     function sendMailAuthCode(){
-    	var sendForm = $("#joinform").serialize();
+    	var email = $("#email").val();
     	
     	 $.ajax({
     	        url: "../user/send-mail-auth-code",
     	        type: "POST",
-    	        data: sendForm,
+    	        data: {recipientEmail:email},
     	        async: false,
+    	        beforeSend: function(xhr)
+    	        {   // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+    	           xhr.setRequestHeader(header, token);
+    	        },
     	        success: function(response) {
     	        	openModal();
     	        },
@@ -330,9 +337,13 @@
 	   	        url: "../user/chk-auth-code",
 	   	        type: "POST",
 	   	        data: sendForm,
+	   	     	beforeSend: function(xhr)
+ 	      	  {   // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+ 	           xhr.setRequestHeader(header, token);
+ 	        },
 	   	        async: false,
 	   	        success: function(data) {
-	   				debugger;
+	   				
 	   	        },
 	   	        error: function(error) {
 	            }

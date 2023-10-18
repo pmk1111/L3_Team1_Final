@@ -8,7 +8,7 @@ public interface UserService {
 	
 //	public int isId(String id, String pass);
 //
-//	public int insert(User user);
+	public int insert(User user);
 //
 //	public int isId(String id);
 //

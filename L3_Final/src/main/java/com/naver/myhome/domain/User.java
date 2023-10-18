@@ -12,20 +12,20 @@ import lombok.Data;
 
 @Data
 public class User implements UserDetails {
-   private int id;
-   private String email;
-   private String password;
-   private String pic;
-   private String name;
-   private String phone;
-   private String company_invited;
-   private String company_status;
-   private String security;
-   private Date create_at;
-   private int authNum;
-   
-   
-    @Override
+	private int id;
+	private String email;
+	private String password;
+	private String pic;
+	private String name;
+	private String phone;
+	private String company_invited;
+	private String company_status;
+	private String security;
+	private Date create_at;
+	private int authNum;
+	
+	
+	 @Override
      public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
         list.add(new SimpleGrantedAuthority(security));

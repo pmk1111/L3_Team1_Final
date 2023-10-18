@@ -22,7 +22,11 @@ public interface UserMapper {
 
 		public int rejectUser(int userId);
 
-	
+		public User isId(String UserEmail);
+
+		public User isEmail(String username);
+		
+		public int insert(User user);
 
 	}
 
