@@ -17,9 +17,15 @@
     <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
 
     <link href="../resources/project/css/projectboard/projectboard_Header.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap">
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
     <style>
+    	body {
+    		font-family: 'Nanum Gothic', sans-serif;
+    	}
         .row {
             justify-content: center;
         }
@@ -32,43 +38,27 @@
         }
 
         .project-list-card-body {
-            margin: 30px 20px 30px 20px;
-            max-height: 800px;
+            margin: 30px 20px 20px 20px;
         }
 
-        .search-create {
+        .search-proejct {
             display: flex;
             justify-content: space-between;
         }
 
-        .issue-search {
+        .project-search {
             border: 1px solid lightgrey;
             border-radius: 3px;
-            width: 350px;
-            height: 35px;
-            padding-left: 15px;
+            width: 300px;
+            height: 45px;
+            padding-left: 10px;
             color: #6a6192;
-            font-weight: 700
+            font-weight: 500;
+            font-size:13.5px
         }
 
-        .issue-search::placeholder {
+        .project-search::placeholder {
             color: #bababa;
-        }
-
-        .create-issue {
-            width: 100px;
-            height: 35px;
-            border: 2px solid #9F7AB0;
-            border-radius: 3px;
-            background-color: white;
-            color: #9F7AB0;
-        }
-
-        .create-issue:hover {
-            cursor: pointer;
-            background-color: #9F7AB0;
-            color: white;
-            transition: .3s;
         }
 
         .search-title {
@@ -77,18 +67,13 @@
             justify-content: space-between;
             box-sizing: border-box;
             width: 100%;
+            padding-bottom: 10px;
         }
 
         .search-result-title {
             font-size: 18px;
             font-weight: 700;
             margin-right: 10px
-        }
-
-        .all-issue-count {
-            font-size: 15px;
-            font-weight: 700;
-            color: #999;
         }
 
         .project-filter {
@@ -143,9 +128,14 @@
             font-weight: 600
         }
 
+        .jump {
+            margin-top: 20px;
+            border-bottom: 1px solid #555;
+        }
+
         /* 프로젝트 li */
         .card {
-            height: 800px
+            min-height: 800px
         }
 
         .project-info {
@@ -204,8 +194,8 @@
         }
 
         .project-area {
-            height: 70%;
             overflow: scroll;
+            max-height: 377px;
         }
 
         .project-area>ul {
@@ -217,6 +207,62 @@
             display: flex;
             align-items: center;
         }
+        
+        /* tabs */
+        .tabs {
+        	margin-top: 40px;
+        	font-weight: 600;
+        	font-size: 16px;
+        	margin-bottom: 45px !important;
+        }
+        
+        .part-tabs, .all-tabs {
+        	width:140px;
+        }
+        
+        .tabs li.is-active a {
+   			color: #996ead !important;
+   			border-bottom: 2px solid #996ead;
+        }
+        
+        .tabs li {
+        	color:#8f8f8f
+        }
+        
+        /* favorit-project*/
+        .favoritProject {
+        	padding-bottom:0px;
+        	position: relative;
+        }
+        
+		.favoritProject::before {
+		    content: "";
+		    position: absolute;
+		    bottom: 0;
+		    left: 1%;
+		    width: 98%;
+		    border-bottom: 1px solid #9c9c9c30;
+		}        
+        
+        
+        /* part-project */
+        .partProject {
+        	padding-top: 25px;
+        }
+        
+        /* 프로젝트 요소 */
+        .select-color {
+        	margin-left:10px !important;
+        }
+        .recent-modify {
+        	margin-right:10px;
+        }
+        
+		.star {
+		    transition: opacity 0.5s ease-in-out;
+		}        
+		
+		
     </style>
 </head>
 
@@ -247,49 +293,39 @@
                             <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4 project-list">
                                 <div class="card">
                                     <div class="card-body project-list-card-body">
-                                        <h3 style="margin-bottom: 30px; font-weight: 700;">프로젝트 리스트</h3>
+                                    	<div style="display:flex; justify-content:space-between; align-items: center;">
+                                        <h3 style="font-size:27px; font-weight: 800; color:#555">프로젝트</h3>
 
-                                        <form name="search-form" autocomplete="off" method="post">
-
-                                            <div class="search-create">
+										<div style="display:flex; align-items: center;">
+										<img src="../resources/project/img/projectboard/search.svg" style="margin-right:7px; height:30px; opacity: 0.4;">
+                                        <form name="project-search-form" autocomplete="off" method="post">
+                                            <div class="search-project">
                                                 <div class="search-area">
-                                                    <input type="text" class="issue-search" id="searchInput" name="searchText" placeholder="프로젝트명을 입력하세요">
-                                                    <input type="button" onclick="" value="검색">
-                                                </div>
-                                                <div class="project-filter">
-                                                    <img src="../resources/issue/img/filter.svg">
-                                                    <span>필터</span>
-                                                </div>
-                                                <div class="filter-dropdown" style="display: none;">
-                                                    <ul class="dropdown-items">
-                                                        <li><span>최신순</span></li>
-                                                        <li><span>오름차순(ㄱ~ㅎ)</span></li>
-                                                        <li><span>내림차순(ㅎ~ㄱ)</span></li>
-                                                    </ul>
+                                                    <input type="text" class="project-search" id="searchInput" name="searchText" placeholder="프로젝트명을 입력하세요">
                                                 </div>
                                             </div>
                                         </form>
-
-                                        <hr>
-                                        <ul class="nav nav-tabs nav-justified">
-                                            <li class="nav-item">
-                                                <a class="nav-link active">참여 중인 프로젝트</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link">전체 프로젝트</a>
-                                            </li>
-                                        </ul>
-
+                                        </div>
+                                        </div>
+                                        
+										<div class="tabs">
+										  <ul>
+										    <li class="part-tabs is-active"><a>참여 중</a></li>
+										    <li class="all-tabs"><a>전체 프로젝트</a></li>
+										  </ul>
+										</div>
+										
                                         <div class="personalProject">
                                             <div class="favoritProject">
 
                                                 <div class="search-title">
                                                     <span class="search-result-title">즐겨찾기
                                                         <span class="all-project-count"></span>
+                                                        <img id="favorit-arrow" src="../resources/project/img/arrow/chevron-down.svg">
                                                     </span>
                                                 </div>
 
-                                                <div class="project-area">
+                                                <div class="project-area favorit-project">
                                                     <ul class="all-project-list">
                                                         <c:forEach var="favoritProject" items="${favoritProjectList}">
                                                             <li class="list">
@@ -377,16 +413,17 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="partProject">
 
                                                 <div class="search-title">
                                                     <span class="search-result-title">참여 중
                                                         <span class="all-project-count"></span>
+                                                        <img id="part-arrow" src="../resources/project/img/arrow/chevron-down.svg">                                                       
                                                     </span>
                                                 </div>
 
-                                                <div class="project-area">
+                                                <div class="project-area part-project">
                                                     <ul class="all-project-list">
                                                         <c:forEach var="partProject" items="${partProjectList}">
                                                             <li class="list">
@@ -590,13 +627,70 @@
 
     <script>
         $(document).ready(function() {
-            $(".project-filter").click(function() {
-                if ($(".filter-dropdown").css("display") === "none") {
-                    $(".filter-dropdown").css('display', 'block').fadeIn(300);
-                } else {
-                    $(".filter-dropdown").css('display', 'none').fadeOut(300);
+            // tabs active
+            $('.part-tabs').click(function() {
+                $('.part-tabs').removeClass('is-active');
+                $(this).addClass('is-active');
+                
+            });
+            
+            // list-dropdown
+            $('#favorit-arrow').click(function() {
+            	  var src = $(this).attr('src');
+
+            	  if (src == '../resources/project/img/arrow/chevron-down.svg') {
+            	    $(this).attr('src', '../resources/project/img/arrow/chevron-up.svg');
+            	    $('.favoritProject').css('padding-bottom','25px');
+            	    $('.favorit-project').slideUp(500);
+            	    
+            	  } else if (src == '../resources/project/img/arrow/chevron-up.svg') {
+            	    $(this).attr('src', '../resources/project/img/arrow/chevron-down.svg');
+            	    $('.favoritProject').css('padding-bottom',0);
+            	    $('.favorit-project').slideDown(500);
+            	  }
+            });
+            
+            // list-dropdown
+            $('#part-arrow').click(function() {
+            	  var src = $(this).attr('src');
+
+            	  if (src == '../resources/project/img/arrow/chevron-down.svg') {
+            	    $(this).attr('src', '../resources/project/img/arrow/chevron-up.svg');
+            	    $('.partProject').css('padding-bottom','25px');
+            	    $('.part-project').slideUp(500);
+            	    
+            	  } else if (src == '../resources/project/img/arrow/chevron-up.svg') {
+            	    $(this).attr('src', '../resources/project/img/arrow/chevron-down.svg');
+            	    $('.partProject').css('padding-bottom',0);
+            	    $('.part-project').slideDown(500);
+            	  }
+            });
+            
+            $(".star").click(function(){
+                var $this = $(this);
+                var $targetList = $this.closest('li'); // 가장 가까운 상위의 li 찾기
+
+                $targetList.hide();
+
+                setTimeout(function() {
+                    $targetList.fadeIn(500);
+                }, 500);
+            })
+            
+            $(".star").hover(function() {
+                var src = $(this).attr("src");
+
+                if (src === "../resources/project/img/projectboard/icon_star.png") {
+                    $(this).attr("src", "../resources/project/img/projectboard/icon_star_hover.png");
+                }
+            }, function() {
+                var src = $(this).attr("src");
+
+                if (src === "../resources/project/img/projectboard/icon_star_hover.png") {
+                    $(this).attr("src", "../resources/project/img/projectboard/icon_star.png");
                 }
             });
+
         });
     </script>
 

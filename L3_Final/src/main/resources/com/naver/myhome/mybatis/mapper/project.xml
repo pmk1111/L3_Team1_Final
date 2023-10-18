@@ -12,20 +12,21 @@
 	</insert>
 
     <select id="getAllProjectList" resultType="com.naver.myhome.domain.Project">
-        SELECT PROJECT.*, ROUND((SYSDATE-CREATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = PROJECT.ID ) AS TEAMCOUNT
+        SELECT PROJECT.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = PROJECT.ID ) AS TEAMCOUNT
         FROM PROJECT
         ORDER BY CREATED_AT DESC
     </select>
     
     <select id="getFavoritProjectList" resultType="com.naver.myhome.domain.Project">
-        SELECT P.*, ROUND((SYSDATE-CREATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = P.ID ) AS TEAMCOUNT
+        SELECT P.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = P.ID ) AS TEAMCOUNT
         FROM PROJECT P
         JOIN FAVORITES F ON P.ID = F.PROJECT_ID
         WHERE F.EMPLOYEE_ID = #{employeeId}
+        ORDER BY CREATED_AT DESC
     </select>
     
     <select id="getPartProjectList" resultType="com.naver.myhome.domain.Project">
-		SELECT p.*, ROUND((SYSDATE-CREATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = P.ID ) AS TEAMCOUNT
+		SELECT p.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = P.ID ) AS TEAMCOUNT
 		FROM PROJECT P
 		JOIN TEAM T ON P.ID = T.PROJECT_ID
 		WHERE T.EMPLOYEE_ID = #{employeeId}
@@ -33,6 +34,7 @@
 		    SELECT F.PROJECT_ID
 		    FROM FAVORITES F
 		)
+		ORDER BY CREATED_AT DESC
     </select>
 
     <select id="getDetail" parameterType="int" resultType="Project">

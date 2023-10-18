@@ -42,41 +42,41 @@ $(document).ready(function() {
 			        success: function(response) {
 			            console.log(response);
 			            if(response == -1) {
-			                // 즐겨찾기 삭제 성공 시
+			                
 			                $this.attr('src', '../resources/project/img/projectboard/icon_star.png');
 			
-			                // 해당 프로젝트 아이템을 '즐겨찾기' 리스트에서 제거하고 '참여 중인 프로젝트' 리스트에 추가
 			                var listItem = $this.closest('.list');
+			                listItem.hide();
 			                $('.partProject .all-project-list').append(listItem);
+			                listItem.fadeIn(500);
 			
 			            } else {
-			                // 즐겨찾기 추가 성공 시
 			                $this.attr('src', '../resources/project/img/projectboard/icon_star_on.png');
 			
-			                // 해당 프로젝트 아이템을 '참여 중인 프로젝트' 리스트에서 제거하고 '즐겨찾기' 리스트에 추가
 			                var listItem = $this.closest('.list');
-			                $('.favoritProject .all-project-list').append(listItem);
-			            }
-			        },
-			        error: function(xhr, status, error) {
-			           console.error('Error:', error);
-			       }
+			                
+						    listItem.hide();
+						    $('.favoritProject .all-project-list').append(listItem);
+						    listItem.fadeIn(500);
+						}
+					},
+					error: function(xhr, status, error) {
+					   console.error('Error:', error);
+				   }
 			   });
 			});
-
+			
 			$(".star").hover(function() {
-			    var $parent = $(this).parent();
 			    var src = $(this).attr("src");
 			
-			    if (src === "../project/img/projectboard/icon_star.png") {
-			    	$(this).find(".star").attr("src", "../project/img/projectboard/icon_star_hover.png");
+			    if (src === "../resources/project/img/projectboard/icon_star.png") {
+			        $(this).attr("src", "../resources/project/img/projectboard/icon_star_hover.png");
 			    }
 			}, function() {
-			    var $parent = $(this).parent();
 			    var src = $(this).attr("src");
 			
-			    if (src === "../project/img/projectboard/icon_star_hover.png") {
-			   		$(this).find(".star").attr("src", "../project/img/projectboard/icon_star.png");
+			    if (src === "../resources/project/img/projectboard/icon_star_hover.png") {
+			        $(this).attr("src", "../resources/project/img/projectboard/icon_star.png");
 			    }
 			});
 

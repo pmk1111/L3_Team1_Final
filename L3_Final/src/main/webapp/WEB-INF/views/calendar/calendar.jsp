@@ -89,7 +89,6 @@
 
             });
 
-
             calendar.render();
         });
     </script>
