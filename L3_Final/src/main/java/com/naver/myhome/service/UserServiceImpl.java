@@ -48,11 +48,11 @@ public class UserServiceImpl implements UserService {
 //		return 0;
 //	}
 //
-//	@Override
-//	public int insert(User user) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
+	@Override
+	public int insert(User user) {
+		
+		return dao.insert(user);
+	}
 //
 //	@Override
 //	public int isId(String id) {

@@ -45,11 +45,17 @@
 			별칭 -->
 		select * from user where id = #{id}
 	</select>
+	
+	<select id="isEmail" resultType="user" parameterType="String"><!-- Member class를 
+			별칭 -->
+		select * from users where  email = #{user_email}
+	</select>
 
 	<insert id="insert" parameterType="user">
-		insert into user
+		insert into users
+		(id,email,password,name,company_invited)
 		values
-		(#{id},#{password},#{name},#{age},#{gender},#{email})
+		(user_id.nextval,#{email},#{password},#{name},1)
 	</insert>
 	
 	<update id="update" parameterType="user">
