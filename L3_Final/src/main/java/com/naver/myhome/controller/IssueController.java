@@ -21,7 +21,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -78,11 +80,11 @@ public class IssueController {
 	@ResponseBody
 	@GetMapping("/getFilteredIssue")
 	public List<Issue> getFilteredIssueList(
-			@RequestParam(name = "issueType", required = false) String issueType,
+			@RequestParam(name = "issueStatus", required = false) String issueStatus,
 			@RequestParam(name = "issuePriority", required = false) String issuePriority) {
 
 
-		List<Issue> filteredIssues = issueService.getFilteredIssueList(issueType, issuePriority);
+		List<Issue> filteredIssues = issueService.getFilteredIssueList(issueStatus, issuePriority);
 		return filteredIssues;
 	}
 
@@ -101,7 +103,7 @@ public class IssueController {
 		// issue_id는 다음 시퀀스 번호를 가져오니, 
 		// select issue_id.nextval from dual로 가져온 값을 id에 할당
 
-		issue.setIssue_id(issueId);
+		issue.setId(issueId);
 		issueService.createIssue(issue);
 		logger.info(issue.toString());
 
@@ -168,31 +170,31 @@ public class IssueController {
 
 		return fileDBName;
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/down")
 	public byte[] BoardFileDown(String saveName,
-								HttpServletRequest request,
-								String originalName,
-								HttpServletResponse response) throws Exception{
-			
+			HttpServletRequest request,
+			String originalName,
+			HttpServletResponse response) throws Exception{
+
 		String sFilePath = saveFolder + saveName;
-		
+
 		File file = new File(sFilePath);
-		
+
 		byte[] bytes = FileCopyUtils.copyToByteArray(file);
-		
+
 		String sEncoding = new String(originalName.getBytes("utf-8"), "ISO-8859-1");
-		
+
 		response.setHeader("Content-Disposition", "attachment;filename=" + sEncoding);
-		
+
 		response.setContentLength(bytes.length);
 		return bytes;
 	}
 
 
 
-	//테스트용 코드
+	//=====테스트용 코드
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public ModelAndView fileupload(ModelAndView mv, MultipartFile[] uploadfiles) {
 
@@ -242,7 +244,9 @@ public class IssueController {
 
 	@PostMapping("/statusUpdate")
 	@ResponseBody
-	public Map<String, Object> statusUpdate(@RequestParam int issueId, @RequestParam String status, @RequestParam String selectedUserName) {
+	public Map<String, Object> statusUpdate(@RequestParam int issueId, 
+			@RequestParam String status, 
+			@RequestParam String selectedUserName) {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			issueService.updateStatus(issueId, status, selectedUserName);
@@ -255,23 +259,54 @@ public class IssueController {
 	}
 
 
-	@PostMapping("/issueUpdate")
-	public String issueUpdate(Issue issue, @RequestParam("num") int num, HttpServletRequest request, RedirectAttributes rattr){
+	@PostMapping("/issue-update")
+	public String issueUpdate(Issue issue, @RequestParam("num") int num, 
+			@RequestParam("check") String check,
+			HttpServletRequest request, RedirectAttributes rattr,
+			MultipartFile[] uploadfiles) throws Exception{
 		String url = "";
-		issue.setIssue_id(num);
+		issue.setId(num);
 		int result = issueService.issueUpdate(issue);
 
 		if(result==0) {
 			logger.info("게시판 수정 실패");
 		} else {
+			if(check.equals("true")) {
+				fileService.updateDeleteYn(num);
+				List<Files> fileList = new ArrayList<>();
+
+				for(MultipartFile file : uploadfiles) {
+					Files files = new Files();
+					if(file.getSize()>0) {
+						files.setFile_size(file.getSize());
+						logger.info("업로드 파일: " + file.getOriginalFilename());
+
+						files.setIssue_id(num);
+						files.setOriginal_name(file.getOriginalFilename());
+
+						String saveName = fileDBName(file.getOriginalFilename(), saveFolder);
+						files.setSave_name(saveName);
+
+						logger.info("업로드한 파일 사이즈 = " + file.getSize());
+						logger.info("업로드 경로 = " + saveFolder);
+
+						file.transferTo(new File(saveFolder + saveName));
+						fileList.add(files);
+					}
+				}
+				logger.info("파일리스트 크기 = " + fileList.size());
+				if(!fileList.isEmpty()) {
+					fileService.uploadFile(fileList);
+				}
+			}
 			logger.info("게시판 수정 완료");
 			url = "redirect:issue-detail";
-			rattr.addAttribute("num", issue.getIssue_id());
+			rattr.addAttribute("num", issue.getId());
 		}
 		return url;
 	}
 
-	@PostMapping("/issueDelete")
+	@PostMapping("/issue-delete")
 	@ResponseBody
 	public int deleteIssue(@RequestParam int issueId) {
 		try {

@@ -4,14 +4,14 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.FileMapper">
 	<sql id="fileColumns">
-		file_id,
+		id,
 		issue_id,
 		original_name,
 		save_name,
 		file_size,
 		delete_yn,
-		created_date,
-		deleted_date
+		created_at,
+		deleted_at
 	</sql>
 
   <insert id="uploadFile" parameterType="list">
@@ -43,41 +43,33 @@
 		FROM files
 		WHERE delete_yn = 0
 		AND issue_id = #{num}
-		ORDER BY file_id
+		ORDER BY id
 	</select>
-
-
-	<!-- 파일 리스트 조회 -->
-	<select id="findAllByIds" parameterType="list"
-		resultType="com.naver.myhome.domain.Files">
+	
+<!-- 	<select id="getDeleteFileList" resultType="com.naver.myhome.domain.Files">
 		SELECT
-		<include refid="fileColumns" />
-		FROM
-		tb_file
-		WHERE
-		delete_yn = 0
-		AND id IN
-		<foreach item="id" collection="list" open="(" separator=","
-			close=")">
-			#{id}
-		</foreach>
-		ORDER BY
-		id
-	</select>
-
+		*
+		FROM files
+		WHERE delete_yn = 1
+	</select> -->
 
 	<!-- 파일 삭제 -->
-	<delete id="deleteAllByIds" parameterType="list">
+	<update id="updateDeleteYn">
 		UPDATE files
 		SET
 		delete_yn = 1
-		, deleted_date = NOW()
-		WHERE
-		id IN
-		<foreach item="id" collection="list" open="(" separator=","
-			close=")">
-			#{id}
-		</foreach>
+		, deleted_at = SYSDATE
+		WHERE issue_id = #{num}
+	</update>
+	
+	<select id="getDeleteFileList" resultType="String">
+		SELECT save_name FROM files
+		WHERE delete_yn = 1
+	</select>
+	
+	<delete id="deleteFile">
+		DELETE from files
+		where save_name = #{filename}
 	</delete>
 
 </mapper>

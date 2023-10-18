@@ -47,9 +47,9 @@ public class IssueServiceImpl implements IssueService{
 	}
 	
 	@Override
-	public List<Issue> getFilteredIssueList(String issueType, String issuePriority) {
+	public List<Issue> getFilteredIssueList(String issueStatus, String issuePriority) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("issueType", issueType);
+		map.put("issueStatus", issueStatus);
 		map.put("issuePriority", issuePriority);
 		
 		return mapper.getFilteredIssueList(map);

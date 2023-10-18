@@ -69,14 +69,14 @@
 
                   <div class="card-body issue-card">
                     <div class="issue-location">
-                      프로젝트 / 테스트 프로젝트 / ${issuedata.issue_subject}
+                      프로젝트 / 테스트 프로젝트 / ${issuedata.subject}
                     </div>
                     <hr class="issue-hr">
 
                     <div class="issue-write-info">
                     	<div class="issue-writer-date">
                       	<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto user-img" />
-                      	<span class="issue-writer">${issuedata.create_user}</span> <sup class="issue-create">${issuedata.issue_created}</sup>
+                      	<span class="issue-writer">${issuedata.create_user}</span> <sup class="issue-create">${issuedata.created_at}</sup>
                       </div>
                       
                       
@@ -103,14 +103,14 @@
                       
                       
                     </div>
-                    <h3 class="issue-title">${issuedata.issue_subject }</h3>
+                    <h3 class="issue-title">${issuedata.subject }</h3>
                     <hr class="issue-hr">
 
                     <div class="issue-info">
                       <div class="issue-status-area">
                         <span>상태</span>
                         <div class="status-select">
-                        	<input type="hidden" class="this-status" value="${issuedata.issue_status}">
+                        	<input type="hidden" class="this-status" value="${issuedata.status}">
                           <button type="button" class="status-btn" data-value="To Do">To Do</button>
                           <button type="button" class="status-btn" data-value="In Progress">In Progress</button>
                           <button type="button" class="status-btn" data-value="Resolved">Resolved</button>
@@ -118,7 +118,7 @@
                         </div>
                       </div>
                       <div class="issue-assigned-area">
-                        <span>담당자</span><span class="issue-assigned">${issuedata.issue_assigned}</span>
+                        <span>담당자</span><span class="issue-assigned">${issuedata.assigned}</span>
                       </div>
                       <hr class="issue-hr">
 
@@ -139,7 +139,7 @@
                         ✅ 프로젝트 관리자로 추가 지정할 사람은 없나요?<br>
                         <br>
                         프로젝트 규칙 만드는 Tip 영상으로 확인하기 ▶ https://youtu.be/DwgWSLsLgpU -->
-                        <pre>${issuedata.issue_content}</pre>
+                        <pre>${issuedata.content}</pre>
                       </div>
                      <!--  <hr class="issue-hr"> -->
 											
@@ -184,7 +184,7 @@
     															</c:otherwise>
 																</c:choose>	
 																
-																<input type="submit" class="file-item" data-value="${f.file_id}" value="${f.original_name}"> 
+																<input type="submit" class="file-item" data-value="${f.id}" value="${f.original_name}"> 
 															</form>
 															</div>
 														</c:forEach>
@@ -217,7 +217,7 @@
                       <div class="comments create-comment" style="border-bottom: 1px solid lightgrey">
                         <img src="../resources/mainboard/assets/img/avatars/1.png" class="w-px-40 h-auto comment-writer-img" />
                         <div class="comment-input-submit">
-                        	<textarea id="comment-textarea" class="comment-input" name="comment_content" maxlength="500" rows="10" cols="50"
+                        	<textarea id="comment-textarea" class="comment-input" name="content" maxlength="500" rows="10" cols="50"
                           	placeholder="댓글 내용을 입력하세요."></textarea>
                         	<button type="button" class="comment-submit-btn">댓글 작성</button>
 												</div>
@@ -326,6 +326,44 @@
 
 
 <script type="text/javascript">
+const existingFileNames = [];
+$('.file-item').each(function() {
+    existingFileNames.push($(this).val());
+});
+console.log('현재 첨부된 파일 목록:', existingFileNames);
+
+$('.add-file').on('change', function() {
+   
+  // 새로운 파일 목록을 가져옴
+    const newFileNames = [];
+    const files = this.files;
+    for (let i = 0; i < files.length; i++) {
+        newFileNames.push(files[i].name);
+    }
+
+    // 새로운 파일 목록을 콘솔에 출력
+    console.log('새로운 파일 목록:', newFileNames);
+
+    // 첨부된 파일과 기존 파일 목록을 비교하여 변경 여부 확인
+    const hasFileNameChanged = !arraysEqual(newFileNames, existingFileNames);
+
+    if (hasFileNameChanged) {
+        $('.check-file-changed').val('true');
+    } else {
+        $('.check-file-changed').val('false');
+    }
+});
+
+// 배열 비교 함수
+function arraysEqual(arr1, arr2) {
+    if (arr1.length !== arr2.length) return false;
+    for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) return false;
+    }
+    return true;
+}
+
+
 </script>
   </body>
 </html>

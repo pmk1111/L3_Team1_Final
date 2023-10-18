@@ -11,6 +11,10 @@ public interface FileService {
 	
 	public List<Files> getFileList(int num);
 	
-	public void deleteFile(int fileId);
+	public void updateDeleteYn(int num);
+	
+	public List<String> getDeleteFileList();
+	
+	public void deleteFile(String filename);
 
 }
