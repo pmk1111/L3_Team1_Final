@@ -151,17 +151,17 @@
 
 .modal-content {
 	padding: 15px 0 0 0;
-	position: relative;
+	position: relative !important;
 	z-index: 1;
 	background: #fff;
 	border: 1px solid #777;
 	box-sizing: border-box;
 	box-shadow: 20px 20px 30px rgba(0, 0, 0, .2);
 	border-radius: 10px;
-	width: 434px;
+	width: 434px !important;
 	height: auto;
-	margin: 0 auto;
-	margin-top: 7%;
+	margin: 0 auto !important;
+	margin-top: 7% !important;
 	text-align: center;
 }
 

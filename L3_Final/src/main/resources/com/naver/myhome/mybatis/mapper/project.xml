@@ -3,61 +3,66 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.ProjectMapper">
 
-    <insert id="Insert">
-        insert into project (TITLE, SUBTITLE)
-        values (#{TITLE}, #{SUBTITLE})
-    </insert>
+	<insert id="Insert" parameterType="com.naver.myhome.domain.Project">
+	    <selectKey keyProperty="ID" resultType="int" order="BEFORE">
+	        SELECT PROJECT_ID.NEXTVAL FROM DUAL
+	    </selectKey>
+	    	INSERT INTO PROJECT (ID, TITLE, SUBTITLE)
+	    	VALUES (#{ID}, #{TITLE}, #{SUBTITLE})
+	</insert>
 
     <select id="getAllProjectList" resultType="com.naver.myhome.domain.Project">
-        select project.*, ROUND((sysdate-created_at)*24*60) as CURRENTTIME
-        from project
-        ORDER BY created_at DESC
+        SELECT PROJECT.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = PROJECT.ID ) AS TEAMCOUNT
+        FROM PROJECT
+        ORDER BY CREATED_AT DESC
     </select>
     
     <select id="getFavoritProjectList" resultType="com.naver.myhome.domain.Project">
-        SELECT p.*
-        FROM project p
-        JOIN favorites f ON p.num = f.project_num
-        WHERE f.employee_num = #{employeeNum}
+        SELECT P.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = P.ID ) AS TEAMCOUNT
+        FROM PROJECT P
+        JOIN FAVORITES F ON P.ID = F.PROJECT_ID
+        WHERE F.EMPLOYEE_ID = #{employeeId}
+        ORDER BY CREATED_AT DESC
     </select>
     
     <select id="getPartProjectList" resultType="com.naver.myhome.domain.Project">
-		SELECT p.*
-		FROM project p
-		JOIN team t ON p.num = t.project_num
-		WHERE t.employee_num = 1
-		AND p.num NOT IN (
-		    SELECT f.project_num 
-		    FROM favorites f 
+		SELECT p.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = P.ID ) AS TEAMCOUNT
+		FROM PROJECT P
+		JOIN TEAM T ON P.ID = T.PROJECT_ID
+		WHERE T.EMPLOYEE_ID = #{employeeId}
+		AND P.ID NOT IN (
+		    SELECT F.PROJECT_ID
+		    FROM FAVORITES F
 		)
+		ORDER BY CREATED_AT DESC
     </select>
 
     <select id="getDetail" parameterType="int" resultType="Project">
-        select *
-        from project
-        where NUM = #{NUM}
+        SELECT *
+        FROM PROJECT
+        WHERE ID = #{id}
     </select>
 
     <update id="updateColor">
-        update project
-        set COLOR = #{color}
-        where NUM = #{num}
+        UPDATE PROJECT
+        SET COLOR = #{color}
+        WHERE ID = #{id}
     </update>
 
     <select id="checkFavorite" resultType="integer">
-        select num
-        from favorites
-        where project_num = #{projectNum} AND employee_num = #{employeeNum}
+        SELECT ID
+        FROM FAVORITES
+       	WHERE PROJECT_ID = #{projectId} AND EMPLOYEE_ID = #{employeeId}
     </select>
 
     <insert id="addFavorite">
-        insert into favorites (employee_num, project_num)
-        values (#{employeeNum}, #{projectNum})
+        INSERT INTO FAVORITES (EMPLOYEE_ID, PROJECT_ID)
+        VALUES (#{employeeId}, #{projectId})
     </insert>
 
     <delete id="removeFavorite">
-        DELETE FROM favorites
-        WHERE employee_num = #{employeeNum} AND project_num = #{projectNum}
+        DELETE FROM FAVORITES
+        WHERE EMPLOYEE_ID = #{employeeId} AND PROJECT_ID = #{projectId}
     </delete>
 
 </mapper>
