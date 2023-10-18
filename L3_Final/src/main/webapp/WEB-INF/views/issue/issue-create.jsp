@@ -15,7 +15,8 @@
 						<span>프로젝트</span><sup>*</sup>
 					</div>
 					<div class="issue-create-custom-select">
-    				<input type="text" class="issue-create-custom-selected project-name" name="project_name" value="" readonly>
+
+    				<input type="text" class="issue-create-custom-selected project-name" name="project_id" value="">
     				<div class="issue-create-custom-options">
         		<div class="issue-create-custom-option">전사관리</div>
         		<div class="issue-create-custom-option">버그수정</div>
@@ -31,7 +32,8 @@
 						<span>유형</span><sup>*</sup>
 					</div>
 					<div class="issue-create-custom-select">
-						<input type="text" class="issue-create-custom-selected issue-type" name="issue_type" value="" readonly>
+
+						<input type="text" class="issue-create-custom-selected issue-type" name="type" value="" readonly>
 						<div class="issue-create-custom-options">
 							<div class="issue-create-custom-option">에픽</div>
 							<div class="issue-create-custom-option" >작업</div>
@@ -46,7 +48,8 @@
 						<span>상태</span><sup>*</sup>
 					</div>
 					<div class="issue-create-custom-select">
-						<input type="text" class="issue-create-custom-selected issue-status" name="issue_status" value="" readonly>
+
+						<input type="text" class="issue-create-custom-selected issue-status" name="status" value="" readonly>
 						<div class="issue-create-custom-options">
 							<div class="issue-create-custom-option">To Do</div>
 							<div class="issue-create-custom-option">In Progress</div>
@@ -59,19 +62,21 @@
 
 
 				<div class="issue-title-wrap">
-					<input type="text" class="issue-title-area" name="issue_subject"
+
+					<input type="text" class="issue-title-area" name="subject"
 						placeholder="제목을 입력하세요.">
 				</div>
 
 				<div class="issue-content-wrap">
-					<textarea class="issue-content" name="issue_content" placeholder="내용을 입력하세요."></textarea>
+					<textarea class="issue-content" name="content" placeholder="내용을 입력하세요."></textarea>
+
 				</div>
 
 				<div class="issue-reporter-wrap">
 					<div class="text">
 						<span>보고자</span><sup>*</sup>
 					</div>
-					<input class="issue-reporter" type="text" name="issue_reporter">
+					<input class="issue-reporter" type="text" name="reporter">
 				</div>
 
 				<div class="issue-assigned-wrap">
@@ -79,7 +84,7 @@
 						<span>담당자</span><sup>*</sup>
 					</div>
 					<div class="issue-create-custom-select">
-						<input type="text" class="issue-create-custom-selected issue-assigned" name="issue_assigned" value="" readonly>
+						<input type="text" class="issue-create-custom-selected issue-assigned" name="assigned" value="" >
 						<div class="issue-create-custom-options">
 							<div class="issue-create-custom-option" data-value="전사관리">직원1</div>
 							<div class="issue-create-custom-option" data-value="버그수정">직원2</div>
@@ -93,7 +98,7 @@
 						<span>중요도</span><sup>*</sup>
 					</div>
 					<div class="issue-create-custom-select">
-						<input type="text" class="issue-create-custom-selected issue-priority" name="issue_priority" value="" readonly>
+						<input type="text" class="issue-create-custom-selected issue-priority" name="priority" value="" readonly>
 						<div class="issue-create-custom-options">
 							<div class="issue-create-custom-option">low</div>
 							<div class="issue-create-custom-option">middle</div>
@@ -111,7 +116,7 @@
     		</div>
     		
     		<label class="custom-file-upload">파일첨부
-    			<input type="file" class="add-file" name="uploadFiles" multiple>
+    			<input type="file" class="add-file" name="uploadfiles" multiple>
     		</label>
 			</div>
 			<div class="uploaded-files"></div>

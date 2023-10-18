@@ -16,13 +16,13 @@ public interface IssueService {
 
 	public List<Issue> getIssueList();
 	
-	public List<Issue> getFilteredIssueList(String issueType, String issuePriority);
+	public List<Issue> getFilteredIssueList(String issueStatus, String issuePriority);
 
 //	public List<Project> getMyProjectList(String userId);
 	
 	public List<Issue> searchIssues(String searchText);
 	
-	public void issueAdd(Issue issue);
+	public void createIssue(Issue issue);
 
 	public Issue getIssueDetail(int num);
 	

@@ -43,7 +43,7 @@ public class MyDashboardController {
 		this.memoService = memoService;
 	}
 	
-	@GetMapping("/mydashboard")
+	@GetMapping("/my-dashboard")
 	public ModelAndView myDashBoard(ModelAndView mv, HttpServletRequest request, Principal principal) {
 		
 //		시큐리티 적용 전 세션에서 id 가져오기
@@ -58,7 +58,7 @@ public class MyDashboardController {
 		List<Issue> mywork = issueService.getMyWork(toDo);
 		List<Memo> memolist = memoService.getMemoContent(userId);
 		
-		mv.setViewName("mainboard/mydashboard");
+		mv.setViewName("mainboard/my-dashboard");
 		mv.addObject("memolist", memolist);
 		mv.addObject("issuelist", mywork);		
 		return mv;
@@ -73,7 +73,7 @@ public class MyDashboardController {
 		return issuecount;
 	}
 	
-	@PostMapping("/mywork")
+	@GetMapping("/mywork")
 	@ResponseBody
 	public List<Issue> getMyWork(@RequestParam String status){
 		List<Issue> mywork = issueService.getMyWork(status);
@@ -81,9 +81,9 @@ public class MyDashboardController {
 		return mywork;
 	}
 	
-	@PostMapping("/memoSave")
+	@GetMapping("/saveMemoContent")
 	@ResponseBody
-	public int memoSave(Memo memo, @RequestParam("memoTxt") String memoTxt) {
+	public int saveMemoContent(Memo memo, @RequestParam("memoTxt") String memoTxt) {
 		List<Memo> memoList = memoService.getMemoContent(userId);
 		String currentMemo = memo.getMemo_content();
 		

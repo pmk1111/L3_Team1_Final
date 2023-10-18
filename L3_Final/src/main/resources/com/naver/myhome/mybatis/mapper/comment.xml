@@ -6,11 +6,11 @@
 	<select id="getCommentList" resultType="com.naver.myhome.domain.Comment">
 	select * from comments
 	where issue_id = #{issue_id}
-	order by comment_id
+	order by id
 </select>
 
 	<insert id="commentAdd">
-		<selectKey order="BEFORE" keyProperty="comment_id" resultType="int">
+		<selectKey order="BEFORE" keyProperty="id" resultType="int">
 		select comment_id.nextval from dual
 		</selectKey>
 <!-- 	insert into comments
@@ -21,17 +21,17 @@
 	 
 	 	insert into comments
 	 	values
-	 	(#{comment_id}, #{issue_id}, SYSDATE, '홍길동', #{comment_content})
+	 	(#{id}, #{issue_id}, SYSDATE, 1, #{content})
 	</insert>
 
 	<update id="commentUpdate" parameterType="comment">
 		update comments
-		set comment_content = #{comment_content}
-		where comment_id = #{comment_id}
+		set content = #{content}
+		where id = #{id}
 	</update>
 	
 	<delete id="commentDelete" parameterType="int">
 		delete comments
-		where comment_id = #{comment_id}
+		where id = #{id}
 	</delete>
 </mapper>
