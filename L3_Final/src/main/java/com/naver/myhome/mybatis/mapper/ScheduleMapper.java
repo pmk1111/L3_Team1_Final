@@ -9,8 +9,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ScheduleMapper {
 	void insertSchedule(Map<String, String> map);
-
-	void updateSchedule(Map<String, String> paramMap);
-
-	void deleteSchdule(Map<String, String> paramMap);
 }

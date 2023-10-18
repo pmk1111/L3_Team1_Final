@@ -258,7 +258,7 @@
                         function saveSchedule() {
                             $.ajax({
                                 type: "POST",
-                                url: "save_schedule",
+                                url: "save-schedule",
                                 data: $("#scheduleForm").serialize(),
                                 dataType: "json",
                                 success: function(data) {

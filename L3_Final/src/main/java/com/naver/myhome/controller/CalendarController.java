@@ -18,9 +18,9 @@ import com.naver.myhome.service.ScheduleService;
 @RequestMapping(value = "/calendar")
 public class CalendarController {
 
-    @RequestMapping(value = "/calendarlist", method = RequestMethod.GET)
+    @RequestMapping(value = "/calendar-list", method = RequestMethod.GET)
     public String addcalendar() {
-        return "calendar/calendarlist";
+        return "calendar/calendar-list";
     }
     @RequestMapping(value = "/calendar", method = RequestMethod.GET)
     public String calendar() {
@@ -29,7 +29,7 @@ public class CalendarController {
     @Autowired
     ScheduleService calendarService;
 
-    @RequestMapping(value = "/save_schedule", method = RequestMethod.POST)
+    @RequestMapping(value = "/save-schedule", method = RequestMethod.POST)
     @ResponseBody
     public Map < String, Object > saveSchedule(@RequestParam Map < String, Object > map) {
 
@@ -53,46 +53,6 @@ public class CalendarController {
         return response;
     }
 
-    @RequestMapping(value = "/modify_schedule", method = RequestMethod.POST)
-    @ResponseBody
-    public Map < String, Object > modifySchedule(@RequestParam Map < String, Object > map) {
 
-        Map < String, Object > response = new HashMap < String, Object > ();
-        String testId = "superAdmin";
-
-        LocalDateTime dt1 = LocalDateTime.now();
-        String testScheduleId = testId + dt1.format(DateTimeFormatter.ofPattern("yyMMddHHmmss"));
-
-        System.out.println("testId : " + testId);
-        System.out.println("testScheduleId : " + testScheduleId);
-
-        map.put("scheduleId", testScheduleId);
-        map.put("scheduleUserId", testId);
-        calendarService.insertSchedule(map);
-        response.put("rsltCd", "0");
-        response.put("scheduleTitle", (String) map.get("eventTitle"));
-        response.put("scheduleStartDate", (String) map.get("eventStartDate"));
-        response.put("scheduleEndDate", (String) map.get("eventEndDate"));
-
-        return response;
-    }
-    @RequestMapping(value = "/remove_schedule", method = RequestMethod.POST)
-    @ResponseBody
-    public Map < String, Object > removeSchedule(@RequestParam String scheduleId) {
-        // 일정 삭제 로직
-
-        String testId = "superAdmin";
-
-        Map < String, Object > map = new HashMap < > ();
-        map.put("scheduleId", scheduleId);
-        map.put("scheduleUserId", testId);
-
-        calendarService.deleteSchedule(map);
-
-        Map < String, Object > response = new HashMap < > ();
-        response.put("rsltCd", "0");
-
-        return response;
-    }
 
 }
