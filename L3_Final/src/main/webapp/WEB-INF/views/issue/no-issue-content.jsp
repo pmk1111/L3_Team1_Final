@@ -9,7 +9,7 @@
 <body>
 <script type="text/javascript">
 if (${showAlert}==true) {
-    alert('Á¸ÀçÇÏÁö ¾Ê´Â °Ô½Ã±ÛÀÔ´Ï´Ù.');
+    alert('ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê²Œì‹œê¸€ì…ë‹ˆë‹¤.');
     window.location.href = '../issue/issue-list';
 }
 </script>

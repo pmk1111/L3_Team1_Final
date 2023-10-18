@@ -70,6 +70,7 @@
                   <div class="card-body issue-card">
                     <div class="issue-location">
                       프로젝트 / 테스트 프로젝트 / ${issuedata.subject}
+
                     </div>
                     <hr class="issue-hr">
 
@@ -362,7 +363,6 @@ function arraysEqual(arr1, arr2) {
     }
     return true;
 }
-
 
 </script>
   </body>

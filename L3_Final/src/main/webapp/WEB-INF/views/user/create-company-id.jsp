@@ -3,14 +3,16 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>WidUs-join</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    <link rel="stylesheet" href="../resources/user/css/join.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../resources/user/css/create-company-id.css" />
     <!-- Favicons -->
     <link href="../resources/home/assets/img/favicon.png" rel="icon">
     <link href="../resources/home/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -26,10 +28,68 @@
     <link href="../resources/home/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
     <!-- Template Main CSS File -->
     <link href="../resources/home/assets/css/home.css" rel="stylesheet">
-    <!-- ======================================================== * Template Name: Arsha * Updated: Jul 27 2023 with Bootstrap v5.3.1
-     * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ * Author: BootstrapMade.com
-     * License: https://bootstrapmade.com/license/ ======================================================== -->
-    <style>
+    <!-- ======================================================== * Template Name: Arsha * Updated: Jul 27 2023 with Bootstrap v5.3.1 * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ * Author: BootstrapMade.com * License: https://bootstrapmade.com/license/ ======================================================== -->
+    <style type="text/css">
+        .login-text,
+        .login-company,
+        .btn-join {
+            text-align: center;
+        }
+
+        .login-text {
+            display: block;
+            font-size: 36px;
+            color: #333;
+            font-weight: 700;
+            margin: 0 auto 30px;
+        }
+
+        .email,
+        .name,
+        .pw {
+            color: #333;
+            font-size: 16px;
+            padding: 0 0 0 20px;
+            background: #FFFFFF;
+            width: 640px;
+            padding: 16px 20px;
+            color: #333;
+            border: 1px solid #ddd;
+            -webkit-border-radius: 8px;
+            border-radius: 8px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-top: 10px;
+        }
+
+        .errMsg {
+            text-align: left;
+            margin-top: 10px;
+            color: #ff6b6b;
+            font-size: 14px;
+            line-height: 21px;
+        }
+
+        .errMsg {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            visibility: hidden;
+        }
+
+        #confirmBtn {
+            margin-top: 20px;
+            margin-bottom: 100px;
+        }
+
+        .login-text {
+            margin-top: 100px;
+        }
+
+        .auth-section {
+            padding-top: 0px;
+
+        }
         .modal {
             display: none;
             position: fixed;
@@ -78,62 +138,61 @@
             width: 100%;
             margin-bottom: 20px;
         }
-
+        
     </style>
-
 </head>
+
 <body>
     <jsp:include page="header.jsp"></jsp:include>
+	<form id="joinform" name="joinform">
+     <div class="auth-section after-contets">
+        <div class="accont-wrap">
+            <div id="companyJoinMain" class="login-wrap">
+                <div class="login-text">회사 계정 만들기</div>
+                <div class="join-contets">
 
-    <form id="joinform" name="joinform">
-	    <div class="auth-section after-contets">
-	        <div class="accont-wrap">
-	                <div class="account">개인회원</div>
-	                <div class="formDiv">
-	                    <div>
-	                        <b class="bTxt">이메일 주소</b><br> <input type="text" id="email" class="email" name="email" maxLength="30" placeholder="이메일을 입력하세요" required>
-	                        <p class="errMsg" id="email_message">오류메세지 영역</p>
-	                    </div>
-	                    <div>
-	                        <b class="bTxt">이름</b><br> <input type="text" id="userName" class="name" name="name" placeholder="이름을 입력하세요" maxLength="15" required>
-	                        <p class="errMsg" id="name_message">오류메세지 영역</p>
-	                    </div>
-	                    <div>
-	                        <b class="bTxt">비밀번호</b><br> <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="pass" required>
-	                        <p class="errMsg" id="pw_message">오류메세지 영역</p>
-	                    </div>
-	
-	                    <div class="mt10">
-	                        <div>
-	                            <input type="checkbox" id="policyCheckbox" class="policy" name="policy" value="필수"> <label for="policy" class="policyLabel"> <b class="require">(필수)</b>&nbsp; <a href="Service.net" style="color: #7C00B6; text-decoration: dash">
-	                                    서비스 이용약관</a>,<a href="PrivatePolicy.net" style="color: #7C00B6; text-decoration: dash">개인정보 처리방침</a>에
-	                                동의합니다.
-	                            </label>
-	                        </div>
-	                        <br>
-	                        <div>
-	                            <input type="checkbox" id="benefits" class="benefits" name="benefits" value="선택"> <label for="benefits" class="benefitsLabel"> <b>(선택)</b>&nbsp;혜택 수신에 동의합니다.
-	                            </label>
-	                        </div>
-	                    </div>
-	                </div>
-	
-	                <div class="clearfix">
-	                    <button type="button" id="confirmBtn" class="submitbtn" onclick="sendMailAuthCode();">
-	                        <strong>가입하기</strong>
-	                    </button>
-	                </div>
-	            
-	
-	            <input type="hidden" id="authRandNum" name="authRandNum" />
-	            <input type="hidden" id="isChkPassword" name="isChkPassword" value="N" />
-	            <input type="hidden" id="isChkName" name="isChkName" value="N" />
-	            <input type="hidden" id="isChkEmail" name="isChkEmail" value="N" />
-	            <input type="hidden" id="isChkpolicy" name="isChkpolicy" value="N" />
-	        </div>
-	
-	    </div>
-	    <div class="modalarea">
+                    <div>
+                        <b class="bTxt">이메일 주소</b><br> <input type="text" id="email" class="email" name="email" maxLength="30" placeholder="이메일을 입력하세요" required>
+                        <p class="errMsg" id="email_message">오류메세지 영역</p>
+                    </div>
+                    <div>
+                        <b class="bTxt">이름</b><br> <input type="text" id="userName" class="name" name="name" placeholder="이름을 입력하세요" maxLength="15" required>
+                        <p class="errMsg" id="name_message">오류메세지 영역</p>
+                    </div>
+                    <div>
+                        <b class="bTxt">비밀번호</b><br> <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="pass" required>
+                        <p class="errMsg" id="pw_message">오류메세지 영역</p>
+                    </div>
+
+                    <div class="mt10">
+                        <div>
+                            <input type="checkbox" id="policyCheckbox" class="policy" name="policy" value="필수"> <label for="policy" class="policyLabel"> <b class="require">(필수)</b>&nbsp; <a href="Service.net" style="color: #7C00B6; text-decoration: dash">
+                                    서비스 이용약관</a>,<a href="PrivatePolicy.net" style="color: #7C00B6; text-decoration: dash">개인정보 처리방침</a>에
+                                동의합니다.
+                            </label>
+                        </div>
+                        <br>
+                        <div>
+                            <input type="checkbox" id="benefits" class="benefits" name="benefits" value="선택"> <label for="benefits" class="benefitsLabel"> <b>(선택)</b>&nbsp;혜택 수신에 동의합니다.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix">
+                    <button type="button" id="confirmBtn" class="submitbtn" onclick="sendMailAuthCode();">
+                        <strong>가입하기</strong>
+                    </button>
+					  <input type="hidden" id="authRandNum" name="authRandNum" />
+	          		  <input type="hidden" id="isChkPassword" name="isChkPassword" value="N" />
+	          		  <input type="hidden" id="isChkName" name="isChkName" value="N" />
+	          		  <input type="hidden" id="isChkEmail" name="isChkEmail" value="N" />
+	          		  <input type="hidden" id="isChkpolicy" name="isChkpolicy" value="N" />
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="modalarea">
 	        <div id="myModal" class="modal">
 	
 	            <div class="modal-content">
@@ -148,8 +207,7 @@
 	            </div>
 	        </div>
 	    </div>
-    </form>
-    
+	  </form>
     <div id="signupFooterArea" style="display: block;">
         <!-- ======= Footer ======= -->
         <footer id="footer">
@@ -234,7 +292,7 @@
     <script src="../resources/home/assets/vendor/php-email-form/validate.js"></script>
     <!-- Template Main JS File -->
     <script src="../resources/home/assets/js/main.js"></script>
-    <script type="text/javascript">
+     <script type="text/javascript">
         // 오류 메세지 출력
         function printErrMsg(id, msg) {
             const element = document.getElementById(id);
@@ -350,8 +408,6 @@
         modal.style.display = "none";
      }
     </script>
-
-
 
 </body>
 

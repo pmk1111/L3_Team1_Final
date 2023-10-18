@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.naver.myhome.mybatis.mapper.TeamMapper">
+
+	<insert id="addTeam" >
+		INSERT INTO TEAM (EMPLOYEE_ID, PROJECT_ID)
+		VALUES (#{employeeId}, #{projectId})
+	</insert>
+	
+	<select id="teamCount" resultType="int">
+		SELECT COUNT(*)
+		FROM TEAM
+		WHERE PROJECT_ID = #{projectId}
+	</select>
+
+</mapper>

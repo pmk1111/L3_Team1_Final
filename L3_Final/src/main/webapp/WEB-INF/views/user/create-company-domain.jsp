@@ -11,7 +11,7 @@
     <title>WidUs-join</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    <link rel="stylesheet" href="../resources/user/css/join4.css" />
+    <link rel="stylesheet" href="../resources/user/css/create-company-domain.css" />
     <!-- Favicons -->
     <link href="../resources/home/assets/img/favicon.png" rel="icon">
     <link href="../resources/home/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -27,17 +27,28 @@
     <link href="../resources/home/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
     <!-- Template Main CSS File -->
     <link href="../resources/home/assets/css/home.css" rel="stylesheet">
-    <!-- ======================================================== * Template Name: Arsha * Updated: Jul 27 2023 with Bootstrap v5.3.1 * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ * Author: BootstrapMade.com * License: https://bootstrapmade.com/license/ ======================================================== -->
+    <!-- ======================================================== * Template Name: Arsha * Updated: Jul 27 2023 with Bootstrap v5.3.1
+     * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ * Author: BootstrapMade.com *
+      License: https://bootstrapmade.com/license/ ======================================================== -->
     <style type="text/css">
-        .errMsg {
-            margin-top: 5px;
-            margin-bottom: 5px;
-            visibility: hidden;
+        .companyName,
+        .eid {
+            color: #333;
+            font-size: 16px;
+            padding: 0 0 0 20px;
+            background: #FFFFFF;
+            width: 640px;
+            padding: 16px 20px;
+            color: #333;
+            border: 1px solid #ddd;
+            -webkit-border-radius: 8px;
+            border-radius: 8px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-top: 10px;
         }
 
-        .btn-join {
-            margin-bottom: 100px;
-        }
         .errMsg {
             text-align: left;
             margin-top: 10px;
@@ -45,31 +56,53 @@
             font-size: 14px;
             line-height: 21px;
         }
+
+        .errMsg {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            visibility: hidden;
+        }
+
+        .btn-join {
+            margin-top: 20px;
+            margin-bottom: 100px;
+        }
     </style>
 </head>
 
 <body>
     <jsp:include page="header.jsp"></jsp:include>
-
+	<form id="joinform" name="joinform" action="create-company-id" method="post">
     <div class="auth-section after-contets">
         <div class="accont-wrap">
             <div id="companyJoinMain" class="login-wrap">
-                <div class="login-text">기존 회사 참여</div>
-                <div class="login-company">이미 회사에서 사용하고 있다면 회사 URL을 입력하여
-                    함께하세요.</div>
+                <div class="login-text">새 회사 만들기</div>
+                <div class="login-company">회사 정보 입력 후, Widus 관리자로 시작해보세요.</div>
                 <div class="join-contets">
+                    <div>
+                        <b class="bTxt">회사명</b><br> <input type="text" id="companyName" class="companyName" name="companyName" placeholder="회사이름을 입력하세요" maxLength="30" required>
+                        <p class="errMsg" id="name_message">오류메세지 영역</p>
+                    </div>
                     <p class="url-tit">회사 URL</p>
                     <div class="url-wr">
-                        <span>https://</span> <input id="joinInput" type="text" class="join-input" autocomplete="off" placeholder="회사 URL">
+                        <span>https://</span> <input id="companyDomain" name="companyDomain" type="text" class="companyDomain" autocomplete="off" placeholder="회사 URL" maxLength="30">
                         <span>.widus.team</span>
                     </div>
                     <p id="helpMsg" class="join-company-url" style="display: block;">
                         회사URL 주소는 관리자를 통해 확인할 수 있습니다.
                 </div>
-                <button id="companyJoinBtn" class="btn-join">참여하기</button>
+
+                <div>
+                    <b class="bTxt">사업자 등록번호</b><br> <input type="text" id="eid" class="eid" name="eid" maxLength="10" placeholder="-없이 10자리를 입력하세요" required>
+                    <p class="errMsg" id="eid_message">오류메세지 영역</p>
+                </div>
+                <button id="companyJoinBtn" class="btn-join"><strong>다음</strong></button>
             </div>
         </div>
     </div>
+	          		  <input type="hidden" id="isChkDomain" name="isChkDomain" value="N" />
+	          		  <input type="hidden" id="isChkEid" name="isChkEid" value="N" />
+    </form>
     <div id="signupFooterArea" style="display: block;">
         <!-- ======= Footer ======= -->
         <footer id="footer">
@@ -154,39 +187,72 @@
     <script src="../resources/home/assets/vendor/php-email-form/validate.js"></script>
     <!-- Template Main JS File -->
     <script src="../resources/home/assets/js/main.js"></script>
+   
 </body>
-<script type='text/javascript'>
-    function validateURL(input){
-        var re = /^[a-zA-Z0-9-]{3,30}$/;
-        return re.test(input);
-    }
-  
-   $(document).ready(function() {
-     $("#joinInput").on('focusout', function() {
-         if (!validateURL(this.value)) {
-             document.getElementById("helpMsg").innerHTML = "회사 URL은 3~30글자의 영문자/숫자/하이픈(-)으로만 입력해야 합니다.";
-             document.getElementById("helpMsg").style.color = "red";
-         } else {
-             document.getElementById("helpMsg").innerHTML = "회사URL 주소는 관리자를 통해 확인할 수 있습니다.";
-             document.getElementById("helpMsg").style.color = "#623ad6";
-         }
-     });
+ <script type='text/javascript'>
+        function printErrMsg(id,msg){
+            const element = document.getElementById(id);
+            element.innerHTML = msg;
+            element.style.visibility = 'visible';
+        }
 
-     $("#companyJoinBtn").on('click', function(event){
-          event.preventDefault();
+        function validateURL(input){
+            var re = /^[a-zA-Z0-9-]{3,30}$/;
+            return re.test(input);
+        }
 
-          var joinInputInput = document.getElementById('joinInput');
+        function validateEID(input) {
+          var re = /^\d{10}$/;
+          return re.test(input);
+       }
+      
+        $(document).ready(function() {
+            
+            $("#companyDomain").on('focusout', function() {
+                if (!validateURL(this.value)) {
+                    document.getElementById("helpMsg").innerHTML = "회사 URL은 3~30글자의 영문자/숫자/하이픈(-)으로만 입력해야 합니다.";
+                    document.getElementById("helpMsg").style.color = "red";
+                } else {
+                    document.getElementById("helpMsg").innerHTML = "회사URL 주소는 관리자를 통해 확인할 수 있습니다.";
+                    document.getElementById("helpMsg").style.color = "#623ad6";
+                    document.getElementById("isChkDomain").value = "Y";
+                }
+            });
+      
+         $("#eid").on('focusout', function() { 
+              if (!validateEID(this.value)) { 
+                  printErrMsg("eid_message", "사업자 등록번호는 반드시 숫자 10자리로 입력해야 합니다."); 
+              } else { 
+                  document.getElementById("eid_message").style.visibility ="hidden";
+                  document.getElementById("isChkEid").value = "Y";
+              } 
+         }); 
 
-          if (validateURL(joinInputInput.value)) {
-              // Make sure to add a form with id 'joinform' in your HTML
-              $("#joinform").submit();
-          }
+         $("#companyJoinBtn").on('click', function(event){
+        	    event.preventDefault();
 
-           return false;
+        	    var companyNameInput = document.getElementById('companyName');
+        	    var companyDomain = document.getElementById('companyDomain');
+        	    var eidInput= document.getElementById('eid');
 
-       });
-  });
+        	    if (!validateURL(companyNameInput.value)) {
+        	        console.log("Invalid company name");
+        	        return false;
+        	    }
+
+        	    if (!validateURL(companyDomain.value)) {
+        	        console.log("Invalid URL");
+        	        return false;
+        	    }
+
+        	    if (!validateEID(eidInput.value)) {
+        	        console.log("Invalid EID");
+        	        return false;
+        	    }
+
+        	   $("#joinform").submit();
+        	});
+      });
 
 </script>
-
 </html>
