@@ -80,7 +80,7 @@
 
             <!-- Dashboard -->
             <li class="menu-item">
-              <a class="menu-link" href="../project/ProjectList">
+              <a class="menu-link" href="${pageContext.request.contextPath}/project/project-list">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">내 프로젝트</div>
               </a>

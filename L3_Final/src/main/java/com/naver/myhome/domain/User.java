@@ -1,73 +1,68 @@
 package com.naver.myhome.domain;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 
-public class User {
-	private int user_id;
-	private String user_password;
-	private String user_name;
-	private String user_phone;
-	private String user_photo;
-	private Date user_create;
-	private int user_status;
-	private String user_email;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import lombok.Data;
+
+@Data
+public class User implements UserDetails {
+	private int id;
+	private String email;
+	private String password;
+	private String pic;
+	private String name;
+	private String phone;
 	private String company_invited;
-	public int getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
-	}
-	public String getUser_password() {
-		return user_password;
-	}
-	public void setUser_password(String user_password) {
-		this.user_password = user_password;
-	}
-	public String getUser_name() {
-		return user_name;
-	}
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
-	public String getUser_phone() {
-		return user_phone;
-	}
-	public void setUser_phone(String user_phone) {
-		this.user_phone = user_phone;
-	}
-	public String getUser_photo() {
-		return user_photo;
-	}
-	public void setUser_photo(String user_photo) {
-		this.user_photo = user_photo;
-	}
-	public Date getUser_create() {
-		return user_create;
-	}
-	public void setUser_create(Date user_create) {
-		this.user_create = user_create;
-	}
-	public int getUser_status() {
-		return user_status;
-	}
-	public void setUser_status(int user_status) {
-		this.user_status = user_status;
-	}
-	public String getUser_email() {
-		return user_email;
-	}
-	public void setUser_email(String user_email) {
-		this.user_email = user_email;
-	}
-	public String getCompany_invited() {
-		return company_invited;
-	}
-	public void setCompany_invited(String company_invited) {
-		this.company_invited = company_invited;
-	}
+	private String company_status;
+	private String security;
+	private Date create_at;
+	private int authNum;
 	
 	
-
-	
+	 @Override
+     public Collection<? extends GrantedAuthority> getAuthorities() {
+        ArrayList<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+        list.add(new SimpleGrantedAuthority(security));
+        return list;
+     }
+  
+  //계정의 아이디를 리턴합니다.
+  @Override
+  public String getUsername() {
+     // TODO Auto-generated method stub
+     return email;
+  }
+  
+  //계정이 만료되지 않았는지를 리턴합니다. (true:만료되지 않음)
+   @Override
+    public boolean isAccountNonExpired() {
+       return true;
+    }
+    
+   
+   //계정이 잠겨있지 않은지 리턴합니다. (true:잠겨있지 않음)
+    @Override
+    public boolean isAccountNonLocked() {
+       return true;
+    }
+    
+    
+    //계정의 패스워드가 만료되지 않았는지 리턴합니다.(true:만료되지 않음)
+    @Override
+    public boolean isCredentialsNonExpired() {
+       return true;
+    }
+    
+    //계정이 사용가능한지를 리턴합니다.(true:사용가능)
+    @Override
+    public boolean isEnabled() {
+       return true;
+    }
+  
 }

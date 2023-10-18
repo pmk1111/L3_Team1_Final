@@ -42,7 +42,7 @@
 
 <body>
     <jsp:include page="header.jsp"></jsp:include>
-
+	<form action="loginProcess" method="post">
     <div class="auth-section after-contets">
         <div class="accont-wrap">
 
@@ -53,7 +53,7 @@
                     <p class="errMsg" id="email_message">오류메세지 영역</p>
                 </div>
                 <div>
-                    <b class="bTxt">비밀번호</b><br> <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="pass" required>
+                    <b class="bTxt">비밀번호</b><br> <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="password" required>
                     <p class="errMsg" id="pw_message">오류메세지 영역</p>
                 </div>
 
@@ -61,9 +61,11 @@
             </div>
 
             <div class="clearfix">
-                <button type="button" id="confirmBtn" class="submitbtn">
+                <button type="submit" id="confirmBtn" class="submitbtn">
                     로그인
                 </button>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                </form>
                 <div class="guest-or">
 
                     <strong>소셜계정 로그인</strong>

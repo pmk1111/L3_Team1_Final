@@ -7,6 +7,8 @@
         background-color: #9F7AB0;
     }
 </style>
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 <!-- ======= Header ======= -->
 <header id="header" class="">
     <div class="container d-flex align-items-center">

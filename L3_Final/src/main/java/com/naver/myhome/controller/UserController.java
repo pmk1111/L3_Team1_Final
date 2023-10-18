@@ -11,11 +11,10 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,19 +22,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.naver.myhome.domain.User;
 import com.naver.myhome.service.UserService;
 
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
 
-
+	//주영
+	private PasswordEncoder passwordEncoder;
 	//지니
 	private UserService userservice;
 	
 	@Autowired
-	public UserController(UserService userservice) {
+	public UserController(UserService userservice,PasswordEncoder passwordEncoder) {
 		this.userservice = userservice;
+		this.passwordEncoder= passwordEncoder;
 	}
 	
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
@@ -147,6 +149,12 @@ public class UserController {
 	return "user/join";
 	}
 	
+	@GetMapping("/joinProcess")
+	public String joinProcess(User user) {
+		
+		return "user/joinProcess";
+	}
+	
 	@GetMapping("/create-company-domain")
 	public String createCompanyDomain() {
 	return "user/create-company-domain";
@@ -170,10 +178,9 @@ public class UserController {
 	
     @ResponseBody
     @PostMapping("/send-mail-auth-code")
-    public String sendMailAuthCode(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws Exception {
+    public Integer sendMailAuthCode(String recipientEmail,HttpSession session) throws Exception {
 
 
-        String recipientEmail = request.getParameter("email"); // 입력된 이메일 주소
         // 난수(인증번호) 생성
         Random random = new Random();
         int verificationCode = 100000 + random.nextInt(900000); // 6자리 난수 생성
@@ -208,33 +215,32 @@ public class UserController {
 
             Transport.send(message);
             
-            response.getWriter().write(Integer.toString(verificationCode));
             
             session.setAttribute("verificationCode", verificationCode);
             
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        return null;
+        return verificationCode;
     } 
     
     @ResponseBody
     @PostMapping("/chk-auth-code")
-    public String chkAuthCode(HttpServletRequest request, HttpServletResponse response , HttpSession session) throws Exception {
+    public String chkAuthCode(User user, HttpSession session) throws Exception {
     	int verCode = (int) session.getAttribute("verificationCode");
-    	int userAuthCode = Integer.parseInt(request.getParameter("authNum")); 
+    	int userAuthCode = user.getAuthNum();
     	System.out.println("verificationCode== > " + verCode);
     	System.out.println("userInputAuthNum== > " + userAuthCode);
     	
     	if(verCode == userAuthCode) {
-    		System.out.println("인증완료 메시지 출력 후 고객정보 등록");
+    		 String encPassword = passwordEncoder.encode(user.getPassword());
+             user.setPassword(encPassword);
+             System.out.println(user.getPassword());
+    		userservice.insert(user);
     		return "0";
-    	}if(verCode != userAuthCode) {
-    		System.out.println("인증 실패 메시지 출력");
-    		return "1";
     	}
     	
-    	return "";
+    	return "1";
     }
     
 	
