@@ -4,20 +4,39 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.MytotalworkMapper">
 	
-
-	<select id="getMyTotalWorks" resultType="com.naver.myhome.domain.Mytotalwork">
+<!-- 
+	<select id="getMyTotalWorks" resultType="Mytotalwork">
 		    
 		SELECT
-		  P.title AS project_title,
-		  I.issue_subject AS issue_title,
-		  I.issue_status
-		FROM
-		  project P
-		  JOIN issue I ON P.num = I.project_id
-		WHERE
-		  I.create_user = #{I.create_user}
- 
-  </select>
+  P.title,
+  I.issue_subject,
+  I.issue_status
+FROM
+  project P
+  JOIN issue I ON P.num = I.project_id
+		
+		  
+	
+  </select> -->
+  
+
+<select id="getSearchList" resultType="Mytotalwork">
+    SELECT
+    P.title,
+    I.issue_subject,
+    I.issue_status
+    FROM
+    project P
+    JOIN issue I ON P.num = I.project_id
+    <where>
+        <if test="search_field != null">
+              and (P.title like '%' || #{search_word} || '%' OR I.issue_subject like '%' || #{search_word} || '%')
+        
+        </if>
+    </where>
+</select>
+
+
   
 
 </mapper>

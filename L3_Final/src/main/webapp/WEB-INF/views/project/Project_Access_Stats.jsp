@@ -475,17 +475,51 @@ select::-ms-expand {
 										        ];
 										        data = [50, 20, 10, 0, 25, 60];
 										      } else if (charttype === 'lineChart2') {
+										    	  // 현재 날짜를 얻기
+										    	  var today = new Date();
+										    	  
+										    	  // 현재 월의 첫 번째 날을 구하기
+										    	  var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+										    	  
+										    	  // 현재 월의 첫 번째 날의 요일을 얻기 (0은 일요일, 1은 월요일, ... 6은 토요일)
+										    	  var firstDayOfWeek = firstDayOfMonth.getDay();
+										    	  
+										    	  // 현재 날짜가 몇 주차에 속하는지 계산
+										    	  var currentWeek = Math.ceil((today.getDate() + firstDayOfWeek) / 7);
+
+										    	  // 해당 월의 주차 갯수 계산
+										    	  var totalWeeksInMonth = Math.ceil((firstDayOfMonth.getMonth() + 2) / 3); // 3개월(1/4년)마다 주차가 증가
+
+										    	  // 레이블을 계산된 주차로 업데이트
+										    	  labels = [];
+
+										    	  for (var i = 1; i <= totalWeeksInMonth; i++) {
+										    	    labels.push(i + '주차');
+										    	  }
+										    	  
+
 									
-
-										      
-										    	  labels = ["1주", "2주", "3주", "4주"];
-										        data = [30, 40, 50, 25, 35, 45];
+										        data = [30, 40, 50, 25, 35, 45]; 
 										      } else if (charttype === 'lineChart3') {
-										        // 일별 데이터 설정
+										    /*     // 일별 데이터 설정
 										        labels = ["1일", "2일", "3일", "4일", "5일", "6일","7일"];
-										        data = [10, 20, 15, 30, 25, 40,55];
-										      }
+										        data = [10, 20, 15, 30, 25, 40,55]; */
+										     // 현재 날짜를 얻기
+										        var today = new Date();
+										        
+										        // 현재 날짜의 일(day)를 얻기
+										        var currentDay = today.getDate();
 
+										        // 7개의 레이블을 저장할 배열
+										         labels = [];
+										        data = [10, 20, 15, 30, 25, 40,55];
+
+										        // 7일 전부터 현재 날짜까지의 레이블 생성
+										        for (var i = currentDay - 6; i <= currentDay; i++) {
+										          labels.push(today.getMonth() + 1 + '월 ' + i + '일');
+										        }
+										       
+										      }
 										      const chartData = {
 										        labels: labels, // 계산된 레이블을 사용
 										        datasets: [
@@ -544,155 +578,7 @@ select::-ms-expand {
 										</script>
 										
 										<script>
-									 	/* 	// Chart 생성
-											var ctx = document.getElementById(
-													'lineChart').getContext(
-													'2d');
-											var ctx2 = document.getElementById(
-													'lineChart2').getContext(
-													'2d');
-											var ctx3 = document.getElementById(
-													'lineChart3').getContext(
-													'2d'); 
-										
-											
-											
-											// JavaScript로 6개월 간격의 날짜를 계산
-											var today = new Date();
-											var sixMonthsAgo = new Date();
-											sixMonthsAgo.setMonth(today
-													.getMonth() - 5);
-
-											// 날짜를 원하는 형식으로 포맷
-											function formatDate(date) {
-												var year = date.getFullYear();
-												var month = date.getMonth() + 1;
-												return year + '년' + month + '월';
-											}
-
-											// 레이블을 계산된 날짜로 업데이트
-											var labels = [
-													formatDate(sixMonthsAgo),
-
-													formatDate(new Date(
-															today.getFullYear(),
-															today.getMonth() - 4)),
-													formatDate(new Date(
-															today.getFullYear(),
-															today.getMonth() - 3)),
-													formatDate(new Date(
-															today.getFullYear(),
-															today.getMonth() - 2)),
-													formatDate(new Date(
-															today.getFullYear(),
-															today.getMonth() - 1)),
-													formatDate(new Date(today
-															.getFullYear(),
-															today.getMonth())) ];
-
-											const data = {
-												labels : labels, // 계산된 레이블을 사용
-												datasets : [ {
-
-													data : [ 50, 20, 10, 0, 25,
-															60 ], // 실제 통계 데이터로 업데이트 필요
-													borderColor : 'lightblue',
-													backgroundColor : 'lightblue',
-													pointRadius : 10,
-													pointHoverRadius : 15
-												} ]
-											};
-
-											const config2 = {
-												type : 'line',
-												data : data,
-												options : {
-													responsive : true,
-													plugins : {
-														title : {
-															display : true
-														},
-														legend : { // 추가
-															display : false
-														// 추가
-														}
-													}
-												}
-											};
-
-											var chart1 = new Chart(ctx, config2);
-											var chart2 = new Chart(ctx2,
-													config2);
-											var chart3 = new Chart(ctx3,
-													config2);
-
-											function showGraph(graphType) {
-												// 모든 탭의 active 클래스 제거
-												var tabs = document
-														.querySelectorAll('.nav-item');
-												tabs.forEach(function(tab) {
-													tab.classList
-															.remove('active');
-												});
-
-												// 클릭한 탭에 active 클래스 추가
-												var activeTab = document
-														.querySelector('a[onclick="showGraph(\''
-																+ graphType
-																+ '\')"]');
-												activeTab.parentNode.classList
-														.add('active');
-
-												// 모든 그래프 숨기기
-												document
-														.getElementById('monthlyGraph').style.display = 'none';
-												document
-														.getElementById('weeklyGraph').style.display = 'none';
-												document
-														.getElementById('dailyGraph').style.display = 'none';
-
-												// 선택한 그래프만 보이도록 설정
-												document
-														.getElementById(graphType).style.display = 'block';
-												console
-														.log("Showing graph of type: "
-																+ graphType);
-											} */
-
-											// 초기로딩 시 월별 그래프를 보이도록 설정
-											//showGraph('monthlyGraph');
-											/*  function tableToExcel(table, name) {
-											     var uri = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8;base64,';
-											     var template =
-											         '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head>' +
-											         '<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>' +
-											         '<x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>' +
-											         '</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
-											     var base64 = function(s) {
-											         return window.btoa(unescape(encodeURIComponent(s)));
-											     };
-											     var format = function(s, c) {
-											         return s.replace(/{(\w+)}/g, function(m, p) {
-											             return c[p];
-											         });
-											     };
-											     var ctx = {
-											         worksheet: name || 'Worksheet',
-											         table: table.innerHTML
-											     };
-											     var blob = new Blob([format(template, ctx)], {
-											         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
-											     });
-											     return uri + base64(format(template, ctx));
-											 }
-
-											 document.getElementById('downloadLink').addEventListener('click', function() {
-											     var table = document.querySelector('.table');
-											     var excelDataUri = tableToExcel(table, '테이블명');
-											     this.href = excelDataUri;
-											     this.download = '테이블명.xls';
-											 });
-											 */ 
+									
 											function tableToExcel(table, name) {
 												var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head>'
 														+ '<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>'

@@ -34,22 +34,32 @@ public class MytotalworkController {
 		this.myTotalWorkService = myTotalWorkService;
 	}
 	
+	
 	@GetMapping(value = "/mywork")
-	public ModelAndView myTotalWorks(ModelAndView mv, HttpServletRequest request, Principal principal) {
+	public ModelAndView myTotalWorks(ModelAndView mv, HttpServletRequest request, Principal principal,@RequestParam(value="search_word" , defaultValue="", required=false)
+	   String search_word
+	   ) {
 		
-		List<Mytotalwork> myTotalWorks = myTotalWorkService.getMyTotalWorks();
+	//	List<Mytotalwork> myTotalWorks = myTotalWorkService.getMyTotalWorks();
+		List<Mytotalwork> myTotalWorks = myTotalWorkService.getSearchList(search_word);
 		
 
+
 		
-		mv.setViewName("total/mywork");
+		
 		mv.addObject("myTotalWorks" ,myTotalWorks);
+		mv.addObject("search_word",search_word);
+		
+	   
+		mv.setViewName("total/mywork");
 		return mv;
 	}
 
 
-	@ResponseBody
-	@GetMapping("/mywork")
-	public List<Mytotalwork> searchMyTotalWork(@RequestParam String searchtitle) {
-		return myTotalWorkService.searchMyTotalWork(searchtitle);
-	}
+	/*
+	 * @ResponseBody
+	 * @GetMapping("/mywork") public List<Mytotalwork>
+	 * searchMyTotalWork(@RequestParam String searchtitle) { return
+	 * myTotalWorkService.searchMyTotalWork(searchtitle); }
+	 */
 }
