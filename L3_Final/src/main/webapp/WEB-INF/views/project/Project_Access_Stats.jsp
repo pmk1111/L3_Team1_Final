@@ -12,7 +12,7 @@
 
 <title>WidUs - 대시보드</title>
 <meta name="description" content="" />
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon"
 	href="../resources/mainboard/assets/img/favicon/favicon.ico" />
@@ -72,6 +72,7 @@
 
 <!-- Google Analytics (Optional) -->
 <script async src="https://www.google-analytics.com/analytics.js"></script>
+
 
 
 
@@ -265,7 +266,8 @@ select::-ms-expand {
 
 </head>
 
-<body>
+
+<body onload="updateMonthSelect()"> 
 	<!-- Layout wrapper -->
 	<div class="layout-wrapper layout-content-navbar">
 		<div class="layout-container">
@@ -348,16 +350,15 @@ select::-ms-expand {
 
 														<div class="search-content">
 															<!-- <input class="search-bar" type="text" id="searchInput" placeholder="검색어 입력"> -->
-															<input class="search-bar" type="text" id="searchInput"
-																placeholder="검색어 입력">
+															<input class="search-bar" type="text" id="searchInput" placeholder="검색어 입력" oninput="searchTable()">
 
 															<!--   <img class="search-img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="검색" onclick="searchTable()"> -->
 														</div>
 													</div>
 
 													<div>
-														<a class="exel" href="#" id="downloadLink">엑셀 다운로드</a> <select
-															class="month-select"></select>
+														<a class="exel" href="#" id="downloadLink"onclick="tableToExcel(document.querySelector('table'), 'Worksheet')">엑셀 다운로드</a> 
+														<select class="month-select"></select>
 													</div>
 												</div>
 												<!-- 테이블 -->
@@ -413,267 +414,9 @@ select::-ms-expand {
 										</div>
 										<script
 											src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
-										<script>
-										let can='';
-										handleTabClick('monthly');
-										  function handleTabClick(tabType) {
-										    console.log(tabType);
-										      if (tabType === 'monthly') {
-										    	  
-											        settings('lineChart',"monthlyGraph");
-											      } else if (tabType === 'weekly') {
-											        settings('lineChart2',"weeklyGraph");
-											      } else if (tabType === 'daily') {
-											        settings('lineChart3',"dailyGraph");
-											      }
-
-										      // 모든 탭에서 'active' 클래스 제거
-										      const tabElements = document.querySelectorAll('.nav-item a.nav-link');
-										      tabElements.forEach((tabElement) => {
-										        tabElement.classList.remove('active');
-										      });
-										      
-										      // 선택된 탭에 'active' 클래스 추가
-										      const selector = "a[onclick=handleTabClick('" + tabType +"')]"
-										      console.log(selector);
-										      const activeTabElement = document.querySelector('.' + tabType);
-										      
-										      console.log(activeTabElement);
-										      activeTabElement.classList.add('active');
-										      
-										    
-										    }//handleTabClick
-										  
-
-										    function settings(charttype,graphsid) {
-										      // Chart 생성
-										      let ctx = document.getElementById(charttype).getContext('2d');
-										      
-										      let labels = [];
-										      let data = [];
-
-										      if (charttype === 'lineChart') {
-										        // JavaScript로 6개월 간격의 날짜를 계산
-										        var today = new Date();
-										        var sixMonthsAgo = new Date();
-										        sixMonthsAgo.setMonth(today.getMonth() - 5);
-
-										        // 날짜를 원하는 형식으로 포맷
-										        function formatDate(date) {
-										          var year = date.getFullYear();
-										          var month = date.getMonth() + 1;
-										          return year + '년' + month + '월';
-										        }
-
-										        // 레이블을 계산된 날짜로 업데이트
-										        labels = [
-										          formatDate(sixMonthsAgo),
-										          formatDate(new Date(today.getFullYear(), today.getMonth() - 4)),
-										          formatDate(new Date(today.getFullYear(), today.getMonth() - 3)),
-										          formatDate(new Date(today.getFullYear(), today.getMonth() - 2)),
-										          formatDate(new Date(today.getFullYear(), today.getMonth() - 1)),
-										          formatDate(new Date(today.getFullYear(), today.getMonth()))
-										        ];
-										        data = [50, 20, 10, 0, 25, 60];
-										      } else if (charttype === 'lineChart2') {
-										    	  // 현재 날짜를 얻기
-										    	  var today = new Date();
-										    	  
-										    	  // 현재 월의 첫 번째 날을 구하기
-										    	  var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-										    	  
-										    	  // 현재 월의 첫 번째 날의 요일을 얻기 (0은 일요일, 1은 월요일, ... 6은 토요일)
-										    	  var firstDayOfWeek = firstDayOfMonth.getDay();
-										    	  
-										    	  // 현재 날짜가 몇 주차에 속하는지 계산
-										    	  var currentWeek = Math.ceil((today.getDate() + firstDayOfWeek) / 7);
-
-										    	  // 해당 월의 주차 갯수 계산
-										    	  var totalWeeksInMonth = Math.ceil((firstDayOfMonth.getMonth() + 2) / 3); // 3개월(1/4년)마다 주차가 증가
-
-										    	  // 레이블을 계산된 주차로 업데이트
-										    	  labels = [];
-
-										    	  for (var i = 1; i <= totalWeeksInMonth; i++) {
-										    	    labels.push(i + '주차');
-										    	  }
-										    	  
-
 									
-										        data = [30, 40, 50, 25, 35, 45]; 
-										      } else if (charttype === 'lineChart3') {
-										    /*     // 일별 데이터 설정
-										        labels = ["1일", "2일", "3일", "4일", "5일", "6일","7일"];
-										        data = [10, 20, 15, 30, 25, 40,55]; */
-										     // 현재 날짜를 얻기
-										        var today = new Date();
-										        
-										        // 현재 날짜의 일(day)를 얻기
-										        var currentDay = today.getDate();
-
-										        // 7개의 레이블을 저장할 배열
-										         labels = [];
-										        data = [10, 20, 15, 30, 25, 40,55];
-
-										        // 7일 전부터 현재 날짜까지의 레이블 생성
-										        for (var i = currentDay - 6; i <= currentDay; i++) {
-										          labels.push(today.getMonth() + 1 + '월 ' + i + '일');
-										        }
-										       
-										      }
-										      const chartData = {
-										        labels: labels, // 계산된 레이블을 사용
-										        datasets: [
-										          {
-										            data: data, // 실제 통계 데이터로 업데이트 필요
-										            borderColor: 'lightblue',
-										            backgroundColor: 'lightblue',
-										            pointRadius: 10,
-										            pointHoverRadius: 15
-										          }
-										        ]
-										      };
-
-										      const chartConfig = {
-										        type: 'line',
-										        data: chartData,
-										        options: {
-										          responsive: true,
-										          plugins: {
-										            title: {
-										              display: true
-										            },
-										            legend: {
-										              display: false
-										            }
-										          }
-										        }
-										      };
-
-										      // Chart 생성 및 설정
-										      if(can != '')
-										      can.destroy();
-										      
-										      
-										     can = new Chart(ctx, chartConfig);
-										      
-										      		  	document
-												.getElementById('monthlyGraph').style.display = 'none';
-										document
-												.getElementById('weeklyGraph').style.display = 'none';
-										document
-												.getElementById('dailyGraph').style.display = 'none';
-										
-										
-										
-
-										// 선택한 그래프만 보이도록 설정
-										document
-												.getElementById(graphsid).style.display = 'block';
-										document
-										.getElementById(graphsid).style.height = '250px';
 									
-										
-											  
-										    }//settings end
-										</script>
-										
-										<script>
-									
-											function tableToExcel(table, name) {
-												var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head>'
-														+ '<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>'
-														+ '<x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>'
-														+ '</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
-												var format = function(s, c) {
-													return s.replace(
-															/{(\w+)}/g,
-															function(m, p) {
-																return c[p];
-															});
-												};
-
-												var ctx = {
-													worksheet : name
-															|| 'Worksheet',
-													table : table.innerHTML
-												};
-
-												// Create a Blob with the data
-												var blob = new Blob(
-														[ '\ufeff'
-																+ format(
-																		template,
-																		ctx) ],
-														{
-															type : 'application/vnd.ms-excel'
-														});
-
-												// Use FileSaver.js to save the file
-												saveAs(blob, "테이블명.xls");
-											}
-
-											document
-													.getElementById(
-															'downloadLink')
-													.addEventListener(
-															'click',
-															function() {
-																var table = document
-																		.querySelector('.table');
-																tableToExcel(
-																		table,
-																		'테이블명');
-															});
-										</script>
-										<script>
-											function searchTable() {
-												var filterText = document
-														.getElementById("searchInput").value
-														.toUpperCase();
-												var filterType = document
-														.getElementById("filterSelect").value;
-												var rows = document
-														.querySelectorAll("table tbody tr");
-
-												rows
-														.forEach(function(row) {
-															var cells = row
-																	.getElementsByTagName("td");
-															var shouldHide = true;
-
-															for (var i = 0; i < cells.length; i++) {
-																var cellText = cells[i].textContent
-																		.toUpperCase();
-
-																if ((filterType === "번호" && i === 0)
-																		|| (filterType === "이름" && i === 1)
-																		|| (filterType === "아이디" && i === 3)) {
-																	if (cellText
-																			.indexOf(filterText) > -1) {
-																		shouldHide = false;
-																		break;
-																	}
-																}
-															}
-
-															if (shouldHide) {
-																row.style.display = "none";
-															} else {
-																row.style.display = "";
-															}
-														});
-											}
-
-											document.getElementById(
-													"searchInput")
-													.addEventListener("input",
-															searchTable);
-											document.getElementById(
-													"filterSelect")
-													.addEventListener("change",
-															searchTable);
-										</script>
+								
 
 
 
@@ -684,36 +427,6 @@ select::-ms-expand {
 
 
 
-
-
-										<script>
-
-                    
-										function formatYearMonth(date) {
-											var year = date.getFullYear();
-											var month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더합니다.
-											return year + '년'
-													+ (month < 12 ? '' : '')
-													+ month+'월';
-										}
-
-										// sixMonthsAgo 변수 정의
-										var sixMonthsAgo = new Date();
-										sixMonthsAgo.setMonth(sixMonthsAgo
-												.getMonth() - 6);
-
-										// <select> 요소 업데이트
-										var select = document
-												.querySelector('.month-select');
-										for (var i = 6; i > 0; i--) {
-											var option = document
-													.createElement('option');
-											option.text = formatYearMonth(new Date(
-													sixMonthsAgo.getFullYear(),
-													sixMonthsAgo.getMonth() + i));
-											select.add(option);
-										}
-									</script>
 
 
 									</div>
@@ -769,6 +482,9 @@ select::-ms-expand {
 		<!-- Overlay -->
 		<div class="layout-overlay layout-menu-toggle"></div>
 	</div>
+	<script src="../resources/access/js/access.js"></script>
+	
+	
 	<!-- / Layout wrapper -->
 
 	<!-- Core JS -->
