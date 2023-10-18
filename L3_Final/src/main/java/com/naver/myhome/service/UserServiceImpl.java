@@ -20,24 +20,24 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> finduser(String company_invited) {
+	public List<User> findUser(int companyInvited) {
 		// TODO Auto-generated method stub
-		return dao.finduser(company_invited);
+		return dao.findUser(companyInvited);
 	}
 
 	@Override
-	public int countuser(String company_invited) {
-		return dao.countuser(company_invited);
+	public int countUser(int companyInvited) {
+		return dao.countUser(companyInvited);
 	}
 
 	@Override
-	public int approveuser(int userid) {
-		return dao.approveuser(userid);
+	public int approveUser(int userId) {
+		return dao.approveUser(userId);
 	}
 
 	@Override
-	public int rejectuser(int userid) {
-		return dao.rejectuser(userid);
+	public int rejectUser(int userId) {
+		return dao.rejectUser(userId);
 	}
 
 	//지니 끝

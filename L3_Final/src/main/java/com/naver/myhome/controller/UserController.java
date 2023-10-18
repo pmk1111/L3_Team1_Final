@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,14 +29,14 @@ public class UserController {
 
 
 	//지니
-	private UserService userservice;
+	private UserService userService;
 	
 	@Autowired
-	public UserController(UserService userservice) {
-		this.userservice = userservice;
+	public UserController(UserService userService) {
+		this.userService = userService;
 	}
 	
-	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	@GetMapping(value = "/profile")
 //    public ModelAndView user_update(Principal principal, ModelAndView mv) {
 //          String id =S principal.getName();
 //        
@@ -52,10 +53,10 @@ public class UserController {
     }
 	
 	// 수정처리
-//	   @RequestMapping(value = "/updateProcess", method = RequestMethod.POST)
+//	   @PostMapping(value = "/update-process")
 //	   public String updateProcess(User user, Model model, HttpServletRequest request, RedirectAttributes rattr) {
 //
-//	      int result = userservice.update(user);
+//	      int result = userService.update(user);
 //	      if (result == 1) {
 //	         rattr.addFlashAttribute("result", "updateSuccess");
 //	         return "redirect:/board/list";
