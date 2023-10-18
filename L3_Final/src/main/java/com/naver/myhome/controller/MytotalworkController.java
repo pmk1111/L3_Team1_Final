@@ -26,30 +26,40 @@ public class MytotalworkController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MytotalworkController.class);
 
-	private MytotalworkService MytotalworkService;
+	private MytotalworkService myTotalWorkService;
 
 	@Autowired
-	public MytotalworkController(MytotalworkService MytotalworkService) {
+	public MytotalworkController(MytotalworkService myTotalWorkService) {
 	
-		this.MytotalworkService = MytotalworkService;
+		this.myTotalWorkService = myTotalWorkService;
 	}
 	
+	
 	@GetMapping(value = "/mywork")
-	public ModelAndView issuelist(ModelAndView mv, HttpServletRequest request, Principal principal) {
+	public ModelAndView myTotalWorks(ModelAndView mv, HttpServletRequest request, Principal principal,@RequestParam(value="search_word" , defaultValue="", required=false)
+	   String search_word
+	   ) {
 		
-		List<Mytotalwork> Mytotalworklist = MytotalworkService.getMytotalworkList();
+	//	List<Mytotalwork> myTotalWorks = myTotalWorkService.getMyTotalWorks();
+		List<Mytotalwork> myTotalWorks = myTotalWorkService.getSearchList(search_word);
 		
 
+
 		
+		
+		mv.addObject("myTotalWorks" ,myTotalWorks);
+		mv.addObject("search_word",search_word);
+		
+	   
 		mv.setViewName("total/mywork");
-		mv.addObject("Mytotalworklist" ,Mytotalworklist);
 		return mv;
 	}
 
 
-	@ResponseBody
-	@PostMapping("/mywork")
-	public List<Mytotalwork> searchmytotalwork(@RequestParam String searchtitle) {
-		return MytotalworkService.searchmytotalwork(searchtitle);
-	}
+	/*
+	 * @ResponseBody
+	 * @GetMapping("/mywork") public List<Mytotalwork>
+	 * searchMyTotalWork(@RequestParam String searchtitle) { return
+	 * myTotalWorkService.searchMyTotalWork(searchtitle); }
+	 */
 }
