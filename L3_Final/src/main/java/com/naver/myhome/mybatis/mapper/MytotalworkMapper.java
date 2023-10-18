@@ -9,10 +9,11 @@ import com.naver.myhome.domain.Mytotalwork;
 @Mapper
 public interface MytotalworkMapper {
 
-	List<Mytotalwork> searchmytotalwork(String searchtitle);
+	
 
-	List<Mytotalwork> mytotallist();
+	List<Mytotalwork> getMyTotalWorks();
 
+	public List<Mytotalwork> getSearchList(String search_word);
 	
 
 }
