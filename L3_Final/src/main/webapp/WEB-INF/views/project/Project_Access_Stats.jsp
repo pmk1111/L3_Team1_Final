@@ -76,6 +76,7 @@
 
 
 
+
 <style>
 .leftbar-close {
 	background-color: #9F7AB0;
