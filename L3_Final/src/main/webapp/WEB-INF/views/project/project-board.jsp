@@ -96,7 +96,7 @@
 
                                                 <!-- 프로젝트 색 선택 -->
                                                 <div class="favorite-project">
-                                                    <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-num="${project.NUM}">
+                                                    <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${project.ID}">
                                                 </div>
 
                                                 <!-- 프로젝트 설정 -->
@@ -110,7 +110,7 @@
                                                         <div class="dropdown-menu" aria-labelledby="cardOpt3">
                                                             <div class="project-setup-header">
                                                                 <span>프로젝트 번호</span>
-                                                                <em id="detailSettingProjectSrno">${project.NUM}</em>
+                                                                <em id="detailSettingProjectSrno">${project.ID}</em>
                                                             </div>
 
                                                             <div class="setting-menu">

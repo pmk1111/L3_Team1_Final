@@ -201,8 +201,8 @@ function saveMemo() {
 
     // 이스케이핑: HTML 엔터티로 변환
     $.ajax({
-        url: '../mainboard/memoSave',
-        type: 'POST',
+        url: '../mainboard/saveMemoContent',
+        type: 'GET',
         data: {
             memoTxt: newText
         },
@@ -334,7 +334,7 @@ window.addEventListener('load', function () {
 
 		$.ajax({
 			url: "../mainboard/mywork",
-			type: "POST",
+			type: "GET",
 			data: {
 				status: selectedWorkType
 			},
@@ -350,7 +350,7 @@ window.addEventListener('load', function () {
 						} else {
 							str += '<img src="../resources/issue/img/epic.svg"> <span>에픽</span>'
 						}
-						str += '<a href="../issue/issuedetail?num=' + item.issue_id + '">'
+						str += '<a href="../issue/issue-detail?num=' + item.issue_id + '">'
 						str += '<span class="post-title">' + item.issue_subject + '</span></div></a>'
 						str += '<span class="post-date">' + item.issue_created + '</span></li>'
 

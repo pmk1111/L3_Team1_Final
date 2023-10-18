@@ -10,17 +10,17 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Issue {
-	private int issue_id;
+	private int id;
 	private int project_id;
 	private String create_user;
-	private String issue_type;
-	private String issue_priority;
-	private String issue_subject;
-	private String issue_content;
-	private String issue_status;
-	private String issue_reporter;
-	private String issue_assigned;
-	private String issue_created;
+	private String type;
+	private String priority;
+	private String subject;
+	private String content;
+	private String status;
+	private String reporter;
+	private String assigned;
+	private String created_at;
 	
     private int totalcount;
     private int todocount;
@@ -32,14 +32,13 @@ public class Issue {
 
 	@Override
 	public String toString() {
-		return "Issue [issue_id=" + issue_id + ", project_id=" + project_id + ", create_user=" + create_user
-				+ ", issue_type=" + issue_type + ", issue_priority=" + issue_priority + ", issue_subject="
-				+ issue_subject + ", issue_content=" + issue_content + ", issue_status=" + issue_status
-				+ ", issue_reporter=" + issue_reporter + ", issue_assigned=" + issue_assigned
-				+ ", issue_created=" + issue_created + ", files=" + files + "]";
+		return "Issue [id=" + id + ", project_id=" + project_id + ", create_user=" + create_user + ", type=" + type
+				+ ", priority=" + priority + ", subject=" + subject + ", content=" + content + ", status=" + status
+				+ ", reporter=" + reporter + ", assigned=" + assigned + ", created_at=" + created_at + ", totalcount="
+				+ totalcount + ", todocount=" + todocount + ", progresscount=" + progresscount + ", resolvedcount="
+				+ resolvedcount + ", donecount=" + donecount + "]";
 	}
 
-	
-	
+    
 	
 }

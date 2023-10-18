@@ -216,7 +216,7 @@ function addStatusUpdateHandler(clickedButton, newStatus, selectedUserName) {
 	//이슈 삭제 관련 로직
 	$('.issue-delete-btn').click(function(){
 	    $.ajax({
-	        url: '../issue/issueDelete',
+	        url: '../issue/issue-delete',
 	        method: 'POST', 
 	        data: {
 	            issueId: $("#issue_id").val() 
@@ -235,7 +235,7 @@ function addStatusUpdateHandler(clickedButton, newStatus, selectedUserName) {
 	                $('.issue-delete-modal-content .issue-delete-btn-wrap').append(returnToListBtn);
 	                
 	                returnToListBtn.click(function() {
-	                    window.location.href = '../issue/issuelist';
+	                    window.location.href = '../issue/issue-list';
 	                });
 
 	                $('.issue-delete-modal-content').fadeIn(200);

@@ -22,14 +22,14 @@ $(document).ready(function () {
 
 		// 필터링 ajax 호출 함수
 	  $(".custom-option").on("click", function () {
-      const issueType = $("#issueType").text();
+      const issueStatus = $("#issueStatus").text();
       const issuePriority = $("#issuePriority").text();
 
-      console.log(issueType);
+      console.log(issueStatus);
       console.log(issuePriority);
         
       const data = {
-      	issueType: issueType,
+      	issueStatus: issueStatus,
         issuePriority: issuePriority,
         state: "ajax"
       };
@@ -42,11 +42,11 @@ $(document).ready(function () {
 
 //필터링 ajax
 function getFilteredData(data) {
-    console.log("Ajax 요청 issueType: " + data.issueType + ", issuePriority: " + data.issuePriority);
+    console.log("Ajax 요청 issueStatus: " + data.issueStatus + ", issuePriority: " + data.issuePriority);
 
     $.ajax({
-    		type: "POST",
-        url: "list_ajax",
+    		type: "GET",
+        url: "getFilteredIssue",
         data: data,
         success: function (data) {
             $(".all-issue-list").empty();
@@ -59,20 +59,20 @@ function getFilteredData(data) {
                     var str = '<li class="list">';
                     str += '<div class="issuetype-wrap">';
 
-                    if (item.issue_type === '버그') {
+                    if (item.type === '버그') {
                         str += '<img src="../resources/issue/img/bug.svg" class="issuetype-icon">';
-                    } else if (item.issue_type === '작업') {
+                    } else if (item.type === '작업') {
                         str += '<img src="../resources/issue/img/task.svg" class="issuetype-icon">';
-                    } else if (item.issue_type === '에픽') {
+                    } else if (item.type === '에픽') {
                         str += '<img src="../resources/issue/img/epic.svg" class="issuetype-icon">';
                     }
 
-                    str += '<span class="issuetype" style="margin-left:20px !important">' + item.issue_type + '</span>';
-                    str += '<a href="issuedetail?num=' + item.issue_id + '">';
-                    str += '<span class="issue-title" style="margin-left:5px !important">' + item.issue_subject + '</span></a></div>';
+                    str += '<span class="issuetype" style="margin-left:20px !important">' + item.type + '</span>';
+                    str += '<a href="issue-detail?num=' + item.id + '">';
+                    str += '<span class="issue-title" style="margin-left:5px !important">' + item.subject + '</span></a></div>';
                     str += '<div class="issuewriter-created">';
                     str += '<span class="issue-writer">' + item.create_user + '</span>';
-                    str += '<span class="issue-created" style="margin-left:25px !important">' + item.issue_created + '</span>';
+                    str += '<span class="issue-created" style="margin-left:25px !important">' + item.created + '</span>';
                     str += '</div></li>';
 
                     $('.all-issue-list').append(str);
@@ -93,8 +93,8 @@ function getFilteredData(data) {
 //검색 AJAX
 	function getSearchList() {
 		$.ajax({
-			type: "POST", 
-			url: "issue_search", 
+			type: "Get", 
+			url: "getSearchedIssue", 
 			data: $("form[name=search-form]").serialize(),
 			dataType: "json",
 			success: function (data) {
@@ -106,20 +106,20 @@ function getFilteredData(data) {
 						var str = '<li class="list">';
 						str += '<div class="issuetype-wrap">';
 						
-						if(item.issue_type === '버그'){
+						if(item.type === '버그'){
 							str += '<img src="../resources/issue/img/bug.svg" class="issuetype-icon">';
-						} else if(item.issue_type === '작업'){
+						} else if(item.type === '작업'){
 							str += '<img src="../resources/issue/img/task.svg" class="issuetype-icon">';
-						} else if(item.issue_type === '에픽'){
+						} else if(item.type === '에픽'){
 							str += '<img src="../resources/issue/img/epic.svg" class="issuetype-icon">';
 						}
 						
-						str += '<span class="issuetype" style="margin-left:20px !important">' + item.issue_type + '</span>';
-						str += '<a href="issuedetail?num=' + item.issue_id + '">';
-						str += '<span class="issue-title" style="margin-left:5px !important">' + item.issue_subject + '</span></a></div>';
+						str += '<span class="issuetype" style="margin-left:20px !important">' + item.type + '</span>';
+						str += '<a href="issue-detail?num=' + item.id + '">';
+						str += '<span class="issue-title" style="margin-left:5px !important">' + item.subject + '</span></a></div>';
 						str += '<div class="issuewriter-created">';
 						str += '<span class="issue-writer">' + item.create_user + '</span>';
-						str += '<span class="issue-created" style="margin-left:25px !important">' + item.issue_created + '</span>';
+						str += '<span class="issue-created" style="margin-left:25px !important">' + item.created_at + '</span>';
 						str += '</div></li>';
 				
 						$('.all-issue-list').append(str);

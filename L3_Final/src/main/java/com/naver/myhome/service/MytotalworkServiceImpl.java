@@ -19,14 +19,21 @@ public class MytotalworkServiceImpl implements MytotalworkService{
 		this.dao  = dao;
 	}
 
-	public  List<Mytotalwork> searchmytotalwork(String searchtitle) {
-		return dao.searchmytotalwork(searchtitle);
+	
+	@Override
+	public List<Mytotalwork> getMyTotalWorks() {
+		// TODO Auto-generated method stub
+		return dao.getMyTotalWorks();
 	}
 
+
+
 	@Override
-	public List<Mytotalwork> getMytotalworkList() {
+	public List<Mytotalwork> getSearchList(String search_word) {
 		// TODO Auto-generated method stub
-		return dao.mytotallist();
+		return dao.getSearchList(search_word);
 	}
+
+
 
 }
