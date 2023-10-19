@@ -5,8 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>프로젝트 생성</title>
-
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap">
     <link href="../resources/project/css/createProject.css" rel="stylesheet">
+        <style>
+    	body {
+    		font-family: 'Nanum Gothic', sans-serif;
+    	}
+    	
+    	.on {
+    		font-weight:700
+    	}
+    	</style>
 </head>
 <body>
 	<form action="create" method="Post" name="projectform">
@@ -17,7 +26,7 @@
 	<div class="card">
 		<div class="CreateProject">
 			<div style="display:flex; justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 20px;">
-				<span id="header-span">프로젝트 만들기</span>
+				<span id="header-span">프로젝트 생성</span>
 			</div>
 
 			<div class="create-input-info">
@@ -38,6 +47,7 @@
 		<img id="background-img"
 			src="../resources/project/img/template-bg.png">
 	</div>
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	</form>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
