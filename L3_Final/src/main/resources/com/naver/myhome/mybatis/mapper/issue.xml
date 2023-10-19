@@ -23,9 +23,12 @@
 	</select>
 
 	<select id="getIssueList" resultType="issue">
-		select * from issue 
+		select i.*,
+		(SELECT name FROM users WHERE id = i.create_user) AS create_user_name
+		from issue i
 		where project_id = 1
 		order by created_at desc
+		<!-- 프로젝트 id는 세션 또는 쿠키에서 가져온 값으로 대체 -->
 	</select>
 	
 	<select id="getStatusCount" resultType="issue">
@@ -40,7 +43,9 @@
 	
 
 	<select id="getFilteredIssueList" resultType="com.naver.myhome.domain.Issue">
-  	SELECT * FROM issue
+  	SELECT i.*,
+  	(SELECT name FROM users WHERE id = i.create_user) AS create_user_name
+  	FROM issue i
 		<where>
   		<if test='issueStatus != "-"'>
     		status = #{issueStatus}
@@ -53,8 +58,9 @@
 	</select>
 
 	<select id="searchIssues" resultType="com.naver.myhome.domain.Issue">
-   	SELECT *
-		FROM issue
+   	SELECT i.*,
+   	(SELECT name FROM users WHERE id = i.create_user) AS create_user_name
+		FROM issue i
 			WHERE UPPER(subject) LIKE '%' || UPPER(#{searchText}) || '%'
    		OR UPPER(create_user) LIKE '%' || UPPER(#{searchText}) || '%'
    		ORDER BY created_at DESC
@@ -67,7 +73,7 @@
     		status = #{status}
   		</if>
  		</where>
- 		<!-- and user_id = #{user_id} -->
+ 		and assigned = 1
   	ORDER BY created_at DESC
   </select>
   
@@ -94,10 +100,10 @@
   	
   	insert into issue
   	values
-  	(#{id}, 1, 
-  	1, #{type},
+  	(#{id}, #{project_id}, 
+  	#{create_user}, #{type},
   	#{priority}, #{subject}, #{content},
-  	#{status}, #{reporter}, #{assigned}, SYSDATE)
+  	#{status}, #{create_user}, #{assigned}, SYSDATE)
   </insert>
 
 	<select id="getIssueDetail" resultType="issue">
@@ -107,17 +113,21 @@
 		issue_subject, issue_content, issue_reporter, issue_assigned, issue_created
 		from issue -->
 		
-		select
-		*
-		from issue
-		where id = #{num}
+		SELECT
+    i.*,
+    (SELECT name FROM users WHERE id = i.create_user) AS create_user_name,
+    (SELECT NAME FROM users WHERE id = i.assigned) AS assigned_user_name,
+    (SELECT TITLE FROM project WHERE id = 
+        (SELECT project_id FROM ISSUE WHERE id = #{num})) as project_name
+    FROM issue i
+    WHERE i.id = #{num}
 	</select>
 	
 <update id="updateStatus">
   UPDATE issue
   SET status = #{status}
-  <if test="selectedUserName != null and selectedUserName != ''" >
-    , assigned = #{selectedUserName}
+  <if test="selectedUserId != null and selectedUserId != ''" >
+    , assigned = #{selectedUserId}
   </if>
   WHERE id = #{issueId}
 </update>
@@ -134,8 +144,7 @@
 		where issue_id = #{issue_id} -->
 		
 		update issue
-		set project_id = 1,
-				type = #{type},
+		set type = #{type},
 				priority = #{priority},
 				subject = #{subject},
 				content = #{content},

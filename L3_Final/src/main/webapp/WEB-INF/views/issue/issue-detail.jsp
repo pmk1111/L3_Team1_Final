@@ -10,7 +10,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" 
     	  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
-
+		<meta name="_csrf" content="${_csrf.token}">
+    <meta name="_csrf_header" content="${_csrf.headerName}">
+    
     <title>WidUs - 이슈 상세보기</title>
     <meta name="description" content="" />
     
@@ -69,7 +71,7 @@
 
                   <div class="card-body issue-card">
                     <div class="issue-location">
-                      프로젝트 / 테스트 프로젝트 / ${issuedata.subject}
+                      프로젝트 / ${issuedata.project_name} / ${issuedata.subject}
 
                     </div>
                     <hr class="issue-hr">
@@ -77,7 +79,7 @@
                     <div class="issue-write-info">
                     	<div class="issue-writer-date">
                       	<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto user-img" />
-                      	<span class="issue-writer">${issuedata.create_user}</span> <sup class="issue-create">${issuedata.created_at}</sup>
+                      	<span class="issue-writer">${issuedata.create_user_name}</span> <sup class="issue-create">${issuedata.created_at}</sup>
                       </div>
                       
                       
@@ -85,12 +87,12 @@
                       <img src="../resources/issue/img/settings.svg" class="issue-setting-icon">
                       
                       <ul class="issue-setting-dropdown">
-                      	<li class="issue-dropdown-item copy-url">
+                      	<li class="issue-dropdown-item copy-url" onclick="clip()">
                       		<img src="../resources/issue/img/copyurl.svg" class="issue-setting-icon link-copy-icon">
                       		<span>링크 복사</span>
                       	</li>
                       	
-                      	<li class="issue-dropdown-item issue-edit">
+                      	<li class="issue-dropdown-item issue-edit" onclick="getProjectIdAndTeam()">
                       		<img src="../resources/issue/img/edit.svg" class="issue-setting-icon edit-icon">
                       		<span>수정</span>
                       	</li>
@@ -119,7 +121,7 @@
                         </div>
                       </div>
                       <div class="issue-assigned-area">
-                        <span>담당자</span><span class="issue-assigned">${issuedata.assigned}</span>
+                        <span>담당자</span><span class="assigned-user">${issuedata.assigned_user_name}</span>
                       </div>
                       <hr class="issue-hr">
 
@@ -286,27 +288,6 @@
 		<input type="hidden" class="choose-assignerrr" name="issue_assigned_name">
 		<input type="hidden" class="selected-assigner-id" name="issue_assigned_id">
 		<ul class="select-assign-dropdown">
-			<li class="assign-dropdown-item">
-				<div>
-					<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="h-auto user-img" />
-					<span class="user-name">직원 1</span>
-				</div>
-				<span class="user-id">@1</span>
-			</li>
-			<li class="assign-dropdown-item">
-				<div>
-					<img src="../resources/mainboard/assets/img/avatars/1.png" class="h-auto user-img" />
-					<span class="user-name">직원 2</span>
-				</div>
-				<span class="user-id">@2</span>
-			</li>
-			<li class="assign-dropdown-item">
-				<div>
-					<img src="../resources/mainboard/assets/img/avatars/1.png" class="h-auto user-img" />
-					<span class="user-name">직원 3</span>
-				</div>
-				<span class="user-id">@3</span>
-			</li>
 			<!-- 나중에 해당 프로젝트에 참여 중인 사용자를 불러온다. -->
 		</ul>
 		<div class="status-update-modal-btn-wrap">
@@ -364,6 +345,32 @@ function arraysEqual(arr1, arr2) {
     return true;
 }
 
+function getProjectIdAndTeam() {
+    $.ajax({
+      type: "GET",
+      url: "getProjectAndTeamInfo",
+      data: {
+          projectId: 1 // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
+      },
+      success: function (response) {
+        if (response.length > 0) {
+        	console.log(response)
+        	
+          $('.user-info').empty();
+          $('.project-name').val(response[0].projectTitle);
+          response.forEach(function (item) {
+            let str = '<div class="issue-create-custom-option" data-value="' + item.userId + '">' + item.userName + '</div>';
+            $('.user-info').append(str);
+           }); // forEach end
+          } else {
+              console.log("가져온 프로젝트, 사용자 정보 없음");
+          }
+        },
+        error: function (error) {
+          console.error("Error: " + error);
+        }
+    }); //ajax end
+} // getProjectIdAndTeam end
 </script>
   </body>
 </html>
