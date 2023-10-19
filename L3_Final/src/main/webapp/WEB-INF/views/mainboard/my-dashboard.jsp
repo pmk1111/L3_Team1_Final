@@ -10,6 +10,8 @@
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 
 <title>WidUs - 대시보드</title>
 <meta name="description" content="" />
@@ -200,7 +202,7 @@
 									<div class="card-body">
 										<div id="memo-content" contenteditable="true">
 											<c:forEach var="m" items="${memolist}">
-												${m.memo_content}
+												${m.content}
 											</c:forEach>
 										</div>
 									</div>
@@ -240,23 +242,23 @@
 																<div class="type-title">
 
 																	<c:choose>
-																		<c:when test="${i.issue_type eq '버그'}">
+																		<c:when test="${i.type eq '버그'}">
 																			<img src="../resources/issue/img/bug.svg" class="issuetype-icon">
 																			<span>버그</span>
 																		</c:when>
-																		<c:when test="${i.issue_type eq '에픽'}">
+																		<c:when test="${i.type eq '에픽'}">
 																			<img src="../resources/issue/img/epic.svg" class="issuetype-icon">
 																			<span>에픽</span>
 																		</c:when>
-																		<c:when test="${i.issue_type eq '작업'}">
+																		<c:when test="${i.type eq '작업'}">
 																			<img src="../resources/issue/img/task.svg" class="issuetype-icon">
 																			<span>작업</span>
 																		</c:when>
 																	</c:choose>
-																<a href="../issue/issue-detail?num=${i.issue_id}">
-																	<span class="post-title">${i.issue_subject}</span>
+																<a href="../issue/issue-detail?num=${i.id}">
+																	<span class="post-title">${i.subject}</span>
 																</a>
-															</div> <span class="post-date">${i.issue_created}</span>
+															</div> <span class="post-date">${i.created_at}</span>
 															</li>
 														</c:forEach>
 													</c:otherwise>

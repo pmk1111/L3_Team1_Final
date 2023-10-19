@@ -1,5 +1,6 @@
 $(document).ready(function () {
-
+	var csrfToken = $("meta[name='_csrf']").attr("content");
+	
 	//mydashboard calendar
 	function prevMonth(date) {
 		var target = new Date(date);
@@ -142,6 +143,9 @@ $(document).ready(function () {
             url: '../mainboard/getschedule', // 서버 엔드포인트 URL 설정
             data: JSON.stringify(SelectedDate), // 선택된 데이터를 JSON 형식으로 전달
             contentType: 'application/json', // 데이터 타입 설정
+            //beforeSend: function (xhr) {
+            //    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+            //},
             success: function (response) {
                 console.log('서버 응답:', response);
                 if (response.length > 0) {
@@ -176,7 +180,7 @@ $(document).ready(function () {
 
 
 const memoContent = document.getElementById('memo-content');
-const csrfToken = 'csrf토큰 값';
+
 let memoTxt = memoContent.textContent.trim();
 let textExist = "";
 
@@ -206,6 +210,9 @@ function saveMemo() {
         data: {
             memoTxt: newText
         },
+        //beforeSend: function (xhr) {
+        //        xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        //},
         success: function (data) {
             memoContent.innerHTML = ""; // 초기화
             memoContent.innerHTML = textExist; // 클릭 이후의 내용으로 복원
@@ -227,96 +234,100 @@ window.addEventListener('load', function () {
 });
 
 
+// 상태 갯수를 가져와 표시
+$.ajax({
+    url: '../mainboard/CountPerStatus',
+    type: 'GET',
+    beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+    },
+    success: function (issuecount) {
+        if (issuecount.length > 0) {
+            // 데이터가 비어있지 않으면 작업 수행
+            console.log(issuecount[0].totalcount);
+						console.log(issuecount[0].todocount);
+						console.log(issuecount[0].progresscount);
+						console.log(issuecount[0].resolvedcount);
+						console.log(issuecount[0].donecount);
+						
+            // issuecount 데이터를 사용하여 숫자 업데이트
+            $(".total-work span").text(issuecount[0].totalcount);
+            $(".ToDo-work>h4>span").text(issuecount[0].todocount);
+            $(".Progress-work>h4>span").text(issuecount[0].progresscount);
+            $(".Resolved-work>h4>span").text(issuecount[0].resolvedcount);
+            $(".Done-work>h4>span").text(issuecount[0].donecount);
+
+            // animatePercentage() 함수 호출
+            animatePercentage();
+            console.log('============================')
+            console.log($('.ToDo-work span').text());
+        } else {
+            // 데이터가 비어 있는 경우의 처리
+            console.log("데이터가 비어 있습니다.");
+        }
+    },
+    error: function (error) {
+        // 데이터 가져오기에 실패했을 때 이 코드를 실행
+        console.error('데이터를 가져오는 중에 오류가 발생했습니다:', error);
+    }
+});
 
 
+function animatePercentage() {
+    // totalWorkCount를 한 번만 계산하도록 수정
+    const totalWorkCount = parseInt($(".total-work span").text());
+    
+    $(".situation-list").not(".total-work").each(function () {
+        const workCount = parseInt($(this).find("span").text());
+        const percent = Math.floor((workCount / totalWorkCount) * 100);
+
+				console.log(workCount);
+        $(this).find(".js-chart-percent").prop('Counter', 0).animate({
+            Counter: percent
+        }, {
+            duration: 1000,
+            easing: 'swing',
+            step: function (now) {
+                // 이 부분에서 Math.round 사용하지 않음
+                $(this).text(Math.round(now) + "%");
+            }
+        });
+    });
+}
 
 
+// counter 코드는 그대로 유지
+const counterElement = $("#counter");
+const targetNumber = 1199;
+let duration;
 
+if (targetNumber < 100) {
+    duration = 1000;
+} else if (targetNumber >= 100) {
+    duration = 1500;
+}
 
+let currentNumber = 0;
+let startTime = null;
 
+function updateCounter(timestamp) {
+    if (!startTime) {
+        startTime = timestamp;
+    }
 
+    const progress = timestamp - startTime;
+    const speedFactor = 1 - Math.exp(-progress / duration * 5); // 속도를 조절
 
+    currentNumber = Math.round(targetNumber * speedFactor);
+    counterElement.text(currentNumber);
 
+    if (currentNumber < targetNumber) {
+        requestAnimationFrame(updateCounter);
+    }
+}
 
+requestAnimationFrame(updateCounter);
 
-	function animatePercentage() {
-		const totalWorkCount = parseInt($(".total-work span").text());
-
-		$(".situation-list").not(".total-work").each(function () {
-			const workCount = parseInt($(this).find("span").text());
-			const percent = Math.round((workCount / totalWorkCount * 100));
-
-			$(this).find(".js-chart-percent").prop('Counter', 0).animate({
-				Counter: workCount
-			}, {
-				duration: 1000,
-				easing: 'swing',
-				step: function (now) {
-					$(this).text(Math.ceil(now) + "%");
-				}
-			});
-		});
-	}
-
-
-	//work-summary load
-	$.ajax({
-		url: '../mainboard/CountPerStatus',
-		type: 'GET',
-		success: function (issuecount) {
-			if (issuecount.length > 0) {
-				// 데이터가 비어있지 않으면 작업 수행
-
-				// issuecount 데이터를 사용하여 숫자 업데이트
-				$(".total-work span").text(issuecount[0].totalcount);
-				$(".ToDo-work span").text(issuecount[0].todocount);
-				$(".Progress-work span").text(issuecount[0].progresscount);
-				$(".Resolved-work span").text(issuecount[0].resolvedcount);
-				$(".Done-work span").text(issuecount[0].donecount);
-
-				// animatePercentage() 함수 호출
-				animatePercentage();
-			} else {
-				// 데이터가 비어 있는 경우의 처리
-				console.log("데이터가 비어 있습니다.");
-			}
-		},
-		error: function (error) {
-			// 데이터 가져오기에 실패했을 때 이 코드를 실행
-			console.error('데이터를 가져오는 중에 오류가 발생했습니다:', error);
-		}
-	});
-
-	const counterElement = $("#counter");
-	const targetNumber = 1199;
-	let duration;
-
-	if (targetNumber < 100) {
-		duration = 1000;
-	} else if (targetNumber >= 100) {
-		duration = 1500;
-	}
-
-	let currentNumber = 0;
-	let startTime = null;
-
-	function updateCounter(timestamp) {
-		if (!startTime) {
-			startTime = timestamp;
-		}
-
-		const progress = timestamp - startTime;
-		const speedFactor = 1 - Math.exp(-progress / duration * 5); // 속도를 조절
-
-		currentNumber = Math.round(targetNumber * speedFactor);
-		counterElement.text(currentNumber);
-
-		if (currentNumber < targetNumber) {
-			requestAnimationFrame(updateCounter);
-		}
-	}
-
-	requestAnimationFrame(updateCounter);
 
 
 
@@ -338,21 +349,24 @@ window.addEventListener('load', function () {
 			data: {
 				status: selectedWorkType
 			},
+			//beforeSend: function (xhr) {
+      //          xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+      //},
 			success: function (mywork) {4
 				$('.board').empty();
 				if (mywork.length > 0) {
 					mywork.forEach(function (item) {
 						let str = '<li><div class="type-title">'
-						if (item.issue_type === '버그') {
+						if (item.type === '버그') {
 							str += '<img src="../resources/issue/img/bug.svg"> <span>버그</span>'
-						} else if (item.issue_type === '작업') {
+						} else if (item.type === '작업') {
 							str += '<img src="../resources/issue/img/task.svg"> <span>작업</span>'
 						} else {
 							str += '<img src="../resources/issue/img/epic.svg"> <span>에픽</span>'
 						}
-						str += '<a href="../issue/issue-detail?num=' + item.issue_id + '">'
-						str += '<span class="post-title">' + item.issue_subject + '</span></div></a>'
-						str += '<span class="post-date">' + item.issue_created + '</span></li>'
+						str += '<a href="../issue/issue-detail?num=' + item.id + '">'
+						str += '<span class="post-title">' + item.subject + '</span></div></a>'
+						str += '<span class="post-date">' + item.created_at + '</span></li>'
 
 						$('.board').append(str);
 					});
