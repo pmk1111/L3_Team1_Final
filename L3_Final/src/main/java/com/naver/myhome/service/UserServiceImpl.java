@@ -47,12 +47,29 @@ public class UserServiceImpl implements UserService {
 //		// TODO Auto-generated method stub
 //		return 0;
 //	}
+	
+	
 //
 	@Override
 	public int insert(User user) {
 		
 		return dao.insert(user);
 	}
+	
+
+	@Override
+	public User selectByMail(String eMail) {
+		// TODO Auto-generated method stub
+		return dao.selectByMail(eMail);
+	}
+
+	@Override
+	public int getUserId(String eMail) {
+		// TODO Auto-generated method stub
+		return dao.getUserId(eMail);
+	}
+
+	
 //
 //	@Override
 //	public int isId(String id) {

@@ -85,7 +85,7 @@
 <body>
     <jsp:include page="header.jsp"></jsp:include>
 
-    <form id="joinform" name="joinform" action="joinProcess" method="post">
+    <form id="joinform" name="joinform" action="login" method="post">
 	    <div class="auth-section after-contets">
 	        <div class="accont-wrap">
 	                <div class="account">개인회원</div>
@@ -254,12 +254,16 @@
         $(document).ready(function() {
 
             $("#email").on('focusout', function() {
-                if (!validateEmail(this.value)) {
+            	if (!validateEmail(this.value)) {
                     printErrMsg("email_message", "유효한 이메일을 입력해주세요.");
+                    return;
                 } else {
                     document.getElementById("email_message").style.visibility = "hidden";
                     document.getElementById("isChkEmail").value = "Y";
                 }
+            	
+            	chkDupEmail();
+            	
             });
 
             $("#userName").on('focusout', function() {
@@ -343,7 +347,38 @@
  	        },
 	   	        async: false,
 	   	        success: function(data) {
-	   				
+	   				if(data == ""){
+	   					alert("회원가입이 성공하였습니다.");
+	   					$("#joinform").submit();
+	   				}else{
+	   					alert(data);
+	   					return;
+	   				}
+	   	        },
+	   	        error: function(error) {
+	            }
+	   		});	
+    }
+    
+    function chkDupEmail(){
+
+    	var sendForm = $("#joinform").serialize();
+    	
+	   	 $.ajax({
+	   	        url: "../user/chk-dupl-email",
+	   	        type: "POST",
+	   	        data: sendForm,
+	   	     	beforeSend: function(xhr) {   // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+ 	           		xhr.setRequestHeader(header, token);
+ 	        	},
+	   	        async: false,
+	   	        success: function(data) {
+	   	        	if(data == "1"){
+	   	        	 	printErrMsg("email_message", "중복된 이메일입니다.");
+                    	return;
+	   	        	}else{
+	   	        		return true;
+	   	        	}
 	   	        },
 	   	        error: function(error) {
 	            }

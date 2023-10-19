@@ -27,7 +27,7 @@ public class LoginFailHandler implements AuthenticationFailureHandler{
 		logger.info(exception.getMessage());
 		logger.info("로그인 실패");
 		session.setAttribute("loginfail", "loginFailMsg");
-		String url = request.getContextPath() + "/member/login";
+		String url = request.getContextPath() + "/user/login";
 		response.sendRedirect(url);
 		
 		

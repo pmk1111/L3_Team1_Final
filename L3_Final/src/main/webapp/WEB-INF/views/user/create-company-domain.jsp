@@ -102,6 +102,7 @@
     </div>
 	          		  <input type="hidden" id="isChkDomain" name="isChkDomain" value="N" />
 	          		  <input type="hidden" id="isChkEid" name="isChkEid" value="N" />
+	          		     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     </form>
     <div id="signupFooterArea" style="display: block;">
         <!-- ======= Footer ======= -->
@@ -190,6 +191,9 @@
    
 </body>
  <script type='text/javascript'>
+ 	let token = $("meta[name='_csrf']").attr("content");
+	let header = $("meta[name='_csrf_header']").attr("content");
+	 
         function printErrMsg(id,msg){
             const element = document.getElementById(id);
             element.innerHTML = msg;
@@ -209,6 +213,8 @@
         $(document).ready(function() {
             
             $("#companyDomain").on('focusout', function() {
+            	
+            	
                 if (!validateURL(this.value)) {
                     document.getElementById("helpMsg").innerHTML = "회사 URL은 3~30글자의 영문자/숫자/하이픈(-)으로만 입력해야 합니다.";
                     document.getElementById("helpMsg").style.color = "red";
@@ -217,6 +223,8 @@
                     document.getElementById("helpMsg").style.color = "#623ad6";
                     document.getElementById("isChkDomain").value = "Y";
                 }
+                
+                chkDupDomain();
             });
       
          $("#eid").on('focusout', function() { 
@@ -235,7 +243,7 @@
         	    var companyDomain = document.getElementById('companyDomain');
         	    var eidInput= document.getElementById('eid');
 
-        	    if (!validateURL(companyNameInput.value)) {
+        	    if (companyNameInput.value == '') {
         	        console.log("Invalid company name");
         	        return false;
         	    }
@@ -250,9 +258,63 @@
         	        return false;
         	    }
 
-        	   $("#joinform").submit();
+        	    saveTmpData();
         	});
       });
+        
+        function chkDupDomain(){
+
+        	var sendForm = $("#joinform").serialize();
+        	//companyDomain
+        	
+    	   	 $.ajax({
+    	   	        url: "../company/chk-dupl-domain",
+    	   	        type: "POST",
+    	   	        data: sendForm,
+    	   	     	beforeSend: function(xhr) {   // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+     	           		xhr.setRequestHeader(header, token);
+     	        	},
+    	   	        async: false,
+    	   	        success: function(data) {
+    	   	        	if(data == "1"){
+    	   	        	 	document.getElementById("helpMsg").innerHTML = "회사 도메인이 중복됩니다!!";
+   	                     	document.getElementById("helpMsg").style.color = "red";
+   	                  		document.getElementById("isChkDomain").value = "N";
+                        	return;
+    	   	        	}else{
+    	   	        		return true;
+    	   	        	}
+    	   	        },
+    	   	        error: function(error) {
+    	            }
+    	   		});	
+       
+        } 
+       
+        function saveTmpData(){
+
+        	var sendForm = $("#joinform").serialize();
+        	//companyDomain
+        	
+    	   	 $.ajax({
+    	   	        url: "../company/save-tmp-data",
+    	   	        type: "POST",
+    	   	        data: sendForm,
+    	   	     	beforeSend: function(xhr) {   // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+     	           		xhr.setRequestHeader(header, token);
+     	        	},
+    	   	        async: false,
+    	   	        success: function(data) {
+    	   	        	if(data == ""){
+    	   	        		$("#joinform").submit();
+    	   	        	}
+    	   	        	
+    	   	        },
+    	   	        error: function(error) {
+    	            }
+    	   		});	
+       
+        } 
 
 </script>
 </html>
