@@ -36,8 +36,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.naver.myhome.domain.Files;
 import com.naver.myhome.domain.Issue;
+import com.naver.myhome.domain.ProjectAndUser;
 import com.naver.myhome.service.FileService;
 import com.naver.myhome.service.IssueService;
+import com.naver.myhome.service.ProjectAndUserService;
 
 @Controller
 @RequestMapping(value = "/issue")
@@ -47,14 +49,16 @@ public class IssueController {
 
 	private IssueService issueService;
 	private FileService fileService;
+	private ProjectAndUserService projectAndUserService;
 
 	@Value("${file.upload.path}")
 	private String saveFolder;
 
 	@Autowired
-	public IssueController(IssueService issueService, FileService fileService) {
+	public IssueController(IssueService issueService, FileService fileService, ProjectAndUserService projectAndUserService) {
 		this.issueService = issueService;
 		this.fileService = fileService;
+		this.projectAndUserService = projectAndUserService;
 	}
 
 	@GetMapping(value = "/issue-list")
@@ -94,6 +98,12 @@ public class IssueController {
 		return issueService.searchIssues(searchText);
 	}
 
+	@ResponseBody
+	@GetMapping("/getProjectAndTeamInfo")
+	public List<ProjectAndUser> getProjectAndTeamInfo(@RequestParam int projectId){
+		return projectAndUserService.getProjectAndUserInfo(projectId);
+	}
+	
 	@PostMapping("createIssue")
 	public String createIssue(Issue issue, HttpServletRequest request, MultipartFile[] uploadfiles) throws Exception {
 		List<Files> fileList = new ArrayList<>();
@@ -101,9 +111,13 @@ public class IssueController {
 		logger.info("가져온 이슈 번호: " + issueId);
 
 		// issue_id는 다음 시퀀스 번호를 가져오니, 
-		// select issue_id.nextval from dual로 가져온 값을 id에 할당
+		// select issue_id.nextval from dual로 가져온 값을 id에 할당한 후 issue / files DTO에 할당해준다.
 
 		issue.setId(issueId);
+		issue.setProject_id(1);
+		//issue.setProject_id(projectId);
+		issue.setCreate_user(2);
+		//작성자 정보는 세션에 저장된 user의 id를 불러와 저장한다.
 		issueService.createIssue(issue);
 		logger.info(issue.toString());
 
@@ -246,10 +260,10 @@ public class IssueController {
 	@ResponseBody
 	public Map<String, Object> statusUpdate(@RequestParam int issueId, 
 			@RequestParam String status, 
-			@RequestParam String selectedUserName) {
+			@RequestParam String selectedUserId) {
 		Map<String, Object> response = new HashMap<>();
 		try {
-			issueService.updateStatus(issueId, status, selectedUserName);
+			issueService.updateStatus(issueId, status, selectedUserId);
 			response.put("status", "success");
 		} catch (Exception e) {
 			response.put("status", "error");
