@@ -70,6 +70,15 @@ public class MyDashboardController {
 	@ResponseBody
 	public List<Issue> CountPerStatus(){
 		List<Issue> issuecount = issueService.getStatusCount();
+		
+	    for (Issue issue : issuecount) {
+	        System.out.println("Total Count: " + issue.getTotalcount());
+	        System.out.println("To Do Count: " + issue.getTodocount());
+	        System.out.println("Progress Count: " + issue.getProgresscount());
+	        System.out.println("Resolved Count: " + issue.getResolvedcount());
+	        System.out.println("Done Count: " + issue.getDonecount());
+	    }
+		
 		return issuecount;
 	}
 	
@@ -85,7 +94,7 @@ public class MyDashboardController {
 	@ResponseBody
 	public int saveMemoContent(Memo memo, @RequestParam("memoTxt") String memoTxt) {
 		List<Memo> memoList = memoService.getMemoContent(userId);
-		String currentMemo = memo.getMemo_content();
+		String currentMemo = memo.getContent();
 		
 		int response;
 		

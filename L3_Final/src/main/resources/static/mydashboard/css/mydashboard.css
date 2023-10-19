@@ -267,7 +267,8 @@ tbody td a:hover {
 
 tbody td a>span {
 	position: relative;
-	top: 2px;
+	top: 2.5px;
+	right:0.1px;
 }
 
 .date-select {
