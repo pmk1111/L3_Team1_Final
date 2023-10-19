@@ -90,13 +90,17 @@
     .issue-content {
       width: 99%;
       height: 300px;
-      /* border: 1.2px solid lightgrey; */
+      border: 1.2px solid lightgrey;
       border-radius: 3px;
       resize: none;
       padding: 10px 0px 0px 10px;
       font-size: 16px;
       font-weight: 500;
       color: #484848;
+    }
+    
+    .issue-content:focus{
+    	outline: none
     }
 
     .issue-content::placeholder {

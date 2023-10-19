@@ -19,7 +19,7 @@
 						<span>프로젝트</span><sup>*</sup>
 					</div>
 					<div class="issue-create-custom-select">
-    				<input type="text" class="issue-create-custom-selected project-name-seleted" name="project_name" value="">
+    				<input type="text" class="issue-create-custom-selected project-name-seleted" name="project_name" value="${issuedata.project_name}">
     				<div class="issue-create-custom-options">
         		<div class="issue-create-custom-option">전사관리</div>
         		<div class="issue-create-custom-option">버그수정</div>
@@ -74,7 +74,8 @@
 					<div class="text">
 						<span>보고자</span><sup>*</sup>
 					</div>
-					<input class="issue-reporter-selected" type="text" name="reporter" value="${issuedata.reporter}" readonly>
+					<input class="issue-reporter-selected" type="text" value="${issuedata.create_user_name}" readonly>
+					<input type="hidden" name="reporter" value="${issuedata.create_user}">
 				</div>
 
 				<div class="issue-assigned-wrap">
@@ -82,12 +83,9 @@
 						<span>담당자</span><sup>*</sup>
 					</div>
 					<div class="issue-create-custom-select">
-						<input type="text" class="issue-create-custom-selected issue-assigned" name="assigned" value="${issuedata.assigned}">
-						<div class="issue-create-custom-options">
-							<div class="issue-create-custom-option" data-value="전사관리">직원1</div>
-							<div class="issue-create-custom-option" data-value="버그수정">직원2</div>
-							<div class="issue-create-custom-option" data-value="일정관리">직원3</div>
-							<div class="issue-create-custom-option" data-value="배포준비">직원4</div>
+						<input type="text" class="issue-create-custom-selected issue-assigned" value="${issuedata.assigned_user_name}">
+						<input type="hidden" name="assigned" value="${issuedata.assigned}">
+						<div class="issue-create-custom-options user-info">
 						</div>
 					</div>
 
@@ -140,5 +138,6 @@
 				<button type="submit" class="submit-btn">제출</button>
 			</div>
 			</div>
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			</form>
 		</div>

@@ -13,10 +13,11 @@
 				<div class="select-project-wrap">
 					<div class="text">
 						<span>프로젝트</span><sup>*</sup>
+						<input type="hidden" name="projectId">
 					</div>
 					<div class="issue-create-custom-select">
 
-    				<input type="text" class="issue-create-custom-selected project-name" name="project_id" value="">
+    				<input type="text" class="issue-create-custom-selected project-name" readonly>
     				<div class="issue-create-custom-options">
         		<div class="issue-create-custom-option">전사관리</div>
         		<div class="issue-create-custom-option">버그수정</div>
@@ -72,24 +73,21 @@
 
 				</div>
 
-				<div class="issue-reporter-wrap">
+<!-- 				<div class="issue-reporter-wrap">
 					<div class="text">
 						<span>보고자</span><sup>*</sup>
 					</div>
 					<input class="issue-reporter" type="text" name="reporter">
 				</div>
-
+ -->
 				<div class="issue-assigned-wrap">
 					<div class="text">
 						<span>담당자</span><sup>*</sup>
 					</div>
 					<div class="issue-create-custom-select">
-						<input type="text" class="issue-create-custom-selected issue-assigned" name="assigned" value="" >
-						<div class="issue-create-custom-options">
-							<div class="issue-create-custom-option" data-value="전사관리">직원1</div>
-							<div class="issue-create-custom-option" data-value="버그수정">직원2</div>
-							<div class="issue-create-custom-option" data-value="일정관리">직원3</div>
-							<div class="issue-create-custom-option" data-value="배포준비">직원4</div>
+						<input type="text" class="issue-create-custom-selected issue-assigned" value="" readonly>
+						<input type="hidden" name="assigned">
+						<div class="issue-create-custom-options user-info">
 						</div>
 					</div>
 
@@ -131,5 +129,6 @@
 				<button type="submit" class="submit-btn">제출</button>
 			</div>
 			</div>
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			</form>
 		</div>
