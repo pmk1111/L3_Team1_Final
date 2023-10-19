@@ -106,6 +106,18 @@ public class AdminServiceImpl implements AdminService {
 		return dao.getAccesslist();
 	}
 
+	@Override
+	public List<Access> getDayCount() {
+		// TODO Auto-generated method stub
+		return dao.getDayCount();
+	}
+
+	@Override
+	public List<Access> getMonthCount() {
+		// TODO Auto-generated method stub
+		return dao.getMonthCount();
+	}
+
 		
 
 
