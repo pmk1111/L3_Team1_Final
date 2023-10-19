@@ -73,6 +73,14 @@
        
 
             <!-- Dashboard -->
+            
+             <li class="menu-item active">
+              <a href="${pageContext.request.contextPath}/admin/admin-dashboard" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">관리자 대시보드</div>
+              </a>
+            </li>
+            
             <li class="menu-item">
               <a href="${pageContext.request.contextPath}/admin/companyinfo" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>

@@ -23,6 +23,7 @@ public interface UserService {
 //	public int getSearchListCount(int index, String search_word);
 
 
+	//지니
 	public List<User> findUser(int companyInvited);
 
 	public int countUser( int companyInvited);
@@ -31,5 +32,6 @@ public interface UserService {
 
 	public int rejectUser(int userId);
 
+	//지니 끝
 
 }

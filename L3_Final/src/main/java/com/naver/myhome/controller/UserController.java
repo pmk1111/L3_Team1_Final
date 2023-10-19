@@ -41,7 +41,7 @@ public class UserController {
 	@Autowired
 
 	public UserController(UserService userservice,PasswordEncoder passwordEncoder) {
-		this.userservice = userservice;
+		this.userService = userservice;
 		this.passwordEncoder= passwordEncoder;
 	}
 	
@@ -241,7 +241,7 @@ public class UserController {
     		 String encPassword = passwordEncoder.encode(user.getPassword());
              user.setPassword(encPassword);
              System.out.println(user.getPassword());
-    		userservice.insert(user);
+    		userService.insert(user);
     		return "0";
     	}
     	
