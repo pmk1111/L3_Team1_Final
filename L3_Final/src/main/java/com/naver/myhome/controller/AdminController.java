@@ -2,16 +2,22 @@ package com.naver.myhome.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -102,30 +108,42 @@ public class AdminController {
               
 
 
-//      //비밀번호 체크
-//      @GetMapping(value = "/change-pwd" )
-//      public int checkPwd(Company company) {
-//         String companyId="1";
-//         
-//         String checkPwd = adminService.checkPwd(companyId);
-//         
-//         if(company ==null || checkPassword(company.getCompany_password(),checkPwd)) {
-//            return 0;
-//         }
-//         return 1;
-//      }
-//      
-//      
-//      @PostMapping(value = "/update-pwd")
-//      public String updatePwd(String companyId, String companyPwd, RedirectAttributes rttr, HttpSession session ){
-//         //String hashedPw = BCrypt.hashpw(memberPw1, BCrypt.gensalt());
-//         adminService.updatePwd(companypwd);
-//         session.invalidate();
-//         rttr.addFlashAttribute("message","정보 수정이 완료되었습니다. 다시 로그인해주세요");
-//         
-//         return "redirect:/home/home";
-//      });
-//      
+
+      //비밀번호 변경
+       @PostMapping(value = "/change-pwd" )
+       public String changePwd() {
+   		return "/admin/change-pwd";
+   	}
+       
+       //비밀번호 확인 처리
+       @ResponseBody
+   	   @PostMapping(value="/changePwd")
+       public String checkPwd(@RequestParam Map<String, Object> paramMap,
+    		   				  @ModelAttribute("loginCompany") Company company,
+    		   				  RedirectAttributes rattr) {
+    	   
+    	   paramMap.put("companyId", company.getId());
+    	   
+    	   int result = adminService.changePwd(paramMap);
+    	   
+    	   String message = null;
+    	   String path = null;
+    	   
+    	   if(result > 0) {
+    		   message = "비밀번호 변경 성공";
+    		   path = "info";
+    	   } else {
+    		   message = "현재 비밀번호가 일치하지 않음.";
+    		   path = "changePwd";
+    	   }
+    	   rattr.addFlashAttribute("message",message);
+    	   return "redirect:"+path;
+    	   
+    
+   	}
+   	
+       
+
       @GetMapping(value = "/list")
       public ModelAndView employeeList( ModelAndView mv){
          int companyId = 1; //회사번호
@@ -252,7 +270,9 @@ public class AdminController {
       @ResponseBody
       @PostMapping(value = "/user-uselist")
       public List<Employee> userUseList(@RequestParam("companyId")  int companyId){
-          
+
+          logger.info("여기는 user-uselist 컨트롤러");
+
          
          // 회사의 직원 목록을 가져와서 모델에 추가
           List<Employee> employee = adminService.findEmployee(companyId);
@@ -265,7 +285,9 @@ public class AdminController {
       //이용중지 리스트 가져오기
       @ResponseBody
       @PostMapping(value = "/user-stoplist")
-      public List<Employee> userStopIist(@RequestParam("companyId")  int companyId){
+
+      public List<Employee> userStopList(@RequestParam("companyId")  int companyId){
+
           
          
          // 회사의 직원 목록을 가져와서 모델에 추가
@@ -306,6 +328,9 @@ public class AdminController {
          return "admin/invite-employee";
          
       }
+
+      
+
       //지니 끝
       
       @GetMapping(value="/admin-dashboard")
@@ -334,4 +359,6 @@ public class AdminController {
          return "project/project-access-stats";
       }
       
+
    }
+

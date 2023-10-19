@@ -11,6 +11,8 @@
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 
 <title>WidUs - 이슈 상세보기</title>
 <meta name="description" content="" />
@@ -29,6 +31,8 @@
 <!--  <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />-->
 <style>
+.card{min-width:720px;}
+
 .leftbar-close {
 	background-color: #9F7AB0;
 	border-radius: 50%;
@@ -87,10 +91,13 @@
 										<div class="search-create">
 											<div class="search-area">
 												<input type="text" class="issue-search" id="searchInput" name="searchText"
-													placeholder="제목 또는 작성자를 검색하세요">
-												<input type="button" onclick="getSearchList()" value="검색">
+													placeholder="제목 또는 작성자를 검색하세요">												
+													<input type="button" id="search-btn" onclick="getSearchList()" value="검색">
+													<label for="search-btn" class="search-label">
+														<img class="search-btn-icon" src="../resources/project/img/projectboard/search.svg">
+													</label>								
 											</div>
-											<button type="button" class="create-issue">글쓰기</button>
+											<button type="button" class="create-issue" onclick="getProjectIdAndTeam()">글쓰기</button>
 										</div>
 										
 										</form>
@@ -127,8 +134,11 @@
 																<div class="custom-option" data-value="critical">critical</div>
 															</div>
 														</div></li>
-												</ul>
-													</form>
+														<li>
+															<span class="clear-filter">필터 초기화</span>
+														</li>
+													</ul>
+												</form>
 											</div>
 
 
@@ -170,7 +180,7 @@
 																</div>
 
 																<div class="issuewriter-created">
-																	<span class="issue-writer">${i.create_user}</span> 
+																	<span class="issue-writer">${i.create_user_name}</span> 
 																	<span class="issue-created">${i.created_at.substring(0, 10)}</span>
 																</div>
 															</li>
@@ -212,6 +222,36 @@
 
 	<!-- issuecreate.js -->
 	<script src="../resources/issue/js/issuecreate.js"></script>
+	
+	
+	<script type="text/javascript">
+		function getProjectIdAndTeam() {
+	    $.ajax({
+	      type: "GET",
+	      url: "getProjectAndTeamInfo",
+	      data: {
+	          projectId: 1 // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
+	      },
+	      success: function (response) {
+	        if (response.length > 0) {
+	        	console.log(response)
+	        	
+	          $('.user-info').empty();
+	          $('.project-name').val(response[0].projectTitle);
+	          response.forEach(function (item) {
+	            let str = '<div class="issue-create-custom-option" data-value="' + item.userId + '">' + item.userName + '</div>';
+	            $('.user-info').append(str);
+	           }); // forEach end
+	          } else {
+	              console.log("가져온 프로젝트, 사용자 정보 없음");
+	          }
+	        },
+	        error: function (error) {
+	          console.error("Error: " + error);
+	        }
+	    }); //ajax end
+	} // getProjectIdAndTeam end
 
+	</script>
 </body>
 </html>

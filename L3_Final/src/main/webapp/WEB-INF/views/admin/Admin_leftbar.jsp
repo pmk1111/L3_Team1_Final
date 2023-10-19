@@ -113,7 +113,9 @@
             </li>
 
 
-          <li class="menu-header small text-uppercase">
+
+			 <li class="menu-header small text-uppercase">
+
               <span class="menu-header-text">통계/리포트</span>
             </li>
             
@@ -128,7 +130,9 @@
 
 
             <li class="menu-item">
+
               <a href="${pageContext.request.contextPath}/admin/project-access-stats" class="menu-link">
+
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">프로젝트 접속 통계</div>
               </a>
@@ -143,4 +147,6 @@
             
        
           </ul>
+
         </aside>
+

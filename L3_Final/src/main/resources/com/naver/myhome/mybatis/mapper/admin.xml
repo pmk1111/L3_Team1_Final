@@ -4,116 +4,118 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.AdminMapper">
 
-	<!-- 지니 -->
-	<!-- 정상 -->
-	<select id="findEmployee" resultType="employee">
-		select u.pic, e.id ,u.name, e.department, e.position, u.email, u.phone,
-		e.auth 
-		from employee e
-			inner join
-    			users u on e.user_id = u.id
-		where e.company_id = #{companyId}
-		and e.status = 0
-		order by u.name
-	</select>
-	
-	<select id="countEmployee" resultType="int">
-		select count (*) as countValue
-		from employee e
-			inner join 
-			     users u on e.user_id = u.id
-		WHERE e.company_id = #{companyId}
-	    and e.status = 0
-	</select>
-	
-	<!-- 이용중지 -->
-	 <select id="stopEmployee" resultType="employee">
-		select u.pic, e.id ,u.name, e.department, e.position, u.email, u.phone,
-		e.auth 
-		from employee e
-			inner join
-    			users u on e.user_id = u.id
-		where e.company_id = #{companyId}
-		and e.status=1
-		order by u.name
-	</select>
-	
-	<select id="countStopEmployee" resultType="int">
-		select count (*) as countStopValue
-		from employee e
-			inner join 
-			     users u on e.user_id = u.id
-		WHERE e.company_id = #{companyId}
-		and e.status=1
-	</select>
-	
-	<!-- 이용중지 업데이트 -->
-	<update id="stopEmployeeStatus" parameterType="int">
-	update employee
-	set status= 1
-	where id=#{employeeId}
-	</update>
-	
-	<update id="useEmployeeStatus" parameterType="int">
-	update employee
-	set status= 0
-	where id=#{employeeId}
-	</update>
-	
-	<!-- 관리자 유무 업데이트 -->
-	<update id="noMoreAuth" parameterType="int">
-	update employee
-	set auth= 'N'
-	where id=#{employeeId}
-	</update>
-	
-	<update id="addAuth" parameterType="int">
-	update employee
-	set auth= 'Y'
-	where id=#{employeeId}
-	</update>
-	
-	<!-- 가입승인 후 직원 추가 -->
-	<insert id="addEmployee" >
-	INSERT INTO employee (id, company_id, user_id)
+   <!-- 지니 -->
+   <!-- 정상 -->
+   <select id="findEmployee" resultType="employee">
+      select u.pic, e.id ,u.name, e.department, e.position, u.email, u.phone,
+      e.auth 
+      from employee e
+         inner join
+             users u on e.user_id = u.id
+      where e.company_id = #{companyId}
+      and e.status = 0
+      order by u.name
+   </select>
+   
+   <select id="countEmployee" resultType="int">
+      select count (*) as countValue
+      from employee e
+         inner join 
+              users u on e.user_id = u.id
+      WHERE e.company_id = #{companyId}
+       and e.status = 0
+   </select>
+   
+   <!-- 이용중지 -->
+    <select id="stopEmployee" resultType="employee">
+      select u.pic, e.id ,u.name, e.department, e.position, u.email, u.phone,
+      e.auth 
+      from employee e
+         inner join
+             users u on e.user_id = u.id
+      where e.company_id = #{companyId}
+      and e.status=1
+      order by u.name
+   </select>
+   
+   <select id="countStopEmployee" resultType="int">
+      select count (*) as countStopValue
+      from employee e
+         inner join 
+              users u on e.user_id = u.id
+      WHERE e.company_id = #{companyId}
+      and e.status=1
+   </select>
+   
+   <!-- 이용중지 업데이트 -->
+   <update id="stopEmployeeStatus" parameterType="int">
+   update employee
+   set status= 1
+   where id=#{employeeId}
+   </update>
+   
+   <update id="useEmployeeStatus" parameterType="int">
+   update employee
+   set status= 0
+   where id=#{employeeId}
+   </update>
+   
+   <!-- 관리자 유무 업데이트 -->
+   <update id="noMoreAuth" parameterType="int">
+   update employee
+   set auth= 'N'
+   where id=#{employeeId}
+   </update>
+   
+   <update id="addAuth" parameterType="int">
+   update employee
+   set auth= 'Y'
+   where id=#{employeeId}
+   </update>
+   
+   <!-- 가입승인 후 직원 추가 -->
+   <insert id="addEmployee" >
+   INSERT INTO employee (id, company_id, user_id)
     VALUES (employee_id.nextval, #{companyId}, #{userId} )
-	</insert>
-	
-	<!-- 회사 정보 -->
-	<select id="companyInfo" resultType="Company">
-	select name, domain
-	from company
-	where id = #{companyId}
-	</select>
-	
-	<select id="companyName" resultType="String">
-	select name
-	from company
-	where id = #{companyId}
-	</select>
-	
-	<select id="companyDomain" resultType="String">
-	select domain
-	from company
-	where id = #{companyId}
-	</select>
+   </insert>
+   
+   <!-- 회사 정보 -->
+   <select id="companyInfo" resultType="Company">
+   select name, domain
+   from company
+   where id = #{companyId}
+   </select>
+   
+   <select id="companyName" resultType="String">
+   select name
+   from company
+   where id = #{companyId}
+   </select>
+   
+   <select id="companyDomain" resultType="String">
+   select domain
+   from company
+   where id = #{companyId}
+   </select>
  
- 	<!-- 회사명 업데이트 -->
- 	<update id ="updateName">
- 	update company
- 	set name = #{companyName}
- 	where id = #{companyId}
- 	</update>
- 	
- 	<!-- 회사도메인 업데이트 -->
- 	<update id ="updateDomain">
- 	update company
- 	set domain = #{companyDomain}
- 	where id = #{companyId}
- 	</update>
- 	
- 	<!-- 혜원 -->
- 	<select id="getAccesslist" resultType="Access">
+
+    <!-- 회사명 업데이트 -->
+    <update id ="updateName">
+    update company
+    set name = #{companyName}
+    where id = #{companyId}
+    </update>
+    
+    <!-- 회사도메인 업데이트 -->
+    <update id ="updateDomain">
+    update company
+    set domain = #{companyDomain}
+    where id = #{companyId}
+    </update>
+    
+    <!-- 혜원 -->
+    <select id="getAccesslist" resultType="Access">
+
 
 SELECT COUNT(*), user_id, connectdate
 FROM connectlist
@@ -127,6 +129,7 @@ GROUP BY user_id, connectdate
    
    
 </select>
+
 
 
 <select id="getDayCount" resultType="Access">
@@ -164,4 +167,5 @@ ORDER BY TO_CHAR(CONNECTDATE, 'YYYY-MM')
 </resultMap>
 
  	
+
 </mapper>
