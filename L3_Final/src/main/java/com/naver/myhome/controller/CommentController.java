@@ -1,5 +1,6 @@
 package com.naver.myhome.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +43,13 @@ public class CommentController {
 	
 	@PostMapping("/commentAdd")
 	@ResponseBody
-	public int commentAdd(Comment comment, HttpSession session, HttpServletRequest request) {
+	public int commentAdd(Comment comment, HttpSession session, HttpServletRequest request, Principal principal) {
+		int userId = 2;
+		
+//		String userEmail = principal.getName();
+//		int userId = userService.getUserId(userEmail);
+		
+		comment.setUser_id(userId);
 		int result = commentService.commentAdd(comment);
 		return result;
 	}

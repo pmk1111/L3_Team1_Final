@@ -4,7 +4,9 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.CommentMapper">
 	<select id="getCommentList" resultType="com.naver.myhome.domain.Comment">
-	select * from comments
+	select c.*,
+	(select name from users where id = c.user_id) as comment_user_name
+	from comments c
 	where issue_id = #{issue_id}
 	order by id
 </select>
@@ -21,7 +23,7 @@
 	 
 	 	insert into comments
 	 	values
-	 	(#{id}, #{issue_id}, SYSDATE, 1, #{content})
+	 	(#{id}, #{issue_id}, SYSDATE, #{user_id}, #{content})
 	</insert>
 
 	<update id="commentUpdate" parameterType="comment">
