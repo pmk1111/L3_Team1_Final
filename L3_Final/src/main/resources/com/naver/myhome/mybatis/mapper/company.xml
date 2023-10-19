@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.naver.myhome.mybatis.mapper.CompanyMapper">
+
+	<select id="selectByDomain" resultType="company" parameterType="String">
+		select * from company where domain = #{companyDomain}
+	</select>
+	
+	<select id="selectByMail" resultType="company" parameterType="String">
+		select * from company where email = #{email}
+	</select>
+	
+	<insert id="insert" parameterType="company" >
+	
+	  insert into company(id,email,password,domain,name,eid) values(company_id.nextval, 
+	   	#{company.email},
+	    #{company.password},
+	    #{company.domain},
+	    #{company.name},
+	    #{company.eid}
+	    )
+	</insert>
+	
+	<select id="isEmail" resultType="user" parameterType="String"><!-- Member class를 
+			별칭 -->
+		select * from users where  email = #{user_email}
+	</select>
+</mapper>
+
