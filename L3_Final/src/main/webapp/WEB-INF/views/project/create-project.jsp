@@ -11,6 +11,10 @@
     	body {
     		font-family: 'Nanum Gothic', sans-serif;
     	}
+    	
+    	.on {
+    		font-weight:700
+    	}
     	</style>
 </head>
 <body>
@@ -22,7 +26,7 @@
 	<div class="card">
 		<div class="CreateProject">
 			<div style="display:flex; justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 20px;">
-				<span id="header-span">프로젝트 만들기</span>
+				<span id="header-span">프로젝트 생성</span>
 			</div>
 
 			<div class="create-input-info">

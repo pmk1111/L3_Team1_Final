@@ -25,8 +25,40 @@ $(document).ready(function() {
 				    }
 		        });
 		    });
-		
+			
 			$('.star').click(function() {
+			    var $this = $(this);
+			    var projectId = $this.data('projectId');
+			    /* var employeeId = $this.data('employeeId'); */
+			    var employeeId = 1
+		       let token = $("meta[name='_csrf']").attr("content");
+		       let header = $("meta[name='_csrf_header']").attr("content");			    
+			
+			    $.ajax({
+			        url: '../project/favorite',
+			        method: 'POST',
+			        data: {
+			            projectId: projectId,
+			            employeeId: employeeId
+			        },
+			         beforeSend : function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+			            xhr.setRequestHeader(header, token);
+			         },
+			        success: function(response) {
+			            console.log(response);
+			            if(response == -1) {
+			                $this.attr('src', '../resources/project/img/projectboard/icon_star.png');
+			            } else {
+			                $this.attr('src', '../resources/project/img/projectboard/icon_star_on.png');
+						}
+					},
+					error: function(xhr, status, error) {
+					   console.error('Error:', error);
+				   }
+			   });
+			});
+						
+			$('.favorite-star').click(function() {
 			    var $this = $(this);
 			    var projectId = $this.data('projectId');
 			    /* var employeeId = $this.data('employeeId'); */
@@ -70,7 +102,6 @@ $(document).ready(function() {
 				   }
 			   });
 			});
-
 			
             $(".star").hover(function() {
                 var src = $(this).attr("src");

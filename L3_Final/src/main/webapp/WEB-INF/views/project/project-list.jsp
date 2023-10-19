@@ -144,12 +144,8 @@
         .project-info {
             display: flex;
             flex-direction: row;
-            justify-content: space-between
-        }
-
-        .project-left {
-            display: flex;
-            align-items: center;
+            justify-content: space-between;
+            min-height: 90px
         }
 
         .select-color {
@@ -179,11 +175,6 @@
         .star {
             height: 25px;
             width: 25px;
-        }
-
-        .project-up {
-            margin-top: 5px;
-            margin-bottom: 5px
         }
 
         .project-name {
@@ -348,16 +339,16 @@
                                                 </div>
 
                                                 <div class="project-area favorit-project">
-                                                    <ul class="all-project-list">
+                                                    <ul class="all-project-list fav-ul">
                                                         <c:forEach var="favoritProject" items="${favoritProjectList}">
-                                                            <li class="list">
-                                                                <div class="project-info" style="min-height: 90px">
+                                                            <li class="list fav-list">
+                                                                <div class="project-info">
                                                                     <div class="project-left">
                                                                         <a class="select-color" style="background-color: ${favoritProject.COLOR};"></a>
                                                                         <div class="project-information">
                                                                             <div class="project-up">
                                                                                 <div class="favorite-project" style="">
-                                                                                    <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${favoritProject.ID}">
+                                                                                    <img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${favoritProject.ID}">
                                                                                 </div>
                                                                                 <div class="setting">
                                                                                     <div class="dropdown">
@@ -446,16 +437,16 @@
                                                 </div>
 
                                                 <div class="project-area part-project">
-                                                    <ul class="all-project-list">
+                                                    <ul class="all-project-list part-ul">
                                                         <c:forEach var="partProject" items="${partProjectList}">
-                                                            <li class="list">
-                                                                <div class="project-info" style="min-height: 90px">
+                                                            <li class="list part-list">
+                                                                <div class="project-info">
                                                                     <div class="project-left">
                                                                         <a class="select-color" style="background-color: ${partProject.COLOR};"></a>
                                                                         <div class="project-information">
                                                                             <div class="project-up">
                                                                                 <div class="favorite-project" style="">
-                                                                                    <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${partProject.ID}">
+                                                                                    <img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${partProject.ID}">
                                                                                 </div>
                                                                                 <div class="setting">
                                                                                     <div class="dropdown">
@@ -545,90 +536,7 @@
                                             </div>
 
                                             <div class="project-area all-project">
-                                                <ul class="all-project-list">
-                                                    <c:forEach var="allProject" items="${allProjectlist}">
-                                                        <li class="list">
-                                                            <div class="project-info" style="min-height: 90px">
-                                                                <div class="project-left">
-                                                                    <a class="select-color" style="background-color: ${allProject.COLOR};"></a>
-                                                                    <div class="project-information">
-                                                                        <div class="project-up">
-                                                                            <div class="favorite-project" style="">
-                                                                                <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${allProject.ID}">
-                                                                            </div>
-                                                                            <div class="setting">
-                                                                                <div class="dropdown">
-                                                                                    <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                                                    </button>
-                                                                                    <div class="dropdown-menu" aria-labelledby="cardOpt3">
-                                                                                        <div class="project-setup-header">
-                                                                                            <span>프로젝트 번호</span>
-                                                                                            <em id="detailSettingProjectSrno">${allProject.ID}</em>
-                                                                                        </div>
-
-                                                                                        <div class="setting-menu">
-                                                                                            <div class="setting-line">
-                                                                                                <a class="setting-anchor setting-exit"> <img class="setting-img share" src="../resources/project/img/projectboard/share.svg">
-                                                                                                    <span class="setting-span">프로젝트 나가기</span>
-                                                                                                </a>
-
-                                                                                                <div class="tooltip-container">
-                                                                                                    <img class="setting-info" src="../resources/project/img/projectboard/info.svg">
-                                                                                                    <div class="tooltip-text">프로젝트 나가기 시, 프로젝트
-                                                                                                        목록에서 삭제되며 게시물 작성 및 수정이 불가합니다.</div>
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="setting-line">
-                                                                                                <a class="setting-anchor setting-edit"> <img class="setting-img edit" src="../resources/project/img/projectboard/edit.svg">
-                                                                                                    <span class="setting-span">프로젝트 수정</span>
-                                                                                                </a>
-                                                                                            </div>
-
-                                                                                            <div class="setting-line">
-                                                                                                <a class="setting-anchor setting-delete"> <img class="setting-img bin" src="../resources/project/img/projectboard/bin.svg">
-                                                                                                    <span class="setting-span">프로젝트 삭제</span>
-                                                                                                </a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="project-name">
-                                                                                <a href="project?id=${allProject.ID}"><span class="project-name-span">${allProject.TITLE}</span></a>
-                                                                                <img class="team-count-img" src="../resources/project/img/person.svg">
-                                                                                <span class="team-count-span">${allProject.TEAMCOUNT}</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="recent-modify">
-                                                                    <c:set var="timeDiff" value="${allProject.CURRENTTIME}" />
-
-                                                                    <c:if test="${timeDiff lt 1}">
-                                                                        <span>방금 전</span>
-                                                                    </c:if>
-
-                                                                    <c:if test="${timeDiff ge 1 and timeDiff lt 60}">
-                                                                        <span>${timeDiff} 분 전</span>
-                                                                    </c:if>
-
-                                                                    <c:if test="${timeDiff ge 60 and timeDiff lt 1440}">
-                                                                        <span>${Integer.valueOf(timeDiff div 60)} 시간 전</span>
-                                                                    </c:if>
-
-                                                                    <c:if test="${timeDiff ge (24*60) and timeDiff lt (7*24*60)}">
-                                                                        <span>${Integer.valueOf(timeDiff div (24*60))} 일 전</span>
-                                                                    </c:if>
-
-                                                                    <c:if test="${timeDiff ge (7 *24 *60) and timeDiff lt (30 *24 *60)}">
-                                                                        <span>${Integer.valueOf(timeDiff div (7*24*60))} 주</span>
-                                                                    </c:if>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </c:forEach>
+                                                <ul class="all-project-list all-ul">
                                                 </ul>
                                             </div>
                                         </div>
@@ -649,22 +557,22 @@
 
     <script>
         $(document).ready(function() {
-            // tabs active
-			$('.tabs ul li').click(function() {
-			    var $this = $(this);
-			
-			    $('.tabs ul li').removeClass('is-active');
-			
-			    $this.addClass('is-active');
-			
-			    if ($this.hasClass('part-tabs')) {
-			        $('.personalProject').css('display', 'block');
-			        $('.allProject').css('display', 'none'); 
-			    } else if ($this.hasClass('all-tabs')) {
-			        $('.personalProject').css('display', 'none');
-			        $('.allProject').css('display', 'block');
-			    }
-			});
+            
+            $('#searchInput').on('keyup', function() {
+                var value = $(this).val().toLowerCase();
+
+                if (value === '') {
+                    $('.list').show();
+                } else {
+                    var matchedItems = $('.list').filter(function() {
+                        var projectName = $(this).find('.project-name-span').text().toLowerCase();
+                        return projectName.indexOf(value) > -1;
+                    });
+
+                    $('.list').hide();
+                    matchedItems.show();
+                }
+            });
             
             // list-dropdown
             $('#favorit-arrow').click(function() {
@@ -698,7 +606,8 @@
             	  }
             });
             
-            $(".star").click(function(){
+            // tabs active
+			$(".favorite-star").click(function(){
                 var $this = $(this);
                 var $targetList = $this.closest('li'); // 가장 가까운 상위의 li 찾기
 
@@ -708,23 +617,407 @@
                     $targetList.fadeIn(500);
                 }, 500);
             })
-            
-            $('#searchInput').on('keyup', function() {
-                var value = $(this).val().toLowerCase();
+			
+            // tabs active
+            $('.tabs ul li').click(function() {
+                var $this = $(this);
+                
+                $('.tabs ul li').removeClass('is-active');
+                
+                $this.addClass('is-active');
+                
+                if ($this.hasClass('part-tabs')) {
+                    $.ajax({
+                        url: '../project/part-tabs',
+                        method: 'GET',
+                        success: function(data) {
+                        	$('.personalProject').show();
+                            $('.allProject').hide();
+                        	
+							var favList = '';
+							var partList = '';
+							
+							for(var i=0; i< data.favoritProjectList.length; i++) {
+								favList += '<li class="list fav-list">';								
+								favList += '<div class="project-info">'; 								
+								favList += '<div class="project-left">';								
+								favList += '<a class="select-color" style="background-color:' + data.favoritProjectList[i].color + ';"></a>';								
+								favList += '<div class="project-information">';								
+								favList += '<div class="project-up">';								
+								favList += '<div class="favorite-project">';								
+								favList += '<img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data.favoritProjectList[i].id + '">';								
+								favList += '</div>';								
+								favList += '<div class="setting">';								
+								favList += '<div class="dropdown">';								
+								favList += '<button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';								
+								favList += '<i class="bx bx-dots-vertical-rounded" style="margin:0 5px 0 5px"></i>';								
+								favList += '</button>';								
+								favList += '<div class="dropdown-menu" aria-labelledby="cardOpt3">';								
+								favList += '<div class="project-setup-header">';								
+								favList += '<span>프로젝트 번호</span>';								
+								favList += '<em id="detailSettingProjectSrno">' + data.favoritProjectList[i].id + '</em>';								
+								favList += '</div>';								
+								favList += '<div class="setting-menu">';								
+								favList += '<div class="setting-line">';								
+								favList += '<a class="setting-anchor setting-exit">';								
+								favList += '<img class="setting-img share" src="../resources/project/img/projectboard/share.svg">';								
+								favList += '<span class="setting-span">프로젝트 나가기</span>';								
+								favList += '</a>';								
+								favList += '<div class="tooltip-container">';								
+								favList += '<img class="setting-info" src="../resources/project/img/projectboard/info.svg">';								
+								favList += '<div class="tooltip-text">프로젝트 나가기 시, 프로젝트 목록에서 삭제되며 게시물 작성 및 수정이 불가합니다.</div>';								
+								favList += '</div>';								
+								favList += '</div>';								
+								favList += '<div class="setting-line">';								
+								favList += '<a class="setting-anchor setting-edit">';								
+								favList += '<img class="setting-img edit" src="../resources/project/img/projectboard/edit.svg">';								
+								favList += '<span class="setting-span">프로젝트 수정</span>';								
+								favList += '</a>';								
+								favList += '</div>';								
+								favList += '<div class="setting-line">';								
+								favList += '<a class="setting-anchor setting-delete">';								
+								favList += '<img class="setting-img bin" src="../resources/project/img/projectboard/bin.svg">';								
+								favList += '<span class="setting-span">프로젝트 삭제</span>';								
+								favList += '</a>';								
+								favList += '</div>';								
+								favList += '</div>';								
+								favList += '</div>';								
+								favList += '</div>';								
+								favList += '</div>';								
+								favList += '<div class="project-name">';								
+								favList += '<a href="project?id=' + data.favoritProjectList[i].id + '">';								
+								favList += '<span class="project-name-span">' + data.favoritProjectList[i].title + '</span>';								
+								favList += '</a>';								
+								favList += '<img class="team-count-img" src="../resources/project/img/person.svg" style="margin-left:8.5px">';								
+								favList += '<span class="team-count-span" style="margin-left:4px">' + data.favoritProjectList[i].teamcount + '</span>';								
+								favList += '</div>';								
+								favList += '</div>';								
+								favList += '</div>';								
+								favList += '</div>';								
+								favList += '<div class="recent-modify">';
+								var timeDiff = data.favoritProjectList[i].currenttime;
+								
+								if (timeDiff < 1) {
+									favList += '<span>방금 전</span>';
+								} else if (timeDiff >= 1 && timeDiff < 60) {
+									favList += '<span>' + timeDiff + ' 분 전</span>';
+								} else if (timeDiff >= 60 && timeDiff < 1440) {
+									favList += '<span>' + Math.floor(timeDiff / 60) + ' 시간 전</span>';
+								} else if (timeDiff >= 1440 && timeDiff < 10080) {
+									favList += '<span>' + Math.floor(timeDiff / (24 * 60)) + ' 일 전</span>';
+								} else if (timeDiff >= 10080 && timeDiff < 43200) {
+								    favList += '<span>' + Math.floor(timeDiff / (7 *24 *60)) + ' 주 전</span>';
+								}
+								favList += '</div>';
+								favList += '</div>';								
+								favList += '</li>';								
+							}
+							
+							for(var i=0; i< data.partProjectList.length; i++) {
+								partList += '<li class="list part-list">';								
+								partList += '<div class="project-info">'; 								
+								partList += '<div class="project-left">';								
+								partList += '<a class="select-color" style="background-color:' + data.partProjectList[i].color + ';"></a>';								
+								partList += '<div class="project-information">';								
+								partList += '<div class="project-up">';								
+								partList += '<div class="favorite-project">';								
+								partList += '<img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data.partProjectList[i].id + '">';								
+								partList += '</div>';								
+								partList += '<div class="setting">';								
+								partList += '<div class="dropdown">';								
+								partList += '<button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';								
+								partList += '<i class="bx bx-dots-vertical-rounded" style="margin:0 5px 0 5px"></i>';								
+								partList += '</button>';								
+								partList += '<div class="dropdown-menu" aria-labelledby="cardOpt3">';								
+								partList += '<div class="project-setup-header">';								
+								partList += '<span>프로젝트 번호</span>';								
+								partList += '<em id="detailSettingProjectSrno">' + data.partProjectList[i].id + '</em>';								
+								partList += '</div>';								
+								partList += '<div class="setting-menu">';								
+								partList += '<div class="setting-line">';								
+								partList += '<a class="setting-anchor setting-exit">';								
+								partList += '<img class="setting-img share" src="../resources/project/img/projectboard/share.svg">';								
+								partList += '<span class="setting-span">프로젝트 나가기</span>';								
+								partList += '</a>';								
+								partList += '<div class="tooltip-container">';								
+								partList += '<img class="setting-info" src="../resources/project/img/projectboard/info.svg">';								
+								partList += '<div class="tooltip-text">프로젝트 나가기 시, 프로젝트 목록에서 삭제되며 게시물 작성 및 수정이 불가합니다.</div>';								
+								partList += '</div>';								
+								partList += '</div>';								
+								partList += '<div class="setting-line">';								
+								partList += '<a class="setting-anchor setting-edit">';								
+								partList += '<img class="setting-img edit" src="../resources/project/img/projectboard/edit.svg">';								
+								partList += '<span class="setting-span">프로젝트 수정</span>';								
+								partList += '</a>';								
+								partList += '</div>';								
+								partList += '<div class="setting-line">';								
+								partList += '<a class="setting-anchor setting-delete">';								
+								partList += '<img class="setting-img bin" src="../resources/project/img/projectboard/bin.svg">';								
+								partList += '<span class="setting-span">프로젝트 삭제</span>';								
+								partList += '</a>';								
+								partList += '</div>';								
+								partList += '</div>';								
+								partList += '</div>';								
+								partList += '</div>';								
+								partList += '</div>';								
+								partList += '<div class="project-name">';								
+								partList += '<a href="project?id=' + data.partProjectList[i].id + '"><span class="project-name-span">' + data.partProjectList[i].title + '</span></a>';								
+								partList += '<img class="team-count-img" src="../resources/project/img/person.svg" style="margin-left:8.5px">';								
+								partList += '<span class="team-count-span" style="margin-left:4px">' + data.partProjectList[i].teamcount + '</span>';								
+								partList += '</div>';								
+								partList += '</div>';								
+								partList += '</div>';								
+								partList += '</div>';								
+								partList += '<div class="recent-modify">';
+								var timeDiff = data.partProjectList[i].currenttime;
+								
+								if (timeDiff < 1) {
+									partList += '<span>방금 전</span>';
+								} else if (timeDiff >= 1 && timeDiff < 60) {
+									partList += '<span>' + timeDiff + ' 분 전</span>';
+								} else if (timeDiff >= 60 && timeDiff < 1440) {
+									partList += '<span>' + Math.floor(timeDiff / 60) + ' 시간 전</span>';
+								} else if (timeDiff >= 1440 && timeDiff < 10080) {
+									partList += '<span>' + Math.floor(timeDiff / (24 * 60)) + ' 일 전</span>';
+								} else if (timeDiff >= 10080 && timeDiff < 43200) {
+								    favList += '<span>' + Math.floor(timeDiff / (7 *24 *60)) + ' 주 전</span>';
+								}
+								partList += '</div>';
+								partList += '</div>';								
+								partList += '</li>';								
+							}
+							
+							$('.fav-ul').html(favList);
+							$('.part-ul').html(partList);
+							
+						    $('.star').each(function() {
+						        var $this = $(this);
+						        var projectId = $this.data('projectId');
+						       /* var employeeId = $this.data('employeeId'); */
+						        var employeeId = 1;
+						        
+						        $.ajax({
+						            url: '../project/participate',
+						            method: 'GET',
+						            data: {
+						                projectId: projectId,
+						                employeeId: employeeId
+						            },
+						            success: function(response) {
+						                if (response == -1) {
+						                    $this.attr('src', '../resources/project/img/projectboard/icon_star.png');
+						                } else {
+						                    $this.attr('src', '../resources/project/img/projectboard/icon_star_on.png');
+						                }
+						            },
+								    error: function(xhr, status, error) {
+								        console.error('Error:', error);
+								    }
+						        });
+						    });
 
-                if (value === '') {
-                    $('.list').show();
-                } else {
-                    var matchedItems = $('.list').filter(function() {
-                        var projectName = $(this).find('.project-name-span').text().toLowerCase();
-                        return projectName.indexOf(value) > -1;
+							$('.favorite-star').click(function() {
+							    var $this = $(this);
+							    var projectId = $this.data('projectId');
+							    /* var employeeId = $this.data('employeeId'); */
+							    var employeeId = 1
+						       let token = $("meta[name='_csrf']").attr("content");
+						       let header = $("meta[name='_csrf_header']").attr("content");			    
+							
+							    $.ajax({
+							        url: '../project/favorite',
+							        method: 'POST',
+							        data: {
+							            projectId: projectId,
+							            employeeId: employeeId
+							        },
+							         beforeSend : function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+							            xhr.setRequestHeader(header, token);
+							         },
+							        success: function(response) {
+							            console.log(response);
+							            if(response == -1) {
+							
+							                $this.attr('src', '../resources/project/img/projectboard/icon_star.png');
+							
+							                var listItem = $this.closest('.list');
+							                listItem.hide();
+							                $('.partProject .all-project-list').prepend(listItem);
+							                listItem.fadeIn(500);
+							
+							            } else {
+							                $this.attr('src', '../resources/project/img/projectboard/icon_star_on.png');
+							
+							                var listItem = $this.closest('.list');
+							
+										    listItem.hide();
+										    $('.favoritProject .all-project-list').prepend(listItem); // prepend()
+										    listItem.fadeIn(500);
+										}
+									},
+									error: function(xhr, status, error) {
+									   console.error('Error:', error);
+								   }
+							   });
+							});
+							
+                        }
                     });
-
-                    $('.list').hide();
-                    matchedItems.show();
+                } else if ($this.hasClass('all-tabs')) { 
+                    $.ajax({
+                        url: '../project/all-tabs',
+                        method: 'GET',
+                        success: function(data) {
+                        	$('.personalProject').hide();
+                            $('.allProject').show(); 
+                        	
+							var allList = '';
+							
+							console.log(data);
+							
+							for(var i=0; i< data.length; i++) {
+								allList += '<li class="list">';								
+								allList += '<div class="project-info">'; 								
+								allList += '<div class="project-left">';								
+								allList += '<a class="select-color" style="background-color:' + data[i].color + ';"></a>';								
+								allList += '<div class="project-information">';								
+								allList += '<div class="project-up">';								
+								allList += '<div class="favorite-project">';								
+								allList += '<img class="star all-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data[i].id + '">';								
+								allList += '</div>';								
+								allList += '<div class="setting">';								
+								allList += '<div class="dropdown">';								
+								allList += '<button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';								
+								allList += '<i class="bx bx-dots-vertical-rounded" style="margin:0 5px 0 5px"></i>';								
+								allList += '</button>';								
+								allList += '<div class="dropdown-menu" aria-labelledby="cardOpt3">';								
+								allList += '<div class="project-setup-header">';								
+								allList += '<span>프로젝트 번호</span>';								
+								allList += '<em id="detailSettingProjectSrno">' + data[i].id + '</em>';								
+								allList += '</div>';								
+								allList += '<div class="setting-menu">';								
+								allList += '<div class="setting-line">';								
+								allList += '<a class="setting-anchor setting-exit">';								
+								allList += '<img class="setting-img share" src="../resources/project/img/projectboard/share.svg">';								
+								allList += '<span class="setting-span">프로젝트 나가기</span>';								
+								allList += '</a>';								
+								allList += '<div class="tooltip-container">';								
+								allList += '<img class="setting-info" src="../resources/project/img/projectboard/info.svg">';								
+								allList += '<div class="tooltip-text">프로젝트 나가기 시, 프로젝트 목록에서 삭제되며 게시물 작성 및 수정이 불가합니다.</div>';								
+								allList += '</div>';								
+								allList += '</div>';								
+								allList += '<div class="setting-line">';								
+								allList += '<a class="setting-anchor setting-edit">';								
+								allList += '<img class="setting-img edit" src="../resources/project/img/projectboard/edit.svg">';								
+								allList += '<span class="setting-span">프로젝트 수정</span>';								
+								allList += '</a>';								
+								allList += '</div>';								
+								allList += '<div class="setting-line">';								
+								allList += '<a class="setting-anchor setting-delete">';								
+								allList += '<img class="setting-img bin" src="../resources/project/img/projectboard/bin.svg">';								
+								allList += '<span class="setting-span">프로젝트 삭제</span>';								
+								allList += '</a>';								
+								allList += '</div>';								
+								allList += '</div>';								
+								allList += '</div>';								
+								allList += '</div>';								
+								allList += '</div>';								
+								allList += '<div class="project-name">';								
+								allList += '<a href="project?id=' + data[i].id + '">';								
+								allList += '<span class="project-name-span">' + data[i].title + '</span>';								
+								allList += '</a>';								
+								allList += '<img class="team-count-img" src="../resources/project/img/person.svg" style="margin-left:8.5px">';								
+								allList += '<span class="team-count-span" style="margin-left:4px">' + data[i].teamcount + '</span>';								
+								allList += '</div>';								
+								allList += '</div>';								
+								allList += '</div>';								
+								allList += '</div>';								
+								allList += '<div class="recent-modify">';
+								var timeDiff = data[i].currenttime;
+								
+								if (timeDiff < 1) {
+									allList += '<span>방금 전</span>';
+								} else if (timeDiff >= 1 && timeDiff < 60) {
+									allList += '<span>' + timeDiff + ' 분 전</span>';
+								} else if (timeDiff >= 60 && timeDiff < 1440) {
+									allList += '<span>' + Math.floor(timeDiff / 60) + ' 시간 전</span>';
+								} else if (timeDiff >= 1440 && timeDiff < 10080) {
+									allList += '<span>' + Math.floor(timeDiff / (24 * 60)) + ' 일 전</span>';
+								} else if (timeDiff >= 10080 && timeDiff < 43200) {
+									allList += '<span>' + Math.floor(timeDiff / (7 *24 *60)) + ' 주 전</span>';
+								}
+								allList += '</div>';
+								allList += '</div>';								
+								allList += '</li>';								
+							}
+							
+							$('.all-ul').html(allList);
+							
+						    $('.star').each(function() {
+						        var $this = $(this);
+						        var projectId = $this.data('projectId');
+						       /* var employeeId = $this.data('employeeId'); */
+						        var employeeId = 1;
+						        
+						        $.ajax({
+						            url: '../project/participate',
+						            method: 'GET',
+						            data: {
+						                projectId: projectId,
+						                employeeId: employeeId
+						            },
+						            success: function(response) {
+						                if (response == -1) {
+						                    $this.attr('src', '../resources/project/img/projectboard/icon_star.png');
+						                } else {
+						                    $this.attr('src', '../resources/project/img/projectboard/icon_star_on.png');
+						                }
+						            },
+								    error: function(xhr, status, error) {
+								        console.error('Error:', error);
+								    }
+						        });
+						    });
+						    
+							$('.all-star').click(function() {
+							    var $this = $(this);
+							    var projectId = $this.data('projectId');
+							    /* var employeeId = $this.data('employeeId'); */
+							    var employeeId = 1
+						       let token = $("meta[name='_csrf']").attr("content");
+						       let header = $("meta[name='_csrf_header']").attr("content");			    
+							
+							    $.ajax({
+							        url: '../project/favorite',
+							        method: 'POST',
+							        data: {
+							            projectId: projectId,
+							            employeeId: employeeId
+							        },
+							         beforeSend : function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+							            xhr.setRequestHeader(header, token);
+							         },
+							        success: function(response) {
+							            console.log(response);
+							            if(response == -1) {
+							                $this.attr('src', '../resources/project/img/projectboard/icon_star.png');
+							            } else {
+							                $this.attr('src', '../resources/project/img/projectboard/icon_star_on.png');
+							                var listItem = $this.closest('.list');
+										}
+									},
+									error: function(xhr, status, error) {
+									   console.error('Error:', error);
+								   }
+							   });
+							});
+                        }
+                    });
                 }
             });
+            
         });
+        
     </script>
 
 </body>
