@@ -98,6 +98,7 @@
    where id = #{companyId}
    </select>
  
+
     <!-- 회사명 업데이트 -->
     <update id ="updateName">
     update company
@@ -115,6 +116,7 @@
     <!-- 혜원 -->
     <select id="getAccesslist" resultType="Access">
 
+
 SELECT COUNT(*), user_id, connectdate
 FROM connectlist
 WHERE connectdate LIKE '23/09%'
@@ -127,5 +129,43 @@ GROUP BY user_id, connectdate
    
    
 </select>
-    
+
+
+
+<select id="getDayCount" resultType="Access">
+  SELECT TO_DATE(CONNECTDATE, 'YYYY-MM-DD') AS date, COUNT(*) AS daycount
+  FROM connectlist
+  WHERE CONNECTDATE >= TO_DATE(TO_CHAR(SYSDATE - 7, 'YYYY-MM-DD'), 'YYYY-MM-DD')
+  GROUP BY TO_DATE(CONNECTDATE, 'YYYY-MM-DD')
+  ORDER BY TO_DATE(CONNECTDATE, 'YYYY-MM-DD')
+</select>
+
+
+
+<!-- <select id="getMonthCount" resultType="Access">
+
+SELECT TO_CHAR(CONNECTDATE, 'YYYY-MM') AS month, COUNT(*) AS monthcount
+FROM connectlist
+WHERE CONNECTDATE >= ADD_MONTHS(TRUNC(SYSDATE), -6)
+GROUP BY TO_CHAR(CONNECTDATE, 'YYYY-MM')
+ORDER BY TO_CHAR(CONNECTDATE, 'YYYY-MM')
+   
+   
+</select> -->
+
+<select id="getMonthCount" resultMap="accessResultMap">
+    SELECT TO_CHAR(CONNECTDATE, 'YYYY-MM') AS month, COUNT(*) AS monthcount
+    FROM connectlist
+    WHERE CONNECTDATE >= ADD_MONTHS(TRUNC(SYSDATE), -6)
+    GROUP BY TO_CHAR(CONNECTDATE, 'YYYY-MM')
+    ORDER BY TO_CHAR(CONNECTDATE, 'YYYY-MM')
+</select>
+
+<resultMap id="accessResultMap" type="Access">
+    <result property="month" column="month" />
+    <result property="monthcount" column="monthcount" />
+</resultMap>
+
+ 	
+
 </mapper>

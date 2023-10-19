@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -107,6 +108,7 @@ public class AdminController {
               
 
 
+
       //비밀번호 변경
        @PostMapping(value = "/change-pwd" )
        public String changePwd() {
@@ -141,6 +143,7 @@ public class AdminController {
    	}
    	
        
+
       @GetMapping(value = "/list")
       public ModelAndView employeeList( ModelAndView mv){
          int companyId = 1; //회사번호
@@ -267,7 +270,9 @@ public class AdminController {
       @ResponseBody
       @PostMapping(value = "/user-uselist")
       public List<Employee> userUseList(@RequestParam("companyId")  int companyId){
+
           logger.info("여기는 user-uselist 컨트롤러");
+
          
          // 회사의 직원 목록을 가져와서 모델에 추가
           List<Employee> employee = adminService.findEmployee(companyId);
@@ -280,7 +285,9 @@ public class AdminController {
       //이용중지 리스트 가져오기
       @ResponseBody
       @PostMapping(value = "/user-stoplist")
+
       public List<Employee> userStopList(@RequestParam("companyId")  int companyId){
+
           
          
          // 회사의 직원 목록을 가져와서 모델에 추가
@@ -321,8 +328,9 @@ public class AdminController {
          return "admin/invite-employee";
          
       }
+
       
-     
+
       //지니 끝
       
       @GetMapping(value="/admin-dashboard")
@@ -351,4 +359,6 @@ public class AdminController {
          return "project/project-access-stats";
       }
       
+
    }
+

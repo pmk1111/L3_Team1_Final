@@ -46,5 +46,13 @@ public interface AdminMapper {
 
       public List<Access> getAccesslist();
 
+		public List<Access> getAccesslist();
+
+		
+
+		public List<Access> getDayCount();
+
+		public List<Access> getMonthCount();
+
 
    }
