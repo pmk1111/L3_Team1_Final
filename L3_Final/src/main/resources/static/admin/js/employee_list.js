@@ -5,17 +5,21 @@
             $(".nav-link").click(function () {
                 // 클릭한 탭의 data-tab 속성 값을 가져옴
                 var tabHref = $(this).attr("href");
+                console.log(tabHref);
 
                 // URL 생성
                 var targetUrl = "../admin/list" + tabHref;
             });
           });
+         
 
        
 
 // 직원 상태 업데이트
  $(function() {
 	$("body").on("click",".user-stop", function() {
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
     var employeeId = $(this).attr("data-employeeId"); // 직원 번호 가져오기
 	var employeeStatus = $(this).attr("data-employeeStatus");
     var tab = $(this).data("tab"); // 탭 정보 가져오기
@@ -31,8 +35,10 @@
             employeeStatus: employeeStatus,
             tab: tab 
         },
-        
          async: false,
+        beforeSend : function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+            xhr.setRequestHeader(header, token);
+         },
         success: function(response) {
         	 
         	 if (response == 1) {
@@ -45,10 +51,13 @@
                    data: {
                    		companyId: 1
                 	},
+                	 beforeSend : function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+         			   xhr.setRequestHeader(header, token);
+         			   },
                 	success: function(data){
                 		let count=data.length;
                 		console.log(count)
-                		$('#head-tab > ul > li:nth-child(2) > a > small > b > span').text(count);
+                		$('#head-tab > ul > li:nth-child(2) > a > small > b > span').val(count);
                 		let output="";
                 		if( count == 0){
                 			output += '<tr><td colspan="10" style="border-bottom: none">조회된데이터가 없습니다.</td></tr>';
@@ -95,9 +104,9 @@
        
                 		} // else end
                 		 
-                	}
+                	}//success end
              
-                	})
+                	})//ajax end
                 } else if(tab == "userstop"){
                 $.ajax({
                    url: "../admin/user-uselist",
@@ -105,10 +114,13 @@
                    data: {
                    		companyId: 1
                 	},
+                	 beforeSend : function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+          			 xhr.setRequestHeader(header, token);
+         			   },
                 	success: function(data2){
                 		let count2=data2.length;
                 		console.log(count2)
-                		$('#head-tab > ul > li:nth-child(1) > a > small > b > span').text(count2);
+                		$('#head-tab > ul > li:nth-child(1) > a > small > b > span').val(count2);
                 		let output="";
                 		if( count2 == 0){
                 			output += '<tr><td colspan="10" style="border-bottom: none">조회된데이터가 없습니다.</td></tr>';
@@ -155,9 +167,9 @@
                 		
                 		} // else end
                 		 
-                	}
+                	}//success end
              
-                	})
+                	})//ajax end
                 } //else if end
                
             } else {
@@ -174,6 +186,8 @@
 // 관리자 유무
  $(function() {
 $(".auth-delete").click(function() {
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
     var employeeId = $(this).attr("data-employeeId"); // 직원 번호 가져오기
     var employeeAuth =  $(this).closest("td").find(".employee-auth-value").text().trim();
 	var tab = $(this).closest("tr").find(".user-stop").data("tab"); // 탭 정보 가져오기
@@ -189,7 +203,9 @@ $(".auth-delete").click(function() {
              employeeAuth: employeeAuth,
              tab: tab
         },
-        
+        beforeSend : function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+            xhr.setRequestHeader(header, token);
+         },        
         success: function(response) {
         	  if (response == 1) {
                 alert("관리자 상태가 변경되었습니다.");
@@ -212,6 +228,8 @@ $(".auth-delete").click(function() {
 // 가입 승인
  $(function() {
  $("body").on("click",".approveUser", function() {
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
   //  var userId = $(this).data("userId"); 
     var userId = $(this).attr("data-userId");
 	console.log(userId)
@@ -226,6 +244,9 @@ $(".auth-delete").click(function() {
             action: "approve"
         },
         async: false,
+        beforeSend : function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+            xhr.setRequestHeader(header, token);
+         },        
         success: function(response) {
         	 
         	 if (response == 1) {
@@ -240,7 +261,7 @@ $(".auth-delete").click(function() {
                 	success: function(data){
                 		let count=data.length;
                 		console.log(count)
-                		$('#head-tab > ul > li:nth-child(1) > a > small > b span').text(count);
+                		$('#head-tab > ul > li:nth-child(1) > a > small > b span').val(count);
                 		let output="";
                 		if( count == 0){
                 			output += '<tr><td colspan="10" style="border-bottom: none">조회된데이터가 없습니다.</td></tr>'
@@ -303,6 +324,8 @@ $(".auth-delete").click(function() {
 // 가입 거절
  $(function(){	
 $(".rejectUser").click(function () {
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
     var userId = $(this).attr("data-userId");
     console.log(userId);
    
@@ -313,7 +336,9 @@ $(".rejectUser").click(function () {
             userId: userId,
             action: "reject"
         },
-        
+        beforeSend : function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+            xhr.setRequestHeader(header, token);
+         },       
         success: function(response) {
         	  
         	 if (response == 1) {

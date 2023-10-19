@@ -21,7 +21,7 @@ public class User implements UserDetails {
 	private String company_invited;
 	private String company_status;
 	private String security;
-	private Date create_at;
+	private Date created_at;
 	private int authNum;
 	
 	

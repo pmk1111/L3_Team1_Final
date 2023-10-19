@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec"
+   uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr"
 	data-theme="theme-default"
@@ -13,6 +15,8 @@
 
 <title>구성원 관리</title>
 <meta name="description" content="" />
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="../resources/admin/js/employee_list.js"></script>
 <link rel="stylesheet"
@@ -156,7 +160,7 @@ p {
 		<div class="layout-container">
 			<!-- Menu -->
 
-			<jsp:include page="../mainboard/Admin_leftbar.jsp"></jsp:include>
+			<jsp:include page="../admin/Admin_leftbar.jsp"></jsp:include>
 			<!-- / Menu -->
 
 			<!-- Layout container -->
