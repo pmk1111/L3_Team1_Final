@@ -23,16 +23,16 @@ public class ScheduleServiceImpl implements ScheduleService{
 	public void insertSchedule(Map<String, Object> map) {
 		Map<String, String> paramMap = new HashMap<String, String>();
 //		 
-		paramMap.put("scheduleId", (String)map.get("scheduleId"));
-		paramMap.put("scheduleUserId", (String)map.get("scheduleUserId"));
-		paramMap.put("scheduleSubject", (String)map.get("eventTitle"));
-		paramMap.put("scheduleStartDate", (String)map.get("eventStartDate"));
-		paramMap.put("scheduleEndDate", (String)map.get("eventEndDate"));
-		paramMap.put("scheduleCategory", (String)map.get("eventCategory"));
-		paramMap.put("schedulePlace", (String)map.get("eventLocation"));
-		paramMap.put("scheduleContent", (String)map.get("eventDescription"));
+		paramMap.put("id", (String)map.get("id"));
+		paramMap.put("user_id", (String)map.get("user_id"));
+		paramMap.put("subject", (String)map.get("subject"));
+		paramMap.put("start_date", (String)map.get("start_date"));
+		paramMap.put("end_date", (String)map.get("end_date"));
+		paramMap.put("category", (String)map.get("category"));
+		paramMap.put("place", (String)map.get("place"));
+		paramMap.put("content", (String)map.get("content"));
 		 
-		 mapper.insertSchedule(paramMap);
+		mapper.insertSchedule(paramMap);
 		
 	}
 	
