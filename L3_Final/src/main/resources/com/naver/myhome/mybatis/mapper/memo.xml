@@ -11,13 +11,13 @@
 	</select>
 	
 	<insert id="memoInsert">
-		<selectKey order="BEFORE" keyProperty="memo_id" resultType="int">
+		<selectKey order="BEFORE" keyProperty="id" resultType="int">
 		select memo_id.nextval from dual
 		</selectKey>
 		<!-- insert into memo
 		values(#{memo_id}, #{user_id}, #{memo_content}) -->
 		insert into memo
-		values(#{memo_id}, #{userId}, #{memoTxt})
+		values(#{id}, #{userId}, #{memoTxt})
 	</insert>
 	
 	<update id="memoUpdate">
@@ -25,7 +25,7 @@
 		set memo_content = #{memo_content}
 		where user_id = #{user_id} -->
 		update memo
-		set memo_content = #{memoTxt}
+		set content = #{memoTxt}
 		where user_id = #{userId}
 	</update>
 	

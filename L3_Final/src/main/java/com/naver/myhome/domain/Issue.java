@@ -12,15 +12,19 @@ import lombok.Setter;
 public class Issue {
 	private int id;
 	private int project_id;
-	private String create_user;
+	private int create_user;
 	private String type;
 	private String priority;
 	private String subject;
 	private String content;
 	private String status;
-	private String reporter;
-	private String assigned;
+	private int reporter;
+	private int assigned;
 	private String created_at;
+	
+	private String create_user_name;
+	private String assigned_user_name;
+	private String project_name;
 	
     private int totalcount;
     private int todocount;

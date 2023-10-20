@@ -37,16 +37,7 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return dao.companyDomain(companyId);
 	}
-	
-	@Override
-	public List<Employee> findEmployee(int companyId){
-		return dao.findEmployee(companyId);
-	}
 
-	@Override
-	public int useEmployeeStatus(int employeeId) {
-		return dao.useEmployeeStatus(employeeId);
-	}
 
 	//회사정보 수정
 	@Override
@@ -79,6 +70,11 @@ public class AdminServiceImpl implements AdminService {
 		dao.rejectUser(userId, companyId);
 	}
 
+	@Override
+	public List<Employee> findEmployee(int companyId){
+		return dao.findEmployee(companyId);
+	}
+	
 	@Override
 	public int stopEmployeeStatus(int employeeId) {
 		return dao.stopEmpStatus(employeeId);

@@ -22,5 +22,8 @@ public interface UserService {
 //
 //	public int getSearchListCount(int index, String search_word);
 
+	public int getUserId(String eMail);
+
+	public User selectByMail(String eMail);
 
 }

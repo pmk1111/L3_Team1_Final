@@ -43,10 +43,6 @@ $('modal-overlay').click(function () {
     }
   });
 
-  $(".issue-create-custom-selected").click(function () {
-    $(this).siblings(".issue-create-custom-options").fadeToggle(300);
-  });
-
   $(".issue-create-custom-option").click(function () {
     var text = $(this).text();
     $(this).closest(".issue-create-custom-select").find(".issue-create-custom-selected").text(text);
@@ -109,6 +105,20 @@ $('modal-overlay').click(function () {
     // 이후 폼을 서버로 제출
     $('form[name="createIssue"]').submit();
   });
+  
+  // 이벤트 위임을 사용하여 document에 클릭 이벤트 핸들러를 추가
+$(document).on('click', '.issue-create-custom-option', function () {
+    var text = $(this).text();
+    var userId = $(this).data('value');
+    var customSelect = $(this).closest('.issue-create-custom-select');
+    var selectedInput = customSelect.find('input[type="hidden"]');
+
+    selectedInput.val(userId);
+    customSelect.find('.issue-create-custom-selected').val(text);
+    customSelect.find('.issue-create-custom-options').hide();
+    
+    console.log($('.issue-create-custom-selected').val());
+});
 
 const fileInput = document.querySelector('.add-file');
   const uploadedFilesContainer = $('.uploaded-files');
@@ -203,6 +213,23 @@ const fileInput = document.querySelector('.add-file');
     }
     return fileName;
   }
+  
+  var isToggled = false;
+	var lastClicked = null;
+
+	$('.issue-create-custom-selected').click(function () {
+    var customOptions = $(this).siblings('.issue-create-custom-options');
+
+    if (lastClicked !== this) {
+        // 다른 요소가 클릭되었을 때, 이전 요소를 숨김
+        $('.issue-create-custom-options').fadeOut(300);
+        isToggled = false;
+        lastClicked = this;
+    }
+
+    customOptions.fadeToggle(300);
+    isToggled = !isToggled;
+	});
 
   // issueModal close
   $('.close-btn').on("click", function () {

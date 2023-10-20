@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.naver.myhome.domain.Access;
 import com.naver.myhome.domain.Project;
 import com.naver.myhome.service.ProjectService;
 import com.naver.myhome.service.TeamService;
@@ -152,8 +155,5 @@ public class ProjectController {
 	
 	// JJ's Controller End
 	
-	@RequestMapping(value = "/project-access-stats", method = RequestMethod.GET)
-	public String projectAccessStats() {
-		return "project/project-access-stats";
-	}
+
 }

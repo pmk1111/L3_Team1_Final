@@ -16,10 +16,6 @@ public interface AdminMapper {
 
 		public List<Employee> stopEmployee(int companyId);
 
-		public int noMoreAuth(int employeeId);
-
-		public int addAuth(int employeeId);
-
 		public int useEmployeeStatus(int employeeId);
 
 		Company companyInfo(int companyId);

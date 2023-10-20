@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.naver.myhome.domain.User;
+import com.naver.myhome.mybatis.mapper.CompanyMapper;
 import com.naver.myhome.mybatis.mapper.UserMapper;
 
 /*
@@ -25,6 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
    @Autowired
    private UserMapper dao;
+   
 
    //1. 구현할 메서드를 추가합니다.
    
@@ -50,4 +52,6 @@ public class CustomUserDetailsService implements UserDetailsService {
       
       return user;
    }
+  
+  
 }

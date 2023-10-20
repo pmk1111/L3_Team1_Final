@@ -7,15 +7,9 @@ import com.naver.myhome.domain.User;
 
 public interface AdminService {
 
-	public List<Employee> findEmployee(int companyId);
-
-//	Company companyInfo(int companyId);
-	
 	String companyName(int companyId);
 	
 	String companyDomain(int companyId);
-
-	public int useEmployeeStatus(int employeeId);
 
 	public int updateName(int companyId, String companyName);
 
@@ -28,6 +22,8 @@ public interface AdminService {
 	public void addEmployee(int userId, int companyId);
 
 	public void rejectUser(int userId, int companyId);
+	
+	public List<Employee> findEmployee(int companyId);
 	
 	public int stopEmployeeStatus(int employeeId);
 

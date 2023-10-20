@@ -1,11 +1,12 @@
 $(document).ready(function(){
 
-console.log("게시글 번호 = " + $("#issue_id").val());
+	console.log("게시글 번호 = " + $("#issue_id").val());
 	
 	const IssueSettingDropdown = $('.issue-setting-dropdown');
 	const CopyUrlImg = $('.copy-url img');
 	const IssueEdit = $('.issue-edit img');
 	const IssueDelete = $('.issue-delete img');
+	var csrfToken = $("meta[name='_csrf']").attr("content");
 	
 	$('.issue-setting-icon').click(function(){
 		if(IssueSettingDropdown.css('display') === 'none'){
@@ -118,25 +119,53 @@ $('.status-update-modal-overlay').click(function(){
 
 
 $('.choose-assigner').focus(function(){
+	$.ajax({
+	      type: "GET",
+	      url: "getProjectAndTeamInfo",
+	      data: {
+	          projectId: 1 // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
+	      },
+	      success: function (response) {
+	        if (response.length > 0) {
+	        	console.log(response)
+	        	
+	          $('.select-assign-dropdown').empty();
+	          response.forEach(function (item) {
+	            let str = '<li class="assign-dropdown-item"><div>';
+	            str += '<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="h-auto user-img" />'
+							str += '<span class="user-name">' + item.userName + '</span></div>'
+							str += '<span class="user-id">#' + item.userId + '</span></li>'			
+	            $('.select-assign-dropdown').append(str);
+	           }); // forEach end
+	          } else {
+	              console.log("가져온 프로젝트, 사용자 정보 없음");
+	          }
+	        },
+	        error: function (error) {
+	          console.error("Error: " + error);
+	        }
+	    }); //ajax end
+
 	$('.select-assign-dropdown').fadeIn(100);
 }); // focus end
 
 
+$('.choose-assigner').keyup(function(){
+	
+})
+var selectedUserName;
 // li 클릭 시 input에 해당 username 저장
-$('.select-assign-dropdown li').click(function() {
-    const username = $(this).find('.user-name').text(); // 또는 .user-id 등으로 변경해서 필요한 정보 가져오기
+$(document).on('click', '.select-assign-dropdown li', function() {
+    selectedUserName = $(this).find('.user-name').text(); // 또는 .user-id 등으로 변경해서 필요한 정보 가져오기
 		const userId = $(this).find('.user-id').text();
-    const splitUserId = userId.replace(/@/g, ''); // '@' 문자를 제거
+    const splitUserId = userId.replace(/#/g, ''); // '@' 문자를 제거
        
-    $('.choose-assigner').val(username);
-    $('.choose-assignerrr').val(username);
+    $('.choose-assigner').val(selectedUserName);
+    $('.choose-assignerrr').val(selectedUserName);
     $('.selected-assigner-id').val(splitUserId);
     $('.select-assign-dropdown').fadeOut(100);
     
 }); //li click end
-
-
-
 
 
 
@@ -158,7 +187,7 @@ $('.status-btn').click(function() {
     addStatusUpdateHandler(clickedButton, newStatus);
 });
 
-function addStatusUpdateHandler(clickedButton, newStatus, selectedUserName) {
+function addStatusUpdateHandler(clickedButton, newStatus) {
 		
     // .status-update-modal-btn 클릭 이벤트 처리
     $('.status-update-modal-btn').off('click'); // 이전에 추가된 클릭 이벤트 핸들러 제거
@@ -170,13 +199,19 @@ function addStatusUpdateHandler(clickedButton, newStatus, selectedUserName) {
             data: {
                 issueId: $("#issue_id").val(),
                 status: newStatus,
-                selectedUserName: $('.choose-assignerrr').val()
+                selectedUserId: $('.selected-assigner-id').val()
             },
             context: clickedButton,
+            beforeSend: function(xhr) {
+            	xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        		},
             success: function(response) {
                 if (response.status === 'success') {
                     $('.status-btn').removeClass('current-status'); // 모든 버튼에서 current-status 클래스 제거
                     clickedButton.addClass('current-status'); // 선택된 버튼에 current-status 클래스 추가
+                    
+                    $('.assigned-user').text(selectedUserName);
+                    console.log($('.assigned-user').text());
                     
                     $('.status-update-modal').fadeOut(200);
                     $('.status-update-modal-resolved').fadeOut(200);
@@ -221,6 +256,9 @@ function addStatusUpdateHandler(clickedButton, newStatus, selectedUserName) {
 	        data: {
 	            issueId: $("#issue_id").val() 
 	        },
+	        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        	},
 	        success: function(response) {
 	            if (response === 1) { 
 	                console.log(response);
@@ -251,6 +289,17 @@ function addStatusUpdateHandler(clickedButton, newStatus, selectedUserName) {
 	});
 	
 	
-	
 });// document ready
+
+	function clip(){
+		var url = '';
+		var textarea = document.createElement("textarea");
+		document.body.appendChild(textarea);
+		url = window.document.location.href;
+		textarea.value = url;
+		textarea.select();
+		document.execCommand("copy");
+		document.body.removeChild(textarea);
+		alert("URL이 복사되었습니다.")
+	};
 	

@@ -188,7 +188,7 @@
             </li>
             <li class="menu-item">
               <a
-                href="../mainboard/AdminDashboard"
+                href="../admin/admin-dashboard"
                 target="_blank"
                 class="menu-link"
               >

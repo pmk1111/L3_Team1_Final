@@ -144,7 +144,7 @@
 
 <body>
     <jsp:include page="header.jsp"></jsp:include>
-	<form id="joinform" name="joinform">
+	<form id="joinform" name="joinform" action="login" method="post">
      <div class="auth-section after-contets">
         <div class="accont-wrap">
             <div id="companyJoinMain" class="login-wrap">
@@ -152,7 +152,7 @@
                 <div class="join-contets">
 
                     <div>
-                        <b class="bTxt">이메일 주소</b><br> <input type="text" id="email" class="email" name="email" maxLength="30" placeholder="이메일을 입력하세요" required>
+                        <b class="bTxt">이메일 주소</b><br> <input type="text" id="recipientEmail" class="email" name="recipientEmail" maxLength="30" placeholder="이메일을 입력하세요" required>
                         <p class="errMsg" id="email_message">오류메세지 영역</p>
                     </div>
                     <div>
@@ -160,7 +160,7 @@
                         <p class="errMsg" id="name_message">오류메세지 영역</p>
                     </div>
                     <div>
-                        <b class="bTxt">비밀번호</b><br> <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="pass" required>
+                        <b class="bTxt">비밀번호</b><br> <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="password" required>
                         <p class="errMsg" id="pw_message">오류메세지 영역</p>
                     </div>
 
@@ -207,6 +207,7 @@
 	            </div>
 	        </div>
 	    </div>
+	       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	  </form>
     <div id="signupFooterArea" style="display: block;">
         <!-- ======= Footer ======= -->
@@ -292,7 +293,9 @@
     <script src="../resources/home/assets/vendor/php-email-form/validate.js"></script>
     <!-- Template Main JS File -->
     <script src="../resources/home/assets/js/main.js"></script>
-     <script type="text/javascript">
+    <script type="text/javascript">
+     let token = $("meta[name='_csrf']").attr("content");
+   	 let header = $("meta[name='_csrf_header']").attr("content");
         // 오류 메세지 출력
         function printErrMsg(id, msg) {
             const element = document.getElementById(id);
@@ -308,13 +311,17 @@
 
         $(document).ready(function() {
 
-            $("#email").on('focusout', function() {
+            $("#recipientEmail").on('focusout', function() {
                 if (!validateEmail(this.value)) {
                     printErrMsg("email_message", "유효한 이메일을 입력해주세요.");
+                    return;
                 } else {
                     document.getElementById("email_message").style.visibility = "hidden";
                     document.getElementById("isChkEmail").value = "Y";
                 }
+                
+            	chkDupEmail();
+            	
             });
 
             $("#userName").on('focusout', function() {
@@ -348,7 +355,7 @@
     </script>
     <script>
     function openModal() {
-        var email = document.getElementById('email').value;
+        var email = document.getElementById('recipientEmail').value;
         var modal = document.getElementById('myModal');
         var authDescription = document.querySelector('.authDescription');
 
@@ -357,7 +364,7 @@
             document.getElementById("isChkEmail").value == 'Y' &&
             document.getElementById("isChkpolicy").value == 'Y') {
 
-            authDescription.innerHTML = email + '으로 <br> 6자리 인증번호가 전송되었습니다';
+            authDescription.innerHTML = recipientEmail + '으로 <br> 6자리 인증번호가 전송되었습니다';
             modal.style.display = 'block';
             
         } else {
@@ -385,18 +392,47 @@
     	var sendForm = $("#joinform").serialize();
     	
 	   	 $.ajax({
-	   	        url: "../user/chk-auth-code",
+	   	        url: "../company/chk-auth-code",
 	   	        type: "POST",
 	   	        data: sendForm,
 	   	        async: false,
 	   	        success: function(data) {
-	   				debugger;
+	   	        	if(data==""){
+	   	        		alert("회원 가입을 축하드립니다.");
+	   	        		$("#joinform").submit();
+	   	        	}else{
+	   	        		alert("인증코드가 일치하지않습니다.");
+	   	        	}
 	   	        },
 	   	        error: function(error) {
 	            }
 	   		});	
     }
     
+    function chkDupEmail(){
+
+    	var sendForm = $("#joinform").serialize();
+    	
+	   	 $.ajax({
+	   	        url: "../company/chk-dupl-email",
+	   	        type: "POST",
+	   	        data: sendForm,
+	   	     	beforeSend: function(xhr) {   // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+ 	           		xhr.setRequestHeader(header, token);
+ 	        	},
+	   	        async: false,
+	   	        success: function(data) {
+	   	        	if(data == "1"){
+	   	        	 	printErrMsg("email_message", "중복된 이메일입니다.");
+                    	return;
+	   	        	}else{
+	   	        		return true;
+	   	        	}
+	   	        },
+	   	        error: function(error) {
+	            }
+	   		});	
+    }
     
     
     

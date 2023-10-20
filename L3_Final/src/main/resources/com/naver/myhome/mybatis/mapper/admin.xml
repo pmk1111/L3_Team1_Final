@@ -1,142 +1,185 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.AdminMapper">
 
-	<!-- 지니 -->
-	<!-- 정상 -->
-	<select id="waitUser" resultType="user">
-		select *
-		from users
-		where company_invited = #{companyId} and company_status = 0
-		order by created_at
-	</select>
-	
-	<!-- 가입대기 승인/거절 -->
-	<update id="approveUser" >
-		update users
-		set company_status = 1
-		where id = #{userId} and company_invited = #{companyId}
-	</update>
-	
-	<!-- 가입승인 후 직원 추가 -->
-	<insert id="addEmployee" >
-		INSERT INTO employee (id, user_id, company_id)
-    	VALUES (employee_id.nextval, #{userId}, #{companyId})
-	</insert>	
-	
-	<!-- 직원 리스트 호출 -->
-	<select id="findEmployee" resultType="employee">
-		select u.pic, e.id ,u.name, e.department, e.position, u.email, u.phone,
-		e.auth 
-		from employee e
-			inner join
-    			users u on e.user_id = u.id
-		where e.company_id = #{companyId}
-		and e.status = 0
-		order by u.name
-	</select>
-		
-	<!-- 가입 거부 -->
-	<update id="rejectUser" >
-		update users 
-		set company_invited = 0
-		where id = #{userId} and company_invited = #{companyId}
-	</update>
-	
-	<!-- 이용 중지 -->
-	<update id="stopEmpStatus" parameterType="int">
-		update employee
-		set status = 1
-		where id=#{empId}
-	</update>
-	
-	<update id="updateAuth" parameterType="int">
-		update employee
-    	set auth = DECODE(auth, 'N', 'Y', 'N')
-    	where id=#{employeeId}
-	</update>
-	
-	<select id="countUser" resultType="int">
-		select count(*)
-		from users
-		where company_invited = #{companyId} and company_status = 0
-	</select>
-	
-	<select id="countEmp" resultType="int">
-	    select count(*)
-	    from USERS u
-	    inner join EMPLOYEE e on u.ID = e.USER_ID
-	    where u.COMPANY_INVITED = #{companyId} 
-	          and u.COMPANY_STATUS = 1 
-	          and e.STATUS = 0
-	</select>
-	
-	<select id="countStop" resultType="int">
-	    select count(*)
-	    from USERS u
-	    inner join EMPLOYEE e on u.ID = e.USER_ID
-	    where u.COMPANY_INVITED = #{companyId} 
-	          and u.COMPANY_STATUS = 1 
-	          and e.STATUS = 1
-	</select>
-	
-	<!-- 이용중지 리스트 호출 -->
-	<select id="getStopList" resultType="employee">
-		select u.pic, e.id ,u.name, e.department, e.position, u.email, u.phone
-		from employee e
-			inner join
-    			users u on e.user_id = u.id
-		where e.company_id = #{companyId}
-		and e.status = 1
-		order by u.name
-	</select>	
+    <!-- 지니 -->
+    <!-- 정상 -->
+    <select id="waitUser" resultType="user">
+        select *
+        from users
+        where company_invited = #{companyId} and company_status = 0
+        order by created_at
+    </select>
 
-	<!-- 이용 재개 -->
-	<update id="backEmp" parameterType="int">
-		update employee
-		set status = 0
-		where id=#{empId}
-	</update>
+    <!-- 가입대기 승인/거절 -->
+    <update id="approveUser">
+        update users
+        set company_status = 1
+        where id = #{userId} and company_invited = #{companyId}
+    </update>
+
+    <!-- 가입승인 후 직원 추가 -->
+    <insert id="addEmployee">
+        INSERT INTO employee (id, user_id, company_id)
+        VALUES (employee_id.nextval, #{userId}, #{companyId})
+    </insert>
+
+    <!-- 직원 리스트 호출 -->
+    <select id="findEmployee" resultType="employee">
+        select u.pic, e.id ,u.name, e.department, e.position, u.email, u.phone,
+        e.auth
+        from employee e
+        inner join
+        users u on e.user_id = u.id
+        where e.company_id = #{companyId}
+        and e.status = 0
+        order by u.name
+    </select>
+
+    <!-- 가입 거부 -->
+    <update id="rejectUser">
+        update users
+        set company_invited = 0
+        where id = #{userId} and company_invited = #{companyId}
+    </update>
+
+    <!-- 이용 중지 -->
+    <update id="stopEmpStatus" parameterType="int">
+        update employee
+        set status = 1
+        where id=#{empId}
+    </update>
+
+    <update id="updateAuth" parameterType="int">
+        update employee
+        set auth = DECODE(auth, 'N', 'Y', 'N')
+        where id=#{employeeId}
+    </update>
+
+    <select id="countUser" resultType="int">
+        select count(*)
+        from users
+        where company_invited = #{companyId} and company_status = 0
+    </select>
+
+    <select id="countEmp" resultType="int">
+        select count(*)
+        from USERS u
+        inner join EMPLOYEE e on u.ID = e.USER_ID
+        where u.COMPANY_INVITED = #{companyId}
+        and u.COMPANY_STATUS = 1
+        and e.STATUS = 0
+    </select>
+
+    <select id="countStop" resultType="int">
+        select count(*)
+        from USERS u
+        inner join EMPLOYEE e on u.ID = e.USER_ID
+        where u.COMPANY_INVITED = #{companyId}
+        and u.COMPANY_STATUS = 1
+        and e.STATUS = 1
+    </select>
+
+    <!-- 이용중지 리스트 호출 -->
+    <select id="getStopList" resultType="employee">
+        select u.pic, e.id ,u.name, e.department, e.position, u.email, u.phone
+        from employee e
+        inner join
+        users u on e.user_id = u.id
+        where e.company_id = #{companyId}
+        and e.status = 1
+        order by u.name
+    </select>
+
+    <!-- 이용 재개 -->
+    <update id="backEmp" parameterType="int">
+        update employee
+        set status = 0
+        where id=#{empId}
+    </update>
+
+    <!-- 회사 정보 -->
+    <select id="companyInfo" resultType="Company">
+        select name, domain
+        from company
+        where id = #{companyId}
+    </select>
+
+    <select id="companyName" resultType="String">
+        select name
+        from company
+        where id = #{companyId}
+    </select>
+
+    <select id="companyDomain" resultType="String">
+        select domain
+        from company
+        where id = #{companyId}
+    </select>
+
+    <!-- 회사명 업데이트 -->
+    <update id="updateName">
+        update company
+        set name = #{companyName}
+        where id = #{companyId}
+    </update>
+
+    <!-- 회사도메인 업데이트 -->
+    <update id="updateDomain">
+        update company
+        set domain = #{companyDomain}
+        where id = #{companyId}
+    </update>
+
+    <!-- 혜원 -->
+    <select id="getAccesslist" resultType="Access">
+
+
+        SELECT COUNT(*), user_id, connectdate
+        FROM connectlist
+        WHERE connectdate LIKE '23/09%'
+        GROUP BY user_id, connectdate
+        UNION
+        SELECT COUNT(*), user_id, connectdate
+        FROM connectlist
+        WHERE connectdate LIKE '23/10%'
+        GROUP BY user_id, connectdate
+
+
+    </select>
+
+    <select id="getDayCount" resultType="Access">
+        SELECT TO_DATE(CONNECTDATE, 'YYYY-MM-DD') AS date, COUNT(*) AS daycount
+        FROM connectlist
+        WHERE CONNECTDATE >= TO_DATE(TO_CHAR(SYSDATE - 7, 'YYYY-MM-DD'), 'YYYY-MM-DD')
+        GROUP BY TO_DATE(CONNECTDATE, 'YYYY-MM-DD')
+        ORDER BY TO_DATE(CONNECTDATE, 'YYYY-MM-DD')
+    </select>
+
+
+	<!-- <select id="getMonthCount" resultType="Access">
 	
-	<!-- 직원 초대 -->
-	<update id="useEmployeeStatus" parameterType="int">
-		update employee
-		set status= 0
-		where id=#{employeeId}
-	</update>
-	
-	<!-- 회사 정보 -->
-	<select id="companyInfo" resultType="Company">
-	select name, domain
-	from company
-	where id = #{companyId}
-	</select>
-	
-	<select id="companyName" resultType="String">
-	select name
-	from company
-	where id = #{companyId}
-	</select>
-	
-	<select id="companyDomain" resultType="String">
-	select domain
-	from company
-	where id = #{companyId}
-	</select>
- 
- 	<!-- 회사명 업데이트 -->
- 	<update id ="updateName">
- 	update company
- 	set name = #{companyName}
- 	where id = #{companyId}
- 	</update>
- 	
- 	<!-- 회사도메인 업데이트 -->
- 	<update id ="updateDomain">
- 	update company
- 	set domain = #{companyDomain}
- 	where id = #{companyId}
- 	</update>
+	SELECT TO_CHAR(CONNECTDATE, 'YYYY-MM') AS month, COUNT(*) AS monthcount
+	FROM connectlist
+	WHERE CONNECTDATE >= ADD_MONTHS(TRUNC(SYSDATE), -6)
+	GROUP BY TO_CHAR(CONNECTDATE, 'YYYY-MM')
+	ORDER BY TO_CHAR(CONNECTDATE, 'YYYY-MM')
+	   
+	   
+	</select> -->
+
+    <select id="getMonthCount" resultMap="accessResultMap">
+        SELECT TO_CHAR(CONNECTDATE, 'YYYY-MM') AS month, COUNT(*) AS monthcount
+        FROM connectlist
+        WHERE CONNECTDATE >= ADD_MONTHS(TRUNC(SYSDATE), -6)
+        GROUP BY TO_CHAR(CONNECTDATE, 'YYYY-MM')
+        ORDER BY TO_CHAR(CONNECTDATE, 'YYYY-MM')
+    </select>
+
+    <resultMap id="accessResultMap" type="Access">
+        <result property="month" column="month" />
+        <result property="monthcount" column="monthcount" />
+    </resultMap>
+
 </mapper>
