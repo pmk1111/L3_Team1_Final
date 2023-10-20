@@ -6,36 +6,6 @@
 
 	<!-- 지니 -->
 	
-	<!-- 가입대기자 -->
-	<select id="findUser" resultType="user">
-		select u.pic, u.name, u.email, u.created_at, u.id
-		from users u
-		left join employee e on u.id = e.user_id
-		where u.company_invited = #{companyInvited} and u.company_status = 0
-		order by u.name
-	</select>
-	
-	<select id="countUser" resultType="int">
-	select count(*) as usercount
-	from users u
-	left join employee e on u.id = e.user_id
-	where u.company_invited = #{companyInvited} and u.company_status = 0
-	</select>
-	
-	<!-- 가입대기 승인/거절 -->
-	<update id="approveUser" >
-		update users
-		set company_status = 1
-		where id= #{userId} and company_status = 0
-	</update>
-	
-	
-	
-	<delete id="rejectUser" >
-		delete  users 
-		where id=#{userId}
-		
-	</delete>
 	<!-- /지니 -->
 	
 	<select id="isId" resultType="user" parameterType="String"><!-- Member class를 

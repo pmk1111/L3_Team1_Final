@@ -19,27 +19,6 @@ public class UserServiceImpl implements UserService {
 		this.dao = dao;
 	}
 
-	@Override
-	public List<User> findUser(int companyInvited) {
-		// TODO Auto-generated method stub
-		return dao.findUser(companyInvited);
-	}
-
-	@Override
-	public int countUser(int companyInvited) {
-		return dao.countUser(companyInvited);
-	}
-
-	@Override
-	public int approveUser(int userId) {
-		return dao.approveUser(userId);
-	}
-
-	@Override
-	public int rejectUser(int userId) {
-		return dao.rejectUser(userId);
-	}
-
 	//지니 끝
 	
 //	@Override

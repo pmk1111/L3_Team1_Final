@@ -28,6 +28,7 @@ import com.naver.myhome.service.UserService;
 @RequestMapping(value = "/user")
 public class UserController {
 
+
    //주영
    private PasswordEncoder passwordEncoder;
    //지니
@@ -41,6 +42,7 @@ public class UserController {
    }
    
    @GetMapping(value = "/profile")
+
 //    public ModelAndView user_update(Principal principal, ModelAndView mv) {
 //          String id =S principal.getName();
 //        
@@ -241,6 +243,7 @@ public class UserController {
            String encPassword = passwordEncoder.encode(user.getPassword());
              user.setPassword(encPassword);
              System.out.println(user.getPassword());
+
             userService.insert(user);
        }else {
           errMsg = "인증코드를 확인하세요";

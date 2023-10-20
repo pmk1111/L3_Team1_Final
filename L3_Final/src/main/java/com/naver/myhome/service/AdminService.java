@@ -1,60 +1,43 @@
 package com.naver.myhome.service;
 
 import java.util.List;
-import java.util.Map;
 
-import com.naver.myhome.domain.Access;
-import com.naver.myhome.domain.Company;
 import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
 
 public interface AdminService {
-   
 
+	String companyName(int companyId);
+	
+	String companyDomain(int companyId);
 
-   public List<Employee> findEmployee(int companyId);
+	public int updateName(int companyId, String companyName);
 
-//   Company companyInfo(int companyId);
-   
-   String companyName(int companyId);
-   
-   String companyDomain(int companyId);
+	public int updateDomain(int companyId, String companyDomain);
+	
+	public List<User> waitUser(int companyId);
 
-   public int countEmployee(int companyId);
+	public void approveUser(int userId, int companyId);
+	
+	public void addEmployee(int userId, int companyId);
 
-   public List<Employee> stopEmployee(int companyId);
+	public void rejectUser(int userId, int companyId);
+	
+	public List<Employee> findEmployee(int companyId);
+	
+	public int stopEmployeeStatus(int employeeId);
 
-   public int countStopEmployee(int companyId);
+	public void updateAuth(int employeeId);
 
-   public int stopEmployeeStatus(int employeeId);
+	public int countUser( int companyId);
+	
+	public int countStop (int companyId);
+	
+	public int countEmp (int companyId);
 
-   public int noMoreAuth(int employeeId);
+	public List<Employee> getStopList(int companyId);
 
-   public int addAuth(int employeeId);
+	public void backEmp(int empId);
+	
 
-   public int useEmployeeStatus(int employeeId);
-
-   public int addEmployee(int userId, int companyId);
-
-   public int updateName(int companyId, String companyName);
-
-   public int updateDomain(int companyId, String companyDomain);
-
-
-
-   public int changePwd(Map<String, Object> paramMap);
-
-  
-
-	public List<Access> getAccesslist();
-
-	public List<Access> getDayCount();
-
-	public List<Access> getMonthCount();
-
-
-
-
-   
-   
 }
