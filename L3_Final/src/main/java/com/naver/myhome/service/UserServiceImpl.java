@@ -19,27 +19,6 @@ public class UserServiceImpl implements UserService {
 		this.dao = dao;
 	}
 
-	@Override
-	public List<User> findUser(int companyInvited) {
-		// TODO Auto-generated method stub
-		return dao.findUser(companyInvited);
-	}
-
-	@Override
-	public int countUser(int companyInvited) {
-		return dao.countUser(companyInvited);
-	}
-
-	@Override
-	public int approveUser(int userId) {
-		return dao.approveUser(userId);
-	}
-
-	@Override
-	public int rejectUser(int userId) {
-		return dao.rejectUser(userId);
-	}
-
 	//지니 끝
 	
 //	@Override
@@ -47,12 +26,29 @@ public class UserServiceImpl implements UserService {
 //		// TODO Auto-generated method stub
 //		return 0;
 //	}
+	
+	
 //
 	@Override
 	public int insert(User user) {
 		
 		return dao.insert(user);
 	}
+	
+
+	@Override
+	public User selectByMail(String eMail) {
+		// TODO Auto-generated method stub
+		return dao.selectByMail(eMail);
+	}
+
+	@Override
+	public int getUserId(String eMail) {
+		// TODO Auto-generated method stub
+		return dao.getUserId(eMail);
+	}
+
+	
 //
 //	@Override
 //	public int isId(String id) {

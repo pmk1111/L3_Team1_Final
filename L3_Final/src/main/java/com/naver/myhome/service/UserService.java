@@ -22,14 +22,8 @@ public interface UserService {
 //
 //	public int getSearchListCount(int index, String search_word);
 
+	public int getUserId(String eMail);
 
-	public List<User> findUser(int companyInvited);
-
-	public int countUser( int companyInvited);
-
-	public int approveUser(int userId);
-
-	public int rejectUser(int userId);
-
+	public User selectByMail(String eMail);
 
 }

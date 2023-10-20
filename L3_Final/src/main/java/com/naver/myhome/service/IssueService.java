@@ -26,7 +26,7 @@ public interface IssueService {
 
 	public Issue getIssueDetail(int num);
 	
-	public int updateStatus(int issueId, String status, String selectedUserName);
+	public int updateStatus(int issueId, String status, String selectedUserId);
 	
 	public int issueUpdate(Issue issue);
 

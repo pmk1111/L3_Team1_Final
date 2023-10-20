@@ -6,7 +6,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" 
+
     	  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+
 
     <title>WidUs - 대시보드</title>
     <meta name="description" content="" />
@@ -60,7 +62,9 @@
       <div class="layout-container">
         <!-- Menu -->
 
-  		<jsp:include page="Admin_leftbar.jsp"></jsp:include>
+
+  		<jsp:include page="admin-leftbar.jsp"></jsp:include>
+
         <!-- / Menu -->
 
         <!-- Layout container -->
@@ -200,7 +204,9 @@
                     </div>
                   </div>
                 </div>
+
 						</div>
+
            </div>
             
             

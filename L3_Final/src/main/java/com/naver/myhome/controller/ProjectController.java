@@ -1,6 +1,13 @@
 package com.naver.myhome.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.naver.myhome.domain.Access;
 import com.naver.myhome.domain.Project;
 import com.naver.myhome.service.ProjectService;
 import com.naver.myhome.service.TeamService;
@@ -59,12 +67,10 @@ public class ProjectController {
 		
 		int employeeId = 1;
 		
-	    List<Project> allProjectList = projectService.getAllProjectList();
 	    List<Project> favoritProjectList = projectService.getFavoritProjectList(employeeId);
 	    List<Project> partProjectList = projectService.getPartProjectList(employeeId);
-	    
+		
 	    mv.setViewName("project/project-list");
-	    mv.addObject("allProjectlist", allProjectList);
 	    mv.addObject("favoritProjectList", favoritProjectList);
 	    mv.addObject("partProjectList", partProjectList);
 	    
@@ -72,24 +78,30 @@ public class ProjectController {
 	    
 	}
 	
-	@GetMapping(value = "/project")
-	public ModelAndView projectBoard
-	(int id, ModelAndView mv) {
+	@ResponseBody
+	@GetMapping(value = "/part-tabs")
+	public Map<String, List<Project>> getPartTabs() {
 		
-		Project project = projectService.getDetail(id);
+		int employeeId = 1;
 		
-		mv.setViewName("project/project-board");
-	    mv.addObject("project", project);
-	      
-		return mv;
+	    List<Project> favoritProjectList = projectService.getFavoritProjectList(employeeId);
+	    List<Project> partProjectList = projectService.getPartProjectList(employeeId);
+	    
+	    Map<String, List<Project>> data = new HashMap<>();
+	    data.put("favoritProjectList", favoritProjectList);
+	    data.put("partProjectList", partProjectList);
+	    
+	    
+		return data;
 	}
 	
-	@ResponseBody
-	@GetMapping("/update-color")
-	public void updateColor(@RequestParam(name="color", required=false) String color,
-	                        @RequestParam(name="id", required=true) int id){
-		projectService.updateColor(id, color);
+	@ResponseBody	
+	@GetMapping(value = "/all-tabs")
+	public List<Project> getAllTabs() {
 		
+	    List<Project> data = projectService.getAllProjectList();
+	    
+		return data;
 	}
 	
 	@ResponseBody
@@ -116,13 +128,32 @@ public class ProjectController {
 			projectService.removeFavorite(projectId, employeeId);
 			return -1;
 		}
+	}
+	
+	@GetMapping(value = "/project")
+	public ModelAndView projectBoard
+	(int id, ModelAndView mv, HttpServletResponse response) {
+		
+		Project project = projectService.getDetail(id);
+		
+	    Cookie cookie = new Cookie("id", String.valueOf(id));
+	    response.addCookie(cookie);
+		
+		mv.setViewName("project/project-board");
+	    mv.addObject("project", project);
+	      
+		return mv;
+	}
+	
+	@ResponseBody
+	@GetMapping("/update-color")
+	public void updateColor(@RequestParam(name="color", required=false) String color,
+	                        @RequestParam(name="id", required=true) int id){
+		projectService.updateColor(id, color);
 		
 	}
 	
 	// JJ's Controller End
 	
-	@RequestMapping(value = "/project-access-stats", method = RequestMethod.GET)
-	public String projectAccessStats() {
-		return "project/project-access-stats";
-	}
+
 }

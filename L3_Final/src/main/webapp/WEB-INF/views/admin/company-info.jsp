@@ -120,7 +120,7 @@
       <div class="layout-container">
         <!-- Menu -->
 
-  		<jsp:include page="../mainboard/Admin_leftbar.jsp"></jsp:include>
+  		<jsp:include page="../admin/admin-leftbar.jsp"></jsp:include>
         <!-- / Menu -->
 
         <!-- Layout container -->
@@ -170,54 +170,9 @@
   					   <input type="hidden" name="updateType" id="updateType" value="updateName">
   					   
                        <div class="changepassword">
-                       		<button type="button" class="changepwd" data-bs-toggle="modal" data-bs-target="#changeModal"> 비밀번호 변경</button>
+                       		<button type="button" class="changepwd"><a href="${pageContext.request.contextPath}/admin/change-pwd"> 비밀번호 변경</a></button>
                        		
-                       		<!-- Modal -->
                        	
-                       		<div class="modal fade" id="changeModal" tabindex="-1"
-                       			aria-labelledby="changePwdModal" aria-hidden="true">
-                       			<div class="modal-dialog">
-                       				<div class="modal-content">
-                       				
-                       				<!-- Modal Header -->
-                       				<div class="modal-header">
-                       					<h5 class="modal-title" id="changePwdModal">비밀번호 변경</h5>
-                       					<button type="button" class="btn-close" data-bs-dismiss="modal"
-                       						aria-label="Close"></button>
-                       				</div>
-                       				
-                       				<!-- Modal Body -->
-                       					<div class="modal-body">
-                       					
-                       					<form method="post" action="/admin/companyinfo" class="usedpassword">
-                       						
-                       						<div class="form-group">
-                       							<label for="usedpwd">비밀번호</label>
-                       							<input type="text" class="form-control" id="usedpwd" placeholder="비밀번호를 입력하세요"
-												name="usedpwd" required>
-                       						</div>	
-                       						
-                       						<div class="form-group">
-                       							<label for="newpwd">새로운 비밀번호</label>
-                       							<input type="text" class="form-control" id="newpwd" placeholder="비밀번호를 입력하세요"
-												name="newpwd" required>
-                       						</div>	
-                       						
-                       						<div class="form-group">
-                       							<label for="checkpwd">비밀번호</label>
-                       							<input type="text" class="form-control" id="checkpwd" placeholder="비밀번호를 입력하세요"
-												name="checkpwd" required>
-                       						</div>	
-                       					</form>
-                       					</div>
-                       				<!-- Modal Footer -->
-                       					<div class="modal-footer">
-                       						<button type="button" class="pwdsubmit"
-                       							data-bs-dismiss="modal">저장</button>
-                       					</div>
-                       				</div>
-                       			</div>
-                       			</div>
                        </div>
 
                          <div class="mb-3 col-md-6">

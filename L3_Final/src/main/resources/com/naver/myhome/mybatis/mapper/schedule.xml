@@ -4,26 +4,29 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.ScheduleMapper">
 	<!-- Insert -->
-	<select id="insertSchedule" resultType="int">
-		INSERT INTO SCHEDULE VALUES(#{schedule_id}, #{schedule_user_id},#{schedule_subject}, #{schedule_start_date}, #{schedule_end_date} ,
-		 #{schedule_category} , #{schedule_place}, #{schedule_content})
-	</select>
+	<insert id="insertSchedule">
+		<selectKey order="BEFORE" keyProperty="id" resultType="int">
+			select schedule_id.nextval from dual
+		</selectKey>
+		INSERT INTO SCHEDULE VALUES(#{id}, #{user_id},#{subject}, #{start_date}, #{end_date} ,
+		 #{category} , #{place}, #{content})
+	</insert>
 	 
 	<!-- Update -->
 	 <update id="updateSchedule" parameterType="int">
-        UPDATE SCHEDULE SET schedule_user_id = #{schedule_user_id},
-        schedule_subject = #{schedule_subject},
-        schedule_start_date = #{schedule_start_date},
-        schedule_end_date = #{schedule_end_date},
-        schedule_category =  #{schedule_category},
-        schedule_place =  #{schedule_place},
-        schedule_content =  #{schedule_content}
-        WHERE schedule_id =  #{id}
+        UPDATE SCHEDULE SET user_id = #{user_id},
+        subject = #{subject},
+        start_date = #{start_date},
+        end_date = #{end_date},
+        category = #{category},
+        place = #{place},
+        content =  #{content}
+        WHERE id =  #{id}
     </update>
 
     <!-- Delete -->
     <delete id="deleteSchedule" parameterType="int">
-       DELETE FROM SCHEDULE WHERE schedule_id= # {id}
+       DELETE FROM SCHEDULE WHERE id= # {id}
     </delete>
     
 </mapper>
