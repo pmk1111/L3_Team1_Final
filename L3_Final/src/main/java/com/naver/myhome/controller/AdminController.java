@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.naver.myhome.domain.Access;
 import com.naver.myhome.domain.Company;
 import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
@@ -263,32 +264,6 @@ public class AdminController {
 
     }
 
-
-    //직원 상태 업데이트 
-    @ResponseBody
-    @PostMapping(value = "/update-employee-status")
-    public int updateEmployeeStatus(
-        @RequestParam("employeeId") int employeeId,
-        @RequestParam("employeeStatus") int employeeStatus,
-        @RequestParam("tab") String tab,
-        HttpServletRequest request, RedirectAttributes rattr) {
-
-        int result = 0;
-
-        if ("useruse".equals(tab)) { //정상 -> 이용중지
-
-            result = adminService.stopEmployeeStatus(employeeId);
-
-        } else if ("userstop".equals(tab)) { //이용중지 -> 정상
-
-            result = adminService.useEmployeeStatus(employeeId);
-
-        }
-        System.out.println(result);
-
-        return result;
-    }
-
     //정상리스트 가져오기
     @ResponseBody
     @PostMapping(value = "/user-uselist")
@@ -332,6 +307,11 @@ public class AdminController {
         }
         return "admin/invite-employee";
 
+    }
+    
+    @GetMapping(value="/admin-dashboard")
+    public String adminDashboard() {
+       return "admin/AdminDashboard";
     }
     //지니 끝
 

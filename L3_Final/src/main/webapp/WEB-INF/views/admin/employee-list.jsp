@@ -149,7 +149,7 @@
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
             <!-- Menu -->
-            <jsp:include page="../mainboard/Admin_leftbar.jsp"></jsp:include>
+            <jsp:include page="../admin/admin-leftbar.jsp"></jsp:include>
             <!-- / Menu -->
             <!-- Layout container -->
             <div class="layout-page">

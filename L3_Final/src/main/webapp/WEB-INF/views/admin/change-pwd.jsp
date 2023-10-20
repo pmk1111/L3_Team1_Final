@@ -149,7 +149,7 @@ $(document).ready(function() {
 		<div class="layout-container">
 			<!-- Menu -->
 
-			<jsp:include page="../admin/Admin_leftbar.jsp"></jsp:include>
+			<jsp:include page="../admin/admin-leftbar.jsp"></jsp:include>
 			<!-- / Menu -->
 
 			<!-- Layout container -->

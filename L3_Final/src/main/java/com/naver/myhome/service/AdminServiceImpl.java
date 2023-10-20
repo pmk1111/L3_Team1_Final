@@ -1,10 +1,12 @@
 package com.naver.myhome.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.naver.myhome.domain.Access;
 import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
 import com.naver.myhome.mybatis.mapper.AdminMapper;
@@ -48,6 +50,12 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int updateDomain(int companyId, String companyDomain) {
 		return dao.updateDomain(companyId, companyDomain);
+	}
+	
+	@Override
+	public int changePwd(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
@@ -110,6 +118,24 @@ public class AdminServiceImpl implements AdminService {
 		dao.backEmp(empId);
 	}
 	
-	
+	// 혜원
+	@Override
+	public List<Access> getAccesslist() {
+		// TODO Auto-generated method stub
+		return dao.getAccesslist();
+	}
 
+	@Override
+	public List<Access> getDayCount() {
+		// TODO Auto-generated method stub
+		return dao.getDayCount();
+	}
+
+	@Override
+	public List<Access> getMonthCount() {
+		// TODO Auto-generated method stub
+		return dao.getMonthCount();
+	}
+
+	
 }

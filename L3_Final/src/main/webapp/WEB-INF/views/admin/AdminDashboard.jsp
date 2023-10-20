@@ -63,7 +63,7 @@
         <!-- Menu -->
 
 
-  		<jsp:include page="Admin_leftbar.jsp"></jsp:include>
+  		<jsp:include page="admin-leftbar.jsp"></jsp:include>
 
         <!-- / Menu -->
 
