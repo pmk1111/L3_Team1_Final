@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -85,70 +85,70 @@
 <body>
     <jsp:include page="header.jsp"></jsp:include>
 
-    <form id="joinform" name="joinform" action="login" method="post">
-	    <div class="auth-section after-contets">
-	        <div class="accont-wrap">
-	                <div class="account">개인회원</div>
-	                <div class="formDiv">
-	                    <div>
-	                        <b class="bTxt">이메일 주소</b><br> <input type="text" id="email" class="email" name="email" maxLength="30" placeholder="이메일을 입력하세요" required>
-	                        <p class="errMsg" id="email_message">오류메세지 영역</p>
-	                    </div>
-	                    <div>
-	                        <b class="bTxt">이름</b><br> <input type="text" id="userName" class="name" name="name" placeholder="이름을 입력하세요" maxLength="15" required>
-	                        <p class="errMsg" id="name_message">오류메세지 영역</p>
-	                    </div>
-	                    <div>
-	                        <b class="bTxt">비밀번호</b><br> <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="password" required>
-	                        <p class="errMsg" id="pw_message">오류메세지 영역</p>
-	                    </div>
-	
-	                    <div class="mt10">
-	                        <div>
-	                            <input type="checkbox" id="policyCheckbox" class="policy" name="policy" value="필수"> <label for="policy" class="policyLabel"> <b class="require">(필수)</b>&nbsp; <a href="Service.net" style="color: #7C00B6; text-decoration: dash">
-	                                    서비스 이용약관</a>,<a href="PrivatePolicy.net" style="color: #7C00B6; text-decoration: dash">개인정보 처리방침</a>에
-	                                동의합니다.
-	                            </label>
-	                        </div>
-	                        <br>
-	                        <div>
-	                            <input type="checkbox" id="benefits" class="benefits" name="benefits" value="선택"> <label for="benefits" class="benefitsLabel"> <b>(선택)</b>&nbsp;혜택 수신에 동의합니다.
-	                            </label>
-	                        </div>
-	                    </div>
-	                </div>
-	
-	                <div class="clearfix">
-	                    <button type="button" id="confirmBtn" class="submitbtn" onclick="sendMailAuthCode();">
-	                        <strong>가입하기</strong>
-	                    </button>
-	                </div>
-	            
-	
-	            <input type="hidden" id="authRandNum" name="authRandNum" />
-	            <input type="hidden" id="isChkPassword" name="isChkPassword" value="N" />
-	            <input type="hidden" id="isChkName" name="isChkName" value="N" />
-	            <input type="hidden" id="isChkEmail" name="isChkEmail" value="N" />
-	            <input type="hidden" id="isChkpolicy" name="isChkpolicy" value="N" />
-	        </div>
-	
-	    </div>
-	    <div class="modalarea">
-	        <div id="myModal" class="modal">
-	
-	            <div class="modal-content">
-	                <span class="close">&times;</span>
-	                <strong style="padding-left: 40px; padding-bottom: 20px;">인증번호 입력</strong>
-	                 <label for="authDescription" class="authDescription"></label><br>
-	
-	                 <input type="text" id="authNum" class="authNum" name="authNum" placeholder="인증번호를 입력하세요" maxLength="6" required>
-	                 <p class="errMsg" id="auth_message">오류메세지 영역</p>
-	
-	                 <button class="save" type="button" onclick="chkAuthCode()">확인</button>
-	            </div>
-	        </div>
-	    </div>
-	     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+    <form id="joinform" name="joinform" action="join-success" method="post">
+       <div class="auth-section after-contets">
+           <div class="accont-wrap">
+                   <div class="account">개인회원</div>
+                   <div class="formDiv">
+                       <div>
+                           <b class="bTxt">이메일 주소</b><br> <input type="text" id="email" class="email" name="email" maxLength="30" placeholder="이메일을 입력하세요" required>
+                           <p class="errMsg" id="email_message">오류메세지 영역</p>
+                       </div>
+                       <div>
+                           <b class="bTxt">이름</b><br> <input type="text" id="userName" class="name" name="name" placeholder="이름을 입력하세요" maxLength="15" required>
+                           <p class="errMsg" id="name_message">오류메세지 영역</p>
+                       </div>
+                       <div>
+                           <b class="bTxt">비밀번호</b><br> <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="password" required>
+                           <p class="errMsg" id="pw_message">오류메세지 영역</p>
+                       </div>
+   
+                       <div class="mt10">
+                           <div>
+                               <input type="checkbox" id="policyCheckbox" class="policy" name="policy" value="필수"> <label for="policy" class="policyLabel"> <b class="require">(필수)</b>&nbsp; <a href="Service.net" style="color: #7C00B6; text-decoration: dash">
+                                       서비스 이용약관</a>,<a href="PrivatePolicy.net" style="color: #7C00B6; text-decoration: dash">개인정보 처리방침</a>에
+                                   동의합니다.
+                               </label>
+                           </div>
+                           <br>
+                           <div>
+                               <input type="checkbox" id="benefits" class="benefits" name="benefits" value="선택"> <label for="benefits" class="benefitsLabel"> <b>(선택)</b>&nbsp;혜택 수신에 동의합니다.
+                               </label>
+                           </div>
+                       </div>
+                   </div>
+   
+                   <div class="clearfix">
+                       <button type="button" id="confirmBtn" class="submitbtn" onclick="sendMailAuthCode();">
+                           <strong>가입하기</strong>
+                       </button>
+                   </div>
+               
+   
+               <input type="hidden" id="authRandNum" name="authRandNum" />
+               <input type="hidden" id="isChkPassword" name="isChkPassword" value="N" />
+               <input type="hidden" id="isChkName" name="isChkName" value="N" />
+               <input type="hidden" id="isChkEmail" name="isChkEmail" value="N" />
+               <input type="hidden" id="isChkpolicy" name="isChkpolicy" value="N" />
+           </div>
+   
+       </div>
+       <div class="modalarea">
+           <div id="myModal" class="modal">
+   
+               <div class="modal-content">
+                   <span class="close">&times;</span>
+                   <strong style="padding-left: 40px; padding-bottom: 20px;">인증번호 입력</strong>
+                    <label for="authDescription" class="authDescription"></label><br>
+   
+                    <input type="text" id="authNum" class="authNum" name="authNum" placeholder="인증번호를 입력하세요" maxLength="6" required>
+                    <p class="errMsg" id="auth_message">오류메세지 영역</p>
+   
+                    <button class="save" type="button" onclick="chkAuthCode()">확인</button>
+               </div>
+           </div>
+       </div>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     </form>
     
     <div id="signupFooterArea" style="display: block;">
@@ -236,8 +236,8 @@
     <!-- Template Main JS File -->
     <script src="../resources/home/assets/js/main.js"></script>
     <script type="text/javascript">
-   	 let token = $("meta[name='_csrf']").attr("content");
-   	 let header = $("meta[name='_csrf_header']").attr("content");
+       let token = $("meta[name='_csrf']").attr("content");
+       let header = $("meta[name='_csrf_header']").attr("content");
         // 오류 메세지 출력
         function printErrMsg(id, msg) {
             const element = document.getElementById(id);
@@ -254,16 +254,16 @@
         $(document).ready(function() {
 
             $("#email").on('focusout', function() {
-            	if (!validateEmail(this.value)) {
+               if (!validateEmail(this.value)) {
                     printErrMsg("email_message", "유효한 이메일을 입력해주세요.");
                     return;
                 } else {
                     document.getElementById("email_message").style.visibility = "hidden";
                     document.getElementById("isChkEmail").value = "Y";
                 }
-            	
-            	chkDupEmail();
-            	
+               
+               chkDupEmail();
+               
             });
 
             $("#userName").on('focusout', function() {
@@ -289,7 +289,7 @@
                     alert('서비스 이용약관 동의는 필수입니다.');
                     this.focus();
                 }else{
-                	document.getElementById("isChkpolicy").value = "Y";
+                   document.getElementById("isChkpolicy").value = "Y";
                 }
             })
 
@@ -315,74 +315,74 @@
     }
     
     function sendMailAuthCode(){
-    	var email = $("#email").val();
-    	
-    	 $.ajax({
-    	        url: "../user/send-mail-auth-code",
-    	        type: "POST",
-    	        data: {recipientEmail:email},
-    	        async: false,
-    	        beforeSend: function(xhr)
-    	        {   // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
-    	           xhr.setRequestHeader(header, token);
-    	        },
-    	        success: function(response) {
-    	        	openModal();
-    	        },
-    	        error: function(error) {
+       var email = $("#email").val();
+       
+        $.ajax({
+               url: "../user/send-mail-auth-code",
+               type: "POST",
+               data: {recipientEmail:email},
+               async: false,
+               beforeSend: function(xhr)
+               {   // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+                  xhr.setRequestHeader(header, token);
+               },
+               success: function(response) {
+                  openModal();
+               },
+               error: function(error) {
                 }
-    	});
+       });
     }
     
     function chkAuthCode(){
-    	var sendForm = $("#joinform").serialize();
-    	
-	   	 $.ajax({
-	   	        url: "../user/chk-auth-code",
-	   	        type: "POST",
-	   	        data: sendForm,
-	   	     	beforeSend: function(xhr)
- 	      	  {   // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
- 	           xhr.setRequestHeader(header, token);
- 	        },
-	   	        async: false,
-	   	        success: function(data) {
-	   				if(data == ""){
-	   					alert("회원가입이 성공하였습니다.");
-	   					$("#joinform").submit();
-	   				}else{
-	   					alert(data);
-	   					return;
-	   				}
-	   	        },
-	   	        error: function(error) {
-	            }
-	   		});	
+       var sendForm = $("#joinform").serialize();
+       
+          $.ajax({
+                 url: "../user/chk-auth-code",
+                 type: "POST",
+                 data: sendForm,
+                 beforeSend: function(xhr)
+               {   // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+               xhr.setRequestHeader(header, token);
+            },
+                 async: false,
+                 success: function(data) {
+                  if(data == ""){
+                     alert("회원가입이 성공하였습니다.");
+                     $("#joinform").submit();
+                  }else{
+                     alert(data);
+                     return;
+                  }
+                 },
+                 error: function(error) {
+               }
+            });   
     }
     
     function chkDupEmail(){
 
-    	var sendForm = $("#joinform").serialize();
-    	
-	   	 $.ajax({
-	   	        url: "../user/chk-dupl-email",
-	   	        type: "POST",
-	   	        data: sendForm,
-	   	     	beforeSend: function(xhr) {   // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
- 	           		xhr.setRequestHeader(header, token);
- 	        	},
-	   	        async: false,
-	   	        success: function(data) {
-	   	        	if(data == "1"){
-	   	        	 	printErrMsg("email_message", "중복된 이메일입니다.");
-                    	return;
-	   	        	}else{
-	   	        		return true;
-	   	        	}
-	   	        },
-	   	        error: function(error) {
-	            }
-	   		});	
+       var sendForm = $("#joinform").serialize();
+       
+          $.ajax({
+                 url: "../user/chk-dupl-email",
+                 type: "POST",
+                 data: sendForm,
+                 beforeSend: function(xhr) {   // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+                     xhr.setRequestHeader(header, token);
+               },
+                 async: false,
+                 success: function(data) {
+                    if(data == "1"){
+                        printErrMsg("email_message", "중복된 이메일입니다.");
+                       return;
+                    }else{
+                       return true;
+                    }
+                 },
+                 error: function(error) {
+               }
+            });   
     }
     
     
