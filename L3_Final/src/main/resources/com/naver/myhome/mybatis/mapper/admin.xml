@@ -6,6 +6,27 @@
 
 	<!-- 지니 -->
 	<!-- 정상 -->
+	<select id="waitUser" resultType="user">
+		select *
+		from users
+		where company_invited = #{companyId} and company_status = 0
+		order by created_at
+	</select>
+	
+	<!-- 가입대기 승인/거절 -->
+	<update id="approveUser" >
+		update users
+		set company_status = 1
+		where id = #{userId} and company_invited = #{companyId}
+	</update>
+	
+	<!-- 가입승인 후 직원 추가 -->
+	<insert id="addEmployee" >
+		INSERT INTO employee (id, user_id, company_id)
+    	VALUES (employee_id.nextval, #{userId}, #{companyId})
+	</insert>	
+	
+	<!-- 직원 리스트 호출 -->
 	<select id="findEmployee" resultType="employee">
 		select u.pic, e.id ,u.name, e.department, e.position, u.email, u.phone,
 		e.auth 
@@ -16,68 +37,75 @@
 		and e.status = 0
 		order by u.name
 	</select>
+		
+	<!-- 가입 거부 -->
+	<update id="rejectUser" >
+		update users 
+		set company_invited = 0
+		where id = #{userId} and company_invited = #{companyId}
+	</update>
 	
-	<select id="countEmployee" resultType="int">
-		select count (*) as countValue
-		from employee e
-			inner join 
-			     users u on e.user_id = u.id
-		WHERE e.company_id = #{companyId}
-	    and e.status = 0
+	<!-- 이용 중지 -->
+	<update id="stopEmpStatus" parameterType="int">
+		update employee
+		set status = 1
+		where id=#{empId}
+	</update>
+	
+	<update id="updateAuth" parameterType="int">
+		update employee
+    	set auth = DECODE(auth, 'N', 'Y', 'N')
+    	where id=#{employeeId}
+	</update>
+	
+	<select id="countUser" resultType="int">
+		select count(*)
+		from users
+		where company_invited = #{companyId} and company_status = 0
 	</select>
 	
-	<!-- 이용중지 -->
-	 <select id="stopEmployee" resultType="employee">
-		select u.pic, e.id ,u.name, e.department, e.position, u.email, u.phone,
-		e.auth 
+	<select id="countEmp" resultType="int">
+	    select count(*)
+	    from USERS u
+	    inner join EMPLOYEE e on u.ID = e.USER_ID
+	    where u.COMPANY_INVITED = #{companyId} 
+	          and u.COMPANY_STATUS = 1 
+	          and e.STATUS = 0
+	</select>
+	
+	<select id="countStop" resultType="int">
+	    select count(*)
+	    from USERS u
+	    inner join EMPLOYEE e on u.ID = e.USER_ID
+	    where u.COMPANY_INVITED = #{companyId} 
+	          and u.COMPANY_STATUS = 1 
+	          and e.STATUS = 1
+	</select>
+	
+	<!-- 이용중지 리스트 호출 -->
+	<select id="getStopList" resultType="employee">
+		select u.pic, e.id ,u.name, e.department, e.position, u.email, u.phone
 		from employee e
 			inner join
     			users u on e.user_id = u.id
 		where e.company_id = #{companyId}
-		and e.status=1
+		and e.status = 1
 		order by u.name
-	</select>
-	
-	<select id="countStopEmployee" resultType="int">
-		select count (*) as countStopValue
-		from employee e
-			inner join 
-			     users u on e.user_id = u.id
-		WHERE e.company_id = #{companyId}
-		and e.status=1
-	</select>
-	
-	<!-- 이용중지 업데이트 -->
-	<update id="stopEmployeeStatus" parameterType="int">
-	update employee
-	set status= 1
-	where id=#{employeeId}
+	</select>	
+
+	<!-- 이용 재개 -->
+	<update id="backEmp" parameterType="int">
+		update employee
+		set status = 0
+		where id=#{empId}
 	</update>
 	
+	<!-- 직원 초대 -->
 	<update id="useEmployeeStatus" parameterType="int">
-	update employee
-	set status= 0
-	where id=#{employeeId}
+		update employee
+		set status= 0
+		where id=#{employeeId}
 	</update>
-	
-	<!-- 관리자 유무 업데이트 -->
-	<update id="noMoreAuth" parameterType="int">
-	update employee
-	set auth= 'N'
-	where id=#{employeeId}
-	</update>
-	
-	<update id="addAuth" parameterType="int">
-	update employee
-	set auth= 'Y'
-	where id=#{employeeId}
-	</update>
-	
-	<!-- 가입승인 후 직원 추가 -->
-	<insert id="addEmployee" >
-	INSERT INTO employee (id, company_id, user_id)
-    VALUES (employee_id.nextval, #{companyId}, #{userId} )
-	</insert>
 	
 	<!-- 회사 정보 -->
 	<select id="companyInfo" resultType="Company">

@@ -9,17 +9,12 @@ public class Employee {
 	private int user_id;
 	private String department;
 	private String position;
-	private String auth;
+	private String auth="N";
 	private int status;
 	private String company_invited;
 	private String name;
 	private String email;
 	private String pic;
 	private String phone;
-
-	
-	
-	
-
 	
 }
