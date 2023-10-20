@@ -14,6 +14,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -140,11 +141,6 @@ public class UserController {
 //         }
 //   
    //지니 끝
-
-   @GetMapping("/confirm")
-   public String confirm() {
-   return "user/confirm";
-   }
    
    @GetMapping("/join")
    public String join() {
@@ -154,6 +150,11 @@ public class UserController {
    @GetMapping("/joinProcess")
    public String joinProcess(User user) {
    return "user/joinProcess";
+   }
+
+   @GetMapping("/confirm")
+   public String confirm() {
+   return "user/confirm";
    }
    
    @GetMapping("/create-company-domain")
@@ -171,21 +172,23 @@ public class UserController {
    return "user/join-company";
    }
    
-   @GetMapping("/login")
-   public String login() {
-   return "user/login";
+   // 이메일 확인
+   @ResponseBody
+   @PostMapping("/check-email")
+   public int checkEmail (String email) {
+	   
+     int checkEmail = userService.selectByMail(email);
+     if(checkEmail == 0) {
+       return 0;
+     } 
+       return 1;
    }
    
-   @PostMapping("/join-success")
-   public String joinSuccess() {
-      return "user/login";
-   }
-
-   
+   // 이메일 발송
+    @Async
     @ResponseBody
     @PostMapping("/send-mail-auth-code")
-    public Integer sendMailAuthCode(String recipientEmail,HttpSession session) throws Exception {
-
+    public Integer sendMailAuthCode(String email, HttpSession session) throws Exception {
 
         // 난수(인증번호) 생성
         Random random = new Random();
@@ -215,57 +218,31 @@ public class UserController {
 
             Message message = new MimeMessage(mailSession);
             message.setFrom(new InternetAddress(senderEmail));
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipientEmail));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
             message.setSubject(subject);
             message.setText(body);
 
             Transport.send(message);
-            
             
             session.setAttribute("verificationCode", verificationCode);
             
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+        
         return verificationCode;
     }  
     
-    @ResponseBody
-    @PostMapping("/chk-auth-code")
-    public String chkAuthCode(User user, HttpSession session) throws Exception {
-       String errMsg = "";
-       int verCode = (int) session.getAttribute("verificationCode");
-       int userAuthCode = user.getAuthNum();
-       System.out.println("verificationCode== > " + verCode);
-       System.out.println("userInputAuthNum== > " + userAuthCode);
-       
-       if(verCode == userAuthCode || userAuthCode == 0) {
-           String encPassword = passwordEncoder.encode(user.getPassword());
-             user.setPassword(encPassword);
-             System.out.println(user.getPassword());
-
-            userService.insert(user);
-       }else {
-          errMsg = "인증코드를 확인하세요";
-       }
-       
-       return errMsg;
+    // 회원가입 성공
+    @PostMapping("/join-success")
+    public String joinSuccess() {
+       return "user/login";
     }
     
-    @ResponseBody
-    @PostMapping("/chk-dupl-email")
-    public String chkduplEmail(String email, HttpSession session) throws Exception {
-       String errCode = "";
-       System.out.println("userEMail" + email);         //입력받은 eMail;
-             
-        User tmpUser = userService.selectByMail(email);
-        System.out.println("tmpUser" + tmpUser);               //고객 조회 (Email을 통해서)
-        if(tmpUser != null) {
-           errCode = "1";                                 //이미 Email로 가입한 경우
-         }else {
-           errCode = "0";
-         }
-        
-        return errCode;
+    // 로그인 페이지
+    @GetMapping("/login")
+    public String login() {
+    return "user/login";
     }
+    
 }

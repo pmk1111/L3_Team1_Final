@@ -24,6 +24,6 @@ public interface UserService {
 
 	public int getUserId(String eMail);
 
-	public User selectByMail(String eMail);
+	public int selectByMail(String eMail);
 
 }

@@ -18,7 +18,7 @@ public interface UserMapper {
 		
 		public int insert(User user);
 
-		public User selectByMail(String eMail);
+		public int selectByMail(String eMail);
 
 		public int getUserId(String eMail);
 

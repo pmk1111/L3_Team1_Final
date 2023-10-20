@@ -58,8 +58,8 @@
 	
 	
 	<!-- #########################################주영###################################### START  -->
-	<select id="selectByMail" resultType="user" parameterType="String">
-		select * from users where email = #{email}
+	<select id="selectByMail" resultType="int" parameterType="String">
+		select count(*) from users where email = #{email}
 	</select>
 	
 	<select id="getUserId" resultType="int">

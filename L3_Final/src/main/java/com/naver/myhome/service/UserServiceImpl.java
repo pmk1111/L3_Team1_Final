@@ -37,8 +37,7 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Override
-	public User selectByMail(String eMail) {
-		// TODO Auto-generated method stub
+	public int selectByMail(String eMail) {
 		return dao.selectByMail(eMail);
 	}
 
