@@ -1,7 +1,9 @@
 package com.naver.myhome.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.naver.myhome.domain.Access;
 import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
 
@@ -14,6 +16,8 @@ public interface AdminService {
 	public int updateName(int companyId, String companyName);
 
 	public int updateDomain(int companyId, String companyDomain);
+
+	public int changePwd(Map<String, Object> paramMap);
 	
 	public List<User> waitUser(int companyId);
 
@@ -38,6 +42,14 @@ public interface AdminService {
 	public List<Employee> getStopList(int companyId);
 
 	public void backEmp(int empId);
+	
+	
+	// 혜원 
+	public List<Access> getAccesslist();
+	
+	public List<Access> getDayCount();
+
+	public List<Access> getMonthCount();
 	
 
 }
