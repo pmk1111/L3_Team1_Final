@@ -44,12 +44,9 @@ public interface AdminMapper {
 
       public String companyDomain(int companyId);
 
-      public List<Access> getAccesslist();
+       public List<Access> getAccesslist();
 
-		public List<Access> getAccesslist();
-
-		
-
+	
 		public List<Access> getDayCount();
 
 		public List<Access> getMonthCount();

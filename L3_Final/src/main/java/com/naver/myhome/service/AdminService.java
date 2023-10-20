@@ -40,7 +40,7 @@ public interface AdminService {
 
    public int updateDomain(int companyId, String companyDomain);
 
-   public List<Access> getAccesslist();
+
 
    public int changePwd(Map<String, Object> paramMap);
 

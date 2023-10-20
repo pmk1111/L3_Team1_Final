@@ -7,6 +7,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import com.naver.myhome.domain.Access;
+
 import com.naver.myhome.domain.Company;
 import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
@@ -40,6 +43,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	
+
 	@Override
 	public List<Employee> findEmployee(int companyId){
 		return dao.findEmployee(companyId);
@@ -86,4 +90,39 @@ public class AdminServiceImpl implements AdminService {
 		return dao.updateDomain(companyId, companyDomain);
 	}
 		
+
+   
+   
+   @Override
+	public List<Access> getAccesslist() {
+		// TODO Auto-generated method stub
+		return dao.getAccesslist();
+	}
+
+	@Override
+	public List<Access> getDayCount() {
+		// TODO Auto-generated method stub
+		return dao.getDayCount();
+	}
+
+	@Override
+	public List<Access> getMonthCount() {
+		// TODO Auto-generated method stub
+		return dao.getMonthCount();
+	}
+
+		
+
+      
+
+
 }
+
+	
+  
+      
+
+
+
+
+
