@@ -18,10 +18,10 @@ public class User implements UserDetails {
 	private String pic;
 	private String name;
 	private String phone;
-	private String company_invited;
-	private String company_status;
+	private String companyInvited;
+	private String companyStatus;
 	private String security;
-	private Date created_at;
+	private Date createdAt;
 	private int authNum;
 	
 	
