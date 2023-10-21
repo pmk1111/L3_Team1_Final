@@ -68,10 +68,25 @@
 	
 	<insert id="insert" parameterType="user">
 		insert into users
-		(id,email,password,name,company_invited)
+		(id,email,password,name,company_invited,COMPANY_STATUS)
 		values
-		(user_id.nextval,#{email},#{password},#{name},1)
-	</insert> 
+		(user_id.nextval,#{email},#{password},#{name},'','')
+	</insert>
+	
+	<select id="getEmplyeeInfoById" parameterType="user" resultType="user">
+		select ID, USER_ID , COMPANY_ID ,STATUS, AUTH, DEPARTMENT, POSITION , VISIT_COUNT FROM EMPLOYEE WHERE USER_ID = #{email};
+	</select>
+	
+	<update id="updateUserInfo" parameterType="user">
+		UPDATE USERS SET 
+				EMAIL = #{email}, 
+                NAME = #{name},
+                COMPANY_INVITED = #{companyInvited},
+                COMPANY_STATUS = #{companyStatus}
+        WHERE ID = #{id}
+	</update>  
+	
+	
 	
 	<!-- #########################################주영###################################### END  -->
 </mapper>

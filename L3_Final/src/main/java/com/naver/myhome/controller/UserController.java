@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
+import com.naver.myhome.service.EmployeeService;
+import com.naver.myhome.service.ProjectService;
+import com.naver.myhome.service.TeamService;
 import com.naver.myhome.service.UserService;
 
 @Controller
@@ -34,11 +39,12 @@ public class UserController {
    private PasswordEncoder passwordEncoder;
    //지니
    private UserService userService;
-   
-   @Autowired
+   private EmployeeService employeeService;
 
-   public UserController(UserService userservice,PasswordEncoder passwordEncoder) {
+   @Autowired
+   public UserController(UserService userservice,EmployeeService employeeService, PasswordEncoder passwordEncoder) {
       this.userService = userservice;
+      this.employeeService = employeeService;
       this.passwordEncoder= passwordEncoder;
    }
    
@@ -157,19 +163,9 @@ public class UserController {
    return "user/confirm";
    }
    
-   @GetMapping("/create-company-domain")
-   public String createCompanyDomain() {
-   return "user/create-company-domain";
-   }
-   
    @PostMapping("/create-company-id")
    public String createCompanyId() {
       return "user/create-company-id";
-   }
-   
-   @GetMapping("/join-company")
-   public String joinCompany() {
-   return "user/join-company";
    }
    
    // 이메일 확인
@@ -178,6 +174,19 @@ public class UserController {
    public int checkEmail (String email) {
 	   
      int checkEmail = userService.selectByMail(email);
+     if(checkEmail == 0) {
+       return 0;
+     } 
+       return 1;
+   }
+   
+   // 회원가입
+   @ResponseBody
+   @PostMapping("/save-user")
+   public int saveUser(User user) {
+	   
+     int checkEmail = userService.insert(user);
+     
      if(checkEmail == 0) {
        return 0;
      } 
@@ -200,7 +209,8 @@ public class UserController {
 
         String subject = "이메일 인증 번호";
         String body = "인증 번호는 다음과 같습니다: " + verificationCode;
-
+        System.out.println(email);
+         
         try {
            Properties props = new Properties();
            props.put("mail.smtp.host", "smtp.naver.com");
@@ -226,23 +236,69 @@ public class UserController {
             
             session.setAttribute("verificationCode", verificationCode);
             
+            return 0;
+            		
         } catch (MessagingException e) {
             e.printStackTrace();
         }
         
-        return verificationCode;
+        return 1;
     }  
     
     // 회원가입 성공
-    @PostMapping("/join-success")
-    public String joinSuccess() {
-       return "user/login";
+    @PostMapping("/check-auth-code")
+    @ResponseBody
+    public String joinSuccess(User user,HttpSession session) {
+    	
+    	int userAuthCode = user.getAuthNum();
+    	int sessionAuthCode = (int)session.getAttribute("verificationCode");
+    	String resultCd = "";
+    	
+    	System.out.println("1 ==> "+userAuthCode);
+    	System.out.println("2 ==> "+sessionAuthCode);
+    	
+    	
+    	
+    	if(sessionAuthCode == userAuthCode || userAuthCode == 0) {
+    		System.out.println(user.toString());
+    		String encPassword = passwordEncoder.encode(user.getPassword());
+    		user.setPassword(encPassword);
+    		userService.insert(user);
+    		
+    		resultCd = "0";
+    	}else {
+    		resultCd = "1";
+    	}
+    	
+        return resultCd;
     }
     
     // 로그인 페이지
     @GetMapping("/login")
     public String login() {
-    return "user/login";
+    	return "user/login";
     }
+   
+    @GetMapping("/loginSuccess")
+    public String loginSuccess(@AuthenticationPrincipal User user) {
+    	System.out.println(user.toString());
+    	
+    	Employee emp = employeeService.getEmplyeeInfoById(user);
+    	
+    	if(emp == null) {					//emp 테이블에 정보가 없다면
+    		return "user/confirm";
+    	}else{								//emp 테이블에 정보가 있다면		
+    		return "mainboard/my-dashboard";
+    	}
+    
+    	/*
+		 * if( 회사 참여여부 ){ 
+		 * 회사 만들기(1) or 회사 참여 (2) or 개인프로젝트 만들기(3) 현재
+		 * 
+		 * }
+		 */
+    }
+    
+   
     
 }

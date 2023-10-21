@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.naver.myhome.domain.Company;
+import com.naver.myhome.domain.User;
 import com.naver.myhome.mybatis.mapper.CompanyMapper;
 
 @Service
@@ -18,8 +19,8 @@ public class CompanyServiceImpl implements CompanyService{
 
 	
 	@Override
-	public Company selectByDomain(String companyDomain) {
-		return dao.selectByDomain(companyDomain);
+	public Company selectByDomain(String domain) {
+		return dao.selectByDomain(domain);
 	}
 
 
@@ -31,8 +32,7 @@ public class CompanyServiceImpl implements CompanyService{
 
 
 	@Override
-	public Company selectByEmail(String email) {
-		// TODO Auto-generated method stub
-		return dao.selectByMail(email);
+	public Company selectCompanyByUser(User user) {
+		return dao.selectCompanyByUser(user);
 	}
 }

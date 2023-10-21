@@ -81,7 +81,7 @@
 
     <jsp:include page="header.jsp"></jsp:include>
 
-    <form id="joinform" name="joinform" action="join-success" method="post">
+    <form id="joinform" name="joinform" action="login" method="get">
 
         <div class="auth-section after-contets">
             <div class="accont-wrap">
@@ -90,19 +90,19 @@
                     <div>
                         <b class="bTxt">이메일 주소</b>
                         <br>
-                        <input type="text" id="email"  class="email" name="email" maxLength="30" placeholder="이메일을 입력하세요" required>
+                        <input type="text" id="email"  class="email" name="email" maxLength="30" onfocusout = "checkEmail(this)" placeholder="이메일을 입력하세요" required >
                         <p class="errMsg" id="email_message">오류메세지 영역</p>
                     </div>
                     <div>
                         <b class="bTxt">이름</b>
                         <br>
-                        <input type="text" id="userName" class="name" name="name" placeholder="이름을 입력하세요" maxLength="15" required>
+                        <input type="text" id="userName" class="name" name="name" onfocusout = "checkUserName(this)" placeholder="이름을 입력하세요" maxLength="15" required>
                         <p class="errMsg" id="name_message">오류메세지 영역</p>
                     </div>
                     <div>
                         <b class="bTxt">비밀번호</b>
                         <br>
-                        <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="password" required>
+                        <input type="password" id="password" placeholder="비밀번호를 입력하세요" onfocusout="checkPassword(this)" class="pw" name="password" required>
                         <p class="errMsg" id="pw_message">오류메세지 영역</p>
                     </div>
 
@@ -127,7 +127,7 @@
 				
 				<!-- submitbtn 클래스명 수정 -->
                 <div class="clearfix">
-                    <button type="button" class="submitbtn" id="confirmBtn">
+                    <button type="button" class="submitbtn" id="confirmBtn" onclick="confirmUser()">
                         <strong>가입하기</strong>
                     </button>
                 </div>
@@ -143,9 +143,8 @@
         
         <div class="modalarea">
             <div id="myModal" class="modal">
-
                 <div class="modal-content">
-                    <span class="close">&times;</span>
+                    <span class="close" onclick="closeModal()">&times;</span>
                     
                     <!-- 입력한 이메일 데이터값 -->
                     <input type="hidden" id="hiddenEmail" name="hiddenEmail">
@@ -156,7 +155,7 @@
                     <input type="text" id="authNum" class="authNum" name="authNum" placeholder="인증번호를 입력하세요" maxLength="6" required>
                     <p class="errMsg" id="auth_message">오류메세지 영역</p>
 
-                    <button type="submit" class="save">확인</button>
+                    <button type="button" class="save" onclick="checkAuthCode()">확인</button>
                 </div>
             </div>
         </div>
@@ -252,162 +251,161 @@
 <script type="text/javascript">
     let token = $("meta[name='_csrf']").attr("content");
     let header = $("meta[name='_csrf_header']").attr("content");
-
-    // 오류 메세지 출력
-    function printErrMsg(id, msg) {
-        const element = document.getElementById(id);
-        element.innerHTML = msg;
-        element.style.visibility = "visible";
-    }
-
-    // 이메일 유효성 검사
+    
+    var isSending = "N";
+    
+    //이메일 유효성 검사    
     function validateEmail(email) {
         var re = /\S+@\S+\.\S+/;
         return re.test(email);
     }
 
-    $(document).ready(function() {
-        $("#email").on('focusout', function() {
-            if (!validateEmail(this.value)) {
-                printErrMsg("email_message", "유효한 이메일을 입력해주세요.");
-                return;
-            } else {
-                var email = this.value;
+    // 오류 메세지 출력
+    function printErrMsg(id, msg) {
+        $("#"+id).html(msg);
+        $("#"+id).attr("style","visibility : visible");
+    }
+    
+    function checkEmail(obj){
 
-                $.ajax({
-                    url: '../user/check-email',
-                    type: 'POST',
-                    data: { email: email },
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader(header, token);
-                    },
-                    success: function(response) {
-                        if (response == 1) {  // 동일한 이메일이 DB에 존재한다면
-                            printErrMsg("email_message", "이미 사용중인 이메일입니다.");
-                            document.getElementById("isChkEmail").value = "N";
-                        } else {  // 동일한 이메일이 DB에 없다면
-                            document.getElementById("email_message").style.visibility = "hidden";
-                            document.getElementById("isChkEmail").value = "Y";
-                        }
-                    },
-                    error: function(error) {
-                        console.error(error);
-                    }
-                });
+    	if (!validateEmail(obj.value)) {
+              printErrMsg("email_message", "유효한 이메일을 입력해주세요.");
+              return;
+          } else {
+              var email = obj.value;
+              $.ajax({
+                  url: '../user/check-email',
+                  type: 'POST',
+                  data: { email: email },
+                  beforeSend: function(xhr) {
+                      xhr.setRequestHeader(header, token);
+                  },
+                  success: function(response) {
+                      if (response == 1) {  // 동일한 이메일이 DB에 존재한다면
+                          printErrMsg("email_message", "이미 사용중인 이메일입니다.");
+	                      $("#isChkEmail").val("N");
+                          $("#hiddenEmail").val('');
+                      } else {  // 동일한 이메일이 DB에 없다면
+                    	  $("#email_message").attr("style","visibility : hidden");
+                          $("#isChkEmail").val("Y");
+                          $("#hiddenEmail").val(email);
+                      }
+                  },
+                  error: function(error) {
+                      console.error(error);
+                  }
+              });
+          }
+    }
+    
+    function checkUserName(obj){
+        if (obj.value.length < 2) {
+            printErrMsg("name_message", "이름은 2글자 이상이어야 합니다.");
+            $("#isChkName").val("N");
+        } else {
+      	  $("#name_message").attr("style","visibility : hidden");
+          $("#isChkName").val("Y");
+        }
+    }
+    
+    function checkPassword(obj){
+
+        if (obj.value.length < 6) {
+            printErrMsg("pw_message", "비밀번호는 6글자 이상이어야 합니다.");
+            $("#isChkPassword").val("N");
+        } else {
+        	$("#pw_message").attr("style","visibility : hidden");
+			$("#isChkPassword").val("Y");
+        }
+    }
+    
+    function saveUser(){
+	    var userVerificationCode = $("#authNum").val();
+	    console.log("Server code: " + serverVerificationCode);  // 로그 추가
+	    console.log("User code: " + userVerificationCode);  // 로그 추가
+	    saveUser();
+    }
+    
+    function closeModal(){
+    	$(".modalarea").css("display", "none");
+    }
+    
+    function confirmUser(){
+
+    	if(isSending == "Y"){
+    		alert("현재 이메일이 발송중입니다. 잠시만 기다려주세요");
+    		return;
+    	}
+    	
+		// 모든 필드의 유효성을 확인
+		if (!($("#isChkEmail").val() === "Y")) {
+		    alert("이메일을 확인해주세요.");
+		    return;
+		}
+		if (!($("#isChkName").val() === "Y")) {
+		    alert("이름을 확인해주세요.");
+		    return;
+		}
+		if (!($("#isChkPassword").val() === "Y")) {
+		    alert("비밀번호를 확인해주세요.");
+		    return;
+		}
+	   	if ($("#policyCheckbox").is(":checked")) {
+			$("#isChkpolicy").val('Y');
+		} else {
+			alert('서비스 이용약관 동의는 필수입니다.');
+            return;
+            $("#isChkpolicy").val('N');
+            $("#policyCheckbox").focus();
+        }
+		
+      
+        var email = $("#hiddenEmail").val();
+        isSending = "Y";
+        $.ajax({
+            url: '../user/send-mail-auth-code',
+            type: 'POST',
+            data: { email: email },
+            beforeSend: function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+                xhr.setRequestHeader(header, token);
+            },
+            success: function(response) {
+            	if(response == 0){
+            		$(".authDescription").html(email + '으로 <br> 6자리 인증번호가 전송되었습니다.');
+           		   	$(".modalarea").css("display", "block");
+           		 	isSending = "N";
+            	}else{
+            		alert("인증번호 발송에 실패하였습니다.");
+            		return;
+            	}
+            },
+            error: function(error) {
+                console.error(error);
             }
         });
-
-        $("#userName").on('focusout', function() {
-            if (this.value.length < 2) {
-                printErrMsg("name_message", "이름은 2글자 이상이어야 합니다.");
-                document.getElementById("isChkName").value = "N";
-            } else {
-                document.getElementById("name_message").style.visibility = "hidden";
-                document.getElementById("isChkName").value = "Y";
-            }
-        });
-
-        $("#password").on('focusout', function() {
-            if (this.value.length < 6) {
-                printErrMsg("pw_message", "비밀번호는 6글자 이상이어야 합니다.");
-                document.getElementById("isChkPassword").value = "N";
-            } else {
-                document.getElementById("pw_message").style.visibility = "hidden";
-                document.getElementById("isChkPassword").value = "Y";
-            }
-        });
-
-        $("#policyCheckbox").on('change', function() {
-            if (!this.checked) {
-                alert('서비스 이용약관 동의는 필수입니다.');
-                document.getElementById("isChkpolicy").value = "N";
-                this.focus();
-            } else {
-                document.getElementById("isChkpolicy").value = "Y";
-            }
-        });
-
-        // 모달창 띄우기
-        $("#confirmBtn").click(function(e) {
-            var isEmailValid = $("#isChkEmail").val() === "Y";
-            var isNameValid = $("#isChkName").val() === "Y";
-            var isPassValid = $("#isChkPassword").val() === "Y";
-            var isCheckValid = $("#isChkpolicy").val() === "Y";
-
-            // 모든 필드의 유효성을 확인
-            if (!isEmailValid || !isNameValid || !isPassValid || !isCheckValid) {
-                if (!isEmailValid) {
-                    alert("이메일을 확인해주세요.");
-                    return;
-                }
-                if (!isNameValid) {
-                    alert("이름을 확인해주세요.");
-                    return;
-                }
-                if (!isPassValid) {
-                    alert("비밀번호를 확인해주세요.");
-                    return;
-                }
-                if (!isCheckValid) {
-                    alert("이용약관을 확인해주세요.");
-                    return;
-                }
-                
-                e.preventDefault(); // 유효성 검사에 실패한 경우 폼 제출을 막음
-            } else {
-            	$(".modalarea").css("display", "block");
-            	
-                // 모달 끄기
-                $(".close").click(function() {
-                    $(".modalarea").css("display", "none");
-                });
-
-                // 이메일 입력시 이메일 저장
-                $("#email").blur(function() {
-                    var email = $(this).val();
-                    $("#hiddenEmail").val(email);
-                });
-
-                var serverVerificationCode;  // 서버로부터 받은 인증 코드를 저장할 전역 변수
-
-                // 이메일
-                    e.preventDefault();
-
-                    var email = $("#hiddenEmail").val();
-
-                    $.ajax({
-                        url: '../user/send-mail-auth-code',
-                        type: 'POST',
-                        data: { email: email },
-                        beforeSend: function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
-                            xhr.setRequestHeader(header, token);
-                        },
-                        success: function(response) {
-                            console.log(response);
-                            serverVerificationCode = response; // 응답으로 받은 인증 코드를 저장
-                        },
-                        error: function(error) {
-                            console.error(error);
-                        }
-                    });
-
-                    // 에이잭스로 가져온 인증번호와 입력한 인증번호 비교
-                    $(".save").click(function() {
-                        var userVerificationCode = $("#authNum").val();
-
-                        console.log("Server code: " + serverVerificationCode);  // 로그 추가
-                        console.log("User code: " + userVerificationCode);  // 로그 추가
-
-                        if (serverVerificationCode == userVerificationCode) {
-                            alert("회원가입을 축하합니다");
-                        } else {
-                            alert("인증번호를 확인하세요");
-                            event.preventDefault();
-                        }
-                    });
-            }
-        });
-    });
+    }
+    
+    function checkAuthCode(){
+    	 $.ajax({
+             url: '../user/check-auth-code',
+             type: 'POST',
+             data: $("#joinform").serialize() ,
+             beforeSend: function(xhr) {
+                 xhr.setRequestHeader(header, token);
+             },
+             success: function(response) {
+                 if (response == 0) {  
+                	 $("#joinform").submit();
+                 } else  { 
+                     alert("인증코드가 일치하지 않습니다. <br>인증코드를 다시 확인해주세요.");
+                 }
+             },
+             error: function(error) {
+                 console.error(error);
+             }
+         });
+    }
+	
 </script>
  
 </body>

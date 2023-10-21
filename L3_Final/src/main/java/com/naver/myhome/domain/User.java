@@ -18,7 +18,7 @@ public class User implements UserDetails {
 	private String pic;
 	private String name;
 	private String phone;
-	private String companyInvited;
+	private int companyInvited;			//int형식으로 변경하였음
 	private String companyStatus;
 	private String security;
 	private Date createdAt;

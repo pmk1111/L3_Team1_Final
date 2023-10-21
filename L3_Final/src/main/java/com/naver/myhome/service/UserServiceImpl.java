@@ -1,7 +1,5 @@
 package com.naver.myhome.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +43,16 @@ public class UserServiceImpl implements UserService {
 	public int getUserId(String eMail) {
 		// TODO Auto-generated method stub
 		return dao.getUserId(eMail);
+	}
+
+	@Override
+	public User getEmplyeeInfoById(User user) {
+		return dao.getEmplyeeInfoById(user);
+	}
+
+	@Override
+	public int updateUserInfo(User user) {
+		return dao.updateUserInfo(user);
 	}
 
 	

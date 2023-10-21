@@ -22,5 +22,9 @@ public interface UserMapper {
 
 		public int getUserId(String eMail);
 
+		public User getEmplyeeInfoById(User user);
+
+		public int updateUserInfo(User user);
+
 	}
 

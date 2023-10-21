@@ -26,4 +26,8 @@ public interface UserService {
 
 	public int selectByMail(String eMail);
 
+	public User getEmplyeeInfoById(User user);
+
+	public int updateUserInfo(User user);
+
 }
