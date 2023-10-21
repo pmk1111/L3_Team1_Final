@@ -18,7 +18,8 @@
     <title>회원관리 - 회원수정 페이지</title>
 
     <meta name="description" content="" />
-
+    
+	<script src="../resources/user/js/profile.js"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
@@ -49,8 +50,21 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../user/assets/js/config.js"></script>
+    <style>
+    .changepassword { margin: 20px 0px 40px 0px}
+	.changepwd { background-color: white;
+				 border: 1px solid #d9dee3;
+				 color: #697a8d;
+				 border-radius: 5px;
+			
+	}
+	.pwdsubmit {border: 1px solid #d9dee3;
+ 	  						    background-color: white;
+ 	  						    color: #697a8d;
+ 	  						    box-shadow:none;
+ 	  						    border-radius:5px;}
+    </style>
   </head>
-
   <body>
   
     <!-- Layout wrapper -->
@@ -111,8 +125,9 @@
                             <input
                               type="file"
                               id="upload"
+                              name="uploadfile"
+                              value = "${userinfo.user_photo}"
                               class="account-file-input"
-                              hidden
                               accept="image/png, image/jpeg"
                             />
                           </label>
@@ -127,7 +142,8 @@
                     </div>
                     <hr class="my-0" />
                     <div class="card-body">
-                      <form id="formAccountSettings" method="POST" onsubmit="return false">
+                      <form id="formAccountSettings" method="POST" action="../user/update-process">
+                          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <div class="row">
                           <div class="mb-3 col-md-6">
                             <label for="email" class="form-label">이메일</label>
@@ -146,46 +162,40 @@
                               type="text"
                               class="form-control"
                               id="company"
-                              name="company"
-                              value="${userinfo.company}"
+                              name="company"_
+                              value="${userinfo.company_name}"
+                              required readOnly
                             />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">이름</label>
                             <input class="form-control" type="text" name="name" id="name" value="${userinfo.name}" />
                           </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="department" class="form-label">부서</label>
-                            <input type="text" class="form-control" id="department" name="department" placeholder="" 
-                            value="${userinfo.department}"/>
-                          </div>
+                         
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="tel">휴대폰 번호</label>
                             <div class="input-group input-group-merge">
                               <input
                                 type="text"
-                                id="tel"
-                                name="tel"
+                                id="phone"
+                                name="phone"
                                 class="form-control"
                                 placeholder="010 000 0000"
-                                value="${userinfo.tel}"
+                                value="${userinfo.phone}"
                               />
                             </div>
                           </div>
                           
                          
-                          <div class="mb-3 col-md-6">
-                            <label for="position" class="form-label">직책</label>
-                            <input type="text" class="form-control" id="position" name="position" placeholder="" 
-                            value="${userinfo.position}"/>
-                          </div>
+                        
                           
-                       <div class="d-flex justify-content-between" >
-    					 <div class="change password">
-       						 <button type="button" class="btn btn-outline-secondary" style= "margin-top: 10;">비밀번호 변경</button>
-    					 </div>
+                      <div class="changepassword">
+                       		<button type="button" class="changepwd"><a href="${pageContext.request.contextPath}/user/change-pwd"> 비밀번호 변경</a></button>
+                       </div>
+    					 
+    					 
    						 <div class="mt-2">
-      					     <button type="submit" class="btn btn-primary me-2">저장</button>
+      					     <button type="submit" class="btn btn-primary me-2" id="updateProfile">저장</button>
       					     <button type="reset" class="btn btn-outline-secondary">취소</button>
   					     </div>
 					  </div>
@@ -261,18 +271,7 @@
    
     <!-- Place this tag in your head or just before your close body tag. -->
     
-    <script>
-    $('input[type=file]').change(function(event){
-        const inputfile=$(this).val().split('\\');
-        const filename=inputfile[inputfile.length-1]; //inputfile.length-1 =2
-        
-        const pattern=/(gif|jpg|jpeg|png)$/i; //i(ignore case)는 대소문자 무시를 의미
-        if (pattern.test(filename)){
-           $('#filename').text(filename);
-           
-           const reader = new FileReader(); //파일을 읽기 위한 객체 생성
-           
-    </script>
+  
 
   </body>
 </html>

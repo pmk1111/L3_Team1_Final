@@ -1,8 +1,12 @@
 package com.naver.myhome.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import com.naver.myhome.domain.User;
@@ -11,12 +15,45 @@ import com.naver.myhome.mybatis.mapper.UserMapper;
 @Service
 public class UserServiceImpl implements UserService {
 
+	private final SqlSession sqlSession;
+	
 	private UserMapper dao;
 	
-	//지니
+	
 	@Autowired
-	public UserServiceImpl(UserMapper dao) {
+	public UserServiceImpl(UserMapper dao, SqlSession sqlSession) {
 		this.dao = dao;
+		this.sqlSession = sqlSession;
+	}
+	//지니
+	
+	@Override
+	public int isId(String email) {
+		User ruser = dao.isId(email);
+		return (ruser == null) ? -1 : 1;
+	}
+
+	@Override
+	public int update(User user) {
+		return dao.update(user);
+	}
+
+	@Override
+	public User userInfo(String email) {
+		return dao.isId(email);
+	}
+	
+	@Override
+	public String checkPwd(String email) {
+		return dao.checkPwd(email);
+	}
+
+
+
+	@Override
+	public void updatePwd(String email, String newPwd) {
+	 dao.updatePwd(email, newPwd);
+		
 	}
 
 	//지니 끝
@@ -47,43 +84,9 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return dao.getUserId(eMail);
 	}
-
 	
-//
-//	@Override
-//	public int isId(String id) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	@Override
-//	public User user_info(String id) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public void delete(String id) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public int update(User m) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	@Override
-//	public List<User> getSearchList(int index, String search_word, int page, int limit) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public int getSearchListCount(int index, String search_word) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
+	
+
+
 
 }

@@ -17,7 +17,7 @@ public interface AdminService {
 
 	public int updateDomain(int companyId, String companyDomain);
 
-	public int changePwd(Map<String, Object> paramMap);
+//	public int changePwd(Map<String, Object> paramMap);
 	
 	public List<User> waitUser(int companyId);
 

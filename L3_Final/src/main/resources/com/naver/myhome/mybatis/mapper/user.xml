@@ -4,52 +4,38 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.UserMapper">
 
-	<!-- 지니 -->
+		<!-- 지니 -->
 	
-	<!-- /지니 -->
-	
-	<select id="isId" resultType="user" parameterType="String"><!-- Member class를 
-			별칭 -->
-		select * from user where id = #{id}
+	<select id = "isId" resultType = "user">
+		SELECT u.email, u.name, u.phone, c.name
+		AS company_name
+		FROM users u
+		INNER JOIN company c ON u.id = c.user_id
+		WHERE u.email = #{email}
 	</select>
 	
-	<select id="isEmail" resultType="user" parameterType="String"><!-- Member class를 
-			별칭 -->
-		select * from users where  email = #{user_email}
-	</select>
-
-	
-	<update id="update" parameterType="user">
-		update user
-		set name =
-		#{name}, age = #{age},
-		gender = #{gender}, email = #{email}
-		where id =
-		#{id}
+	<update id = "update" parameterType = "user">
+		update users
+		set name = #{name},
+   		phone = #{phone}
+		WHERE email = #{email}
+		
 	</update>
 
-	<select id="getSearchListCount" parameterType="map"
-		resultType="int">
-		select count(*)
-		from user
-		where id !='admin'
-		<include refid="search_" />
+	<select id="checkPwd">
+		select password 
+		from users
+		where email = #{email}
 	</select>
 	
-
+	<update id="updatePwd">
+		update users
+		set password =#{newPwd}
+		where email = #{email}
+	</update>
 	
-	<sql id="search_">
-		<if test="search_field != null">
-		and
-			<choose>
-				<when test='search_field=="user_name"'>user_name</when>
-				<when test='search_field=="user_email"'>user_email</when>
-				<when test='search_field=="department"'>department</when>
-				<when test='search_field=="position"'>position</when>
-			</choose>
-		like #{search_word}
-		</if>
-	</sql>
+	<!-- /지니 -->
+
 
 	<delete id="delete" parameterType="String">
 		delete from user

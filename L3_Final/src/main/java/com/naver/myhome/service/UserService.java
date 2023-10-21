@@ -1,6 +1,7 @@
 package com.naver.myhome.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.naver.myhome.domain.User;
 
@@ -10,13 +11,7 @@ public interface UserService {
 //
 	public int insert(User user);
 //
-//	public int isId(String id);
-//
-//	public User user_info(String id);
-//
 //	public void delete(String id);
-//
-//	public int update(User m);
 //
 //	public List<User> getSearchList(int index, String search_word, int page, int limit);
 //
@@ -25,5 +20,20 @@ public interface UserService {
 	public int getUserId(String eMail);
 
 	public User selectByMail(String eMail);
+
+	// 지니
+	
+	public User userInfo(String email);
+
+	public int isId(String email);
+
+	public int update(User user);
+
+	public void updatePwd(String email, String newPwd);
+
+	public String checkPwd(String email);
+	
+	//지니 끝
+
 
 }

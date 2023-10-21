@@ -23,6 +23,8 @@ public class User implements UserDetails {
 	private String security;
 	private Date created_at;
 	private int authNum;
+	private String company_name;
+
 	
 	
 	 @Override
