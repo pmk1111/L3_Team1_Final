@@ -31,12 +31,16 @@
 }
 
 .col-md-8 {width: 55%; min-width: 55%}
-.col-md-4{width: 45%}
-.schedules{max-height:300px; overflow: auto; list-style: none; margin-top:50px;}
-.schedules li{display: flex; align-items: center; margin:10px 0;}
+.col-md-4{position:relative; width: 45%}
+.go-calendar{color:#566a7f}
+.go-calendar:hover{color:#5f61e6; text-decoration:none; transition:.3s;}
+.schedules{max-height:300px; overflow: auto; list-style: none; margin-top:50px; padding:0;}
+.schedules li{display: flex; align-items: center; margin:12px 0; padding-left: 32px}
 .schedules img{width: 35px; height: 35px}
 .schedule-title-date{display: flex; flex-direction: column; padding-left: 15px; font-size: 14px}
 .schedule-title{font-weight: 700; color:#333333;}
+.no-schdule-today{position:absolute; top:50%; left:50%; width:250px; text-align:center; transform:translate(-50%, -50%); font-size:18px}
+.no-schdule-today:hover{color:#5f61e6; transition:.3s;}
 </style>
 </head>
 
@@ -97,7 +101,11 @@
 								<div class="card">
 									<div class="row row-bordered g-0">
 										<div class="col-md-8">
-											<h5 class="card-header m-0 me-2 pb-3">내 일정</h5>
+											<h5 class="card-header m-0 me-2 pb-3">
+											<a class="go-calendar" href="${pageContext.request.contextPath}/calendar/calendar-list">
+												내 일정
+											</a>
+											</h5>
 											<div class="date-wrap calendar">
 												<div class="date-month year-month">
 													<button type="button" id="month-prev" class="month-move"
@@ -144,45 +152,22 @@
 										</div>
 										<div class="col-md-4">
 											<ul class="schedules">										
-												<li>
-													<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
-													<div class="schedule-title-date">
-														<span class="schedule-title">일정을 등록하세요.</span>
-														<span class="schedule-date">2023-10-03(수)</span>
-													</div>
-												</li>
-												
-												<li>
-													<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
-													<div class="schedule-title-date">
-														<span class="schedule-title">일정을 등록하세요.</span>
-														<span class="schedule-date">2023-10-03(수)</span>
-													</div>
-												</li>
-												
-													<li>
-													<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
-													<div class="schedule-title-date">
-														<span class="schedule-title">일정을 등록하세요.</span>
-														<span class="schedule-date">2023-10-03(수)</span>
-													</div>
-												</li>
-												
-												<li>
-													<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
-													<div class="schedule-title-date">
-														<span class="schedule-title">일정을 등록하세요.</span>
-														<span class="schedule-date">2023-10-03(수)</span>
-													</div>
-												</li>
-												
-													<li>
-													<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
-													<div class="schedule-title-date">
-														<span class="schedule-title">일정을 등록하세요.</span>
-														<span class="schedule-date">2023-10-03(수)</span>
-													</div>
-												</li>
+												<c:choose>
+													<c:when test="${empty schedulelist}">
+														<p class="no-schdule-today">등록된 일정이 없습니다.</p>
+													</c:when>
+													
+													<c:otherwise>
+														<c:forEach var="s" items="${schedulelist}">
+															<li>
+                      					<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
+                        				<div class="schedule-title-date">
+                        				<span class="schedule-title">${s.subject}</span>
+                        				<span class="schedule-date"></span>
+                        				</div></li>
+														</c:forEach>
+													</c:otherwise>
+												</c:choose>
 																								
 											</ul>
 
