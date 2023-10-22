@@ -128,40 +128,42 @@ $(document).ready(function () {
         var year = yearMonth.split('.')[0]; // 년도
         var month = yearMonth.split('.')[1]; // 월
         var day = SelectedDate; // 클릭한 날짜
+        
+        const pickedDate = year + "-" + month + "-" + day
+        console.log("선택한 날짜 = " + pickedDate);
 
         // 요일 표시
         var daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
         var selectedDateObj = new Date(year, month - 1, day); // Date 객체로 변환
         var today = daysOfWeek[selectedDateObj.getDay()]; // getDay() 메서드로 요일값 가져옴
-
+				 
         // 콘솔에 년, 월, 일을 표시
         console.log('오늘 날짜와 요일:', year + '/' + month + '/' + day + ' (' + today + ')');
 
-        // 나중에 캘린더 db 불러올 때 사용할 ajax
         $.ajax({
-            type: 'GET', // 또는 'GET' 등 HTTP 메서드 선택
-            url: '../mainboard/getschedule', // 서버 엔드포인트 URL 설정
-            data: JSON.stringify(SelectedDate), // 선택된 데이터를 JSON 형식으로 전달
-            contentType: 'application/json', // 데이터 타입 설정
-            //beforeSend: function (xhr) {
-            //    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-            //},
+            type: 'GET',
+            url: '../mainboard/get-selected-schedule-list', // 서버 엔드포인트 URL 설정
+            data: {pickedDate: pickedDate}, 
+            //contentType: 'application/json', // 데이터 타입 설정
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+            },
             success: function (response) {
                 console.log('서버 응답:', response);
-                if (response.length > 0) {
-                    $('.schedules').empty();
+                $('.schedules').empty()
+                if (response.length > 0) {;
                     response.forEach(function (item) {
                         let str = '<li>'
                         str += '<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">'
                         str += '<div class="schedule-title-date">'
-                        str += '<span class="schedule-title">' + item.schedule_subject + '</span>'
-                        str += '<span class="schedule-date">' + SelectedDate + '(' + today + ')' + '</span>'
+                        str += '<span class="schedule-title">' + item.subject + '</span>'
+                        str += '<span class="schedule-date">' + pickedDate + '(' + today + ')' + '</span>'
                         str += '</div></li>'
 
                         $('.schedules').append(str);
                     }); //forEach end
                 } else {
-                    let noScheduleMsg = '<h2>등록된 일정이 없습니다.</h2>'
+                    let noScheduleMsg = '<p class="no-schdule-today">등록된 일정이 없습니다.</p>'
                     $('.schedules').append(noScheduleMsg);
                     console.log('내 일정이 없습니다.');
                 }
