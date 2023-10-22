@@ -13,7 +13,7 @@
 	</select>
 	
 	<insert id="insert" parameterType="company" >
-	   INSERT INTO COMPANY(ID, USER_ID, DOMAIN, NAME,COMPANY_REGISTRATION_NO)VALUES(company_id.nextval,#{userId} ,#{domain},#{name},#{companyRegistrationNo})
+	   INSERT INTO COMPANY(ID, USER_ID, DOMAIN, NAME,REGISTRATION_NO)VALUES(company_id.nextval,#{userId} ,#{domain},#{name},#{RegistrationNo})
 	</insert>
 	
 	<select id="isEmail" resultType="user" parameterType="String"><!-- Member class를 

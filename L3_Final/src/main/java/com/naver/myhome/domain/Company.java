@@ -10,6 +10,6 @@ public class Company {
 	private int userId;
 	private String name;
 	private String domain;
-	private String companyRegistrationNo;		//추가되었음
+	private String RegistrationNo;		//추가되었음
 	private Date created_at;
 }
