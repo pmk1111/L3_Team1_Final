@@ -7,21 +7,18 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.naver.myhome.domain.Access;
 import com.naver.myhome.domain.Project;
+import com.naver.myhome.domain.Team;
 import com.naver.myhome.service.ProjectService;
 import com.naver.myhome.service.TeamService;
 
@@ -132,15 +129,19 @@ public class ProjectController {
 	
 	@GetMapping(value = "/project")
 	public ModelAndView projectBoard
-	(int id, ModelAndView mv, HttpServletResponse response) {
+	(int projectId, ModelAndView mv, HttpServletResponse response) {
 		
-		Project project = projectService.getDetail(id);
+		int sessionId = 1;
 		
-	    Cookie cookie = new Cookie("id", String.valueOf(id));
+		Project project = projectService.getDetail(projectId);
+		List<Team> team = teamService.getTeam(projectId, sessionId);
+		
+	    Cookie cookie = new Cookie("projectId", String.valueOf(projectId));
 	    response.addCookie(cookie);
 		
 		mv.setViewName("project/project-board");
 	    mv.addObject("project", project);
+	    mv.addObject("team", team);
 	      
 		return mv;
 	}

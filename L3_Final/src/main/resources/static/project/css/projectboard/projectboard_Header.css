@@ -443,6 +443,7 @@
 	border-radius: 6px;
 	border: 1px solid #555;
 	font-weight: 400;
+	padding:0 0 5px 0!important;
 }
 
 .project-setup-header {
@@ -467,7 +468,7 @@
 }
 
 .setting-menu {
-	padding: 3px 0 3px 0;
+	padding: 3px 0 3px 0 !important;
 }
 
 .setting-line {
@@ -627,7 +628,7 @@
 	background-color: #fff !important;
 	color: #555 !important;
 	border-bottom: 2px solid #555 !important;
-	font-weight: 550;
+	font-weight: 600;
 }
 
 .modal-search {
@@ -665,16 +666,16 @@
 }
 
 .member-list {
-	padding: 5px;
+	padding: 0px;
 	margin-top: 15px;
-	width: 102%;
+	width: 103%;
 	height: 350px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
 
 .member-list::-webkit-scrollbar {
-	width: 8px;
+	width: 7px;
 }
 
 .member-list::-webkit-scrollbar-track {
@@ -700,7 +701,7 @@
 #member-list-li {
 	width: 100%;
 	display: flex;
-	padding: 15px 0 15px 0;
+	padding: 15px 5px 15px 5px;
 	border-bottom: 1px solid #cdcdcd;
 }
 
@@ -717,8 +718,8 @@
 
 .modal-memeber-img {
 	display: block;
-	min-width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 	background-size: cover;
 	background-position: center;
 	background-color: #fff;
@@ -751,8 +752,8 @@
 
 .modal-member-role-span {
 	position: absolute;
-    top: 51%;
-    left: 23%;
+    top: 50%;
+    left: 25%;
 	transform: translateY(-50%);
 	font-family: inherit;
 }
@@ -780,7 +781,7 @@
 }
 
 .setting-menu-padding {
-	padding: 0 !important
+	padding: 0
 }
 
 .modal-content-wrapper {
@@ -798,14 +799,11 @@
 .modal-invite-list {
 	width: 220px;
 	border-bottom: 1px solid #8d99b1;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 }
 
 .modal-search-invite-02 {
 	padding-right: 25px;
-	padding-bottom: 25px;
+	padding-bottom: 10px;
 }
 
 .modal-bottom-invite {
