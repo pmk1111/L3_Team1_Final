@@ -36,10 +36,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.naver.myhome.domain.Files;
 import com.naver.myhome.domain.Issue;
+import com.naver.myhome.domain.Notify;
 import com.naver.myhome.domain.ProjectAndUser;
 import com.naver.myhome.service.FileService;
 import com.naver.myhome.service.IssueService;
 import com.naver.myhome.service.ProjectAndUserService;
+import com.naver.myhome.service.NotifyService;
 
 @Controller
 @RequestMapping(value = "/issue")
@@ -50,15 +52,18 @@ public class IssueController {
 	private IssueService issueService;
 	private FileService fileService;
 	private ProjectAndUserService projectAndUserService;
+	private NotifyService notifyService;
 
 	@Value("${file.upload.path}")
 	private String saveFolder;
 
 	@Autowired
-	public IssueController(IssueService issueService, FileService fileService, ProjectAndUserService projectAndUserService) {
+	public IssueController(NotifyService notifyService,IssueService issueService, FileService fileService, ProjectAndUserService projectAndUserService) {
 		this.issueService = issueService;
 		this.fileService = fileService;
 		this.projectAndUserService = projectAndUserService;
+		this.notifyService = notifyService;
+		
 	}
 
 	@GetMapping(value = "/issue-list")
@@ -104,52 +109,73 @@ public class IssueController {
 		return projectAndUserService.getProjectAndUserInfo(projectId);
 	}
 	
+
 	@PostMapping("createIssue")
-	public String createIssue(Issue issue, HttpServletRequest request, MultipartFile[] uploadfiles) throws Exception {
-		List<Files> fileList = new ArrayList<>();
-		int issueId = issueService.getIssueId();
-		logger.info("가져온 이슈 번호: " + issueId);
+	public String createIssue(Issue issue, Notify notify, HttpServletRequest request, MultipartFile[] uploadfiles) throws Exception {
+	    List<Files> fileList = new ArrayList<>();
+	    int issueId = issueService.getIssueId();
+	    logger.info("가져온 이슈 번호: " + issueId);
 
-		// issue_id는 다음 시퀀스 번호를 가져오니, 
-		// select issue_id.nextval from dual로 가져온 값을 id에 할당한 후 issue / files DTO에 할당해준다.
+	    issue.setId(issueId);
+	    issue.setProject_id(1);
+	    issue.setCreate_user(2);
 
-		issue.setId(issueId);
-		issue.setProject_id(1);
-		//issue.setProject_id(projectId);
-		issue.setCreate_user(2);
-		//작성자 정보는 세션에 저장된 user의 id를 불러와 저장한다.
-		issueService.createIssue(issue);
-		logger.info(issue.toString());
+	    issueService.createIssue(issue);
 
+	    String tagname = request.getParameter("tagname");
+	   // String user_id=request.getParameter("user_id");
+	    
+		 int user_id = Integer.parseInt(request.getParameter("user_id").trim()); 
+	  
+	    
+	    
+	    notify.setNAME(tagname);
+	    notify.setPOST_ID(issueId);
+	   notify.setMENTIONED_ID(user_id);
+	   
+	    logger.info(issue.toString());
+	    logger.info("이슈 태그: " + notify.getNAME());
+	    logger.info("user_id: " + user_id);
 
-		for(MultipartFile file : uploadfiles) {
-			Files files = new Files();
-			if(file.getSize()>0) {
-				files.setFile_size(file.getSize());
-				logger.info("업로드 파일: " + file.getOriginalFilename());
+	   
+	        int existingNotifyCount = notifyService.existsNotifyWithName(user_id);
 
-				files.setIssue_id(issueId);
-				files.setOriginal_name(file.getOriginalFilename());
+	        if (existingNotifyCount > 0) {
+	           
+	            notifyService.updatealarm(notify);
+	            logger.info("이미 존재하는 태그. 업데이트를 수행하세요.");
+	        } else {
+	            // 존재하지 않는 경우, createalarm을 호출하여 새로운 레코드를 삽입
+	            notifyService.createalarm(notify);
+	        }
+	    
 
-				String saveName = fileDBName(file.getOriginalFilename(), saveFolder);
-				files.setSave_name(saveName);
+	    for (MultipartFile file : uploadfiles) {
+	        Files files = new Files();
+	        if (file.getSize() > 0) {
+	            files.setFile_size(file.getSize());
+	            logger.info("업로드 파일: " + file.getOriginalFilename());
 
-				logger.info("업로드한 파일 사이즈 = " + file.getSize());
-				logger.info("업로드 경로 = " + saveFolder);
+	            files.setIssue_id(issueId);
+	            files.setOriginal_name(file.getOriginalFilename());
 
-				file.transferTo(new File(saveFolder + saveName));
-				fileList.add(files);
-			}
-		}
-		logger.info("파일리스트 크기 = " + fileList.size());
-		if(!fileList.isEmpty()) {
-			fileService.uploadFile(fileList);
-		}
+	            String saveName = fileDBName(file.getOriginalFilename(), saveFolder);
+	            files.setSave_name(saveName);
 
+	            logger.info("업로드한 파일 사이즈 = " + file.getSize());
+	            logger.info("업로드 경로 = " + saveFolder);
 
-		return "redirect:issue-list";
+	            file.transferTo(new File(saveFolder + saveName));
+	            fileList.add(files);
+	        }
+	    }
+	    logger.info("파일리스트 크기 = " + fileList.size());
+	    if (!fileList.isEmpty()) {
+	        fileService.uploadFile(fileList);
+	    }
+
+	    return "redirect:issue-list";
 	}
-
 
 
 	private String fileDBName(String fileName, String saveFolder) {
@@ -330,6 +356,7 @@ public class IssueController {
 			return 0;
 		}
 	}
+
 
 
 

@@ -2,6 +2,7 @@ package com.naver.myhome.service;
 
 import java.util.List;
 
+import com.naver.myhome.domain.MentionUser;
 import com.naver.myhome.domain.User;
 
 public interface UserService {
@@ -25,5 +26,9 @@ public interface UserService {
 	public int getUserId(String eMail);
 
 	public User selectByMail(String eMail);
+
+
+
+	public List<MentionUser> mentionUser(String requestData);
 
 }

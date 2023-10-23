@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.naver.myhome.domain.MentionUser;
 import com.naver.myhome.domain.User;
 
 @Mapper
@@ -21,6 +22,12 @@ public interface UserMapper {
 		public User selectByMail(String eMail);
 
 		public int getUserId(String eMail);
+
+		
+
+
+
+		public List<MentionUser> mentionUser(String requestData);
 
 	}
 
