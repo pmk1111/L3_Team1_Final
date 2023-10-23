@@ -20,8 +20,9 @@
 
 <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
 
-<link rel="stylesheet"
-	href="../resources/mydashboard/css/mydashboard.css">
+<link rel="stylesheet" href="../resources/mydashboard/css/mydashboard.css">
+<link rel="stylesheet" href="../resources/mydashboard/css/selected-schedule.css">
+
 
 
 <style>
@@ -41,6 +42,7 @@
 .schedule-title{font-weight: 700; color:#333333;}
 .no-schdule-today{position:absolute; top:50%; left:50%; width:250px; text-align:center; transform:translate(-50%, -50%); font-size:18px}
 .no-schdule-today:hover{color:#5f61e6; transition:.3s;}
+.selected-schedule-modal{display:none;}
 </style>
 </head>
 
@@ -159,12 +161,14 @@
 													
 													<c:otherwise>
 														<c:forEach var="s" items="${schedulelist}">
-															<li>
-                      					<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
-                        				<div class="schedule-title-date">
-                        				<span class="schedule-title">${s.subject}</span>
-                        				<span class="schedule-date"></span>
-                        				</div></li>
+															<li class="schedule-item">									
+																<input type="hidden" class="schedule-id" value="${s.id}">						
+                      						<img src="../resources/mydashboard/img/calendar.svg" class="schedule-calendar-img">
+                        					<div class="schedule-title-date">                       						
+                        						<span class="schedule-title">${s.subject}</span>
+                        						<span class="schedule-date"></span>	
+                        					</div>
+                        			</li>
 														</c:forEach>
 													</c:otherwise>
 												</c:choose>
@@ -340,8 +344,9 @@
 			</div>
 			<!-- / Layout page -->
 		</div>
-		`
+		
 	</div>
+	<jsp:include page="selected-schedule.jsp"></jsp:include>
 	<jsp:include page="../template/jsTemplate.jsp"></jsp:include>
 	<script src="../resources/mydashboard/js/mydashboard.js"></script>
 

@@ -31,7 +31,15 @@
 	</insert>
 
 	<select id="getScheduleInfo" resultType="Schedule">
-		SELECT * FROM SCHEDULE
+<!-- 		SELECT s.*, (select name from users where id = #{userId})
+		FROM SCHEDULE s
+		WHERE id = #{scheduleId} -->
+	
+		SELECT s.*, 
+		(select name from users where id = 
+		(select user_id from schedule where id = #{scheduleId})
+		) as name
+		FROM SCHEDULE s
 		WHERE id = #{scheduleId}
 	</select>
 

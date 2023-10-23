@@ -18,4 +18,6 @@ public class Schedule {
 	private String place;
 	private String category;
 	private String content;
+	
+	private String name;
 }

@@ -93,6 +93,13 @@ public class MyDashboardController {
 
 		return scheduleList;
 	}
+	
+	@GetMapping("/get-schedule-info")
+	@ResponseBody
+	public Schedule getScheduleInfo(@RequestParam("scheduleId") int scheduleId) {
+		return scheduleService.getScheduleInfo(scheduleId);
+	}
+	
 
 	@GetMapping("/CountPerStatus")
 	@ResponseBody
