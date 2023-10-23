@@ -68,6 +68,7 @@ endDateInput.addEventListener("input", function() {
 
     if (selectedEndDate < selectedStartDate) {
         alert("마감일은 시작일 이전으로 설정할 수 없습니다.");
+        $('.schedule-end').val('');
     }
 });
 
