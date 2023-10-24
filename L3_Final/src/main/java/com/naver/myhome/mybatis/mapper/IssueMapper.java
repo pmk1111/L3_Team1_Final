@@ -15,7 +15,7 @@ public interface IssueMapper {
 	
 	public int getListCount(); 
 	
-	public List<Issue> getIssueList();
+	public List<Issue> getIssueList(int projectId);
 	
 	public List<Issue> getStatusCount();
 	
