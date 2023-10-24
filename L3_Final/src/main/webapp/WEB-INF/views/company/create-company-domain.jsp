@@ -93,7 +93,7 @@
 	                </div>
 	
 	                <div>
-	                    <b class="bTxt">사업자 등록번호</b><br> <input type="number" id="companyRegistrationNo" class="eid" name="companyRegistrationNo" maxLength="10" placeholder="-없이 10자리를 입력하세요" required>
+	                    <b class="bTxt">사업자 등록번호</b><br> <input type="text" id="RegistrationNo" class="eid" name="RegistrationNo" maxLength="10" placeholder="-없이 10자리를 입력하세요" required>
 	                    <p class="errMsg" id="eid_message">오류메세지 영역</p>
 	                </div>
 	                <button type="button" id="companyJoinBtn" onclick="companyJoin()" class="btn-join"><strong>회사 생성하기</strong></button>
@@ -128,6 +128,21 @@
         var re = /^[a-zA-Z0-9-]{3,30}$/;
         return re.test(input);
     }
+	
+	function checkRegistrationNo(){
+	    var registrationNo = $("#RegistrationNo").val();
+	    
+	    if(registrationNo == ''){
+	        $("#eid_message").html("사업자 등록번호를 입력해주세요.");
+	        $("#eid_message").css('visibility', 'visible');
+	        return;
+	    }
+	    
+	    if(!/^[0-9]{10}$/.test(registrationNo)){
+	        $("#eid_message").html("사업자 등록번호는 숫자 10자리만 입력해야 합니다.");
+	        $("#eid_message").css('visibility', 'visible');
+	        return;
+	    }
     
 	function checkDuplicationDomain(){
 		var domain = $("#domain").val();

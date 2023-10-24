@@ -20,7 +20,7 @@
                         <li><a href="../myhome/user/login">로그인</a></li>
                         <li class="dropdown"><a href="../myhome/user/join"><span>회원가입</span></a></li>
                         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                        <li><a class="getstarted scrollto" href="#about">지금 시작하기</a></li>
+                        <li><a class="getstarted scrollto" href="../myhome/user/join">지금 시작하기</a></li>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->

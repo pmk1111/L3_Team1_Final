@@ -39,10 +39,7 @@ public interface UserService {
 	   
 	//지니 끝
 	
-	//혜원
-	public List<MentionUser> mentionUser(String requestData);
-	
-	//혜원 끝
+
 
 
 }

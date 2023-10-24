@@ -233,42 +233,7 @@ public class UserController {
     }
       
    //지니 끝
-   
-    //혜원
-    @PostMapping("/issue-mention")
-    @ResponseBody
-    public List<MentionUser> mentionUsers (@RequestBody String requestData) {
-      
-        String name = extractName(requestData);
-        
-        
-        System.out.println("metion tag: " + userService.mentionUser(name)); 
-        return userService.mentionUser(name);
-       
-    
-        
-    }
 
-    private String extractName(String requestData) {
-        // 정규 표현식을 사용하여 "@"로 시작하고 이름 부분을 추출
-        Pattern mentionPattern = Pattern.compile("@[\\p{L}]+");
-        System.out.println("requestData: " + requestData);
-        Matcher matcher = mentionPattern.matcher(requestData);
-
-        StringBuilder names = new StringBuilder();
-
-        while (matcher.find()) {
-            String mention = matcher.group();
-            // 특수문자를 제거하여 이름만 추출
-            String name = mention.replaceAll("[^\\p{L}]+", "");
-            names.append(name).append(" ");
-        }
-        System.out.println("names: " + names.toString());
-        return names.toString().trim();
-    
-    }
-    //혜원끝
-    
    
    //주영
    @GetMapping("/join")
