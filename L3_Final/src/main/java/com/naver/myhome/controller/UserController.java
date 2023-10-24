@@ -51,7 +51,7 @@ public class UserController {
    
    @GetMapping(value = "/profile")
 
-//    public ModelAndView user_update(Principal principal, ModelAndView mv) {
+//     public ModelAndView user_update(Principal principal, ModelAndView mv) {
 //          String id =S principal.getName();
 //        
 //       if (id == null) {
@@ -66,7 +66,7 @@ public class UserController {
        return "user/profile";
     }
    
-   // 수정처리
+  // 수정처리
 //      @PostMapping(value = "/update-process")
 //      public String updateProcess(User user, Model model, HttpServletRequest request, RedirectAttributes rattr) {
 //
