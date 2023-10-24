@@ -4,12 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Calendar;
-
-import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -26,27 +22,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.naver.myhome.domain.MentionUser;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.naver.myhome.domain.Employee;
-import com.naver.myhome.domain.MentionUser;
 import com.naver.myhome.domain.User;
 import com.naver.myhome.service.EmployeeService;
 import com.naver.myhome.service.UserService;
@@ -369,8 +359,9 @@ public class UserController {
 
    
     @GetMapping("/loginSuccess")
-    public String loginSuccess(@AuthenticationPrincipal User user) {
+    public String loginSuccess(@AuthenticationPrincipal User user, RedirectAttributes redirectAttrs) {
     	System.out.println(user.toString());
+    	
     	
     	Employee emp = employeeService.getEmplyeeInfoById(user);
     	
@@ -379,17 +370,11 @@ public class UserController {
     	}else{								//emp 테이블에 정보가 있다면		
     		return "mainboard/my-dashboard";
     	}
-    
-    	/*
-		 * if( 회사 참여여부 ){ 
-		 * 회사 만들기(1) or 회사 참여 (2) or 개인프로젝트 만들기(3) 현재
-		 * 
-		 * }
-		 */
     }
-    
-   
-    
 
+    @GetMapping("/login-fail")
+    public String loginFail() {
+       return "user/login"; // 로그인 페이지 반환
+    }
 
 }

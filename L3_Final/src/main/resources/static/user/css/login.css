@@ -1,4 +1,7 @@
 @charset "UTF-8";
+#logins{
+	color: #000;
+}
 .formDiv {
    display: flex;
    flex-direction: column;
@@ -97,7 +100,7 @@ visibility: hidden;
 .guest-or{
 	margin-bottom: 20px;
 }
-#kakaologin, #googlelogin {
+#login, #googlelogin {
     border: 1px solid #000; 
     margin: 16px 0 0 0;
     color: #333;

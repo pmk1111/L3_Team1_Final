@@ -34,15 +34,13 @@ pageEncoding="UTF-8"%>
     <form id="submitForm"> <input type="hidden" id="joinType" name="joinType" />
         <div class="auth-section after-contets">
             <div class="accont-wrap">
-                <div class="account">회원가입 </div>
+                <div class="account">시작하기</div>
                 <div class="jm-cont0">
                     <!-- 회사 계정생성 --> <img src="../resources/user/img/newcompany.png" alt="#" class="create-company"> </div>
                 <div class="join-main-container">
-                    <div class="jmcont1">
-                        <!-- 개인 계정생성 --> <img src="../resources/user/img/joinmain2.png" alt="#" style=" width: 330px; height:350px; margin-right:20px;" class="join-user"> </div>
                     <div class="jmcont2">
                         <!-- 회사 가입하기-->
-                        <img src="../resources/user/img/joinmain1.png" alt="#" style=" width: 330px; height:350px;" class="join-company">
+                        <img src="../resources/user/img/joincompany.png" alt="#" style="width: 680px; height: 170px;" class="join-company">
                     </div>
                 </div>
             </div>

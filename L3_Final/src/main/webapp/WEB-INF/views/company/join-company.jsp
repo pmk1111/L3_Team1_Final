@@ -182,7 +182,7 @@
 	   		success: function(response) {
 	       		if (response == 0) {  
 	       			alert("신청하신 도메인 '" +domain+ "'에 정상적으로 신청이 되었습니다.");
-	       			//페이지 이동//
+	       			window.location.href = "/myhome/mainboard/my-dashboard";
 	       		} else  { 
 	       			alert("신청하신 도메인 '" +domain+ "' 은 존재하지 않는 도메인입니다. 도메인을 다시 확인해주세요.");
 	       		}
@@ -206,18 +206,6 @@
              document.getElementById("helpMsg").style.color = "#623ad6";
          }
      });
-
-/*      $("#companyJoinBtn").on('click', function(event){
-          event.preventDefault();
-
-          var joinInputInput = document.getElementById('joinInput');
-
-          if (validateURL(joinInputInput.value)) {
-              $("#joinform").submit();
-          }
-           return false;
-
-       }); */
   });
 
 </script>
