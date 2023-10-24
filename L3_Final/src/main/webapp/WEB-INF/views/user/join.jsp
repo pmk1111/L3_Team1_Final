@@ -396,8 +396,9 @@
              success: function(response) {
                  if (response == 0) {  
                 	 $("#joinform").submit();
+                	 alert("회원가입이 완료되었습니다 로그인을 해주세요.");
                  } else  { 
-                     alert("인증코드가 일치하지 않습니다. <br>인증코드를 다시 확인해주세요.");
+                     alert("인증코드가 일치하지 않습니다. 인증코드를 다시 확인해주세요.");
                  }
              },
              error: function(error) {

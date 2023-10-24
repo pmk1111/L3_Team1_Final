@@ -5,56 +5,53 @@
 <mapper namespace="com.naver.myhome.mybatis.mapper.UserMapper">
 
 	<!-- 지니 -->
-	
-	<!-- /지니 -->
-	
-	<select id="isId" resultType="user" parameterType="String"><!-- Member class를 
-			별칭 -->
-		select * from user where id = #{id}
-	</select>
-	
-	<select id="isEmail" resultType="user" parameterType="String"><!-- Member class를 
-			별칭 -->
+	<select id="isEmail" resultType="user" parameterType="String"><!-- Member class를 별칭 -->
 		select * from users where  email = #{user_email}
 	</select>
+   
+   <select id = "isId" resultType = "user">
+      SELECT u.pic, u.password,u.email, u.name, u.phone, c.name AS company_name
+      FROM users u
+      LEFT JOIN company c ON u.id = c.user_id
+      WHERE u.email = #{email}
+   </select>
+   
+   <update id = "update" parameterType = "user">
+      update users
+      set pic = #{pic},
+      name = #{name},
+         phone = #{phone}
+      WHERE email = #{email}
+      
+   </update>
 
-	
-	<update id="update" parameterType="user">
-		update user
-		set name =
-		#{name}, age = #{age},
-		gender = #{gender}, email = #{email}
-		where id =
-		#{id}
-	</update>
-
-	<select id="getSearchListCount" parameterType="map"
-		resultType="int">
-		select count(*)
-		from user
-		where id !='admin'
-		<include refid="search_" />
+   <select id="checkPwd">
+      select password 
+      from users
+      where email = #{email}
+   </select>
+   
+   <update id="updatePwd">
+      update users
+      set password =#{newPwd}
+      where email = #{email}
+   </update>
+   
+   <delete id="delete" >
+      delete from users
+      where email =#{email}
+   </delete>
+   
+   <!-- /지니 -->
+   <!-- 혜원 -->
+   
+	<select id="mentionUser" parameterType="String" resultType="com.naver.myhome.domain.MentionUser">
+  	 SELECT id,name FROM users
+   	 WHERE name LIKE '%' || #{name} || '%'
+     AND company_invited = 1
 	</select>
-	
 
-	
-	<sql id="search_">
-		<if test="search_field != null">
-		and
-			<choose>
-				<when test='search_field=="user_name"'>user_name</when>
-				<when test='search_field=="user_email"'>user_email</when>
-				<when test='search_field=="department"'>department</when>
-				<when test='search_field=="position"'>position</when>
-			</choose>
-		like #{search_word}
-		</if>
-	</sql>
-
-	<delete id="delete" parameterType="String">
-		delete from user
-		where id =#{id}
-	</delete>
+    <!-- 혜원끝 -->
 	
 	
 	<!-- #########################################주영###################################### START  -->

@@ -1,6 +1,7 @@
 package com.naver.myhome.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.naver.myhome.domain.User;
@@ -10,23 +11,61 @@ import com.naver.myhome.mybatis.mapper.UserMapper;
 public class UserServiceImpl implements UserService {
 
 	private UserMapper dao;
-	
+	private PasswordEncoder passwordEncoder;
+	   
+	   @Autowired
+	   public UserServiceImpl(UserMapper dao,PasswordEncoder passwordEncoder ) {
+	      this.dao = dao;
+	      this.passwordEncoder = passwordEncoder;
+	   }
 	//지니
-	@Autowired
-	public UserServiceImpl(UserMapper dao) {
-		this.dao = dao;
-	}
+	   
+	   @Override
+	   public int isId(String email) {
+	      User ruser = dao.isId(email);
+	      return (ruser == null) ? -1 : 1;
+	   }
 
-	//지니 끝
-	
-//	@Override
-//	public int isId(String id, String pass) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-	
-	
-//
+
+	   @Override
+	   public User userInfo(String email) {
+	      return dao.isId(email);
+	   }
+	   
+	   @Override
+	   public int checkPwd(String usedPwd, String email) {
+	      User dbUser = dao.isId(email);
+	       int result = -1; 
+	         if(dbUser != null) {
+	            if(passwordEncoder.matches(usedPwd, dbUser.getPassword())) {
+	               result = 1;
+	            } else
+	               result = 0;
+	         }
+	         return result;
+	      }
+
+
+
+	   @Override
+	   public void updatePwd(String email, String newPwd) {
+	    dao.updatePwd(email, newPwd);
+	      
+	   }
+
+	   @Override
+	   public int update(User user) {
+	      return dao.update(user);
+	   }
+	   
+	   @Override
+	   public void delete(String email) {
+	      dao.delete(email);
+	   }
+	   
+	   //지니 끝
+
+	//주영   
 	@Override
 	public int insert(User user) {
 		
@@ -55,42 +94,13 @@ public class UserServiceImpl implements UserService {
 		return dao.updateUserInfo(user);
 	}
 
+	//주영 끝
 	
-//
-//	@Override
-//	public int isId(String id) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	@Override
-//	public User user_info(String id) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public void delete(String id) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public int update(User m) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	@Override
-//	public List<User> getSearchList(int index, String search_word, int page, int limit) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public int getSearchListCount(int index, String search_word) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-
+	//혜원
+	@Override
+	public List<MentionUser> mentionUser(String requestData) {
+	      
+	    System.out.println("UserServiceIm: " + dao.mentionUser(requestData));
+	    return dao.mentionUser(requestData);
+	   }
 }

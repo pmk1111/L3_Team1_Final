@@ -6,21 +6,9 @@ import com.naver.myhome.domain.User;
 
 public interface UserService {
 	
-//	public int isId(String id, String pass);
-//
+
+	// 주영
 	public int insert(User user);
-//
-//	public int isId(String id);
-//
-//	public User user_info(String id);
-//
-//	public void delete(String id);
-//
-//	public int update(User m);
-//
-//	public List<User> getSearchList(int index, String search_word, int page, int limit);
-//
-//	public int getSearchListCount(int index, String search_word);
 
 	public int getUserId(String eMail);
 
@@ -30,4 +18,25 @@ public interface UserService {
 
 	public int updateUserInfo(User user);
 
+	// 지니
+	   
+	public User userInfo(String email);
+
+	public int isId(String email);
+
+	public void updatePwd(String email, String newPwd);
+
+	public int checkPwd(String usedPwd, String email);
+
+	public int update(User user);
+
+	public void delete(String email);
+	   
+	//지니 끝
+	
+	//혜원
+	public List<MentionUser> mentionUser(String requestData);
+	
+	//혜원 끝
+	
 }

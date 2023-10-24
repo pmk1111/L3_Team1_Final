@@ -12,7 +12,6 @@ public interface UserMapper {
 
 		public List<User> findUser(int companyInvited);
 
-		public User isId(String UserEmail);
 
 		public User isEmail(String username);
 		
@@ -25,6 +24,17 @@ public interface UserMapper {
 		public User getEmplyeeInfoById(User user);
 
 		public int updateUserInfo(User user);
+		
+		//지니
+		public User isId(String email);
+		
+		public int update(User user);
+
+		public void updatePwd(String email, String newPwd);
+
+		public int checkPwd(String usedPwd, String email);
+
+		public void delete(String email);
 
 	}
 
