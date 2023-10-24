@@ -42,7 +42,10 @@ public class TeamServiceImpl implements TeamService {
 	public void insertTeam(int empId, int projectId) {
 		mapper.insertTeam(empId, projectId);
 	}
-	
-	
+
+	@Override
+	public Integer getAuth(int sessionId, int projectId) {
+		return mapper.getAuth(sessionId, projectId);
+	}
 	
 }

@@ -48,4 +48,8 @@ public interface ProjectService {
 
 	public Integer lowCount(int projectId);
 
+	public void deleteProject(int projectId);
+
+	public int getEmpId(int sessionId);
+
 }

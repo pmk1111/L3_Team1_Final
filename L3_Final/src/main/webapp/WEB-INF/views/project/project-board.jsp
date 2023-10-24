@@ -196,7 +196,7 @@
                                                                 </div>
 
                                                                 <div class="setting-line">
-                                                                    <a class="setting-anchor setting-delete">
+                                                                    <a class="setting-anchor setting-delete" data-project-id="${project.ID}">
                                                                         <img class="setting-img bin" src="../resources/project/img/projectboard/bin.svg">
                                                                         <span class="setting-span">프로젝트 삭제</span>
                                                                     </a>
@@ -523,13 +523,13 @@
 			                                                            <td style="vertical-align: middle;"><a style="color:#392a85 !important;" href="../issue/issue-detail?num=${issue.id}" class="text-primary post-title">${issue.subject }</a></td>
 			                                                            <td style="vertical-align: middle; text-align: center;">
 																            <c:choose>
-																                <c:when test="${issue.priority eq 'Critical'}">
+																                <c:when test="${issue.priority eq 'critical'}">
 																                    <span class="badge bg-danger">${issue.priority }</span>
 																                </c:when>
-																                <c:when test="${issue.priority eq 'High'}">
+																                <c:when test="${issue.priority eq 'high'}">
 																                    <span class="badge bg-info">${issue.priority }</span>
 																                </c:when>
-																                <c:when test="${issue.priority eq 'Middle'}">
+																                <c:when test="${issue.priority eq 'middle'}">
 																                    <span class="badge bg-success">${issue.priority }</span>
 																                </c:when>
 																                <c:otherwise>  
@@ -656,6 +656,42 @@
     	
     <script>
 
+    $('.setting-delete').click(function(event) {
+        event.preventDefault();
+        
+        var projectId = $(this).data('projectId');  // 프로젝트 ID 가져오기
+	    let token = $("meta[name='_csrf']").attr("content");
+	    let header = $("meta[name='_csrf_header']").attr("content");	
+
+        swal({
+                title: "정말 프로젝트를 삭제하시겠습니까?",
+                text: "삭제된 프로젝트는 복구가 불가능합니다.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willExit) => {
+    	        if (willExit) {
+    	            $.ajax({
+    	                url: `../project/delete?projectId=${projectId}`,  // DELETE 요청 URL 구성
+    	                type: 'DELETE',
+				        beforeSend : function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+					           xhr.setRequestHeader(header, token);
+					    },
+    	                success: function(data) {  // 성공적으로 삭제되었을 경우
+    	                        swal("완료", '프로젝트 삭제가 완료되었습니다.', "success")
+    	                        .then(() => {
+    	                            location.href="../project/project-list";  // 페이지 이동
+    	                        });
+    	                },
+    	                error: function(jqXHR, textStatus, errorThrown) {  // 실패했을 경우
+    	                    swal("실패", jqXHR.responseJSON.message || textStatus, "error");
+    	                }
+    	            });
+    	        }
+            });
+    });
+    
     var todoCount = ${todoCount};
     var progressCount = ${progressCount};
     var doneCount = ${doneCount};

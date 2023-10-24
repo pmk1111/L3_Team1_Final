@@ -12,8 +12,7 @@
         }, 250); // 너비 변경 애니메이션
         })
         
-        var projectId = 1;
-        var sessionId = 1;
+        var projectId = parseInt($("#detailSettingProjectSrno").text());
 
         // AJAX 요청 시작
         $.ajax({
@@ -21,7 +20,6 @@
             method: 'POST',
             data: {
                 projectId: projectId,
-                sessionId: sessionId
             },	
             beforeSend: function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
                 xhr.setRequestHeader(header, token);
@@ -118,7 +116,7 @@
     });
     
     $('#profile-tab').on('click', function() {
-        var projectId = 1;
+        var projectId = parseInt($("#detailSettingProjectSrno").text());
         
         $('.modal-search-list').hide(); // 목록 div 숨기기
         $('.modal-body-invite').show(); // 초대 div 보이기
@@ -222,7 +220,7 @@
     // 수락시 insert
     $('.modal-submit-exit').on('click', function() {
     	
-    	projectId = 1;
+    	projectId = parseInt($("#detailSettingProjectSrno").text());
     	
         
         // 이미지가 icon_check_hover.png인 모든 요소를 찾습니다.

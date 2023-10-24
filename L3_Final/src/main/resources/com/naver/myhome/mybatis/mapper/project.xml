@@ -10,6 +10,12 @@
 	    	INSERT INTO PROJECT (ID, TITLE, SUBTITLE)
 	    	VALUES (#{ID}, #{TITLE}, #{SUBTITLE})
 	</insert>
+	
+	<select id="getEmpId" resultType="int">
+		SELECT ID
+		FROM EMPLOYEE
+		WHERE USER_ID = #{sessionId}
+	</select>
 
     <select id="getAllProjectList" resultType="com.naver.myhome.domain.Project">
         SELECT PROJECT.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = PROJECT.ID ) AS TEAMCOUNT
@@ -116,31 +122,36 @@
     <select id="resolveCount" resultType="integer">
 		SELECT COUNT(*)
 	    FROM ISSUE
-	    WHERE STATUS = 'Resolve' AND PROJECT_ID = #{projectId}
+	    WHERE STATUS = 'Resolved' AND PROJECT_ID = #{projectId}
     </select>    
     
     <select id="allCriticalCount" resultType="integer">
 		SELECT COUNT(*)
 	    FROM ISSUE
-	    WHERE PRIORITY = 'Critical' AND PROJECT_ID = #{projectId}
+	    WHERE PRIORITY = 'critical' AND PROJECT_ID = #{projectId}
     </select>   
      
     <select id="highCount" resultType="integer">
 		SELECT COUNT(*)
 	    FROM ISSUE
-	    WHERE PRIORITY = 'High' AND PROJECT_ID = #{projectId}
+	    WHERE PRIORITY = 'high' AND PROJECT_ID = #{projectId}
     </select>   
      
     <select id="middleCount" resultType="integer">
 		SELECT COUNT(*)
 	    FROM ISSUE
-	    WHERE PRIORITY = 'Middle' AND PROJECT_ID = #{projectId}
+	    WHERE PRIORITY = 'middle' AND PROJECT_ID = #{projectId}
     </select>    
     
     <select id="lowCount" resultType="integer">
 		SELECT COUNT(*)
 	    FROM ISSUE
-	    WHERE PRIORITY = 'Low' AND PROJECT_ID = #{projectId}
+	    WHERE PRIORITY = 'low' AND PROJECT_ID = #{projectId}
     </select>        
 
+	<delete id="deleteProject">
+		DELETE PROJECT
+		WHERE ID = #{projectId}
+	</delete>
+	
 </mapper>
