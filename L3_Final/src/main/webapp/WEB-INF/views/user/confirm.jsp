@@ -34,15 +34,13 @@ pageEncoding="UTF-8"%>
     <form id="submitForm"> <input type="hidden" id="joinType" name="joinType" />
         <div class="auth-section after-contets">
             <div class="accont-wrap">
-                <div class="account">회원가입 </div>
+                <div class="account">시작하기</div>
                 <div class="jm-cont0">
                     <!-- 회사 계정생성 --> <img src="../resources/user/img/newcompany.png" alt="#" class="create-company"> </div>
                 <div class="join-main-container">
-                    <div class="jmcont1">
-                        <!-- 개인 계정생성 --> <img src="../resources/user/img/joinmain2.png" alt="#" style=" width: 330px; height:350px; margin-right:20px;" class="join-user"> </div>
                     <div class="jmcont2">
                         <!-- 회사 가입하기-->
-                        <img src="../resources/user/img/joinmain1.png" alt="#" style=" width: 330px; height:350px;" class="join-company">
+                        <img src="../resources/user/img/joincompany.png" alt="#" style="width: 680px; height: 170px;" class="join-company">
                     </div>
                 </div>
             </div>
@@ -131,17 +129,39 @@ pageEncoding="UTF-8"%>
     <script>
 	    $(function() {
 	        $(".create-company").click(function() {
-	            window.location.href = '../user/create-company-domain';
+	            window.location.href = '../company/create-company-domain';
 	        });
 	        
 	        $(".join-user").click(function() {
-	            window.location.href = '../user/join';
+	           	
 	        });
 	        
 	        $(".join-company").click(function() {
-	            window.location.href = '../user/join-company';
+	            window.location.href = '../company/join-company';
 	        });  
 	    });
+	    
+	    
+		function createSingleProject(){
+			$.ajax({
+		   		url: '../user/create-single-project',
+		       	type: 'POST',
+		       	beforeSend: function(xhr) {
+		           xhr.setRequestHeader(header, token);
+		       	},
+		   		success: function(response) {
+		       		if (response == 0) {  
+		       			alert("프로젝트가 정상적으로 생성되었습니다.");
+		       			//페이지 이동//
+		       		} else  { 
+		       			alert("프로젝트 생성이 실패하였습니다.");
+		       		}
+		   		},
+		   		error: function(error) {
+		       		console.error(error);
+		   		}
+			});
+		}
     </script>
 </body>
 

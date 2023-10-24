@@ -41,127 +41,47 @@
 </head>
 
 <body>
-    <jsp:include page="header.jsp"></jsp:include>
-	<form action="loginProcess" method="post">
-    <div class="auth-section after-contets">
-        <div class="accont-wrap">
+ <jsp:include page="header.jsp"></jsp:include>
+ <form action="loginProcess" method="post">
+     <div class="auth-section after-contents">
+         <div class="account-wrap">
+             <div class="account">로그인</div>
+             <div class="formDiv">
+                 <div>
+                     <b class="bTxt">이메일 주소</b><br>
+                     <input type="text" id="email" class="email" name="email" maxLength="30" placeholder="이메일을 입력하세요" required>
+                     <p class="errMsg" id="email_message">오류메세지 영역</p>
+                 </div>
+                 <div>
+                     <b class="bTxt">비밀번호</b><br>
+                     <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="password" required>
+                     <p class="errMsg" id="pw_message">오류메세지 영역</p>
+                 </div>
+             </div>
+             <div class="clearfix">
+                 <button type="submit" id="confirmBtn" class="submitbtn">로그인</button>
+                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+             </div>
+         </div>
+         <div style="margin-top:30px;">
+         <div class="guest-or">
+             <strong>아이디가 없으신가요?</strong>
+         </div>
+         <div>
+             <button type="button" id="login"  >
+               <a href="../user/join" id="logins"><strong>회원가입</strong></a>
+             </button><br>
+         </div>
+         </div>
+     </div>
+ </form>
+ <input type="hidden" id="isChkPassword" name="isChkPassword" value="N" />
+ <input type="hidden" id="isChkEmail" name="isChkEmail" value="N" />
 
-            <div class="account">로그인</div>
-            <div class="formDiv">
-                <div>
-                    <b class="bTxt">이메일 주소</b><br> <input type="text" id="email" class="email" name="email" maxLength="30" placeholder="이메일을 입력하세요" required>
-                    <p class="errMsg" id="email_message">오류메세지 영역</p>
-                </div>
-                <div>
-                    <b class="bTxt">비밀번호</b><br> <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="password" required>
-                    <p class="errMsg" id="pw_message">오류메세지 영역</p>
-                </div>
+ <div id="signupFooterArea" style="display: block;">
+  <jsp:include page="footer.jsp"></jsp:include>
+ </div>
 
-
-            </div>
-
-            <div class="clearfix">
-                <button type="submit" id="confirmBtn" class="submitbtn">
-                    로그인
-                </button>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-                </form>
-                <div class="guest-or">
-
-                    <strong>소셜계정 로그인</strong>
-                </div>
-                <div>
-                    <button type="button" id="kakaologin" class="kakaologin" onclick="location.href='#'">
-                        <strong>KaKao 계정으로 로그인</strong>
-                    </button><br>
-                    <button type="button" id="googlelogin" class="googlelogin" onclick="location.href='#'">
-                        <strong>Google 계정으로 로그인</strong>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-
-
-
-        <input type="hidden" id="isChkPassword" name="isChkPassword" value="N" />
-        <input type="hidden" id="isChkEmail" name="isChkEmail" value="N" />
-    </div>
-
-    <div id="signupFooterArea" style="display: block;">
-        <!-- ======= Footer ======= -->
-        <footer id="footer">
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-3 col-md-6 footer-contact">
-                            <h3>WidUs</h3>
-                            <p>
-                                서울 종로구 율곡로10길 <br> 105 디아망 4층<br> 봉익동 10-1 03134<br>
-                                <br> <strong>Phone:</strong> 010-1234-1234<br> <strong>Email:</strong>
-                                WidUs1004@naver.com<br>
-                            </p>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>다음으로 이동</h4>
-                            <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">홈</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">소개</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">솔루션</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">서비스
-                                        약관</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">개인정보
-                                        이용약관</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>Our Services</h4>
-                            <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Web
-                                        Design</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Web
-                                        Development</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Product
-                                        Management</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic
-                                        Design</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>SNS</h4>
-                            <p>WidUs 팀원들의 SNS 계정을 방문해 보세요.</p>
-                            <div class="social-links mt-3">
-                                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a> <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a> <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="container footer-bottom clearfix">
-                <div class="copyright">
-                    &copy; Copyright <strong><span>WidUs</span></strong>. All Rights
-                    Reserved
-                </div>
-                <div class="credits">
-                    <!-- All the links in the footer should remain intact. -->
-                    <!-- You can delete the links only if you purchased the pro version. -->
-                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ -->
-                    Designed by <a href="https://bootstrapmade.com/">JHTA_L3_1</a>
-                </div>
-            </div>
-        </footer>
-        <!-- End Footer -->
-    </div>
     <!-- Vendor JS Files -->
     <script src="../resources/home/assets/vendor/aos/aos.js"></script>
     <script src="../resources/home/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -205,23 +125,8 @@
             }
         });
     });
-
+   
     </script>
-    <script>
-        // 모달 창 열기
-        function openModal() {
-            var modal = document.getElementById('myModal');
-            modal.style.display = 'block';
-        }
-
-        // 모달 창 닫기
-        function closeModal() {
-            var modal = document.getElementById('myModal');
-            modal.style.display = 'none';
-        }
-    </script>
-
-
 </body>
 
 </html>

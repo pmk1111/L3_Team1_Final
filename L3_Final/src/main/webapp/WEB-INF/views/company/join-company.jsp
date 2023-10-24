@@ -49,6 +49,7 @@
 </head>
 
 <body>
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     <jsp:include page="header.jsp"></jsp:include>
 
     <div class="auth-section after-contets">
@@ -60,13 +61,13 @@
                 <div class="join-contets">
                     <p class="url-tit">회사 URL</p>
                     <div class="url-wr">
-                        <span>https://</span> <input id="joinInput" type="text" class="join-input" autocomplete="off" placeholder="회사 URL">
+                        <span>https://</span> <input id="domain" type="text" class="join-input" autocomplete="off" placeholder="회사 URL">
                         <span>.widus.team</span>
                     </div>
                     <p id="helpMsg" class="join-company-url" style="display: block;">
                         회사URL 주소는 관리자를 통해 확인할 수 있습니다.
                 </div>
-                <button id="companyJoinBtn" class="btn-join">참여하기</button>
+                <button id="companyJoinBtn" class="btn-join" onclick="signUpDomain()">참여하기</button>
             </div>
         </div>
     </div>
@@ -156,10 +157,44 @@
     <script src="../resources/home/assets/js/main.js"></script>
 </body>
 <script type='text/javascript'>
+	let token = $("meta[name='_csrf']").attr("content");
+	let header = $("meta[name='_csrf_header']").attr("content");
+
     function validateURL(input){
         var re = /^[a-zA-Z0-9-]{3,30}$/;
         return re.test(input);
     }
+    
+	function signUpDomain(){
+		var domain = $("#domain").val() ;
+		if(!validateURL(domain)){
+			alert("도메인이 정상적이지 않습니다. 다시 확인해주세요!");
+			return;
+		}
+		
+		$.ajax({
+	   		url: '../company/sign-up-domain',
+	       	type: 'POST',
+	       	data: {"domain" : domain} ,
+	       	beforeSend: function(xhr) {
+	           xhr.setRequestHeader(header, token);
+	       	},
+	   		success: function(response) {
+	       		if (response == 0) {  
+	       			alert("신청하신 도메인 '" +domain+ "'에 정상적으로 신청이 되었습니다.");
+	       			window.location.href = "/myhome/mainboard/my-dashboard";
+	       		} else  { 
+	       			alert("신청하신 도메인 '" +domain+ "' 은 존재하지 않는 도메인입니다. 도메인을 다시 확인해주세요.");
+	       		}
+	   		},
+	   		error: function(error) {
+	       		console.error(error);
+	   		}
+			});
+		
+	}
+
+	
   
    $(document).ready(function() {
      $("#joinInput").on('focusout', function() {
@@ -171,19 +206,6 @@
              document.getElementById("helpMsg").style.color = "#623ad6";
          }
      });
-
-     $("#companyJoinBtn").on('click', function(event){
-          event.preventDefault();
-
-          var joinInputInput = document.getElementById('joinInput');
-
-          if (validateURL(joinInputInput.value)) {
-              $("#joinform").submit();
-          }
-
-           return false;
-
-       });
   });
 
 </script>

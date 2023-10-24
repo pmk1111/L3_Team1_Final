@@ -1,5 +1,6 @@
-$(document).ready(function () {
 
+
+$(document).ready(function () {
     const issue_modal_btn = $('.create-issue');
     const issue_modal = $('.issue-modal');
     const overlay = $('.modal-overlay');
@@ -71,6 +72,21 @@ $(document).ready(function () {
         const issue_reporter = $('.issue-reporter').val();
         const issue_assigned = $('.issue-assigned').val();
         const issue_priority = $('.issue-priority').val();
+      	var issue_tag = ''; // 초기값을 빈 문자열로 설정합니다.
+      	
+     
+
+    	// 이슈 컨텐츠에서 첫 번째 '@사용자이름' 멘션을 찾아 처리합니다.
+   		 const mentionPattern = /@([\w가-힣]+)/;
+   		 const match = issue_content.match(mentionPattern);
+
+ 	   if (match) {
+        // 첫 번째 멘션을 추출하여 이슈 태그로 사용합니다.
+        issue_tag = match[0].replace("@", "");
+        
+  		  }
+  		  console.log(issue_tag);
+
 
         if (project_name === '') {
             alert('프로젝트를 선택해주세요.');
@@ -99,8 +115,17 @@ $(document).ready(function () {
         }
 
         const issue_content_html = issue_content.replace(/\n/g, '<br>');
+        
+        console.error("전송전 user_id: " + user_id);
 
+   // $('.hidden-issue-tag').val(issue_tag);
         $('.hidden-issue-content').val(issue_content_html);
+          // 이슈 태그를 숨겨진 필드에 설정합니다.
+           $('form[name="createIssue"]').append('<input type="hidden" name="tagname" value="' + issue_tag + '">');
+           $('form[name="createIssue"]').append('<input type="hidden" name="user_id" value="' + user_id + '">');
+
+
+    // 폼을 제출합니다.
         $('form[name="createIssue"]').submit();
     });
 
@@ -202,4 +227,57 @@ $(document).ready(function () {
             issue_modal.fadeOut(200);
         }
     });
+ //혜원
+$(".issue-content").on("input", function() {
+    var textarea = $(this);
+    var text = textarea.val();
+
+  
+    var mentionPattern = /@([\w가-힣]+)/g;
+    var matches = text.match(mentionPattern);
+
+    if (matches && matches.length > 0) {
+       
+        var mention = matches[0];
+
+        
+        sendDataToServer(mention);
+    }
+});
+
+
+function sendDataToServer(mention) {
+    
+   
+    
+    $.ajax({
+        type: "POST",
+        url: "../user/issue-mention",
+        data: mention,
+        contentType: "application/json; charset=UTF-8",
+        dataType: "JSON",
+        success: function(response) {
+           
+            console.log('데이터가 서버로 전송되었습니다.');
+            console.log(response);
+           
+           	if (response.length > 0) {
+	            console.log('서버 응답:', response[0]);
+	            
+	            testName = response[0].name
+	            user_id = response[0].id
+	            
+	            console.log("testName: " + testName)
+	            console.log("user_id: " + user_id)
+           	}
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            
+            console.error('데이터 전송 중 오류가 발생했습니다:', errorThrown);
+        }
+    });
+    
+}
+//혜원끝
 });

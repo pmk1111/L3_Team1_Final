@@ -52,7 +52,7 @@
           <h1>업무 관리의 첫 걸음</h1>
           <h2>WidUs와 함께 나와 팀의 프로젝트를 보다 빠르고 쉽게 관리하세요!</h2>
           <div class="d-flex justify-content-center justify-content-lg-start">
-            <a href="#about" class="btn-get-started scrollto">지금 시작하기</a>
+            <a href="../myhome/user/join" class="btn-get-started scrollto">지금 시작하기</a>
             <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>소개 영상</span></a>
           </div>
         </div>

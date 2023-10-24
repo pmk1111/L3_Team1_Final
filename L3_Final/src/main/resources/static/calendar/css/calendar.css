@@ -32,19 +32,30 @@
 	min-height: 315px;
 }
 
-.modal {
+.create-schedule-modal, .manage-schedule-modal{
+	position:fixed;
 	display: none;
-	position: fixed;
 	z-index: 1200;
 	left: 0;
 	top: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-overlay{
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	background-color: black;
+	opacity: 0.6;
 }
 
 .modal-content {
-	background-color: #fefefe;
+	position:absolute;
+	top:30%;
+	left:52%;
+	transform:translate(-50%, -50%);
+	background-color: white;
 	margin: 10% auto;
 	padding: 20px;
 	border: 1px solid #888;
@@ -54,10 +65,10 @@
 
 /* 모달 닫기 버튼 스타일 */
 .close {
+	text-align:right;
 	color: #aaaaaa;
 	float: right;
-	font-size: 28px;
-	font-weight: bold;
+	font-size: 24px;
 }
 
 .close:hover, .close:focus {
@@ -75,7 +86,7 @@ label {
 	font-weight: bold;
 }
 
-input[type="text"], input[type="date"], select, textarea {
+input[type="text"], input[type="datetime-local"], select, textarea {
 	width: 100%;
 	padding: 10px;
 	margin-bottom: 10px;
@@ -125,5 +136,27 @@ input[type="submit"]:hover {
 }
 
 #calendararea2 {
-	margin-top: 100px;
+	margin-top: 50px;
+}
+
+#eventDescription{
+	resize:none;
+	height: 80px
+}
+
+.btn-wrap{
+	display: flex;
+	justify-content: flex-end
+}
+
+.btn-wrap button+button{
+	margin-left: 15px
+}
+
+.select-color{
+	display: block;
+	width:80px;
+	height:30px;
+	margin-bottom:10px;
+	border-radius: 5px;
 }

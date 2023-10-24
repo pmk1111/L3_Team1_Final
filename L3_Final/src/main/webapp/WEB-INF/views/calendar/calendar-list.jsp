@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
   <!DOCTYPE html>
   <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
     data-assets-path="../resources/mainboard/assets/" data-template="vertical-menu-template-free">
@@ -12,10 +13,44 @@
 
     <title>Widus-Calendar</title>
     <meta name="description" content="" />
-
+		
+		<!-- JQuery cdn -->
+		<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+		
+		<!-- css template -->
     <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
     <link rel="stylesheet" href="../resources/calendar/css/calendar.css">
 
+		<style>
+        html,
+        body {
+            overflow: hidden;
+            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+            font-size: 14px;
+
+        }
+
+        .fc-header-toolbar {
+            padding-top: 1em;
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+        
+        .fc-daygrid-day-frame:hover{
+        	cursor: pointer;
+        	background-color: rgba(105, 108, 255, 0.16);
+        	transition:.3s;
+        }
+        
+        .fc-button{
+        	background-color: #352f54 !important;
+        	border-color: #352f54 !important;
+        }
+        .fc-button:hover{
+        	opacity: .9;
+        	transition:.3s;
+        	}
+    </style>
   </head>
 
   <body>
@@ -24,14 +59,14 @@
       <div class="layout-container">
         <!-- Menu -->
 
-        <jsp:include page="leftbar.jsp"></jsp:include>
+        <jsp:include page="../mainboard/leftbar.jsp"></jsp:include>
         <!-- / Menu -->
 
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
 
-          <jsp:include page="navbar.jsp"></jsp:include>
+          <jsp:include page="../mainboard/navbar.jsp"></jsp:include>
 
           <!-- / Navbar -->
           <div class="container-xxl flex-grow-1 container-p-y" id="calendararea2">
@@ -48,49 +83,6 @@
                         <div class="calendararea">
                           <jsp:include page="calendar.jsp"></jsp:include>
 
-                          <!-- 일정 추가 모달 창 -->
-                          <div id="myModal" class="modal">
-                            <div class="modal-content">
-                              <span class="close" onclick="closeModal()">&times;</span>
-                              <h2>일정 등록</h2>
-                              <form id="scheduleForm" method="post" name="create-schedule">
-                                <label for="eventTitle">일정 제목:</label>
-                                <input type="text" id="eventTitle" name="subject" required><br>
-
-                                <label for="eventStartDate">시작일:</label>
-                                <input type="date" id="eventStartDate" name="start-date" required><br>
-
-                                <label for="eventEndDate">끝나는 날:</label>
-                                <input type="date" id="eventEndDate" name="end-date" required><br>
-
-                                <label for="eventLocation">장소:</label>
-                                <input type="text" id="eventLocation" name="place"><br>
-
-
-                                <label for="eventAlarm">알람:</label>
-                                <select id="eventAlarm" name="eventAlarm">
-                                  <option value="15">15분 전</option>
-                                  <option value="30">30분 전</option>
-                                  <option value="60">1시간 전</option>
-                                  <option value="0">없음</option>
-                                </select><br>
-
-                                <label for="eventCategory">일정 구분</label>
-                                <select id="eventCategory" name="category">
-                                  <option value="1">업무</option>
-                                  <option value="2">일정</option>
-                                  <option value="0">선택안함</option>
-                                </select><br>
-                                <label for="eventDescription">설명:</label>
-                                <textarea id="eventDescription" name="content"></textarea><br>
-
-                                <button class="save" type="button" onclick="saveSchedule()">저장</button>
-                                <button class="modify" type="button" onclick="modifySchedule()">수정</button>
-                                <button class="remove" type="button" onclick="removeSchedule()">삭제</button>
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-                              </form>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -134,14 +126,22 @@
       <!-- / Layout page -->
     </div>
 
+		<%-- <input type="hidden" class="calenderList" value="${calendarList}"> --%>
+		<jsp:include page="create-schedule-modal.jsp"></jsp:include>
+		<jsp:include page="manage-schedule-modal.jsp"></jsp:include>
+		
     <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
+   <!--  <div class="layout-overlay layout-menu-toggle"></div> -->
     <!-- / Layout wrapper -->
 
     <jsp:include page="../template/jsTemplate.jsp"></jsp:include>
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="../resources/calendar/js/calendar.js"></script>
+    <script type="text/javascript">
+			$(document).on('click', '.fc-daygrid-event-harness', function(){
+				$('.manage-schedule-modal').fadeIn(200);
+			})
+    </script>
   </body>
 
   </html>

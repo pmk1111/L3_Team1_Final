@@ -390,7 +390,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="project-name">
-                                                                                    <a href="project?id=${favoritProject.ID}"><span class="project-name-span">${favoritProject.TITLE}</span></a>
+                                                                                    <a href="project?projectId=${favoritProject.ID}"><span class="project-name-span">${favoritProject.TITLE}</span></a>
                                                                                     <img class="team-count-img" src="../resources/project/img/person.svg">
                                                                                     <span class="team-count-span">${favoritProject.TEAMCOUNT}</span>
                                                                                 </div>
@@ -488,7 +488,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="project-name">
-                                                                                    <a href="project?id=${partProject.ID}"><span class="project-name-span">${partProject.TITLE}</span></a>
+                                                                                    <a href="project?projectId=${partProject.ID}"><span class="project-name-span">${partProject.TITLE}</span></a>
                                                                                     <img class="team-count-img" src="../resources/project/img/person.svg">
                                                                                     <span class="team-count-span">${partProject.TEAMCOUNT}</span>
                                                                                 </div>
@@ -685,7 +685,7 @@
 								favList += '</div>';								
 								favList += '</div>';								
 								favList += '<div class="project-name">';								
-								favList += '<a href="project?id=' + data.favoritProjectList[i].id + '">';								
+								favList += '<a href="project?projectId=' + data.favoritProjectList[i].id + '">';								
 								favList += '<span class="project-name-span">' + data.favoritProjectList[i].title + '</span>';								
 								favList += '</a>';								
 								favList += '<img class="team-count-img" src="../resources/project/img/person.svg" style="margin-left:8.5px">';								
@@ -761,7 +761,7 @@
 								partList += '</div>';								
 								partList += '</div>';								
 								partList += '<div class="project-name">';								
-								partList += '<a href="project?id=' + data.partProjectList[i].id + '"><span class="project-name-span">' + data.partProjectList[i].title + '</span></a>';								
+								partList += '<a href="project?projectId=' + data.partProjectList[i].id + '"><span class="project-name-span">' + data.partProjectList[i].title + '</span></a>';								
 								partList += '<img class="team-count-img" src="../resources/project/img/person.svg" style="margin-left:8.5px">';								
 								partList += '<span class="team-count-span" style="margin-left:4px">' + data.partProjectList[i].teamcount + '</span>';								
 								partList += '</div>';								
@@ -923,7 +923,7 @@
 								allList += '</div>';								
 								allList += '</div>';								
 								allList += '<div class="project-name">';								
-								allList += '<a href="project?id=' + data[i].id + '">';								
+								allList += '<a href="project?projectId=' + data[i].id + '">';								
 								allList += '<span class="project-name-span">' + data[i].title + '</span>';								
 								allList += '</a>';								
 								allList += '<img class="team-count-img" src="../resources/project/img/person.svg" style="margin-left:8.5px">';								

@@ -63,4 +63,78 @@ public class ProjectServiceImpl implements ProjectService {
 		mapper.removeFavorite(projectId, employeeId);
 	}
 
+	@Override
+	public Integer getDoneCount(int projectId) {
+		return mapper.getDoneCount(projectId);
+	}
+
+	@Override
+	public Integer getUpdateCount(int projectId) {
+		return mapper.getUpdateCount(projectId);
+	}
+
+	@Override
+	public Integer getCreateCount(int projectId) {
+		return mapper.getCreateCount(projectId);
+	}
+
+	@Override
+	public Integer getCriticalCount(int projectId) {
+		return mapper.getCriticalCount(projectId);
+	}
+
+	@Override
+	public Integer todoCount(int projectId) {
+		return mapper.todoCount(projectId);
+	}
+
+	@Override
+	public Integer progressCount(int projectId) {
+		return mapper.progressCount(projectId);
+	}
+
+	@Override
+	public Integer allDoneCount(int projectId) {
+		return mapper.allDoneCount(projectId);
+	}
+
+	@Override
+	public Integer resolveCount(int projectId) {
+		return mapper.resolveCount(projectId);
+	}
+	
+	@Override
+	public Integer allCriticalCount(int projectId) {
+		return mapper.allCriticalCount(projectId);
+	}
+
+	@Override
+	public Integer highCount(int projectId) {
+		return mapper.highCount(projectId);
+	}
+
+	@Override
+	public Integer middleCount(int projectId) {
+		return mapper.middleCount(projectId);
+	}
+
+	@Override
+	public Integer lowCount(int projectId) {
+		return mapper.lowCount(projectId);
+	}
+
+	@Override
+	public void deleteProject(int projectId) {
+		mapper.deleteProject(projectId);
+	}
+
+	@Override
+	public int getEmpId(int sessionId) {
+		return mapper.getEmpId(sessionId);
+	}
+	
+	
+	
+	
+
 }

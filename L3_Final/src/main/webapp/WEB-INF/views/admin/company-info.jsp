@@ -146,7 +146,9 @@
                           <p class="mb-4">
                           
                           <!-- content -->
+                          
                           <form id="formCompanySetting" method="POST" action = "../admin/companyinfo">
+                                                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <div class="row">
                         <div class="mb-3 col-md-6" id="name">
                             <label for="companyName" class="form-label">회사명</label>
@@ -169,12 +171,7 @@
   					   </div>
   					   <input type="hidden" name="updateType" id="updateType" value="updateName">
   					   
-                       <div class="changepassword">
-                       		<button type="button" class="changepwd"><a href="${pageContext.request.contextPath}/admin/change-pwd"> 비밀번호 변경</a></button>
-                       		
-                       	
-                       </div>
-
+                      
                          <div class="mb-3 col-md-6">
                             <label for="companyDomain" class="form-label">전용 URL</label>
                              <input
@@ -220,7 +217,8 @@
                        </div>
                 	 -->
                 
-                      </div> 
+                      </div>
+                       
                     </form>
                    </div>
                   </div>
