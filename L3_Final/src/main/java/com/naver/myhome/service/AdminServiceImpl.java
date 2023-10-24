@@ -52,11 +52,11 @@ public class AdminServiceImpl implements AdminService {
 		return dao.updateDomain(companyId, companyDomain);
 	}
 	
-	@Override
-	public int changePwd(Map<String, Object> paramMap) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+//	@Override
+//	public int changePwd(Map<String, Object> paramMap) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
 
 	@Override
 	public List<User> waitUser(int companyId) {

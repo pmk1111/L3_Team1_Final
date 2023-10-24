@@ -18,6 +18,7 @@
     <title>회원관리 - 회원수정 페이지</title>
 
     <meta name="description" content="" />
+    
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
@@ -31,15 +32,15 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="../resources/user/assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../user/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../user/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../user/assets/css/demo.css" />
+    <link rel="stylesheet" href="../resources/user/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../resources/user/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../resources/user/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../user/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="../resources/user/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
     <!-- Page CSS -->
 
@@ -49,8 +50,32 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../user/assets/js/config.js"></script>
+    <style>
+    body {
+    		font-family: 'Nanum Gothic', sans-serif;
+    	}
+    .changepassword { margin: 20px 0px 40px 0px}
+	.changepwd { background-color: white;
+				 border: 1px solid #d9dee3;
+				 color: #697a8d;
+				 border-radius: 5px;
+			
+	}
+	.pwdsubmit {border: 1px solid #d9dee3;
+ 	  						    background-color: white;
+ 	  						    color: #697a8d;
+ 	  						    box-shadow:none;
+ 	  						    border-radius:5px;}
+ 	#fileName {font-size: 13px;}
+ 	
+    </style>
+    <script>
+    const result ="${result}";
+		if(result == 'success'){
+		 alert("회원 정보가 수정되었습니다.")
+	}
+    </script>
   </head>
-
   <body>
   
     <!-- Layout wrapper -->
@@ -82,52 +107,65 @@
                     <li class="nav-item">
                       <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> 계정</a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="pages-account-settings-notifications.html"
-                        ><i class="bx bx-bell me-1"></i> 알림</a
-                      >
-                    </li>
+                    
                    
                   </ul>
+                      <form id="formAccountSettings" method="POST" action="../user/update-process" enctype="multipart/form-data">
                   <div class="card mb-4">
                     <h5 class="card-header">프로필</h5>
                     <!-- Account -->
                     <div class="card-body">
                       <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img
-                          src="../user/assets/img/avatars/profile.png"
-                          alt="user-avatar"
-                          class="d-block rounded"
-                          height="100"
-                          width="100"
-                          id="uploadedAvatar"
-                        />
-                        
-                        
+                      <c:choose>
+  							<c:when test="${not empty userinfo.pic}">
+    							<img src="${pageContext.request.contextPath}/upload${userinfo.pic}" alt="프로필 사진"
+    							class="d-block rounded"
+                         		 height="150"
+                         		 width="150"
+                         		 id="uploadedAvatar"
+                       			 />
+    							
+  							</c:when>
+ 					 		<c:otherwise>
+   								 <img src="${pageContext.request.contextPath}/user/assets/img/avatars/profile.png" alt="기본 프로필 사진"
+   								 class="d-block rounded"
+                         		 height="150"
+                         		 width="150"
+                         		 id="uploadedAvatar"
+                       			 />
+   								
+ 					 		</c:otherwise>
+					</c:choose>
+                     
+                       
                         <div class="button-wrapper">
                           <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                             <span class="d-none d-sm-block">프로필 수정</span>
                             <i class="bx bx-upload d-block d-sm-none"></i>
-                            <input
-                              type="file"
-                              id="upload"
-                              class="account-file-input"
-                              hidden
-                              accept="image/png, image/jpeg"
-                            />
+                          
                           </label>
-                          <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                           <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
                             <i class="bx bx-reset d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">취소</span>
                           </button>
 
-                          <!-- <p class="text-muted mb-0">파일이름이 들어와야함</p> -->
+                         <div id="filename">
+                          <input
+                              type="file"
+                              id="upload"
+                              name="uploadfile"
+                              value = "${userinfo.pic}"
+                              class="account-file-input"
+                              accept="image/png, image/jpeg"
+                            />
                         </div>
+                        </div>
+                        
                       </div>
                     </div>
                     <hr class="my-0" />
                     <div class="card-body">
-                      <form id="formAccountSettings" method="POST" onsubmit="return false">
+                          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <div class="row">
                           <div class="mb-3 col-md-6">
                             <label for="email" class="form-label">이메일</label>
@@ -146,50 +184,45 @@
                               type="text"
                               class="form-control"
                               id="company"
-                              name="company"
-                              value="${userinfo.company}"
+                              name="company"_
+                              value="${userinfo.companyName}"
+                              required readOnly
                             />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">이름</label>
                             <input class="form-control" type="text" name="name" id="name" value="${userinfo.name}" />
                           </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="department" class="form-label">부서</label>
-                            <input type="text" class="form-control" id="department" name="department" placeholder="" 
-                            value="${userinfo.department}"/>
-                          </div>
+                         
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="tel">휴대폰 번호</label>
                             <div class="input-group input-group-merge">
                               <input
                                 type="text"
-                                id="tel"
-                                name="tel"
+                                id="phone"
+                                name="phone"
                                 class="form-control"
                                 placeholder="010 000 0000"
-                                value="${userinfo.tel}"
+                                value="${userinfo.phone}"
                               />
                             </div>
                           </div>
                           
                          
-                          <div class="mb-3 col-md-6">
-                            <label for="position" class="form-label">직책</label>
-                            <input type="text" class="form-control" id="position" name="position" placeholder="" 
-                            value="${userinfo.position}"/>
-                          </div>
+                        
                           
-                       <div class="d-flex justify-content-between" >
-    					 <div class="change password">
-       						 <button type="button" class="btn btn-outline-secondary" style= "margin-top: 10;">비밀번호 변경</button>
-    					 </div>
+                      <div class="changepassword">
+                       		<button type="button" class="changepwd"><a href="${pageContext.request.contextPath}/user/change-pwd"> 비밀번호 변경</a></button>
+                       </div>
+    					 
+    					 
    						 <div class="mt-2">
-      					     <button type="submit" class="btn btn-primary me-2">저장</button>
+      					     <button type="submit" class="btn btn-primary me-2" id="updateProfile" >저장</button>
       					     <button type="reset" class="btn btn-outline-secondary">취소</button>
   					     </div>
 					  </div>
 					  </div>
+					  
                       </form>
                     </div>
                     <!-- /Account -->
@@ -203,31 +236,34 @@
                           <p class="mb-0">탈퇴시 모든 정보를 더 이상 확인할 수 없습니다.</p>
                         </div>
                       </div>
-                      <form id="formAccountDeactivation" onsubmit="return false">
+                      <form id="formAccountDeactivation" action="../user/delete" method="GET" >
                         <div class="form-check mb-3">
                           <input
                             class="form-check-input"
                             type="checkbox"
-                            name="accountActivation"
-                            id="accountActivation"
+                            name="agreeDelete"
+                            id="agreeDelete"
                           />
                           <label class="form-check-label" for="accountActivation"
                             >동의합니다.</label
                           >
                         </div>
-                        <button type="submit" class="btn btn-danger deactivate-account">탈퇴</button>
-                      </form>
+                      
+                        <button type="submit" class="btn btn-danger deactivate-account" id="deleteUser">탈퇴</button>
+                    </form>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+                  
             <!-- / Content -->
 
             
 
             <div class="content-backdrop fade"></div>
           </div>
+        
           <!-- Content wrapper -->
         </div>
         
@@ -242,37 +278,26 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../assets/vendor/libs/popper/popper.js"></script>
-    <script src="../assets/vendor/js/bootstrap.js"></script>
-    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../resources/user/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../resources/user/assets/vendor/libs/popper/popper.js"></script>
+    <script src="../resources/user/assets/vendor/js/bootstrap.js"></script>
+    <script src="../resources/user/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="../assets/vendor/js/menu.js"></script>
+    <script src="../resources/user/assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
 
     <!-- Main JS -->
-    <script src="../assets/js/main.js"></script>
+    <script src="../resources/user/assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="../assets/js/pages-account-settings-account.js"></script>
+    <script src="../resources/user/assets/js/pages-account-settings-account.js"></script>
 
-   
+   	<script src="../resources/user/js/profile.js"></script>
     <!-- Place this tag in your head or just before your close body tag. -->
     
-    <script>
-    $('input[type=file]').change(function(event){
-        const inputfile=$(this).val().split('\\');
-        const filename=inputfile[inputfile.length-1]; //inputfile.length-1 =2
-        
-        const pattern=/(gif|jpg|jpeg|png)$/i; //i(ignore case)는 대소문자 무시를 의미
-        if (pattern.test(filename)){
-           $('#filename').text(filename);
-           
-           const reader = new FileReader(); //파일을 읽기 위한 객체 생성
-           
-    </script>
+  
 
   </body>
 </html>

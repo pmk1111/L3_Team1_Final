@@ -26,7 +26,7 @@
 		select i.*,
 		(SELECT name FROM users WHERE id = i.create_user) AS create_user_name
 		from issue i
-		where project_id = 1
+		where project_id = #{projectId}
 		order by created_at desc
 		<!-- 프로젝트 id는 세션 또는 쿠키에서 가져온 값으로 대체 -->
 	</select>
@@ -98,12 +98,12 @@
   	#{issue_assigned}, SYSDATE) -->
   	<!-- 사용자 식별번호를 세션에서 가져와서 그 값을 작성자, 보고자에 넣어야 함. 그 값을 통해 화면에 표시되는 값은 유저 이름-->
   	
-  	insert into issue
+  	insert into issue 
   	values
   	(#{id}, #{project_id}, 
   	#{create_user}, #{type},
   	#{priority}, #{subject}, #{content},
-  	#{status}, #{create_user}, #{assigned}, SYSDATE)
+  	#{status}, #{create_user}, #{assigned}, SYSDATE, SYSDATE)
   </insert>
 
 	<select id="getIssueDetail" resultType="issue">

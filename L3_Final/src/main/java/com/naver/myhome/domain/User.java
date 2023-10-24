@@ -7,6 +7,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -16,13 +17,20 @@ public class User implements UserDetails {
 	private String email;
 	private String password;
 	private String pic;
+
+	private MultipartFile uploadfile; 	// 프로필사진 업로드 지니
+	private String picOriginal;  		//프로필 오리지널 지니
 	private String name;
 	private String phone;
-	private String companyInvited;
+	private int companyInvited;			//int형식으로 변경하였음 주영 수정사항
+
 	private String companyStatus;
 	private String security;
 	private Date createdAt;
 	private int authNum;
+
+	private String companyName;			//회사명변경을위해 필요한 생성자 지니
+
 	
 	
 	 @Override

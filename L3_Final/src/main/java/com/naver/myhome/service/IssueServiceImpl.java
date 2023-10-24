@@ -42,8 +42,8 @@ public class IssueServiceImpl implements IssueService{
 
 
 	@Override
-	public List<Issue> getIssueList() {
-		return mapper.getIssueList();
+	public List<Issue> getIssueList(int projectId) {
+		return mapper.getIssueList(projectId);
 	}
 	
 	@Override

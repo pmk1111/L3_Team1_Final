@@ -1,8 +1,11 @@
 package com.naver.myhome.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.naver.myhome.domain.Team;
 import com.naver.myhome.mybatis.mapper.TeamMapper;
 
 @Service
@@ -25,4 +28,21 @@ public class TeamServiceImpl implements TeamService {
 		return mapper.teamCount(projectId);
 	}
 
+	@Override
+	public List<Team> getTeam(int projectId, int sessionId) {
+		return mapper.getTeam(projectId, sessionId);
+	}
+
+	@Override
+	public List<Team> inviteTeam(int projectId) {
+		return mapper.inviteTeam(projectId);
+	}
+
+	@Override
+	public void insertTeam(int empId, int projectId) {
+		mapper.insertTeam(empId, projectId);
+	}
+	
+	
+	
 }

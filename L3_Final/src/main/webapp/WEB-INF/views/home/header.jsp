@@ -17,8 +17,8 @@
                 <li><a class="nav-link scrollto" href="#team">팀</a></li>
                 <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
-                        <li><a href="../user/login">로그인</a></li>
-                        <li class="dropdown"><a href="../user/confirm"><span>회원가입</span></a></li>
+                        <li><a href="../myhome/user/login">로그인</a></li>
+                        <li class="dropdown"><a href="../myhome/user/join"><span>회원가입</span></a></li>
                         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
                         <li><a class="getstarted scrollto" href="#about">지금 시작하기</a></li>
                     </ul>

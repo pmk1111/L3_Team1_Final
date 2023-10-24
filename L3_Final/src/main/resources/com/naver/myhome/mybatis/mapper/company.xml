@@ -13,19 +13,18 @@
 	</select>
 	
 	<insert id="insert" parameterType="company" >
-	
-	  insert into company(id,email,password,domain,name,eid) values(company_id.nextval, 
-	   	#{company.email},
-	    #{company.password},
-	    #{company.domain},
-	    #{company.name},
-	    #{company.eid}
-	    )
+	   INSERT INTO COMPANY(ID, USER_ID, DOMAIN, NAME,REGISTRATION_NO)VALUES(company_id.nextval,#{userId} ,#{domain},#{name},#{RegistrationNo})
 	</insert>
 	
 	<select id="isEmail" resultType="user" parameterType="String"><!-- Member class를 
 			별칭 -->
 		select * from users where  email = #{user_email}
 	</select>
+	
+	<select id="selectCompanyByUser" resultType="company" parameterType="user">
+		SELECT * FROM COMPANY WHERE USER_ID = #{id}
+	</select>
+	
+	
 </mapper>
 
