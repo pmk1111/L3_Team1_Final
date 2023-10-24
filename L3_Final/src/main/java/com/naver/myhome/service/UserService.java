@@ -45,7 +45,4 @@ public interface UserService {
 	//혜원 끝
 
 
-
-	public List<MentionUser> mentionUser(String requestData);
-
 }
