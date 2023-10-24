@@ -8,7 +8,7 @@
 		VALUES (#{employeeId}, #{projectId})
 	</insert>
 	
-	<select id="teamCount" resultType="int">
+	<select id="teamCount" resultType="integer">
 		SELECT COUNT(*)
 		FROM TEAM
 		WHERE PROJECT_ID = #{projectId}
@@ -27,5 +27,25 @@
 		WHERE PROJECT_ID = #{projectId}
 		ORDER BY T.AUTH DESC, U.NAME ASC
 	</select>
-
+	
+	<select id="inviteTeam" resultType="Team">
+	    SELECT E.ID AS EMPLOYEE_ID, U.NAME AS NAME, U.PIC AS PIC
+	    FROM USERS U
+	    INNER JOIN EMPLOYEE E ON E.USER_ID = U.ID AND E.COMPANY_ID = (
+		    SELECT COMPANY_ID 
+		    FROM PROJECT 
+		    WHERE ID = #{projectId}
+		)
+	    WHERE E.ID NOT IN (
+	        SELECT EMPLOYEE_ID 
+	        FROM TEAM
+	        WHERE PROJECT_ID = #{projectId}
+	    )
+	</select>
+	
+	<insert id="insertTeam" parameterType="integer">
+		INSERT INTO TEAM (employee_id, project_id, auth)
+		VALUES (#{empId}, #{projectId}, 0)
+	</insert>
+	
 </mapper>

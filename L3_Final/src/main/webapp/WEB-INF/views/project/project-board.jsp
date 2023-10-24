@@ -74,8 +74,19 @@
 			border-radius: 12px;
 		    width: 95px;
 		    font-size:14px;		    
+		    max-height:45px;
+		    padding:3px 0 3px 0;
 		}
 		
+		.empty-emp{
+			display: flex;
+		    height: 225px;
+		    justify-content: center;
+		    align-items: center;
+		    padding-right: 25px;
+		    opacity: 0;
+    		animation: fadeIn 0.5s ease-in-out 0.1s forwards;			
+		}
     </style>    
 </head>
 
@@ -147,7 +158,7 @@
 
                                                 <!-- 프로젝트 색 선택 -->
                                                 <div class="favorite-project">
-                                                    <img class="star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${project.ID}">
+                                                    <img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${project.ID}">
                                                 </div>
 
                                                 <!-- 프로젝트 설정 -->
@@ -315,38 +326,20 @@
                                                 <div class="modal-body-invite" style="display:none">
                                                     <div class="modal-content-wrapper">
                                                         <div class="modal-search-invite">
-                                                            <div class="modal-search modal-search-invite-02">
-                                                                <input class="modal-search-input" type="text" id="image-input" placeholder="이름으로 검색">
-                                                            </div>
-                                                            <div class="modal-search-memberlist">
-                                                                <ul id="member-invite-ul">
-                                                                    <li class="member-invite-li">
-                                                                        <div class="modal-member-invite-img">
-                                                                            <img class="modal-invite-check" src="../resources/project/img/projectboard/icon_check.png">
-                                                                        </div>
-                                                                        <div class="modal-member-profile">
-                                                                            <img class="modal-memeber-img" src="../resources/project/img/projectboard/team/user3.jpg">
-                                                                        </div>
-                                                                        <div class="modal-member-name name-flex">
-                                                                            <a>
-                                                                                <span class="modal-member-name-span" style="font-weight:600; font-size:13px;">옥진석</span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
+							                              <div class="modal-search modal-search-invite-02">
+							                                  <input class="modal-search-input" type="text" id="image-input" placeholder="이름으로 검색">
+							                              </div>
+							                              <div class="modal-search-memberlist">
+							                              	<ul id="member-invite-ul">
+							                                </ul>
+							                              </div>                                                        
                                                         </div>
 
                                                         <div class="modal-invite-list">
-                                                        	<div style=" display: flex; align-items: center; justify-content: center; widht:100%; height:100%; display:none">
-                                                            	<span class="invite-empty-span" style="display:none">대상을 선택해주세요.</span>
+                                                        	<div class="modal-invite-empty" style=" display: flex; align-items: center; justify-content: center; widht:100%; height:100%;">
+                                                            	<span class="invite-empty-span">대상을 선택해주세요.</span>
                                                             </div>
                                                             <div class="invite-box"> 
-                                                            	<div class="invite-you">김옥진석rrrrrrrrrrrrrrrrrrrrrrrrr</div>
-                                                            	<div class="invite-you">Harry Kane</div>
-                                                            	<div class="invite-you">abcdefgHijkLmnObpdafsdfad</div>
-                                                            	<div class="invite-you">옥진석</div>
-                                                            	<div class="invite-you">옥진석</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -375,7 +368,7 @@
                                             <div>
                                                 <span>최근 7일 이내에</span>
                                             </div>
-                                            <span>6개 완료</span>
+                                            <span>${doneCount} 개 완료</span>
                                         </div>
                                     </div>
                                 </div>
@@ -393,7 +386,7 @@
                                                 <div>
                                                     <span>최근 7일 이내에</span>
                                                 </div>
-                                                <span>5개 업데이트</span>
+                                                <span>${updateCount} 개 업데이트</span>
                                             </div>
                                         </div>
                                     </div>
@@ -412,7 +405,7 @@
                                                 <div>
                                                     <span>최근 7일 이내에</span>
                                                 </div>
-                                                <span>3개 만듦</span>
+                                                <span>${createCount} 개 만듦</span>
                                             </div>
                                         </div>
                                     </div>
@@ -431,7 +424,7 @@
                                                 <div>
                                                     <span>최근 7일 이내에</span>
                                                 </div>
-                                                <span>2개 기한초과</span>
+                                                <span>${criticalCount } 개 크리티컬</span>
                                             </div>
                                         </div>
                                     </div>
@@ -442,11 +435,11 @@
                             <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4 width-50">
                                 <div class="card h-300">
                                     <div class="row row-bordered g-0">
-                                        <h5 class="card-header m-0 me-2 pb-3" style="font-weight: bold">상태 개요 <span style="color: #899bbd; font-size: 14px; font-weight: 500;"><a style="cursor:pointer"> | 바로가기</a></span></h5>
+                                        <h5 class="card-header m-0 me-2 pb-3" style="font-weight: bold">상태 개요</h5>
                                         <div id="trafficChart" style="min-height: 310px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative; right: 80px;" class="echart" _echarts_instance_="ec_1695722972106">
 
-                                            <div style="position: relative; width: 458px; height: 400px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
-                                                <canvas data-zr-dom-id="zr_0" width="458" height="400" style="position: absolute; left: 0px; top: 0px; width: 458px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
+                                            <div style="position: relative; width: 458px; height: 400px; padding: 0px; margin: 0px; border-width: 0px; cursor: default; min-height:350px">
+                                                <canvas data-zr-dom-id="zr_0" width="458" height="400" style="position: absolute; left: 0px; top: 0px; width: 458px; min-height:350px !important; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
                                             </div>
 
                                             <div class="Chart Access">
@@ -474,7 +467,7 @@
                             <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4 width-50">
                                 <div class="card h-300">
                                     <div class="row row-bordered g-0">
-                                        <h5 class="card-header m-0 me-2 pb-3" style="font-weight: bold">우선 순위 <span style="color: #899bbd; font-size: 14px; font-weight: 500;"><a style="cursor:pointer"> | 바로가기</a></span></h5>
+                                        <h5 class="card-header m-0 me-2 pb-3" style="font-weight: bold">우선 순위</h5>
                                         <div id="barChart" style="min-height: 320px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);" class="echart" _echarts_instance_="ec_1695779430973">
                                             <div style="position: relative; width: 720px; height: 400px; padding: 0px; margin: 0px; border-width: 0px; cursor: pointer;">
                                                 <canvas data-zr-dom-id="zr_0" width="720" height="400" style="position: absolute; left: 0px; top: 0px; width: 720px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
@@ -490,7 +483,7 @@
                                 <div class="card h-300">
                                     <div class="row row-bordered g-0">
                                         <div>
-                                            <h5 class="card-header m-0 me-2 pb-3" style="font-weight: bold; display: inline-block">최근 이슈 <span style="color: #899bbd; font-size: 14px; font-weight: 500;"><a style="cursor:pointer"> | 바로가기</a></span>
+                                            <h5 class="card-header m-0 me-2 pb-3" style="font-weight: bold; display: inline-block">최근 이슈 <span style="color: #899bbd; font-size: 14px; font-weight: 500;"><a href="../issue/issue-list?projectId=${projectId}" style="cursor:pointer; color:#392a85;"> | 바로가기</a></span>
                                             </h5>
                                             <div class="datatable-search" style="display: inline-block; float: right; margin-right: 14px;">
                                                 <input id="searchInput" class="datatable-input form-control" placeholder="Search..." type="search" title="Search within table" style="margin-top: 18px;">
@@ -499,54 +492,62 @@
                                         <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns" style="margin-top: 23px;">
                                             <div class="datatable-container">
 
-                                                <table id="myTable" class="table table-borderless datatable datatable-table">
+                                                <table id="myTable" class="table table-borderless datatable datatable-table" style="min-height:270px">
                                                     <thead>
                                                         <tr>
-                                                            <th data-sortable="true" style="width: 10.703363914373089%;"><button class="datatable-sorter">#북마크</button></th>
-                                                            <th data-sortable="true" style="width: 17%;"><button class="datatable-sorter">작성자</button></th>
-                                                            <th data-sortable="true" style="width: 41.793028299636045%;"><button class="datatable-sorter">글 제목</button></th>
+                                                            <th data-sortable="true" style="width: 7.703363914373089%;"><button class="datatable-sorter">타입</button></th>
+                                                            <th data-sortable="true" style="width: 14%;"><button class="datatable-sorter">작성자</button></th>
+                                                            <th data-sortable="true" style="width: 47.793028299636045%;"><button class="datatable-sorter">글 제목</button></th>
                                                             <th data-sortable="true" style="width: 18.780835881753312%; text-align: center;"><button class="datatable-sorter">우선 순위</button></th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr data-index="0">
-                                                            <td><a href="#">#2457</a></td>
-                                                            <td>JJOCK</td>
-                                                            <td><a href="#" class="text-primary post-title">프로젝트 생성/수정/삭제 페이지 제작 계획</a></td>
-                                                            <td style="text-align: center;"><span class="badge bg-warning">Low</span></td>
-                                                        </tr>
-                                                        <tr data-index="1">
-                                                            <td><a href="#">#2147</a></td>
-                                                            <td>jiney2</td>
-                                                            <td><a href="#" class="text-primary post-title">비밀번호 변경 모달 / 회원탈퇴 기능</a></td>
-                                                            <td style="text-align: center;"><span class="badge  bg-success">Middle</span></td>
-                                                        </tr>
-                                                        <tr data-index="2">
-                                                            <td><a href="#">#2049</a></td>
-                                                            <td>PMK1111</td>
-                                                            <td><a href="#" class="text-primary post-title">Adding chat/alarm and JavaScript events</a></td>
-                                                            <td style="text-align: center;"><span class="badge bg-info">High</span></td>
-                                                        </tr>
-                                                        <tr data-index="3">
-                                                            <td><a href="#">#2644</a></td>
-                                                            <td>par227</td>
-                                                            <td><a href="#" class="text-primar post-title">로그인 / 회원가입 작업 진행 중</a></td>
-                                                            <td style="text-align: center;"><span class="badge bg-danger">Critical</span></td>
-                                                        </tr>
-                                                        <tr data-index="4">
-                                                            <td><a href="#">#2644</a></td>
-                                                            <td>heywon</td>
-                                                            <td><a href="#" class="text-primary post-title">Board 작업 중</a></td>
-                                                            <td style="text-align: center;"><span class="badge bg-info">High</span></td>
-                                                        </tr>
+                                                    <tbody style="min-height:230px">
+													     <c:choose>
+													        <c:when test="${not empty issuelist}">                                                   
+			                                                    <c:forEach var="issue" items="${issuelist}" begin="0" end="4">
+			                                                        <tr data-index="0" >
+			                                                            <td style="vertical-align: middle; text-align: center;">
+																            <c:choose>
+																                <c:when test="${issue.type eq '에픽'}">
+																                    <img src="../resources/issue/img/epic.svg" class="issuetype-icon">
+																                </c:when>
+																                <c:when test="${issue.type eq '작업'}">
+																                    <img src="../resources/issue/img/task.svg" class="issuetype-icon">
+																                </c:when>
+																              	<c:otherwise>  
+																                 	<img src="../resources/issue/img/bug.svg" class="issuetype-icon"> 
+																             	</c:otherwise>  
+																            </c:choose>
+			                                                            </td>
+			                                                            <td style="vertical-align: middle;">${issue.create_user_name }</td>
+			                                                            <td style="vertical-align: middle;"><a style="color:#392a85 !important;" href="../issue/issue-detail?num=${issue.id}" class="text-primary post-title">${issue.subject }</a></td>
+			                                                            <td style="vertical-align: middle; text-align: center;">
+																            <c:choose>
+																                <c:when test="${issue.priority eq 'Critical'}">
+																                    <span class="badge bg-danger">${issue.priority }</span>
+																                </c:when>
+																                <c:when test="${issue.priority eq 'High'}">
+																                    <span class="badge bg-info">${issue.priority }</span>
+																                </c:when>
+																                <c:when test="${issue.priority eq 'Middle'}">
+																                    <span class="badge bg-success">${issue.priority }</span>
+																                </c:when>
+																                <c:otherwise>  
+																                 	<span class="badge bg-warning">${issue.priority}</span> 
+																             	</c:otherwise>  
+																            </c:choose> 
+															            </td>
+			                                                        </tr>
+			                                                   </c:forEach>
+			                                                 </c:when>
+												        <c:otherwise>
+												            <tr>
+												                <td colspan="4" style="padding-top:90px; text-align:center; font-weight:700; opacity: 0; animation: fadeIn 0.5s ease-in-out 0.3s forwards;	">최근 이슈가 없습니다.</td> 
+												            </tr> 
+												        </c:otherwise>
+												    </c:choose>	                                                 
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="datatable-bottom">
-                                                <div class="datatable-info">최근 20개 글정도 검색 가능하게..?</div>
-                                                <nav class="datatable-pagination">
-                                                    <ul class="datatable-pagination-list"></ul>
-                                                </nav>
                                             </div>
                                         </div>
 
@@ -649,134 +650,107 @@
 
 	<!-- ProjectBoard JS -->
     <script src="../resources/project/js/projectboard/projectboard_Header.js"></script>
-    <script src="../resources/project/js/projectboard/projectboard_chart.js"></script>
-    <script src="../resources/project/js/projectboard/projectboard_barchart.js"></script>
     <script src="../resources/project/js/projectboard/projectboard_table.js"></script>
     
     <script src="../resources/project/js/projectboard/team_Ajax.js"></script>
     	
     <script>
 
-    let token = $("meta[name='_csrf']").attr("content");
-    let header = $("meta[name='_csrf_header']").attr("content");
+    var todoCount = ${todoCount};
+    var progressCount = ${progressCount};
+    var doneCount = ${doneCount};
+    var resolveCount = ${resolveCount};
 
-    // tabs active
-    $('.team-tab').on('click', function() {
-        $('.modal-body-invite').hide(); // 초대 div 숨기기
-        $('.modal-search-list').show(); // 목록 div 보이기
-        $('.modal-content-invite').animate({
-            width: '434px'
-        }, 250); // 너비 변경 애니메이션
+    document.addEventListener("DOMContentLoaded", () => {
+        var myChart = echarts.init(document.querySelector("#trafficChart"));
 
-        var projectId = 1;
-        var sessionId = 1;
-
-        // AJAX 요청 시작
-        $.ajax({
-            url: '../team/team-list',
-            method: 'POST',
-            data: {
-                projectId: projectId,
-                sessionId: sessionId
-            },	
-            beforeSend: function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
-                xhr.setRequestHeader(header, token);
+        var option = {
+            tooltip: {
+                trigger: 'item'
             },
-            success: function(data) {
-                var teamList = '';
-                
-                console.log(data);
-
-                for (var i = 0; i < data.team.length; i++) {
-                    teamList += '<li id="member-list-li">';
-                    teamList += '<div class="modal-member-info">';
-	                teamList += '<div class="modal-member-profile">';
-
-                    if (data.team[i].pic == null) {
-                        teamList += '<img class="modal-memeber-img" src="../resources/user/img/profile.png">';
-	                } else {
-    	                teamList += '<img class="modal-memeber-img" src="../resources/project/img/projectboard/team/' + data.team[i].pic + '">';
-        	        }
-
-                    teamList += '</div>';
-                    teamList += '<div class="modal-member-name">';
-                    teamList += '<a>';
-	                teamList += '<span class="modal-member-name-span">' + data.team[i].name + '</span>';
-    	            teamList += '</a>';
-        	        teamList += '</div>';
-
-                    if (data.team[i].auth === 1) {
-                        teamList += '<div class="modal-member-role">';
-	                    teamList += '<span class="modal-member-role-span" style="color: #fff">관리자</span>';
-    	                teamList += '</div>';
-        	        } else {
-            	        teamList += '<div class="modal-member-role">';
-                	    teamList += '<a href="#" class="admin-invite-button-1 manager-badge">';
-                    	teamList += '<span>';
-                            teamList += '</span>';
-                        teamList += '</a>';
-                        teamList += '</div>';
- 	               }
-
-                    teamList += '<div class="setting member-setting">';
-                    teamList += '<div class="dropdown">';
-                    teamList += '<button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-	                teamList += '<i class="bx bx-dots-vertical-rounded"></i>';
-    	            teamList += '</button>';
-        	        teamList += '<div class="dropdown-menu drop-width" aria-labelledby="cardOpt3">';
-            	    teamList += '<div class="setting-menu setting-menu-padding">';
-                	teamList += '<div class="setting-line">';
-
-                    if (data.team[i].my_ID === data.team[i].user_ID) {
-                        teamList += '<a class="setting-anchor setting-exit">';
-                        teamList += '<span class="setting-span setting-span-02">프로젝트 나가기</span>';
-	                    teamList += '</a>';
-    	            } else if (data.team[i].my_AUTH === 1 && data.team[i].my_ID !== data.team[i].user_ID) {
-        	            teamList += '<a class="setting-anchor setting-fire">';
-            	        teamList += '<span class="setting-span setting-span-02">프로젝트 내보내기</span>';
-                	    teamList += '</a>';
-                	}
-
-                    teamList += '</div>';
-                    teamList += '<div class="setting-line">';
-
-                    if (data.team[i].my_AUTH === 1 && data.team[i].auth === 1) {
-                        teamList += '<a class="setting-anchor setting-manager-fire">';
-	                    teamList += '<span class="setting-span setting-span-02">관리자 해제</span>';
-    	                teamList += '</a>';
-        	        } else if (data.team[i].my_AUTH === 1 && data.team[i].auth === 0) {
-            	        teamList += '<a class="setting-anchor setting-manager-hire">';
-                	    teamList += '<span class="setting-span setting-span-02">관리자 지정하기</span>';
-                    	teamList += '</a>';
-                	}
-
-                    teamList += '</div>';
-                    teamList += '</div>';
-                    teamList += '</div>';
-	                teamList += '</div>';
-    	            teamList += '</div>';
-        	        teamList += '</div>';
-            	    teamList += '</li>';
-            	}
-
-                $('#member-list-ul').html(teamList);
-
-                $('.modal-member-role').each(function() {
-                    if ($(this).find('span').text().trim() === '') {
-                        $(this).hide();
-                        $(this).siblings('.modal-member-name').css('width', '269px');
+            legend: {
+                top: 'middle',
+                left: 'right',
+                orient: 'vertical',
+                align: 'left',
+                textStyle: {
+                    color: '#666',
+                    fontSize: '14',
+                }
+            },
+            series: [{
+                name: '상태',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                labelLine: {
+                    show: false
+                },
+                label: {
+                    show: false,
+                    position: 'center',
+                    formatter: '{b}' // b refers to the name of the data item
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '18',
+                        fontWeight: 'bold'
                     }
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', error);
-            }
-        });
-        
+                },
+                data: [{
+                        value: todoCount,
+                        name: 'To Do'
+                    },
+                    {
+                        value: progressCount,
+                        name: 'Progress'
+                    },
+                    {
+                        value: doneCount,
+                        name: 'Done'
+                    },
+                    {
+                        value: resolveCount,
+                        name: 'Resolve'
+                    }
+                ]
+            }]
+        };
+
+        myChart.setOption(option);
     });
     
-
-    	
+    var allCriticalCount = ${allCriticalCount};
+    var highCount = ${highCount};
+    var middleCount = ${middleCount};
+    var lowCount = ${lowCount};
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        echarts.init(document.querySelector("#barChart")).setOption({
+            xAxis: {
+                type: 'category',
+                data: ['Critical', 'High', 'Middle', 'Low'],
+                axisLabel: {
+                    fontWeight: 'bold' // 글꼴 굵게 설정
+                }
+            },
+            yAxis: {
+                type: 'value',
+                interval: 1
+            },
+            series: [{
+                data: [allCriticalCount, highCount, middleCount, lowCount],
+                type: 'bar',
+                itemStyle: {
+                    color: function(params) { // 각 막대마다 다른 색상을 반환하는 함수
+                        var colors = ['#EE6666', '#5470C6', '#91CC75', '#FACB58']; // 원하는 색상 배열
+                        return colors[params.dataIndex];
+                    }
+                }
+            }]
+        });
+    });
     </script>
 </body>
 

@@ -33,5 +33,16 @@ public class TeamServiceImpl implements TeamService {
 		return mapper.getTeam(projectId, sessionId);
 	}
 
+	@Override
+	public List<Team> inviteTeam(int projectId) {
+		return mapper.inviteTeam(projectId);
+	}
+
+	@Override
+	public void insertTeam(int empId, int projectId) {
+		mapper.insertTeam(empId, projectId);
+	}
+	
+	
 	
 }

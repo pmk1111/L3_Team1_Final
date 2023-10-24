@@ -45,7 +45,7 @@ $(document).ready(function() {
                 xhr.setRequestHeader(header, token);
             },
             success: function(response) {
-                console.log(response);
+
                 if (response == -1) {
 
                     $this.attr('src', '../resources/project/img/projectboard/icon_star.png');

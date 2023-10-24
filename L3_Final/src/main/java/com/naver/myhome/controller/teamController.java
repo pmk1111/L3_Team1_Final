@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,7 @@ public class teamController {
 	
 	// JJ's Controller
 	private TeamService teamService;
+	private static final Logger logger = LoggerFactory.getLogger(teamController.class);
 	
 	@Autowired
 	public teamController(TeamService teamService) {
@@ -40,7 +43,32 @@ public class teamController {
 	  
 	}
 	 
-	// JJ's Controller End
+	@ResponseBody
+	@PostMapping(value = "/invite-team")
+	public Map<String, List<Team>> inviteTeam(@RequestParam(name = "projectId", required = true) int projectId){
+		
+		List<Team> invitedUser = teamService.inviteTeam(projectId);
+		
+		Map<String, List<Team>> data = new HashMap<>();
+		data.put("invitedUser", invitedUser);
+		
+		return data;
+	}
 	
+	@ResponseBody
+	@PostMapping(value="/insert-team")
+	public void insertTeam(@RequestParam(name="empIds[]") List<Integer> empIds,
+		            	   @RequestParam(name="projectId") int projectId) {
+		
+		logger.info("empIds = " + empIds.size());
+		
+	    for (int empId : empIds) {
+	    	logger.info("empid = " + empId);
+	        teamService.insertTeam(empId, projectId);
+	    }
+
+	}
+	
+	// JJ's Controller End
 
 }

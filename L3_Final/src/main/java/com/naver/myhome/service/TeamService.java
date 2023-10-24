@@ -11,5 +11,9 @@ public interface TeamService {
 	public int teamCount(int projectId);
 
 	public List<Team> getTeam(int projectId, int sessionId);
-	
+
+	public List<Team> inviteTeam(int projectId);
+
+	public void insertTeam(int empId, int projectId);
+
 }
