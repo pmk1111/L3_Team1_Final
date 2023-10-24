@@ -3,6 +3,7 @@ package com.naver.myhome.service;
 import java.util.List;
 import java.util.Map;
 
+import com.naver.myhome.domain.MentionUser;
 import com.naver.myhome.domain.User;
 
 public interface UserService {
@@ -42,5 +43,9 @@ public interface UserService {
 	public List<MentionUser> mentionUser(String requestData);
 	
 	//혜원 끝
+
+
+
+	public List<MentionUser> mentionUser(String requestData);
 
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.naver.myhome.domain.MentionUser;
 import com.naver.myhome.domain.User;
 
 @Mapper
@@ -25,6 +26,7 @@ public interface UserMapper {
 		public int getUserId(String eMail);
 
 
+
 		public User getEmplyeeInfoById(User user);
 
 		public int updateUserInfo(User user);
@@ -40,6 +42,7 @@ public interface UserMapper {
 		public int checkPwd(String usedPwd, String email);
 
 		public void delete(String email);
+
 
 
 	}
