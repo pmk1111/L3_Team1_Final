@@ -4,6 +4,7 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.UserMapper">
 
+
 	<!-- 지니 -->
 	<select id="isEmail" resultType="user" parameterType="String"><!-- Member class를 별칭 -->
 		select * from users where  email = #{user_email}
@@ -52,6 +53,7 @@
 	</select>
 
     <!-- 혜원끝 -->
+
 	
 	
 	<!-- #########################################주영###################################### START  -->

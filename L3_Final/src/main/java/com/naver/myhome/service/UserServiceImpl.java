@@ -1,6 +1,8 @@
 package com.naver.myhome.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +11,10 @@ import com.naver.myhome.mybatis.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+	
 	private UserMapper dao;
 	private PasswordEncoder passwordEncoder;
+
 	   
 	   @Autowired
 	   public UserServiceImpl(UserMapper dao,PasswordEncoder passwordEncoder ) {
@@ -66,6 +69,7 @@ public class UserServiceImpl implements UserService {
 	   //지니 끝
 
 	//주영   
+
 	@Override
 	public int insert(User user) {
 		
@@ -84,10 +88,12 @@ public class UserServiceImpl implements UserService {
 		return dao.getUserId(eMail);
 	}
 
+
 	@Override
 	public User getEmplyeeInfoById(User user) {
 		return dao.getEmplyeeInfoById(user);
 	}
+
 
 	@Override
 	public int updateUserInfo(User user) {

@@ -96,30 +96,7 @@ public class AdminController {
 
 
 
-    //		//비밀번호 체크
-    //		@GetMapping(value = "/change-pwd" )
-    //		public int checkPwd(Company company) {
-    //			String companyId="1";
-    //			
-    //			String checkPwd = adminService.checkPwd(companyId);
-    //			
-    //			if(company ==null || checkPassword(company.getCompany_password(),checkPwd)) {
-    //				return 0;
-    //			}
-    //			return 1;
-    //		}
-    //		
-    //		
-    //		@PostMapping(value = "/update-pwd")
-    //		public String updatePwd(String companyId, String companyPwd, RedirectAttributes rttr, HttpSession session ){
-    //			//String hashedPw = BCrypt.hashpw(memberPw1, BCrypt.gensalt());
-    //			adminService.updatePwd(companypwd);
-    //			session.invalidate();
-    //			rttr.addFlashAttribute("message","정보 수정이 완료되었습니다. 다시 로그인해주세요");
-    //			
-    //			return "redirect:/home/home";
-    //		});
-    //		
+   
 
     @GetMapping(value = "/list")
     public ModelAndView employeeList(ModelAndView mv) {

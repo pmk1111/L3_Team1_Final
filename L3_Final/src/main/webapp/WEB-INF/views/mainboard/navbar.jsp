@@ -6,6 +6,7 @@
 	
     .alarm-icon:hover, .chat-icon:hover { cursor: pointer; }
 </style>
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
   
 	<div
@@ -62,7 +63,7 @@
 					<li>
 						<div class="dropdown-divider"></div>
 					</li>
-					<li><a class="dropdown-item" href="#"> <i
+					<li><a class="dropdown-item" href="../user/profile"> <i
 							class="bx bx-user me-2"></i> <span class="align-middle">My
 								Profile</span>
 					</a></li>

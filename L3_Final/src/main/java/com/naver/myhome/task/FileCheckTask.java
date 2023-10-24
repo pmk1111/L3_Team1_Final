@@ -27,7 +27,7 @@ public class FileCheckTask {
 		this.fileService = fileService;
 	}
 	
-	@Scheduled(cron = "30 * * * * *")
+	//@Scheduled(cron = "30 * * * * *")
 	public void checkFiles() throws Exception {
 	    logger.info("checkFiles");
 
