@@ -65,15 +65,12 @@
          </div>
          <div style="margin-top:30px;">
          <div class="guest-or">
-             <strong>소셜계정 로그인</strong>
+             <strong>아이디가 없으신가요?</strong>
          </div>
          <div>
-             <button type="button" id="kakaologin" class="kakaologin" >
-                 <strong>KaKao 계정으로 로그인</strong>
+             <button type="button" id="login"  >
+               <a href="../user/join" id="logins"><strong>회원가입</strong></a>
              </button><br>
-             <button type="button" id="googlelogin" class="googlelogin">
-                 <strong>Google 계정으로 로그인</strong>
-             </button>
          </div>
          </div>
      </div>
@@ -82,25 +79,7 @@
  <input type="hidden" id="isChkEmail" name="isChkEmail" value="N" />
 
  <div id="signupFooterArea" style="display: block;">
-     <!-- Footer -->
-     <footer id="footer">
-         <div class="footer-top">
-             <div class="container">
-                 <div class="row">
-                     <!-- Footer content goes here -->
-                 </div>
-             </div>
-         </div>
-         <div class="container footer-bottom clearfix">
-             <div class="copyright">
-                 &copy; Copyright <strong><span>WidUs</span></strong>. All Rights Reserved
-             </div>
-             <div class="credits">
-                 Designed by <a href="https://bootstrapmade.com/">JHTA_L3_1</a>
-             </div>
-         </div>
-     </footer>
-     <!-- End Footer -->
+  <jsp:include page="footer.jsp"></jsp:include>
  </div>
 
     <!-- Vendor JS Files -->
@@ -146,9 +125,8 @@
             }
         });
     });
+   
     </script>
-
-
 </body>
 
 </html>

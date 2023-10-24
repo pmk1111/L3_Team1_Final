@@ -87,13 +87,13 @@
 	                    <div class="url-wr">
 	                        <span>https://</span> <input id="domain" onfocusout = "checkDuplicationDomain()" name="domain" type="text" class="companyDomain" autocomplete="off" placeholder="회사 URL" maxLength="30">
 	                        <span>.widus.team</span>
-	                    </div>
+<!-- 	                    </div> -->
 	                    <p id="helpMsg" class="join-company-url" style="display: block;">
 	                        회사URL 주소는 관리자를 통해 확인할 수 있습니다.
 	                </div>
 	
 	                <div>
-	                    <b class="bTxt">사업자 등록번호</b><br> <input type="text" id="RegistrationNo" class="eid" name="RegistrationNo" maxLength="10" placeholder="-없이 10자리를 입력하세요" required>
+	                    <b class="bTxt">사업자 등록번호</b><br> <input type="number" maxlength="10"  oninput="maxLengthCheck(this)" id="RegistrationNo" class="eid" name="RegistrationNo" placeholder="-없이 10자리를 입력하세요" required>
 	                    <p class="errMsg" id="eid_message">오류메세지 영역</p>
 	                </div>
 	                <button type="button" id="companyJoinBtn" onclick="companyJoin()" class="btn-join"><strong>회사 생성하기</strong></button>
@@ -124,26 +124,17 @@
  	let token = $("meta[name='_csrf']").attr("content");
 	let header = $("meta[name='_csrf_header']").attr("content");
     
+	
 	function validateURL(input){
         var re = /^[a-zA-Z0-9-]{3,30}$/;
         return re.test(input);
     }
+	function maxLengthCheck(object){
+	    if (object.value.length > object.maxLength){
+	      object.value = object.value.slice(0, object.maxLength);
+	    }    
+	  }
 	
-	function checkRegistrationNo(){
-	    var registrationNo = $("#RegistrationNo").val();
-	    
-	    if(registrationNo == ''){
-	        $("#eid_message").html("사업자 등록번호를 입력해주세요.");
-	        $("#eid_message").css('visibility', 'visible');
-	        return;
-	    }
-	    
-	    if(!/^[0-9]{10}$/.test(registrationNo)){
-	        $("#eid_message").html("사업자 등록번호는 숫자 10자리만 입력해야 합니다.");
-	        $("#eid_message").css('visibility', 'visible');
-	        return;
-	    }
-    
 	function checkDuplicationDomain(){
 		var domain = $("#domain").val();
 		
