@@ -19,6 +19,8 @@
 
 <!-- JQuery cdn -->
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.textcomplete/1.8.5/jquery.textcomplete.min.js"></script>	
+
 
 <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
 

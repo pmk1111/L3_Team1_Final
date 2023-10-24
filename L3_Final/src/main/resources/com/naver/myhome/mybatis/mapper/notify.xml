@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naver.myhome.mybatis.mapper.NotifyMapper">
+
+
+    <insert id="createalarm" parameterType="com.naver.myhome.domain.Notify">
+
+    
+                    <!-- 이름이 존재하지 않는 경우 새로운 알림을 삽입 -->
+                    insert into NOTIFY (ID, NAME, MENTIONED_ID,POST_ID, CONTENT, NOTIFY_TIME)
+                    values (notify_id.nextval, #{NAME},#{MENTIONED_ID},#{POST_ID},'언급하였습니다.', sysdate)
+   
+        </insert>
+
+   <!--  <select id="existsNotifyWithName" resultType="int" parameterType="int">
+        select count(*) from NOTIFY where ID = #{ID}
+    </select> -->
+    <select id="existsNotifyWithName" resultType="java.lang.Integer" parameterType="int">
+    select count(*) from NOTIFY where ID = #{ID}
+</select>
+    
+    <update id="updatealarm" parameterType="com.naver.myhome.domain.Notify">
+      UPDATE NOTIFY
+    SET 
+        EMAIL = 'hi',
+        CONTENT = 'hellow',
+        NOTIFY_TIME = sysdate
+    WHERE NAME = #{NAME}
+    </update>
+</mapper>
+
+
+

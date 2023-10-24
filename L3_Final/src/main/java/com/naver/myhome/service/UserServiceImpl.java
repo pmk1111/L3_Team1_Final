@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.naver.myhome.domain.MentionUser;
 import com.naver.myhome.domain.User;
 import com.naver.myhome.mybatis.mapper.UserMapper;
 
@@ -47,6 +48,17 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return dao.getUserId(eMail);
 	}
+
+	@Override
+	public List<MentionUser> mentionUser(String requestData) {
+		
+		System.out.println("UserServiceIm: " + dao.mentionUser(requestData));
+		return dao.mentionUser(requestData);
+	}
+
+	
+
+
 
 	
 //
