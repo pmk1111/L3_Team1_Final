@@ -7,6 +7,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -16,14 +17,16 @@ public class User implements UserDetails {
 	private String email;
 	private String password;
 	private String pic;
+	private MultipartFile uploadfile; // 프로필사진 업로드
+	private String picOriginal;  //프로필 오리지널
 	private String name;
 	private String phone;
-	private String company_invited;
-	private String company_status;
+	private String companyInvited;
+	private String companyStatus;
 	private String security;
-	private Date created_at;
+	private Date createdAt;
 	private int authNum;
-	private String company_name;
+	private String companyName;
 
 	
 	

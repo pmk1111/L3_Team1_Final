@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.naver.myhome.domain.User;
@@ -14,16 +15,14 @@ import com.naver.myhome.mybatis.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService {
-
-	private final SqlSession sqlSession;
 	
 	private UserMapper dao;
-	
+	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	public UserServiceImpl(UserMapper dao, SqlSession sqlSession) {
+	public UserServiceImpl(UserMapper dao,PasswordEncoder passwordEncoder ) {
 		this.dao = dao;
-		this.sqlSession = sqlSession;
+		this.passwordEncoder = passwordEncoder;
 	}
 	//지니
 	
@@ -33,10 +32,6 @@ public class UserServiceImpl implements UserService {
 		return (ruser == null) ? -1 : 1;
 	}
 
-	@Override
-	public int update(User user) {
-		return dao.update(user);
-	}
 
 	@Override
 	public User userInfo(String email) {
@@ -44,9 +39,17 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public String checkPwd(String email) {
-		return dao.checkPwd(email);
-	}
+	public int checkPwd(String usedPwd, String email) {
+		User dbUser = dao.isId(email);
+		 int result = -1; 
+	      if(dbUser != null) {
+	         if(passwordEncoder.matches(usedPwd, dbUser.getPassword())) {
+	            result = 1;
+	         } else
+	            result = 0;
+	      }
+	      return result;
+	   }
 
 
 
@@ -56,6 +59,16 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Override
+	public int update(User user) {
+		return dao.update(user);
+	}
+	
+	@Override
+	public void delete(String email) {
+		dao.delete(email);
+	}
+	
 	//지니 끝
 	
 //	@Override

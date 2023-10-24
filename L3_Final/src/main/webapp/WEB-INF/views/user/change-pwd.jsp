@@ -6,6 +6,8 @@
 	data-assets-path="../resources/mainboard/assets/"
 	data-template="vertical-menu-template-free">
 <head>
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -34,7 +36,7 @@
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon"
 	href="../resources/mainboard/assets/img/favicon/favicon.ico" />
-
+<script src="../resources/user/js/change-pwd.js"></script>
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -132,68 +134,10 @@ em {
  	  box-shadow:none;
 }
 
+.new, .btnArea {display: none;
+}
 </style>
 
-<script>
-$(document).ready(function() {
-    $("#cancelButton").click(function() {
-        window.history.back(); // 브라우저의 이전 페이지로 이동
-    });
-
-
-	$("#saveButton").on("click", function(){
-		if($("#usedPwd").val()==""){
-			alert("현재 비밀번호를 입력해주세요");
-			$("#usedPwd").focus();
-			return false
-		}
-		if($("#newPwd").val()==""){
-			alert("변경비밀번호을를 입력해주세요");
-			$("#newPwd").focus();
-			return false
-		}
-		if($("#checkPwd").val()==""){
-			alert("변경비밀번호를 입력해주세요");
-			$("#checkPwd").focus();
-			return false
-		}
-		if ($("#newPwd").val() != $("#checkPwd").val()) {
-			alert("새로운 비밀번호가 일치하지 않습니다.");
-			$("#checkpwd").focus();
-			return false
-		}	else {
-	            // 비밀번호 일치 여부를 서버에서 확인
-	            var email = "${email}";
-	            var usedPwd =$("#usedPwd").val();
-	            console.log(email)
-	            console.log(usedPwd)
-	            var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content"); 
-	            $.ajax({
-	                url: "/user/check-pwd",
-	                beforeSend: function(xhr) {
-	                    xhr.setRequestHeader(header, token);
-	                },
-	                type: "POST",
-	                data : $("#changePassword").serializeArray(),
-	                success: function(data) {
-	                    if (data === 0) {
-	                        alert("현재 비밀번호가 틀렸습니다.");
-	                        return false;
-	                    } else {
-	                        if (confirm("비밀번호를 변경하시겠습니까?")) {
-	                            // 변경된 비밀번호를 서버로 전송하여 업데이트
-	                            $("#changePassword").submit();
-	                            return "../user/profile"; // 이 부분은 동작하지 않습니다
-	                        }
-	                    }
-	                }
-	            });
-	        }	 
-	});//click end
-});//document end
-</script>
-</script>
 </head>
 
 <body>
@@ -235,9 +179,9 @@ $(document).ready(function() {
 											</p>
 
 											<!-- content -->
-											<form id="changePassword" method="GET" action="../user/change-pwd">
+											<form id="changePassword" method="POST" action="../user/update-pwd">
 											  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-											    <input type="hidden" id="userid" name="userid" value="${email}">
+											    <input type="hidden" id="userEmail" name="userEmail" value="${email}">
 											  
 												<div class="changepassword">
 
@@ -247,16 +191,18 @@ $(document).ready(function() {
 															class="form-control" id="usedPwd"
 															placeholder="비밀번호를 입력하세요" name="usedPwd" required>
 													</div>
+													
+													<div id="message"></div>
 												
 												  
-													<div class="form-group">
+													<div class="form-group new" >
 														<label for="newpwd">새 비밀번호</label> <input type="text"
 															class="form-control" id="newPwd"
 															placeholder="비밀번호를 입력하세요" name="newPwd" required>
 													</div>
-													
-													
-													<div class="form-group">
+													<div id="message1"></div>
+													<br>
+													<div class="form-group new">
 														<label for="checkpwd">새 비밀번호 확인</label> <input type="text"
 															class="form-control" id="checkPwd"
 															placeholder="비밀번호를 입력하세요" name="checkPwd" required>

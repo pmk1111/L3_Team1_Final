@@ -27,11 +27,13 @@ public interface UserService {
 
 	public int isId(String email);
 
-	public int update(User user);
-
 	public void updatePwd(String email, String newPwd);
 
-	public String checkPwd(String email);
+	public int checkPwd(String usedPwd, String email);
+
+	public int update(User user);
+
+	public void delete(String email);
 	
 	//지니 끝
 
