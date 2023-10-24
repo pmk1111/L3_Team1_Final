@@ -19,7 +19,7 @@ public interface AdminMapper {
 
 		public int useEmployeeStatus(int employeeId);
 
-		Company companyInfo(int companyId);
+		public Company companyinfo(String email);
 		
 		public int updateName(int companyId,String companyName);
 
@@ -50,6 +50,8 @@ public interface AdminMapper {
 		public List<Employee> getStopList(int companyId);
 
 		public void backEmp(int empId);
+		
+		public int companyId(String email);
 		
 		// 혜원
 		public List<Access> getAccesslist();
