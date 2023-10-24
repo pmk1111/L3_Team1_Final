@@ -3,15 +3,12 @@ $(document).ready(function() {
     $('.star').each(function() {
         var $this = $(this);
         var projectId = $this.data('projectId');
-        /* var employeeId = $this.data('employeeId'); */
-        var employeeId = 1;
 
         $.ajax({
             url: '../project/participate',
             method: 'GET',
             data: {
                 projectId: projectId,
-                employeeId: employeeId
             },
             success: function(response) {
                 if (response == -1) {
@@ -252,23 +249,7 @@ $(document).ready(function() {
     });
 
     // 프로젝트 삭제
-    $('.setting-delete').click(function(event) {
-        event.preventDefault();
-
-        swal({
-                title: "정말 프로젝트를 삭제하시겠습니까?",
-                text: "삭제된 프로젝트는 복구가 불가능합니다.",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willExit) => {
-                if (willExit) {
-                    swal("완료", "프로젝트 삭제가 완료되었습니다.", "success");
-                }
-            });
-    });
-
+	
     // 친구 초대 모달
     $('.memberlist').click(function() {
         event.preventDefault();

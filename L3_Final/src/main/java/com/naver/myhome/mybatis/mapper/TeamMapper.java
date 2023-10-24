@@ -26,4 +26,6 @@ public interface TeamMapper {
 
 	public void insertTeam(int empId, int projectId);
 
+	public Integer getAuth(int sessionId, int projectId);
+
 }

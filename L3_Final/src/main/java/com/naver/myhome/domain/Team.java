@@ -19,4 +19,6 @@ public class Team {
 	
 	private int MY_ID;
 	private int MY_AUTH;
+	
+	
 }

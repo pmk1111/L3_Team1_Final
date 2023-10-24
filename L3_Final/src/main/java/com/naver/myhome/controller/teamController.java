@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.naver.myhome.domain.Team;
+import com.naver.myhome.domain.User;
 import com.naver.myhome.service.TeamService;
 
 @Controller
@@ -32,10 +34,14 @@ public class teamController {
 	@ResponseBody
 	@PostMapping(value = "/team-list") 
 	public Map<String, List<Team>> teamList(@RequestParam(name = "projectId", required = true) int projectId,
-	            				   		    @RequestParam(name = "sessionId", required = true) int sessionId ) {
-	  
+											@AuthenticationPrincipal User customUser ) {
+		
+		int sessionId = customUser.getId();
+		
 		List<Team> team = teamService.getTeam(projectId, sessionId);
 	  
+		logger.info("팀 가져오는지 " + team); 
+		
 		Map<String, List<Team>> data = new HashMap<>();
 		data.put("team", team);
 	  

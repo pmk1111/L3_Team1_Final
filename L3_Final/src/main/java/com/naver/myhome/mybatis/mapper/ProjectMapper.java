@@ -52,4 +52,9 @@ public interface ProjectMapper {
 	public Integer middleCount(int projectId);
 
 	public Integer lowCount(int projectId);
+
+	public void deleteProject(int projectId);
+
+	public int getEmpId(int sessionId);
+
 }

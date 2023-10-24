@@ -122,6 +122,16 @@ public class ProjectServiceImpl implements ProjectService {
 	public Integer lowCount(int projectId) {
 		return mapper.lowCount(projectId);
 	}
+
+	@Override
+	public void deleteProject(int projectId) {
+		mapper.deleteProject(projectId);
+	}
+
+	@Override
+	public int getEmpId(int sessionId) {
+		return mapper.getEmpId(sessionId);
+	}
 	
 	
 	
