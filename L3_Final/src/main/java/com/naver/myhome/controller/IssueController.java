@@ -109,7 +109,8 @@ public class IssueController {
 
 	@ResponseBody
 	@GetMapping("/getProjectAndTeamInfo")
-	public List<ProjectAndUser> getProjectAndTeamInfo(@RequestParam int projectId){
+	public List<ProjectAndUser> getProjectAndTeamInfo(HttpSession session){
+		int projectId = (int) session.getAttribute("projectId");
 		return projectAndUserService.getProjectAndUserInfo(projectId);
 	}
 	
