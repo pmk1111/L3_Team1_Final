@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,7 +156,8 @@ public class ProjectController {
 	
 	@GetMapping(value = "/project")
 	public ModelAndView projectBoard
-	(int projectId, ModelAndView mv, @AuthenticationPrincipal User customUser) {
+	(int projectId, ModelAndView mv, @AuthenticationPrincipal User customUser, HttpSession session) {
+		session.setAttribute("projectId", projectId);
 		
 		int sessionId = customUser.getId();
 		

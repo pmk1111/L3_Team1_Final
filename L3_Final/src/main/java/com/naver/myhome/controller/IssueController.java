@@ -67,8 +67,12 @@ public class IssueController {
 	}
 
 	@GetMapping(value = "/issue-list")
-	public ModelAndView issuelist(int projectId, ModelAndView mv, HttpServletRequest request, Principal principal) {
-		int listcount = issueService.getListCount();
+	public ModelAndView issuelist(ModelAndView mv, HttpServletRequest request, 
+									Principal principal, HttpSession session) {
+		int projectId = (int) session.getAttribute("projectId");
+		logger.info("선택된 프로젝트 id = " + projectId);
+		
+		int listcount = issueService.getListCount(projectId);
 		List<Issue> issuelist = issueService.getIssueList(projectId);
 
 		//		시큐리티 적용 전 세션에서 id 가져오기

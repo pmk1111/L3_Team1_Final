@@ -20,6 +20,7 @@
 
 	<select id="getListCount" resultType="int">
 		select count(*) from issue
+		where project_id = #{projectId}
 	</select>
 
 	<select id="getIssueList" resultType="issue">
