@@ -44,17 +44,6 @@
    </delete>
    
    <!-- /지니 -->
-   <!-- 혜원 -->
-   
-	<select id="mentionUser" parameterType="String" resultType="com.naver.myhome.domain.MentionUser">
-  	 SELECT id,name FROM users
-   	 WHERE name LIKE '%' || #{name} || '%'
-     AND company_invited = 1
-	</select>
-
-    <!-- 혜원끝 -->
-
-	
 	
 	<!-- #########################################주영###################################### START  -->
 	<select id="selectByMail" resultType="int" parameterType="String">
