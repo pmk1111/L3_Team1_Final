@@ -8,7 +8,7 @@ public interface IssueService {
 	
 	public int getIssueId();
 	
-	public int getListCount();
+	public int getListCount(int projectId);
 	
 	public List<Issue> getStatusCount();
 	

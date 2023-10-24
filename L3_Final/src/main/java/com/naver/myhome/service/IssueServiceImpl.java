@@ -26,8 +26,8 @@ public class IssueServiceImpl implements IssueService{
 	}
 	
 	@Override
-	public int getListCount() {
-		return mapper.getListCount();
+	public int getListCount(int projectId) {
+		return mapper.getListCount(projectId);
 	}
 	
 	@Override

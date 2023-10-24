@@ -13,7 +13,7 @@ import com.naver.myhome.domain.Issue;
 public interface IssueMapper {
 	public int getIssueId();
 	
-	public int getListCount(); 
+	public int getListCount(int projectId); 
 	
 	public List<Issue> getIssueList(int projectId);
 	
