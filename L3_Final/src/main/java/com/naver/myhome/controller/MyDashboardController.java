@@ -40,8 +40,6 @@ public class MyDashboardController {
 	private MemoService memoService;
 	private ScheduleService scheduleService;
 
-	static int userId = 1;
-
 	@Autowired
 	public MyDashboardController(UserService userService, IssueService issueService, 
 			MemoService memoService, ScheduleService scheduleService) {
@@ -53,17 +51,10 @@ public class MyDashboardController {
 
 	@GetMapping("/my-dashboard")
 	public ModelAndView myDashBoard(ModelAndView mv, HttpServletRequest request, Principal principal) {
-
-		//		시큐리티 적용 전 세션에서 id 가져오기
-		//		HttpSession session = request.getSession();
-		//		String id = session.getId();
-
-		//		시큐리티 적용 후 세션에서 id 가져오기
-		//		String userEmail = principal.getName();
-		//		int userId = userService.getUserId(userEmail);
-		//나중에는 저 int는 세션에 저장된 사용자 식별번호
-
-		int userId = 1;
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
+		
+		logger.info("접속한 유저 id = " + userId);
 
 		LocalDate currentDate = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -84,11 +75,12 @@ public class MyDashboardController {
 	@GetMapping("/get-selected-schedule-list")
 	@ResponseBody
 	public List<Schedule> getSelectedScheduleList(Principal principal, @RequestParam("pickedDate") String pickedDate){
-
-		//		String userEmail = principal.getName();
-		//		int userId = userService.getUserId(userEmail);
-
-		int userId = 1;
+		
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
+		
+		logger.info("접속한 유저 id = " + userId);
+		
 		List<Schedule> scheduleList = scheduleService.getSelectedScheduleList(pickedDate, userId);
 
 		return scheduleList;
@@ -127,7 +119,12 @@ public class MyDashboardController {
 
 	@GetMapping("/saveMemoContent")
 	@ResponseBody
-	public int saveMemoContent(Memo memo, @RequestParam("memoTxt") String memoTxt) {
+	public int saveMemoContent(Memo memo, @RequestParam("memoTxt") String memoTxt, Principal principal) {
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
+		
+		logger.info("접속한 유저 id = " + userId);
+		
 		List<Memo> memoList = memoService.getMemoContent(userId);
 		String currentMemo = memo.getContent();
 

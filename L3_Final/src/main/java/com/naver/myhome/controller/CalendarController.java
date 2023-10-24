@@ -46,23 +46,13 @@ public class CalendarController {
 		this.scheduleService = scheduleService;
 	}
 
-	//	    @GetMapping("/calendar-list")
-	//	    public String addcalendar() {
-	//	        return "calendar/calendar-list";
-	//	    }
-	//    @GetMapping("/calendar")
-	//    public String calendar() {
-	//        return "calendar/calendar";
-	//    }
-	// 이건 뭐지...?
-
 	@GetMapping("/calendar-list")
 	public ModelAndView getScheduleList(ModelAndView mv, Principal principal) {
-//		String userMail = principal.getName();
-//		int userId = userService.getUserId(userMail);
-		//세션에 저장된 이메일을 통해 userId를 가져온다.
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
+
+		logger.info("접속한 유저 id = " + userId);
 		
-		int userId = 1;
 		List<Schedule> calendarList = scheduleService.getScheduleList(userId);
 
 		JSONObject jsonObj = new JSONObject();
@@ -96,25 +86,30 @@ public class CalendarController {
 
 	@PostMapping("/create-schedule")
 	public String saveSchedule(
-	        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate, 
-	        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate, 
-	        String color, Principal principal, Schedule schedule) {
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate, 
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate, 
+			String color, Principal principal, Schedule schedule) {
+		
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
+		
+		logger.info("접속한 유저 id = " + userId);
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String startDateStr = startDate.format(formatter);
 		String endDateStr = endDate.format(formatter);
-		
+
 		logger.info("선택한 색상은 = " + color);
-		
-		schedule.setUser_id(1);
+
+		schedule.setUser_id(userId);
 		schedule.setStart_date(startDateStr);
 		schedule.setEnd_date(endDateStr);
 		schedule.setBackground_color(color);
 		schedule.setBorder_color(color);
-	    
-	    scheduleService.insertSchedule(schedule);
 
-	    return "redirect:calendar-list";
+		scheduleService.insertSchedule(schedule);
+
+		return "redirect:calendar-list";
 	}
 
 	@GetMapping("/get-schedule-info")
@@ -122,45 +117,45 @@ public class CalendarController {
 	public Schedule getScheduleInfo(@RequestParam("scheduleId") int scheduleId) {
 		return scheduleService.getScheduleInfo(scheduleId);
 	}
-	
+
 	@PostMapping("/update-schedule")
 	public String updateSchedule(@RequestParam("scheduleId") int scheduleId,
-	        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate, 
-	        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate, 
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate, 
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate, 
 			Schedule schedule, String color) {
 		String url = "";
-		
+
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String startDateStr = startDate.format(formatter);
 		String endDateStr = endDate.format(formatter);
-		
+
 		logger.info("변경된 시작일 = " + startDateStr);
 		logger.info("변경된 종료일 = " + endDateStr);
 		logger.info("변경한 색상은 = " + color);
-		
+
 		schedule.setId(scheduleId);
 		schedule.setStart_date(startDateStr);
 		schedule.setEnd_date(endDateStr);
 		schedule.setBackground_color(color);
 		schedule.setBorder_color(color);
-		
+
 		int result = scheduleService.updateSchedule(schedule);
-		
+
 		if(result==0) {
 			logger.info("일정 수정 실패");
 		} else {
 			logger.info("일정 수정 성공");
 			url = "redirect:calendar-list";
 		}
-		
+
 		return url;
 	}
-	
+
 	@PostMapping("/delete-schedule")
 	@ResponseBody
 	public boolean deleteSchedule(@RequestParam("scheduleId") int scheduleId) {
 		int sqlResult = scheduleService.deleteSchedule(scheduleId);
-		
+
 		if(sqlResult == 1) {
 			return true;
 		}
