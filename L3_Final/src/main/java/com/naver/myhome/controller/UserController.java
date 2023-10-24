@@ -6,7 +6,6 @@ import java.security.Principal;
 import java.util.Calendar;
 
 import java.util.List;
-
 import java.util.Properties;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -23,6 +22,8 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -38,6 +39,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.naver.myhome.domain.MentionUser;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -51,7 +54,7 @@ import com.naver.myhome.service.UserService;
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
-
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 
    
@@ -73,6 +76,7 @@ public class UserController {
    public ModelAndView userUpdate(Principal principal, ModelAndView mv, User user) {
       String email = principal.getName();
       System.out.println("----------------------------------------------------"+email);
+
 
       user= userService.userInfo(email);
 
@@ -194,6 +198,7 @@ public class UserController {
       System.out.println(email);
    
       int result = userService.checkPwd(usedPwd, email);
+
       
       return result;
    }
@@ -396,6 +401,7 @@ public class UserController {
     public String login() {
     	return "user/login";
     }
+
    
     @GetMapping("/loginSuccess")
     public String loginSuccess(@AuthenticationPrincipal User user) {
@@ -419,5 +425,6 @@ public class UserController {
     
    
     
+
 
 }

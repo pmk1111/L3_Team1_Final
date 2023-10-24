@@ -26,6 +26,7 @@ public interface UserMapper {
 		public int getUserId(String eMail);
 
 
+
 		public User getEmplyeeInfoById(User user);
 
 		public int updateUserInfo(User user);
@@ -45,6 +46,11 @@ public interface UserMapper {
       //혜원
 
 		public List<MentionUser> mentionUser(String requestData);
+
+
+
+		public List<MentionUser> mentionUser(String requestData);
+
 
 
 	}
