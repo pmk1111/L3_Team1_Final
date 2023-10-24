@@ -64,5 +64,83 @@
         DELETE FROM FAVORITES
         WHERE EMPLOYEE_ID = #{employeeId} AND PROJECT_ID = #{projectId}
     </delete>
+    
+    <select id="getDoneCount" resultType="integer">
+    SELECT COALESCE(
+    	(SELECT COUNT(*)
+		FROM ISSUE
+		WHERE UPDATED_AT >= SYSDATE - INTERVAL '7' DAY AND STATUS = 'Done' AND PROJECT_ID = #{projectId}
+		GROUP BY STATUS), 0) FROM dual
+    </select>
+    
+    <select id="getUpdateCount" resultType="integer">
+	    SELECT COUNT(*)
+	    FROM ISSUE
+	    WHERE UPDATED_AT >= SYSDATE - INTERVAL '7' DAY 
+	    AND CREATED_AT != UPDATED_AT
+	    AND PROJECT_ID = #{projectId}
+    </select>
+    
+    <select id="getCreateCount" resultType="integer">
+		SELECT COUNT(*)
+	    FROM ISSUE
+	    WHERE CREATED_AT >= SYSDATE - INTERVAL '7' DAY AND PROJECT_ID = #{projectId}
+    </select>
+    
+    <select id="getCriticalCount" resultType="integer">
+	SELECT COALESCE(
+	    (SELECT COUNT(*)
+	     FROM ISSUE
+	     WHERE UPDATED_AT >= SYSDATE - INTERVAL '7' DAY AND PRIORITY = 'Critical' AND PROJECT_ID = #{projectId}
+	     GROUP BY PRIORITY), 0) FROM dual
+    </select>
+    
+    <select id="todoCount" resultType="integer">
+		SELECT COUNT(*)
+	    FROM ISSUE
+	    WHERE STATUS = 'To Do' AND PROJECT_ID = #{projectId}
+    </select>   
+     
+    <select id="progressCount" resultType="integer">
+		SELECT COUNT(*)
+	    FROM ISSUE
+	    WHERE STATUS = 'In Progress' AND PROJECT_ID = #{projectId}
+    </select>   
+     
+    <select id="allDoneCount" resultType="integer">
+		SELECT COUNT(*)
+	    FROM ISSUE
+	    WHERE STATUS = 'Done' AND PROJECT_ID = #{projectId}
+    </select>    
+    
+    <select id="resolveCount" resultType="integer">
+		SELECT COUNT(*)
+	    FROM ISSUE
+	    WHERE STATUS = 'Resolve' AND PROJECT_ID = #{projectId}
+    </select>    
+    
+    <select id="allCriticalCount" resultType="integer">
+		SELECT COUNT(*)
+	    FROM ISSUE
+	    WHERE PRIORITY = 'Critical' AND PROJECT_ID = #{projectId}
+    </select>   
+     
+    <select id="highCount" resultType="integer">
+		SELECT COUNT(*)
+	    FROM ISSUE
+	    WHERE PRIORITY = 'High' AND PROJECT_ID = #{projectId}
+    </select>   
+     
+    <select id="middleCount" resultType="integer">
+		SELECT COUNT(*)
+	    FROM ISSUE
+	    WHERE PRIORITY = 'Middle' AND PROJECT_ID = #{projectId}
+    </select>    
+    
+    <select id="lowCount" resultType="integer">
+		SELECT COUNT(*)
+	    FROM ISSUE
+	    WHERE PRIORITY = 'Low' AND PROJECT_ID = #{projectId}
+    </select>        
 
 </mapper>

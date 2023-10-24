@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.naver.myhome.domain.Issue;
 import com.naver.myhome.domain.Project;
-import com.naver.myhome.domain.Team;
+import com.naver.myhome.service.IssueService;
 import com.naver.myhome.service.ProjectService;
 import com.naver.myhome.service.TeamService;
+
 
 @Controller
 @RequestMapping(value = "/project")
@@ -29,9 +33,12 @@ public class ProjectController {
 	// JJ's Controller
 	private ProjectService projectService;
 	private TeamService teamService;
+	private IssueService issueService;
+	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 	
 	@Autowired
-	public ProjectController(ProjectService projectService, TeamService teamService) {
+	public ProjectController(ProjectService projectService, TeamService teamService, IssueService issueService) {
+		this.issueService = issueService;
 		this.projectService = projectService;
 		this.teamService = teamService;
 	}
@@ -131,17 +138,48 @@ public class ProjectController {
 	public ModelAndView projectBoard
 	(int projectId, ModelAndView mv, HttpServletResponse response) {
 		
-		int sessionId = 1;
-		
 		Project project = projectService.getDetail(projectId);
-		List<Team> team = teamService.getTeam(projectId, sessionId);
+		
+		
+		Integer doneCount = projectService.getDoneCount(projectId); 
+		Integer updateCount = projectService.getUpdateCount(projectId); 
+		Integer createCount = projectService.getCreateCount(projectId); 
+		Integer criticalCount = projectService.getCriticalCount(projectId); 
+		
+		Integer todoCount = projectService.todoCount(projectId); 
+		Integer progressCount = projectService.progressCount(projectId); 
+		Integer allDoneCount = projectService.allDoneCount(projectId); 
+		Integer resolveCount = projectService.resolveCount(projectId); 
+		
+		Integer allCriticalCount = projectService.allCriticalCount(projectId); 
+		Integer highCount = projectService.highCount(projectId); 
+		Integer middleCount = projectService.middleCount(projectId); 
+		Integer lowCount = projectService.lowCount(projectId); 
+		
+		List<Issue> issuelist = issueService.getIssueList(projectId);
 		
 	    Cookie cookie = new Cookie("projectId", String.valueOf(projectId));
 	    response.addCookie(cookie);
 		
 		mv.setViewName("project/project-board");
+		mv.addObject("projectId", projectId);
 	    mv.addObject("project", project);
-	    mv.addObject("team", team);
+	    mv.addObject("doneCount", doneCount);
+	    mv.addObject("updateCount", updateCount);
+	    mv.addObject("createCount", createCount);
+	    mv.addObject("criticalCount", criticalCount);
+	    mv.addObject("todoCount", todoCount);
+	    mv.addObject("progressCount", progressCount);
+	    mv.addObject("allDoneCount", allDoneCount);
+	    mv.addObject("resolveCount", resolveCount);
+	    mv.addObject("allCriticalCount", allCriticalCount);
+	    
+	    logger.info("cc" + allCriticalCount);
+	    mv.addObject("highCount", highCount);
+	    mv.addObject("middleCount", middleCount);
+	    mv.addObject("lowCount", lowCount);
+	    mv.addObject("issuelist", issuelist);
+	    
 	      
 		return mv;
 	}
