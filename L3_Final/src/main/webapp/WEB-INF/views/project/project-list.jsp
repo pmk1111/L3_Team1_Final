@@ -439,6 +439,7 @@
                                                 <div class="project-area part-project">
                                                     <ul class="all-project-list part-ul">
                                                         <c:forEach var="partProject" items="${partProjectList}">
+                                                        	<input type="hidden" name="projectId" value="${partProject.ID}">
                                                             <li class="list part-list">
                                                                 <div class="project-info">
                                                                     <div class="project-left">
