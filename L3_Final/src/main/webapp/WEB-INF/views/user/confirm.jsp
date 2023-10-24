@@ -131,17 +131,39 @@ pageEncoding="UTF-8"%>
     <script>
 	    $(function() {
 	        $(".create-company").click(function() {
-	            window.location.href = '../user/create-company-domain';
+	            window.location.href = '../company/create-company-domain';
 	        });
 	        
 	        $(".join-user").click(function() {
-	            window.location.href = '../user/join';
+	           	
 	        });
 	        
 	        $(".join-company").click(function() {
-	            window.location.href = '../user/join-company';
+	            window.location.href = '../company/join-company';
 	        });  
 	    });
+	    
+	    
+		function createSingleProject(){
+			$.ajax({
+		   		url: '../user/create-single-project',
+		       	type: 'POST',
+		       	beforeSend: function(xhr) {
+		           xhr.setRequestHeader(header, token);
+		       	},
+		   		success: function(response) {
+		       		if (response == 0) {  
+		       			alert("프로젝트가 정상적으로 생성되었습니다.");
+		       			//페이지 이동//
+		       		} else  { 
+		       			alert("프로젝트 생성이 실패하였습니다.");
+		       		}
+		   		},
+		   		error: function(error) {
+		       		console.error(error);
+		   		}
+			});
+		}
     </script>
 </body>
 

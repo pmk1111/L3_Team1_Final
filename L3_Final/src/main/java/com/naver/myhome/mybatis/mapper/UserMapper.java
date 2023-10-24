@@ -11,29 +11,35 @@ import com.naver.myhome.domain.User;
 @Mapper
 public interface UserMapper {
 
+
+		public List<User> findUser(int companyInvited);
+
+
+
 		public User isEmail(String username);
 		
 		public int insert(User user);
 
-		public User selectByMail(String eMail);
+		public int selectByMail(String eMail);
 
 		public int getUserId(String eMail);
 
-		//지니
-		public int update(User user);
 
+		public User getEmplyeeInfoById(User user);
+
+		public int updateUserInfo(User user);
+		
+		//지니
 		public User isId(String email);
 		
+		public int update(User user);
+
+
 		public void updatePwd(String email, String newPwd);
 
 		public int checkPwd(String usedPwd, String email);
 
 		public void delete(String email);
-
-
-
-		//지니 끝
-
 
 
 	}

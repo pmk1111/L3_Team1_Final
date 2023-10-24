@@ -33,6 +33,49 @@
     	body {
     		font-family: 'Nanum Gothic', sans-serif;
     	}
+    	
+		#member-list-li:hover {
+		    background-color: #e6e7ff;
+		}
+		
+		.modal-member-name-span {
+			font-weight: 600;
+			font-size: 13px;
+		}    	
+		
+		.modal-search-memberlist{
+			height: 300px;
+			width: 99%;	
+			overflow-y: auto;
+		    overflow-x: hidden;		
+		}
+		
+		.member-invite-li {
+			padding : 15px 5px 15px 5px;
+		}
+		
+		.member-invite-li:hover {
+			background-color: #e6e7ff;
+		}
+		
+		.invite-box {
+			display: grid;
+    		grid-template-columns: repeat(2, 1fr);
+		}
+		
+		.invite-you {
+			margin: 20px 7px 5px 10px;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    background-color: #9F7AB0;
+		    color: #fff;
+		    height: 35px;
+			border-radius: 12px;
+		    width: 95px;
+		    font-size:14px;		    
+		}
+		
     </style>    
 </head>
 
@@ -182,10 +225,10 @@
                                                 </div>
                                                 <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
                                                     <li class="nav-item" role="presentation">
-                                                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">목록</button>
+                                                        <button class="nav-link team-tab active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">목록</button>
                                                     </li>
                                                     <li class="nav-item" role="presentation">
-                                                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">초대</button>
+                                                        <button class="nav-link invite-tab" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">초대</button>
                                                     </li>
                                                 </ul>
                                                 <div class="modal-search-list">
@@ -195,20 +238,37 @@
                                                     <div class="modal-member-list">
                                                         <div class="member-list">
                                                             <ul id="member-list-ul">
+                                                            	<c:forEach var="TEAM" items="${team}">
+                                                            	<c:if test="${TEAM.EMP_STATUS eq 0 }">
                                                                 <li id="member-list-li">
                                                                     <div class="modal-member-info">
                                                                         <div class="modal-member-profile">
-                                                                            <img class="modal-memeber-img" src="../resources/project/img/projectboard/user3.jpg">
+                                                                        	<c:choose>
+                                                                            	<c:when test="${empty TEAM.PIC}">
+                                                                                	<img class="modal-memeber-img" src="../resources/user/img/profile.png">
+                                                                                </c:when>
+                                                                             	<c:otherwise>
+                                                                             		<img class="modal-memeber-img" src="../resources/project/img/projectboard/team/${TEAM.PIC}">
+                                                                              	</c:otherwise>
+                                                                             </c:choose>                                                                        
                                                                         </div>
                                                                         <div class="modal-member-name">
                                                                             <a>
-                                                                                <span class="modal-member-name-span">옥진석</span>
+                                                                                <span class="modal-member-name-span">${TEAM.NAME}</span>
                                                                             </a>
                                                                         </div>
                                                                         <div class="modal-member-role">
-                                                                            <span class="modal-member-role-span" style="color: #fff">관리자</span>
+															                <c:choose>
+															                    <c:when test="${TEAM.AUTH eq 1}">
+															                        <span class="modal-member-role-span" style="color: #fff">관리자</span>
+															                    </c:when>
+															                    <c:otherwise>
+															                        <a href="#" class="admin-invite-button-1 manager-badge">
+															                            <span></span>
+															                        </a>
+															                    </c:otherwise>
+															                </c:choose>
                                                                         </div>
-                                                                        <!-- 관리자일때만 보이게 작업 -->
                                                                         <div class="setting member-setting">
                                                                             <div class="dropdown">
                                                                                 <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -217,58 +277,28 @@
                                                                                 <div class="dropdown-menu drop-width" aria-labelledby="cardOpt3">
                                                                                     <div class="setting-menu setting-menu-padding">
                                                                                         <div class="setting-line">
-                                                                                            <a class="setting-anchor setting-exit">
-                                                                                                <span class="setting-span setting-span-02">프로젝트 나가기</span>
-                                                                                                <!-- 본인이 아닌 경우 : 프로젝트 내보내기  -->
-                                                                                            </a>
-                                                                                        </div>
+																						   <c:if test="${TEAM.USER_ID eq TEAM.MY_ID}">
+																						   	<a class="setting-anchor setting-exit">
+																						       <span class="setting-span setting-span-02">프로젝트 나가기</span>
+																						    </a>    
+																						   </c:if>
+																						   <c:if test="${TEAM.MY_AUTH eq 1 and TEAM.MY_ID ne TEAM.USER_ID}">
+																						   	<a class="setting-anchor setting-fire">
+																						       <span class="setting-span setting-span-02">프로젝트 내보내기</span>
+																						   	</a>
+																						   </c:if>
+                                                                                         </div>
                                                                                         <div class="setting-line">
-                                                                                            <a class="setting-anchor setting-manager-fire">
+                                                                                        	<c:if test="${TEAM.MY_AUTH eq 1 and TEAM.AUTH eq 1}">
+                                                                                             <a class="setting-anchor setting-manager-fire">
                                                                                                 <span class="setting-span setting-span-02">관리자 해제</span>
-                                                                                                <!-- 관리자가 아닐 경우 : 관리자 지정하기 -->
-                                                                                            </a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li id="member-list-li">
-                                                                    <div class="modal-member-info">
-                                                                        <div class="modal-member-profile">
-                                                                            <img class="modal-memeber-img" src="../resources/project/img/projectboard/user4.jpg">
-                                                                        </div>
-                                                                        <div class="modal-member-name">
-                                                                            <a>
-                                                                                <span class="modal-member-name-span">박민기</span>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="modal-member-role">
-                                                                            <a href="#" class="admin-invite-button-1 manager-badge">
-                                                                                <span>
-                                                                                </span>
-                                                                            </a>
-                                                                        </div>
-                                                                        <!-- 관리자일때만 보이게 작업 -->
-                                                                        <div class="setting member-setting">
-                                                                            <div class="dropdown">
-                                                                                <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                                                </button>
-                                                                                <div class="dropdown-menu drop-width" aria-labelledby="cardOpt3">
-                                                                                    <div class="setting-menu setting-menu-padding">
-                                                                                        <div class="setting-line">
-                                                                                            <a class="setting-anchor setting-fire">
-                                                                                                <span class="setting-span setting-span-02">프로젝트 내보내기</span>
-                                                                                                <!-- 본인이 아닌 경우 : 프로젝트 내보내기  -->
-                                                                                            </a>
-                                                                                        </div>
-                                                                                        <div class="setting-line">
-                                                                                            <a class="setting-anchor setting-manager-hire">
+                                                                                             </a>
+                                                                                            </c:if>
+                                                                                            <c:if test="${TEAM.MY_AUTH eq 1 and TEAM.AUTH eq 0}">
+                                                                                             <a class="setting-anchor setting-manager-hire">
                                                                                                 <span class="setting-span setting-span-02">관리자 지정하기</span>
-                                                                                                <!-- 관리자가 아닐 경우 : 관리자 지정하기 -->
-                                                                                            </a>
+                                                                                             </a>                                                                                             
+                                                                                            </c:if>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -276,171 +306,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </li>
-                                                                <li id="member-list-li">
-                                                                    <div class="modal-member-info">
-                                                                        <div class="modal-member-profile">
-                                                                            <img class="modal-memeber-img" src="../resources/project/img/projectboard/user5.jpg">
-                                                                        </div>
-                                                                        <div class="modal-member-name">
-                                                                            <a>
-                                                                                <span class="modal-member-name-span">김주영</span>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="modal-member-role">
-                                                                            <a href="#" class="admin-invite-button-1 manager-badge">
-                                                                                <span>
-                                                                                </span>
-                                                                            </a>
-                                                                        </div>
-                                                                        <!-- 관리자일때만 보이게 작업 -->
-                                                                        <div class="setting member-setting">
-                                                                            <div class="dropdown">
-                                                                                <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                                                </button>
-                                                                                <div class="dropdown-menu drop-width" aria-labelledby="cardOpt3">
-                                                                                    <div class="setting-menu setting-menu-padding">
-                                                                                        <div class="setting-line">
-                                                                                            <a class="setting-anchor setting-fire">
-                                                                                                <span class="setting-span setting-span-02">프로젝트 내보내기</span>
-                                                                                                <!-- 본인이 아닌 경우 : 프로젝트 내보내기  -->
-                                                                                            </a>
-                                                                                        </div>
-                                                                                        <div class="setting-line">
-                                                                                            <a class="setting-anchor setting-manager-hire">
-                                                                                                <span class="setting-span setting-span-02">관리자 지정하기</span>
-                                                                                                <!-- 관리자가 아닐 경우 : 관리자 지정하기 -->
-                                                                                            </a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li id="member-list-li">
-                                                                    <div class="modal-member-info">
-                                                                        <div class="modal-member-profile">
-                                                                            <img class="modal-memeber-img" src="../resources/project/img/projectboard/user1.jpg">
-                                                                        </div>
-                                                                        <div class="modal-member-name">
-                                                                            <a>
-                                                                                <span class="modal-member-name-span">김혜원</span>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="modal-member-role">
-                                                                            <a href="#" class="admin-invite-button-1 manager-badge">
-                                                                                <span></span>
-                                                                            </a>
-                                                                        </div>
-                                                                        <!-- 관리자일때만 보이게 작업 -->
-                                                                        <div class="setting member-setting">
-                                                                            <div class="dropdown">
-                                                                                <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                                                </button>
-                                                                                <div class="dropdown-menu drop-width" aria-labelledby="cardOpt3">
-                                                                                    <div class="setting-menu setting-menu-padding">
-                                                                                        <div class="setting-line">
-                                                                                            <a class="setting-anchor setting-fire">
-                                                                                                <span class="setting-span setting-span-02">프로젝트 내보내기</span>
-                                                                                                <!-- 본인이 아닌 경우 : 프로젝트 내보내기  -->
-                                                                                            </a>
-                                                                                        </div>
-                                                                                        <div class="setting-line">
-                                                                                            <a class="setting-anchor setting-manager-hire">
-                                                                                                <span class="setting-span setting-span-02">관리자 지정하기</span>
-                                                                                                <!-- 관리자가 아닐 경우 : 관리자 지정하기 -->
-                                                                                            </a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li id="member-list-li">
-                                                                    <div class="modal-member-info">
-                                                                        <div class="modal-member-profile">
-                                                                            <img class="modal-memeber-img" src="../resources/project/img/projectboard/user2.jpg">
-                                                                        </div>
-                                                                        <div class="modal-member-name">
-                                                                            <a>
-                                                                                <span class="modal-member-name-span">한혜진</span>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="modal-member-role">
-                                                                            <a href="#" class="admin-invite-button-1 manager-badge">
-                                                                                <span></span>
-                                                                            </a>
-                                                                        </div>
-                                                                        <!-- 관리자일때만 보이게 작업 -->
-                                                                        <div class="setting member-setting">
-                                                                            <div class="dropdown">
-                                                                                <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                                                </button>
-                                                                                <div class="dropdown-menu drop-width" aria-labelledby="cardOpt3">
-                                                                                    <div class="setting-menu setting-menu-padding">
-                                                                                        <div class="setting-line">
-                                                                                            <a class="setting-anchor setting-fire">
-                                                                                                <span class="setting-span setting-span-02">프로젝트 내보내기</span>
-                                                                                                <!-- 본인이 아닌 경우 : 프로젝트 내보내기  -->
-                                                                                            </a>
-                                                                                        </div>
-                                                                                        <div class="setting-line">
-                                                                                            <a class="setting-anchor setting-manager-hire">
-                                                                                                <span class="setting-span setting-span-02">관리자 지정하기</span>
-                                                                                                <!-- 관리자가 아닐 경우 : 관리자 지정하기 -->
-                                                                                            </a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li id="member-list-li">
-                                                                    <div class="modal-member-info">
-                                                                        <div class="modal-member-profile">
-                                                                            <img class="modal-memeber-img" src="../resources/project/img/projectboard/user6.jpg">
-                                                                        </div>
-                                                                        <div class="modal-member-name">
-                                                                            <a>
-                                                                                <span class="modal-member-name-span">아이유</span>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="modal-member-role">
-                                                                            <a href="#" class="admin-invite-button-1 manager-badge">
-                                                                                <span></span>
-                                                                            </a>
-                                                                        </div>
-                                                                        <!-- 관리자일때만 보이게 작업 -->
-                                                                        <div class="setting member-setting">
-                                                                            <div class="dropdown">
-                                                                                <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                                                </button>
-                                                                                <div class="dropdown-menu drop-width" aria-labelledby="cardOpt3">
-                                                                                    <div class="setting-menu setting-menu-padding">
-                                                                                        <div class="setting-line">
-                                                                                            <a class="setting-anchor setting-fire">
-                                                                                                <span class="setting-span setting-span-02">프로젝트 내보내기</span>
-                                                                                                <!-- 본인이 아닌 경우 : 프로젝트 내보내기  -->
-                                                                                            </a>
-                                                                                        </div>
-                                                                                        <div class="setting-line">
-                                                                                            <a class="setting-anchor setting-manager-hire">
-                                                                                                <span class="setting-span setting-span-02">관리자 지정하기</span>
-                                                                                                <!-- 관리자가 아닐 경우 : 관리자 지정하기 -->
-                                                                                            </a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
+                                                                </c:if>
+                                                                </c:forEach>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -458,11 +325,11 @@
                                                                             <img class="modal-invite-check" src="../resources/project/img/projectboard/icon_check.png">
                                                                         </div>
                                                                         <div class="modal-member-profile">
-                                                                            <img class="modal-memeber-img" src="../resources/project/img/projectboard/user3.jpg">
+                                                                            <img class="modal-memeber-img" src="../resources/project/img/projectboard/team/user3.jpg">
                                                                         </div>
                                                                         <div class="modal-member-name name-flex">
                                                                             <a>
-                                                                                <span class="modal-member-name-span" style="font-weight:520">옥진석</span>
+                                                                                <span class="modal-member-name-span" style="font-weight:600; font-size:13px;">옥진석</span>
                                                                             </a>
                                                                         </div>
                                                                     </li>
@@ -471,7 +338,16 @@
                                                         </div>
 
                                                         <div class="modal-invite-list">
-                                                            <span class="invite-empty-span">대상을 선택해주세요.</span>
+                                                        	<div style=" display: flex; align-items: center; justify-content: center; widht:100%; height:100%; display:none">
+                                                            	<span class="invite-empty-span" style="display:none">대상을 선택해주세요.</span>
+                                                            </div>
+                                                            <div class="invite-box"> 
+                                                            	<div class="invite-you">김옥진석rrrrrrrrrrrrrrrrrrrrrrrrr</div>
+                                                            	<div class="invite-you">Harry Kane</div>
+                                                            	<div class="invite-you">abcdefgHijkLmnObpdafsdfad</div>
+                                                            	<div class="invite-you">옥진석</div>
+                                                            	<div class="invite-you">옥진석</div>
+                                                            </div>
                                                         </div>
                                                     </div>
 
@@ -776,7 +652,132 @@
     <script src="../resources/project/js/projectboard/projectboard_chart.js"></script>
     <script src="../resources/project/js/projectboard/projectboard_barchart.js"></script>
     <script src="../resources/project/js/projectboard/projectboard_table.js"></script>
+    
+    <script src="../resources/project/js/projectboard/team_Ajax.js"></script>
+    	
+    <script>
 
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
+
+    // tabs active
+    $('.team-tab').on('click', function() {
+        $('.modal-body-invite').hide(); // 초대 div 숨기기
+        $('.modal-search-list').show(); // 목록 div 보이기
+        $('.modal-content-invite').animate({
+            width: '434px'
+        }, 250); // 너비 변경 애니메이션
+
+        var projectId = 1;
+        var sessionId = 1;
+
+        // AJAX 요청 시작
+        $.ajax({
+            url: '../team/team-list',
+            method: 'POST',
+            data: {
+                projectId: projectId,
+                sessionId: sessionId
+            },	
+            beforeSend: function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
+                xhr.setRequestHeader(header, token);
+            },
+            success: function(data) {
+                var teamList = '';
+                
+                console.log(data);
+
+                for (var i = 0; i < data.team.length; i++) {
+                    teamList += '<li id="member-list-li">';
+                    teamList += '<div class="modal-member-info">';
+	                teamList += '<div class="modal-member-profile">';
+
+                    if (data.team[i].pic == null) {
+                        teamList += '<img class="modal-memeber-img" src="../resources/user/img/profile.png">';
+	                } else {
+    	                teamList += '<img class="modal-memeber-img" src="../resources/project/img/projectboard/team/' + data.team[i].pic + '">';
+        	        }
+
+                    teamList += '</div>';
+                    teamList += '<div class="modal-member-name">';
+                    teamList += '<a>';
+	                teamList += '<span class="modal-member-name-span">' + data.team[i].name + '</span>';
+    	            teamList += '</a>';
+        	        teamList += '</div>';
+
+                    if (data.team[i].auth === 1) {
+                        teamList += '<div class="modal-member-role">';
+	                    teamList += '<span class="modal-member-role-span" style="color: #fff">관리자</span>';
+    	                teamList += '</div>';
+        	        } else {
+            	        teamList += '<div class="modal-member-role">';
+                	    teamList += '<a href="#" class="admin-invite-button-1 manager-badge">';
+                    	teamList += '<span>';
+                            teamList += '</span>';
+                        teamList += '</a>';
+                        teamList += '</div>';
+ 	               }
+
+                    teamList += '<div class="setting member-setting">';
+                    teamList += '<div class="dropdown">';
+                    teamList += '<button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+	                teamList += '<i class="bx bx-dots-vertical-rounded"></i>';
+    	            teamList += '</button>';
+        	        teamList += '<div class="dropdown-menu drop-width" aria-labelledby="cardOpt3">';
+            	    teamList += '<div class="setting-menu setting-menu-padding">';
+                	teamList += '<div class="setting-line">';
+
+                    if (data.team[i].my_ID === data.team[i].user_ID) {
+                        teamList += '<a class="setting-anchor setting-exit">';
+                        teamList += '<span class="setting-span setting-span-02">프로젝트 나가기</span>';
+	                    teamList += '</a>';
+    	            } else if (data.team[i].my_AUTH === 1 && data.team[i].my_ID !== data.team[i].user_ID) {
+        	            teamList += '<a class="setting-anchor setting-fire">';
+            	        teamList += '<span class="setting-span setting-span-02">프로젝트 내보내기</span>';
+                	    teamList += '</a>';
+                	}
+
+                    teamList += '</div>';
+                    teamList += '<div class="setting-line">';
+
+                    if (data.team[i].my_AUTH === 1 && data.team[i].auth === 1) {
+                        teamList += '<a class="setting-anchor setting-manager-fire">';
+	                    teamList += '<span class="setting-span setting-span-02">관리자 해제</span>';
+    	                teamList += '</a>';
+        	        } else if (data.team[i].my_AUTH === 1 && data.team[i].auth === 0) {
+            	        teamList += '<a class="setting-anchor setting-manager-hire">';
+                	    teamList += '<span class="setting-span setting-span-02">관리자 지정하기</span>';
+                    	teamList += '</a>';
+                	}
+
+                    teamList += '</div>';
+                    teamList += '</div>';
+                    teamList += '</div>';
+	                teamList += '</div>';
+    	            teamList += '</div>';
+        	        teamList += '</div>';
+            	    teamList += '</li>';
+            	}
+
+                $('#member-list-ul').html(teamList);
+
+                $('.modal-member-role').each(function() {
+                    if ($(this).find('span').text().trim() === '') {
+                        $(this).hide();
+                        $(this).siblings('.modal-member-name').css('width', '269px');
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+        
+    });
+    
+
+    	
+    </script>
 </body>
 
 </html>
