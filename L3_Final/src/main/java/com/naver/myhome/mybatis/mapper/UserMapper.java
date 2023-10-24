@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.naver.myhome.domain.MentionUser;
 import com.naver.myhome.domain.User;
 
 @Mapper
@@ -40,6 +41,10 @@ public interface UserMapper {
 		public int checkPwd(String usedPwd, String email);
 
 		public void delete(String email);
+
+      //혜원
+
+		public List<MentionUser> mentionUser(String requestData);
 
 
 	}

@@ -43,6 +43,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.naver.myhome.domain.Employee;
+import com.naver.myhome.domain.MentionUser;
 import com.naver.myhome.domain.User;
 import com.naver.myhome.service.EmployeeService;
 import com.naver.myhome.service.UserService;
