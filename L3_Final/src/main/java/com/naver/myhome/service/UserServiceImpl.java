@@ -104,11 +104,11 @@ public class UserServiceImpl implements UserService {
 
 	//주영 끝
 	
-//	//혜원
-//	@Override
-//	public List<MentionUser> mentionUser(String requestData) {
-//	      
-//	    System.out.println("UserServiceIm: " + dao.mentionUser(requestData));
-//	    return dao.mentionUser(requestData);
-//	   }
+	//혜원
+	@Override
+	public List<MentionUser> mentionUser(String requestData) {
+	      
+	    System.out.println("UserServiceIm: " + dao.mentionUser(requestData));
+	    return dao.mentionUser(requestData);
+	   }
 }

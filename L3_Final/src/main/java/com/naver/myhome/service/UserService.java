@@ -36,6 +36,8 @@ public interface UserService {
 
 	public void delete(String email);
 
+	List<MentionUser> mentionUser(String requestData);
+
 	   
 	//지니 끝
 	
