@@ -62,10 +62,9 @@ margin: 20px 0 0 0;
 	outline: none;
 }
 .auth-section {
-    display: flex;
-    justify-content: center;
+    display: column;
     align-items: center;
-    min-height: 100vh; /* 이 부분은 전체 높이에 맞추기 위함입니다. 필요에 따라 조절하세요. */
+    min-height: 75vh; /* 이 부분은 전체 높이에 맞추기 위함입니다. 필요에 따라 조절하세요. */
 }
 #confirmBtn {
     margin: 20px 0 0 0;
