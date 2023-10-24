@@ -43,6 +43,10 @@ public interface UserMapper {
 
 		public void delete(String email);
 
+      //혜원
+
+		public List<MentionUser> mentionUser(String requestData);
+
 
 
 		public List<MentionUser> mentionUser(String requestData);
