@@ -39,6 +39,11 @@ public class NotifyServiceImpl implements NotifyService{
 		dao.updatealarm(notify);
 	}
 
+	@Override
+	public List<Notify> getNotificationsForUser(int userId) {
+		return dao.listalarm(userId);
+	}
+
 	
 
 

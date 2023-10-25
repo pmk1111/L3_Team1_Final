@@ -116,7 +116,9 @@ public class IssueController {
 	
 
 	@PostMapping("createIssue")
-	public String createIssue(Issue issue, Notify notify, HttpServletRequest request, MultipartFile[] uploadfiles) throws Exception {
+	public String createIssue(Issue issue, Notify notify,
+			@RequestParam(value="user_id",defaultValue="0",required=false) int user_id,
+			String notionchoice, MultipartFile[] uploadfiles) throws Exception {
 	    List<Files> fileList = new ArrayList<>();
 	    int issueId = issueService.getIssueId();
 	    logger.info("가져온 이슈 번호: " + issueId);
@@ -127,16 +129,13 @@ public class IssueController {
 
 	    issueService.createIssue(issue);
 
-	    String tagname = request.getParameter("tagname");
-	   // String user_id=request.getParameter("user_id");
-	    
-		 int user_id = Integer.parseInt(request.getParameter("user_id").trim()); 
-	  
+	
+
 	    
 	    
-	    notify.setNAME(tagname);
+	    notify.setNAME(notionchoice.replace("@", ""));
 	    notify.setPOST_ID(issueId);
-	   notify.setMENTIONED_ID(user_id);
+	   notify.setMENTIONED_ID(4);
 	   
 	    logger.info(issue.toString());
 	    logger.info("이슈 태그: " + notify.getNAME());
@@ -152,6 +151,8 @@ public class IssueController {
 	        } else {
 	            // 존재하지 않는 경우, createalarm을 호출하여 새로운 레코드를 삽입
 	            notifyService.createalarm(notify);
+	            //알림의 넣을 값 구하기
+	            
 	        }
 	    
 

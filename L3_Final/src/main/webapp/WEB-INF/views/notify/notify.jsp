@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <article class="notify-layer">
     <div class="notify-menu-top">
         <strong class="notify-menu-txt">알림</strong>
@@ -7,105 +10,19 @@
         </button>
     </div>
 
-    <div class="notify-side-content">
-        <div class="notify-menu-area">
-            <ul>
-                <li id="notifybtn"><span class="popup-tab notify-on on">읽음</span></li>
-                <li id="notreadbtn"><span class="notread">안읽음</span></li>
-            </ul>
-        </div>
-
-       
-
-        <div class="notify-list-area">
-
-            <ul class="notify-list">
-                <li class="notify-room" data-room-id="1">
-                    <div class="notify-img-user-latest">
-                        <img class="notify-user-img"
-                            src="../resources/mainboard/assets/img/avatars/1.png" alt="">
-                    </div>
-
+    <div class="notify-list-area">
+        <ul class="notify-list">
+            <c:forEach items="${notifications}" var="notification">
+                <li class="notify-room">
                     <div class="user-latest">
-                        <p class="notify-user-id">JJok님이</p>
-                        <p class="latest-notify">나를 언급하였습니다.</p>
+                        <p class="notify-user-id">${notification.NAME}님이</p>
+                        <p class="latest-notify">${notification.CONTENT}</p>
                     </div>
-
                     <div class="update-time-area">
-                        <span class="update-time">13:52</span>
+                        <span class="update-time">${notification.NOTIFY_TIME}</span>
                     </div>
                 </li>
-
-
-                <li class="notify-room" data-room-id="2">
-                    <div class="notify-img-user-latest">
-                        <img class="notify-user-img"
-                            src="../resources/mainboard/assets/img/avatars/1.png" alt="">
-                    </div>
-
-                   <div class="user-latest">
-                        <p class="notify-user-id">JJok님이</p>
-                        <p class="latest-notify">나를 언급하였습니다.</p>
-                    </div>
-
-                    <div class="update-time-area">
-                        <span class="update-time">13:52</span>
-                    </div>
-                </li>
-
-      
-
-
-            </ul>
-
-        </div>
-
-
-
-        <div class="notify-contact-area">
-            <ul class="notify-list">
-               
-
-                  <li  class="notify-room" data-room-id="1">
-                    <div class="notify-img-user-latest">
-                        <img class="notify-user-img"
-                            src="../resources/mainboard/assets/img/avatars/1.png" alt="">
-                    </div>
-
-                    <div class="user-latest">
-                        <p class="notify-user-id">JJok님이</p>
-                        <p class="latest-notify">나를 언급하였습니다!!!!!!.</p>
-                    </div>
-
-                    <div class="update-time-area">
-                        <span class="update-time">13:52</span>
-                    </div>
-               
-
-                </li>
-
-              <li  class="notify-room" data-room-id="2">
-                    <div class="notify-img-user-latest">
-                        <img class="notify-user-img"
-                            src="../resources/mainboard/assets/img/avatars/1.png" alt="">
-                    </div>
-
-                    <div class="user-latest">
-                        <p class="notify-user-id">JJok님이</p>
-                        <p class="latest-notify">나를 언급하였습니다.</p>
-                    </div>
-
-                    <div class="update-time-area">
-                        <span class="update-time">13:52</span>
-                    </div>
-               
-
-                </li>
-
-
-            </ul>
-
-        </div>
+            </c:forEach>
+        </ul>
     </div>
-
 </article>

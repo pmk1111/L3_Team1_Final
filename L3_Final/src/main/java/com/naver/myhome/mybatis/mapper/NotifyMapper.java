@@ -1,6 +1,9 @@
 package com.naver.myhome.mybatis.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+
 
 import com.naver.myhome.domain.Notify;
 
@@ -15,5 +18,7 @@ public interface NotifyMapper {
 	public void createalarm(Notify notify);
 
 	public void updatealarm(Notify notify);
+
+	public List<Notify> listalarm(int userId);
 
 }
