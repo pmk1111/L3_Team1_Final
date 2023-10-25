@@ -77,8 +77,8 @@ $(document).ready(function () {
       	
      const selectedOptionValue = $('#inputnotionchoice').val().trim();
 
-    if (selectedOptionValue === '' || $('#notionchoice option[value="' + selectedOptionValue + '"]').length === 0) {
-        alert('선택한 이슈 태그가 올바르지 않습니다. 옵션에 존재하지 않거나 빈 문자열입니다.');
+    if (selectedOptionValue != '' && $('#notionchoice option[value="' + selectedOptionValue + '"]').length === 0) {
+        alert('항목에 있는 값만 고르세요');
         return false;
     }
 
@@ -116,6 +116,8 @@ $(document).ready(function () {
         $('.hidden-issue-content').val(issue_content_html);
         
           user_id = $("#notionchoice option").data("id");
+          if(user_id == undefined)
+          user_id = 0;
            
        
 
@@ -247,13 +249,18 @@ $("#inputnotionchoice").on("input", function() {
 function sendDataToServer(mention) {
     
    
-    
+    var token = $("meta[name='_csrf']").attr("content");
+      var header = $("meta[name='_csrf_header']").attr("content");
     $.ajax({
         type: "POST",
         url: "../user/issue-mention",
         data: mention,
         contentType: "application/json; charset=UTF-8",
         dataType: "JSON",
+        beforeSend : function(xhr)
+                 {   //데이터를 전송하기 전에 헤더에 csrf값을 설정합니다.
+                    xhr.setRequestHeader(header, token);         
+                 },
         success: function(response) {
            
             console.log('데이터가 서버로 전송되었습니다.');

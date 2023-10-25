@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 <%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
  
