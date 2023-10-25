@@ -1,11 +1,9 @@
 package com.naver.myhome.controller;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,7 +52,12 @@ public class ProjectController {
 	}
 
 	@GetMapping(value = "/create-project") // board/write
-	public String createProject() {
+	public String createProject(@AuthenticationPrincipal User customUser, Model model) {
+		
+	    int sessionId = customUser.getId();
+	    int employeeId = projectService.getEmpId(sessionId);
+	    model.addAttribute("employeeId", employeeId);
+	    
 		return "project/create-project";
 	}
 
@@ -61,17 +65,17 @@ public class ProjectController {
 	@Transactional
 	public String create(Project project, @AuthenticationPrincipal User customUser) throws Exception {
 
-		projectService.insertProject(project);
-
-		int projectId = project.getID();
-
-		logger.info("createprojectId = " + projectId);
-
 		int sessionId = customUser.getId();
 		logger.info("session아이디" + sessionId);
 
 		int employeeId = projectService.getEmpId(sessionId);
 		logger.info("employeeId아이디" + employeeId);
+		
+		projectService.insertProject(project);
+
+		int projectId = project.getID();
+
+		logger.info("createprojectId = " + projectId);
 
 		teamService.addTeam(projectId, employeeId);
 

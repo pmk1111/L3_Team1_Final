@@ -38,6 +38,8 @@ public class teamController {
 		
 		int sessionId = customUser.getId();
 		
+		logger.info("팀리스트" + sessionId);
+		
 		List<Team> team = teamService.getTeam(projectId, sessionId);
 	  
 		logger.info("팀 가져오는지 " + team); 
