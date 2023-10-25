@@ -232,11 +232,11 @@
                                                                                         <c:choose>
                                                                                             <c:when test="${empty emp.pic}">
                                                                                                 <!-- user_photo가 비어있을 때, 기본 이미지 표시 -->
-                                                                                                <img src="<c:url value='/img/profile.png' />" alt="프로필 사진" width="25" height="25">
+                                                                                                <img src="<c:url value='../resources/user/img/profile.png' />" alt="프로필 사진" width="25" height="25">
                                                                                             </c:when>
                                                                                             <c:otherwise>
                                                                                                 <!-- user_photo가 비어있지 않을 때, 사용자의 이미지 표시 -->
-                                                                                                <img src="<c:url value='/usrupload/' />${emp.pic}" alt="프로필 사진" width="25" height="25" 프로필 사진" width="25" height="25">
+                                                                                                <img src="<c:url value='../upload' />${emp.pic}" alt="프로필 사진" width="25" height="25" 프로필 사진" width="25" height="25">
                                                                                             </c:otherwise>
                                                                                         </c:choose>
                                                                                     </td>
@@ -419,7 +419,6 @@
         document.getElementById("filterSelect").addEventListener("change",
             searchTable);
         
-        $(function(){
         	
         /* 정상 탭 */
         $('.employee-tab').click(function(){
@@ -455,11 +454,10 @@
                     	empList += '<td>';
                         var empPic = emp[i].pic;
                         if (empPic === null) {
-                        	empList += '<img src="${pageContext.request.contextPath}/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
+                        	empList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
                         } else {
-                        	empList += '<img src="${pageContext.request.contextPath}/user/img/' + emp[i].pic + '" alt="프로필 사진" width="25" height="25">';
+                        	empList += '<img src="../upload' + emp[i].pic + '" alt="프로필 사진" width="25" height="25">';
                         }
-                        
                         // 각 필드에 대해 null 체크 후 값 할당
                         var department = (emp[i].department !== null) ? emp[i].department : '';
                         var position = (emp[i].position !== null) ? emp[i].position : '';
@@ -525,7 +523,7 @@
                                     $('.employee-body').append('<tr><td colspan="9" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
                                 }
                                 
-                                alert("업데이트에 성공하였습니다.");
+                               
 
                             }
                             /* success */
@@ -594,7 +592,7 @@
                 success: function(user) {
                     var waitList = '';
                     
-                    console.log(user);
+              
                     
                     for (var i = 0; i < user.length; i++) {
                         waitList += '<tr>';
@@ -602,9 +600,9 @@
 
                         var userPic = user[i].pic;
                         if (userPic === null) {
-                            waitList += '<img src="${pageContext.request.contextPath}/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
+                            waitList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
                         } else {
-                            waitList += '<img src="${pageContext.request.contextPath}/user/img/' + user[i].pic + '" alt="프로필 사진" width="25" height="25">';
+                            waitList += '<img src="../upload' + user[i].pic + '" alt="프로필 사진" width="25" height="25">';
                         }
 
                         waitList += '</td>';
@@ -712,6 +710,7 @@
 
         /* 중지 */
         $('.stop-tab').click(function() {
+        	
             let token = $("meta[name='_csrf']").attr("content");
             let header = $("meta[name='_csrf_header']").attr("content");
 
@@ -739,9 +738,9 @@
                         stopList += '<td>';
                         var empPic = stopEmp[i].pic;
                         if (empPic === null) {
-                            stopList += '<img src="${pageContext.request.contextPath}/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
+                            stopList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
                         } else {
-                            stopList += '<img src="${pageContext.request.contextPath}/user/img/' + stopEmp[i].pic + '" alt="프로필 사진" width="25" height="25">';
+                            stopList += '<img src="../upload' + stopEmp[i].pic + '" alt="프로필 사진" width="25" height="25">';
                         }
 
                         // 각 필드에 대해 null 체크 후 값 할당
@@ -814,7 +813,6 @@
 
         }); // click event handler 종료 괄호와 세미콜론
         
-      });
     </script>
 
 

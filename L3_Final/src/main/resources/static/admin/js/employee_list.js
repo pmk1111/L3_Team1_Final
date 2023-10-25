@@ -15,9 +15,3 @@ $(function() {
 
 
 
-//프로필 사진
-const profile = this.userPhoto;
-let src = 'img/profile.png';
-if (profile) {
-    src = 'usrupload/' + profile;
-}

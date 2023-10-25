@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+ <sec:authentication property="principal" var="pinfo"/>
 <style>
 	.alarm-icon+.chat-icon{margin-left: 10px}
 	.chat-icon{margin-right: 10px}
 	
     .alarm-icon:hover, .chat-icon:hover { cursor: pointer; }
 </style>
-<script src="${pageContext.request.contextPath}/notify/js/notify.js"></script>
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
   
@@ -42,22 +44,39 @@
 				class="nav-link dropdown-toggle hide-arrow"
 				href="javascript:void(0);" data-bs-toggle="dropdown">
 					<div class="avatar avatar-online">
-						<img src="../resources/mainboard/assets/img/avatars/1.png" alt
-							class="w-px-40 h-auto rounded-circle" />
+					   <c:choose>
+      					  <c:when test="${empty pinfo.pic}">
+          						  <img src="${pageContext.request.contextPath}/user/img/profile.png" alt="Default Profile Image"
+                					 class="w-px-40 h-auto rounded-circle" />
+        					</c:when>
+        				<c:otherwise>
+           						 <img src="${pageContext.request.contextPath}/upload${pinfo.pic}" alt="User Profile Image"
+               						  class="w-px-40 h-auto rounded-circle" />
+       						 </c:otherwise>
+    					</c:choose>
 					</div>
+					
 			</a>
 				<ul class="dropdown-menu dropdown-menu-end">
 					<li><a class="dropdown-item" href="#">
 							<div class="d-flex">
 								<div class="flex-shrink-0 me-3">
 									<div class="avatar avatar-online">
-										<img src="../resources/mainboard/assets/img/avatars/1.png" alt
-											class="w-px-40 h-auto rounded-circle" />
+										 <c:choose>
+      					  <c:when test="${empty pinfo.pic}">
+          						  <img src="${pageContext.request.contextPath}/user/img/profile.png" alt="Default Profile Image"
+                					 class="w-px-40 h-auto rounded-circle" />
+        					</c:when>
+        				<c:otherwise>
+           						 <img src="${pageContext.request.contextPath}/upload${pinfo.pic}" alt="User Profile Image"
+               						  class="w-px-40 h-auto rounded-circle" />
+       						 </c:otherwise>
+    					</c:choose>
 									</div>
 								</div>
 								<div class="flex-grow-1">
-									<span class="fw-semibold d-block">John Doe</span> <small
-										class="text-muted">Admin</small>
+									<span class="fw-semibold d-block">${pinfo.name}</span>
+									<%--  <small class="text-muted">${userinfo.po }</small> --%>
 								</div>
 							</div>
 					</a></li>
@@ -82,8 +101,8 @@
 						<div class="dropdown-divider"></div>
 					</li>
 					<li><form action="${pageContext.request.contextPath}/user/logout" method ="post"
-             style="margin-bottom:0px" name="logout">
-             <a class="dropdown-item" href="${pageContext.request.contextPath}/user/logout">
+           					  style="margin-bottom:0px" name="logout">
+            					 <a class="dropdown-item" href="${pageContext.request.contextPath}/user/logout">
 							<i class="bx bx-power-off me-2"></i> <span id="logout"class="align-middle">Log
 								Out</span>
 					</a>
@@ -94,7 +113,6 @@
 			<!--/ User -->
 		</ul>
 	</div>
-		<jsp:include page="../notify/notify.jsp"></jsp:include>
 </nav>
 <script>
 

@@ -176,6 +176,7 @@
             </li>
             
             <!-- Misc -->
+            <se:authorize access="hasRole('ROLE_ADMIN')">
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
 <!--             <li class="menu-item">
               <a
@@ -187,7 +188,7 @@
                 <div data-i18n="Support">회사 직원 초대</div>
               </a>
             </li> -->
-            <se:authorize access="hasRole('ROLE_ADMIN')">
+            
             <li class="menu-item">
               <a
                 href="../admin/admin-dashboard"
