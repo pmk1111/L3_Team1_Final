@@ -74,7 +74,7 @@
     .issue-title-area {
       width: 99%;
       height: 60px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       border-left: none;
       border-right: none;
       border-top: 1.4px solid rgb(225, 225, 225);
@@ -292,4 +292,13 @@
       background-color: #9F7AB0;
       color: white;
       transition: .3s;
+    }
+    #inputnotionchoice{
+    margin-bottom:10px;
+    margin-left:15px;
+     width:577px;
+     height:30px;
+      border: 1px solid lightgray; 
+    border-radius: 3px; 
+    
     }

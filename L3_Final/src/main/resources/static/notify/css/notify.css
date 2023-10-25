@@ -1,6 +1,9 @@
 @charset "UTF-8";
 
-
+.no-notification {
+    margin-left:160px;
+    margin-top:280px;
+}
 .notify-layer {
     display: none;
     position: fixed;
@@ -99,7 +102,8 @@
     overflow: auto;
 }
 
-.notify-list, .contact-list {
+.notify-list{
+	
     width: 100%;
     margin: 0;
     padding: 0;
