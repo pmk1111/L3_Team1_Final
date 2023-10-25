@@ -7,8 +7,8 @@
 	    <selectKey keyProperty="ID" resultType="int" order="BEFORE">
 	        SELECT PROJECT_ID.NEXTVAL FROM DUAL
 	    </selectKey>
-	    	INSERT INTO PROJECT (ID, TITLE, SUBTITLE)
-	    	VALUES (#{ID}, #{TITLE}, #{SUBTITLE})
+	    	INSERT INTO PROJECT (ID, TITLE, SUBTITLE, COMPANY_ID)
+	    	VALUES (#{ID}, #{TITLE}, #{SUBTITLE}, (SELECT COMPANY_ID FROM EMPLOYEE WHERE ID = #{employeeId}))
 	</insert>
 	
 	<select id="getEmpId" resultType="int">

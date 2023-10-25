@@ -36,6 +36,8 @@
 				</div>
 			</div>
 			
+			<input type="hidden" name="employeeId" value="${employeeId}">
+			
 			<div style="display:flex">
 <!-- 				<button class="invite-button">팀원 초대하기</button> -->
 				<button class="create-button on">프로젝트 생성하기</button>

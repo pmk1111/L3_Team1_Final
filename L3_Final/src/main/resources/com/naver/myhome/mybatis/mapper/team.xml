@@ -4,8 +4,8 @@
 <mapper namespace="com.naver.myhome.mybatis.mapper.TeamMapper">
 
 	<insert id="addTeam" >
-		INSERT INTO TEAM (EMPLOYEE_ID, PROJECT_ID)
-		VALUES (#{employeeId}, #{projectId})
+		INSERT INTO TEAM (EMPLOYEE_ID, PROJECT_ID, AUTH)
+		VALUES (#{employeeId}, #{projectId}, 1)
 	</insert>
 	
 	<select id="teamCount" resultType="integer">
@@ -20,7 +20,7 @@
 		       (SELECT T2.AUTH FROM TEAM T2
 		     	INNER JOIN EMPLOYEE E2 ON T2.EMPLOYEE_ID = E2.ID
 		     	INNER JOIN USERS U2 ON E2.USER_ID = U2.ID
-		     	WHERE U2.ID = #{sessionId}) AS MY_AUTH
+		     	WHERE U2.ID = #{sessionId} AND T2.PROJECT_ID = #{projectId}) AS MY_AUTH
 		FROM TEAM T
 		INNER JOIN EMPLOYEE E ON T.EMPLOYEE_ID = E.ID
 		INNER JOIN USERS U ON E.USER_ID = U.ID

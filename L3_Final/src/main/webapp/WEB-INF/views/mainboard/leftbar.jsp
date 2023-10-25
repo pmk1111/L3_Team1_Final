@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
  
           <div class="app-brand demo">
@@ -176,7 +177,7 @@
             
             <!-- Misc -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
-            <li class="menu-item">
+<!--             <li class="menu-item">
               <a
                 href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
                 target="_blank"
@@ -185,7 +186,8 @@
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Support">회사 직원 초대</div>
               </a>
-            </li>
+            </li> -->
+            <se:authorize access="hasRole('ROLE_ADMIN')">
             <li class="menu-item">
               <a
                 href="../admin/admin-dashboard"
@@ -196,5 +198,6 @@
                 <div data-i18n="Documentation" id="adminLink">관리자</div>
               </a>
             </li>
+            </se:authorize>
           </ul>
         </aside>

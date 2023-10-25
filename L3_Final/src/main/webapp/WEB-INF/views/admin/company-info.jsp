@@ -8,6 +8,8 @@
     <meta name="viewport" 
     	  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
 
+	<meta name="_csrf" content="${_csrf.token}">
+	<meta name="_csrf_header" content="${_csrf.headerName}">
     <title>회사 정보</title>
     <meta name="description" content="" />
 
@@ -147,8 +149,9 @@
                           
                           <!-- content -->
                           
-                          <form id="formCompanySetting" method="POST" action = "../admin/companyinfo">
-                                                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                          <form id="formCompanySetting" method="GET" action = "../admin/companyinfo">
+                             <%--  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
+                               <input type="hidden" id="companyId" name="companyId" value="${companyinfo.id}">                  
                         <div class="row">
                         <div class="mb-3 col-md-6" id="name">
                             <label for="companyName" class="form-label">회사명</label>
@@ -157,7 +160,7 @@
                               type="text"
                               id="companyName"
                               name="companyName"
-                              value="${companyName}"
+                              value="${companyinfo.name}"
                               disabled="disabled"
                               
                             />
@@ -179,7 +182,7 @@
                               type="text"
                               id="companyDomain"
                               name="companyDomain"
-                              value= "${companyDomain}"
+                              value= "${companyinfo.domain}"
                               disabled="disabled"
                             />
 

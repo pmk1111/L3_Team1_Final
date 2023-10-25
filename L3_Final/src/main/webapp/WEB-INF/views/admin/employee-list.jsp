@@ -17,7 +17,7 @@
     <meta name="_csrf_header" content="${_csrf.headerName}">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="../resources/admin/js/employee_list.js"></script>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -190,6 +190,7 @@
                                                 <!-- 검색 -->
                                                 <div id="search">
                                                     <form>
+                                                   
                                                         <select id="filterSelect" name="search_field" style="border: 1px solid #d9dee3;">
                                                             <option>이름</option>
                                                             <option>이메일</option>
@@ -431,13 +432,13 @@
                 tbody.append('<tr><td colspan="9" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>'); // 만약 자식 요소가 없다면 메시지 출력
             }
             
-            var companyId = 1;
+           
             
             $.ajax({
                 url: "../admin/employee-list",
                 type: "GET",
                 data: {
-                    companyId: companyId
+                    
                 },
                 success: function(emp) {
                     var empList = '';
@@ -505,7 +506,7 @@
                             type: "POST",
                             data: {
                             	empId: empId,
-                            	companyId: companyId
+                            	
                             },
                             beforeSend: function(xhr) {
                                 xhr.setRequestHeader(header, token);
@@ -583,13 +584,12 @@
         
         /* 가입대기 탭 */
         $('.wait-tab').click(function() {
-            var companyId = 1;
-
+        	  
             $.ajax({
                 url: "../admin/wait-reg",
                 type: "GET",
                 data: {
-                    companyId: companyId
+                   
                 },
                 success: function(user) {
                     var waitList = '';
@@ -638,7 +638,7 @@
                             type: "POST",
                             data: {
                                 userId: userId,
-                                companyId: companyId
+                               
                             },
                             beforeSend: function(xhr) {
                                 xhr.setRequestHeader(header, token);
@@ -678,7 +678,7 @@
                             type: "POST",
                             data: {
                                 userId: userId,
-                                companyId: companyId
+                              
                             },
                             beforeSend: function(xhr) {
                                 xhr.setRequestHeader(header, token);
@@ -721,13 +721,13 @@
                 tbody.append('<tr><td colspan="8" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>'); // 만약 자식 요소가 없다면 메시지 출력
             }
 
-            var companyId = 1;
+         
 
             $.ajax({
                 url: "../admin/stop-list",
                 type: "GET",
                 data: {
-                    companyId: companyId
+                  
                 },
                 success: function(stopEmp) {
                     var stopList = '';
@@ -780,7 +780,7 @@
                             type: "POST",
                             data: {
                             	empId: empId,
-                            	companyId: companyId
+                            	
                             },
                             beforeSend: function(xhr) {
                                 xhr.setRequestHeader(header, token);

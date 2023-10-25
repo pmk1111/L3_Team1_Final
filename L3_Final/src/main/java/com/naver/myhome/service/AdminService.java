@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.naver.myhome.domain.Access;
+import com.naver.myhome.domain.Company;
 import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
 
 public interface AdminService {
+	
+	public Company companyinfo(String email);
 
 	String companyName(int companyId);
 	
@@ -43,6 +46,7 @@ public interface AdminService {
 
 	public void backEmp(int empId);
 	
+	public int companyId(String email);
 	
 	// 혜원 
 	public List<Access> getAccesslist();
@@ -50,6 +54,7 @@ public interface AdminService {
 	public List<Access> getDayCount();
 
 	public List<Access> getMonthCount();
+
 	
 
 }

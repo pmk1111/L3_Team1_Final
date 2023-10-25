@@ -26,6 +26,17 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
     <style>
+    
+    	.dropdown{
+			display: block;
+		    border-top: none;
+		    box-shadow: none;
+		    min-width: auto;
+		    position: relative;
+		    padding-bottom: 0px;
+		    padding-top: 0px;
+    	}
+    	
     	body {
     		font-family: 'Nanum Gothic', sans-serif;
     	}
