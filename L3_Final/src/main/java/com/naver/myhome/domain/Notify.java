@@ -5,14 +5,14 @@ import java.sql.Date;
 public class Notify {
 
 
-	  private int ID; // INT 대문자로 변경
-	    private String NAME; // 대문자
-	    private String EMAIL; // 대문자
-	    private String CONTENT; // 대문자
-	    private Integer MENTIONED_ID; // INT 대문자로 변경
-	    private int POST_ID; // INT 대문자로 변경
-	    private int COMMENT_ID; // INT 대문자로 변경
-	    private Date NOTIFY_TIME; // 대문자
+	  private int ID; 
+	    private String NAME; 
+	    private String EMAIL; 
+	    private String CONTENT; 
+	    private Integer MENTIONED_ID;
+	    private int POST_ID; 
+	    private int COMMENT_ID; 
+	    private Date NOTIFY_TIME; 
 		public int getID() {
 			return ID;
 		}

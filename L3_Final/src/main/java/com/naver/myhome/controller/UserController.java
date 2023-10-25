@@ -229,19 +229,20 @@ public class UserController {
       
    //지니 끝
     
-    //혜원
+	//혜원
     @PostMapping("/issue-mention")
     @ResponseBody
     public List<MentionUser> mentionUsers (@RequestBody String requestData) {
-
-        String name = extractName(requestData);
-
-
-        System.out.println("metion tag: " + userService.mentionUser(name)); 
-        return userService.mentionUser(name);
-
-
-
+		
+		  String name = extractName(requestData);
+		  logger.info("name 뽑아낸 이름"+name);
+		  
+		  
+		  System.out.println("metion tag: " + userService.mentionUser(name)); 
+		  return userService.mentionUser(name);
+		 
+    
+        
     }
 
     private String extractName(String requestData) {
@@ -260,7 +261,7 @@ public class UserController {
         }
         System.out.println("names: " + names.toString());
         return names.toString().trim();
-
+    
     }
     //혜원끝
 

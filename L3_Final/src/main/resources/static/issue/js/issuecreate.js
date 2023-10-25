@@ -63,7 +63,7 @@ $(document).ready(function () {
     });
 
 
-    $('.submit-btn').click(function () {
+ $('.submit-btn').click(function () {
         const project_name = $('.project-name').val();
         const issue_type = $('.issue-type').val();
         const issue_status = $('.issue-status').val();
@@ -72,20 +72,17 @@ $(document).ready(function () {
         const issue_reporter = $('.issue-reporter').val();
         const issue_assigned = $('.issue-assigned').val();
         const issue_priority = $('.issue-priority').val();
-      	var issue_tag = ''; // 초기값을 빈 문자열로 설정합니다.
-      	
      
+      	var issue_tag = ''; 
+      	
+     const selectedOptionValue = $('#inputnotionchoice').val().trim();
 
-    	// 이슈 컨텐츠에서 첫 번째 '@사용자이름' 멘션을 찾아 처리합니다.
-   		 const mentionPattern = /@([\w가-힣]+)/;
-   		 const match = issue_content.match(mentionPattern);
+    if (selectedOptionValue === '' || $('#notionchoice option[value="' + selectedOptionValue + '"]').length === 0) {
+        alert('선택한 이슈 태그가 올바르지 않습니다. 옵션에 존재하지 않거나 빈 문자열입니다.');
+        return false;
+    }
 
- 	   if (match) {
-        // 첫 번째 멘션을 추출하여 이슈 태그로 사용합니다.
-        issue_tag = match[0].replace("@", "");
-        
-  		  }
-  		  console.log(issue_tag);
+
 
 
         if (project_name === '') {
@@ -115,20 +112,21 @@ $(document).ready(function () {
         }
 
         const issue_content_html = issue_content.replace(/\n/g, '<br>');
-        
-        console.error("전송전 user_id: " + user_id);
-
-   // $('.hidden-issue-tag').val(issue_tag);
+       
         $('.hidden-issue-content').val(issue_content_html);
-          // 이슈 태그를 숨겨진 필드에 설정합니다.
-           $('form[name="createIssue"]').append('<input type="hidden" name="tagname" value="' + issue_tag + '">');
-           $('form[name="createIssue"]').append('<input type="hidden" name="user_id" value="' + user_id + '">');
+        
+          user_id = $("#notionchoice option").data("id");
+           
+       
+
+          
+          
+         
+        $('form[name="createIssue"]').append('<input type="hidden" name="user_id" value="' + user_id + '">');
 
 
-    // 폼을 제출합니다.
         $('form[name="createIssue"]').submit();
     });
-
     const fileInput = document.querySelector('.add-file');
     const uploadedFilesContainer = $('.uploaded-files');
     const maxSizePerFileInBytes = 10 * 1024 * 1024; // 10MB in bytes
@@ -228,7 +226,7 @@ $(document).ready(function () {
         }
     });
  //혜원
-$(".issue-content").on("input", function() {
+$("#inputnotionchoice").on("input", function() {
     var textarea = $(this);
     var text = textarea.val();
 
@@ -261,17 +259,27 @@ function sendDataToServer(mention) {
             console.log('데이터가 서버로 전송되었습니다.');
             console.log(response);
            
+            output='';
            	if (response.length > 0) {
-	            console.log('서버 응답:', response[0]);
-	            
-	            testName = response[0].name
-	            user_id = response[0].id
-	            
-	            console.log("testName: " + testName)
-	            console.log("user_id: " + user_id)
+           	$(response).each(function(index,item){
+           	
+           	
+           	 output += "<option value=@"+item.name + " data-id="+item.id+"></option>"
+           	 
+           	
+           	
+           	})
+           	$("#notionchoice").html(output)
+           	console.log(output);
+           	inputdata = $("#inputnotionchoice").val()
+           	console.log(inputdata);
+          
+           	
            	}
-
-        },
+           	else{
+           	$("#notionchoice").html(output)
+              
+        }},
         error: function(jqXHR, textStatus, errorThrown) {
             
             console.error('데이터 전송 중 오류가 발생했습니다:', errorThrown);
@@ -279,5 +287,7 @@ function sendDataToServer(mention) {
     });
     
 }
+
+
 //혜원끝
 });
