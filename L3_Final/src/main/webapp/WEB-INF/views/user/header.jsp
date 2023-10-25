@@ -35,8 +35,9 @@
                 </li>
             </ul>
         </nav><!-- .navbar -->
-
+ <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     </div>
+    
 </header><!-- End Header -->
 <script>
 

@@ -3,7 +3,8 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -68,12 +69,13 @@
              <strong>아이디가 없으신가요?</strong>
          </div>
          <div>
-             <button type="button" id="login"  >
-               <a href="../user/join" id="logins"><strong>회원가입</strong></a>
-             </button><br>
+             <a href="${pageContext.request.contextPath}/user/join" id="login" class="submitbtn">
+       		 <strong>회원가입</strong>
+    		</a>
          </div>
          </div>
      </div>
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
  </form>
  <input type="hidden" id="isChkPassword" name="isChkPassword" value="N" />
  <input type="hidden" id="isChkEmail" name="isChkEmail" value="N" />
@@ -93,6 +95,9 @@
     <!-- Template Main JS File -->
     <script src="../resources/home/assets/js/main.js"></script>
     <script type="text/javascript">
+    if("${loginfail}" == 'loginFailMsg'){
+        alert("아이디나 비밀번호 오류 입니다.");
+     }
     // 오류 메세지 출력
     function printErrMsg(id, msg) {
         const element = document.getElementById(id);
