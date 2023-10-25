@@ -40,7 +40,7 @@ pageEncoding="UTF-8"%>
                 <div class="join-main-container">
                     <div class="jmcont2">
                         <!-- 회사 가입하기-->
-                        <img src="../resources/user/img/joincompany.png" alt="#" style="width: 680px; height: 170px;" class="join-company">
+                        <img src="../resources/user/img/joincompany.svg" alt="#" style="width: 680px; height: 170px;" class="join-company">
                     </div>
                 </div>
             </div>

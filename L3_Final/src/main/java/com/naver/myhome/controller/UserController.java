@@ -393,10 +393,11 @@ public class UserController {
     
     // 로그인 페이지
     @GetMapping("/login")
-    public String login() {
+    public String login(Model mv, HttpSession session) {
+    	 mv.addAttribute("loginfail", session.getAttribute("loginfail"));//세션에 저장된 값을 한 번만 실행될 수 있도록 mv에 저장합니다
+         session.removeAttribute("loginfail");
     	return "user/login";
     }
-
    
     @GetMapping("/loginSuccess")
     public String loginSuccess(@AuthenticationPrincipal User user, RedirectAttributes redirectAttrs) {
@@ -411,10 +412,4 @@ public class UserController {
     		return "mainboard/my-dashboard";
     	}
     }
-
-    @GetMapping("/login-fail")
-    public String loginFail() {
-       return "user/login"; // 로그인 페이지 반환
-    }
-
 }
