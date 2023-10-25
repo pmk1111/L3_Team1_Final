@@ -10,7 +10,7 @@
         </button>
     </div>
 
-    <div class="notify-list-area">
+    <div class="notify-list-area" style="background-color:white;">
         <ul class="notify-list">
             <c:forEach items="${notifications}" var="notification">
                 <li class="notify-room">

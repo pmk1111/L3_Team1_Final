@@ -73,6 +73,7 @@
 				
 				<!-- 혜원 -->
 					<div>
+					<label>언급</label>
 				<input list="notionchoice" id="inputnotionchoice" name="notionchoice" />
 				 <datalist id="notionchoice"></datalist>
 				 
