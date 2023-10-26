@@ -64,7 +64,7 @@ $(document).ready(function() {
                         var notificationItem = `
                             <li class="notify-room">
                                 <div class="user-latest">
-                                    <p class="notify-user-id">${notification.name}님이</p>
+                                    <p class="notify-user-id">${notification.mentioned_BY}님이</p>
                                     <p class="latest-notify">${notification.content}</p>
                                 </div>
                                 <div class="update-time-area">

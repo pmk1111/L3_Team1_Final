@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -260,13 +262,21 @@ public class UserController {
     //혜원
     @PostMapping("/issue-mention")
     @ResponseBody
-    public List<MentionUser> mentionUsers (@RequestBody String requestData) {
+    public List<MentionUser> mentionUsers (@RequestBody String requestData,HttpSession session) {
 
         String name = extractName(requestData);
+        int projectId = (int) session.getAttribute("projectId");
+        System.out.println("project id:"+projectId);
+        System.out.println("name:"+name);
 
 
-        System.out.println("metion tag: " + userService.mentionUser(name)); 
-        return userService.mentionUser(name);
+     
+        
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("projectId", projectId);
+        parameters.put("name", name);
+
+        return userService.mentionUser(parameters);
 
 
 

@@ -2,6 +2,7 @@ package com.naver.myhome.service;
 
 
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -109,14 +110,18 @@ public class UserServiceImpl implements UserService {
 	//주영 끝
 	
 	//혜원
+
+	
+
+		@Override
+	public List<MentionUser> mentionUser(Map<String, Object> parameters) {
+		// TODO Auto-generated method stub
+		 return dao.mentionUser(parameters);
+	}
+
 	@Override
-	public List<MentionUser> mentionUser(String requestData) {
-	      
-	    System.out.println("UserServiceIm: " + dao.mentionUser(requestData));
-	    return dao.mentionUser(requestData);
-	   }
-
-	
-
-	
+	public String getCreateUser(int userId) {
+		// TODO Auto-generated method stub
+		return dao.getCreateUser(userId);
+	}
 }

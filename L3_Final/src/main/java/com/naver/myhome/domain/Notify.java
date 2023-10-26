@@ -12,7 +12,8 @@ public class Notify {
 	    private Integer MENTIONED_ID;
 	    private int POST_ID; 
 	    private int COMMENT_ID; 
-	    private Date NOTIFY_TIME; 
+	    private Date NOTIFY_TIME;
+	    private String MENTIONED_BY;
 		public int getID() {
 			return ID;
 		}
@@ -60,6 +61,12 @@ public class Notify {
 		}
 		public void setNOTIFY_TIME(Date nOTIFY_TIME) {
 			NOTIFY_TIME = nOTIFY_TIME;
+		}
+		public String getMENTIONED_BY() {
+			return MENTIONED_BY;
+		}
+		public void setMENTIONED_BY(String mENTIONED_BY) {
+			MENTIONED_BY = mENTIONED_BY;
 		}
 	
 }

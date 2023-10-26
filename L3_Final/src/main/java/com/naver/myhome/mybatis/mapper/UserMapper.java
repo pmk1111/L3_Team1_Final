@@ -40,19 +40,26 @@ public interface UserMapper {
 		public void delete(String email);
 		
 		public int backInvited (int id);
+		//지니끝
 
-      //혜원
-
-		public List<MentionUser> mentionUser(String requestData);
-
+    
 
 
+
+		  //혜원
+
+		public List<MentionUser> mentionUser(Map<String, Object> parameters);
+
+
+
+		public String getCreateUser(int userId);
+		//혜원끝
 
 
 
 	}
 
 
-//지니끝
+
 
 
