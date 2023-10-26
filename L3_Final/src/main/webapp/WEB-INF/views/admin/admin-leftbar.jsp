@@ -145,6 +145,13 @@
               </a>
             </li>
             
+            <li class="back-icon">
+         	 <div class="back-icon-float" style= "position: absolute; top: 90%; left: 70%;">
+              <a href="../mainboard/my-dashboard" class="return-link" >
+                <img src="../resources/admin/image/back.png" alt="돌아가기" style="width:30px;">
+              </a>
+          	 </div>
+            </li>
        
           </ul>
 
