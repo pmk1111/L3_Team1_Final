@@ -71,9 +71,9 @@
 
 	<insert id="insert" parameterType="user">
 		insert into users
-		(id,email,password,name,company_invited,COMPANY_STATUS)
+		(id,email,password,name)
 		values
-		(user_id.nextval,#{email},#{password},#{name},'','')
+		(user_id.nextval,#{email},#{password},#{name})
 	</insert>
 
 	<select id="getEmplyeeInfoById" parameterType="user"
