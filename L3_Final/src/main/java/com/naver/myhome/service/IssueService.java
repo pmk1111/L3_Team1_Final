@@ -12,7 +12,7 @@ public interface IssueService {
 	
 	public List<Issue> getStatusCount();
 	
-	public List<Issue> getMyWork(String status);
+	public List<Issue> getMyWork(String status, int userId);
 
 	public List<Issue> getIssueList(int projectId);
 	

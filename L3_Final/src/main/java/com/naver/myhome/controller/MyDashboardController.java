@@ -61,7 +61,7 @@ public class MyDashboardController {
 		String formattedDate = currentDate.format(formatter); // 오늘날짜 포맷팅한 값
 
 		String toDo = "To Do";
-		List<Issue> myWork = issueService.getMyWork(toDo);
+		List<Issue> myWork = issueService.getMyWork(toDo, userId);
 		List<Memo> memoList = memoService.getMemoContent(userId);
 		List<Schedule> scheduleList = scheduleService.getSelectedScheduleList(formattedDate, userId);
 
@@ -111,8 +111,11 @@ public class MyDashboardController {
 
 	@GetMapping("/mywork")
 	@ResponseBody
-	public List<Issue> getMyWork(@RequestParam String status){
-		List<Issue> mywork = issueService.getMyWork(status);
+	public List<Issue> getMyWork(@RequestParam String status, Principal principal){
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
+		
+		List<Issue> mywork = issueService.getMyWork(status, userId);
 
 		return mywork;
 	}
