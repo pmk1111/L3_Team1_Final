@@ -9,6 +9,7 @@
 	
     .alarm-icon:hover, .chat-icon:hover { cursor: pointer; }
 </style>
+	<script src="${pageContext.request.contextPath}/notify/js/notify.js"></script>
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
   
@@ -113,6 +114,7 @@
 			<!--/ User -->
 		</ul>
 	</div>
+	      <jsp:include page="../notify/notify.jsp"></jsp:include>
 </nav>
 <script>
 
