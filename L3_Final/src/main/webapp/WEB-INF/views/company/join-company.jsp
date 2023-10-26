@@ -182,7 +182,7 @@
 	   		success: function(response) {
 	       		if (response == 0) {  
 	       			alert("신청하신 도메인 '" +domain+ "'에 정상적으로 신청이 되었습니다.");
-	       			window.location.href = "/myhome/admin/wait-approve";
+	       			window.location.href = "/myhome/user/wait-approve";
 	       		} else  { 
 	       			alert("신청하신 도메인 '" +domain+ "' 은 존재하지 않는 도메인입니다. 도메인을 다시 확인해주세요.");
 	       		}
