@@ -86,12 +86,12 @@
 		UPDATE USERS SET
 		EMAIL = #{email},
 		NAME = #{name},
+		SECURITY = #{security},
 		COMPANY_INVITED = #{companyInvited},
 		COMPANY_STATUS = #{companyStatus}
 		WHERE ID = #{id}
 	</update>
-
-
+	
 
 	<!-- #########################################주영###################################### 
 		END -->
