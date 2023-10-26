@@ -38,6 +38,7 @@ public class SecurityConfig {
 
          http.authorizeRequests().antMatchers("/resources/**/**").permitAll()
          .antMatchers("/upload/**/**").permitAll()
+         .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
               /*.antMatchers("/member/login").permitAll()
               .antMatchers("/member/join").permitAll()
               .antMatchers("/member/idcheck").permitAll()
@@ -46,7 +47,7 @@ public class SecurityConfig {
               .antMatchers("/member/list/").access("hasRole('ROLE_ADMIN')")
               .antMatchers("/member/info").access("hasRole('ROLE_ADMIN')")*/
               .antMatchers("/**").permitAll();
-        
+            
             http.formLogin().loginPage("/user/login")
              .loginProcessingUrl("/user/loginProcess")
              .usernameParameter("email")
