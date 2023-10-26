@@ -7,6 +7,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" 
     	  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta name="_csrf" content="${_csrf.token}">
+	<meta name="_csrf_header" content="${_csrf.headerName}">
     <title>구성원 초대</title>
     <meta name="description" content="" />
 
@@ -38,7 +40,7 @@
 
     <!-- Helpers -->
     <script src="../resources/mainboard/assets/vendor/js/helpers.js"></script>
-
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../resources/mainboard/assets/js/config.js"></script>
@@ -84,7 +86,7 @@
     	var copyText = document.getElementById("url_box");
     	copyText.select();
     	navigator.clipboard.writeText(copyText.value);
-    	alert("복사되었습니다");	
+    	swal("복사되었습니다");	
     }
     </script>
   </head>
@@ -128,7 +130,7 @@
                              <p>전용 URL 주소를 전달하여 회사 직원들을 참여시킬 수 있습니다.
                              <div class="input_box">
                               <span>
-                                <input id="url_box" type="text"  value="${companyinfo.company_domain}"
+                                <input id="url_box" type="text" value= "${companyinfo.domain}"
                                 disabled style="width:320px; font-weight:bold; color:#307cff;">
                              
                               <button class="btn_copy" onclick="copy()" title="Copy" type="button" value="copy" id="copyBtn" 

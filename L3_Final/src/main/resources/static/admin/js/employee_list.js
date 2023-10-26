@@ -9,13 +9,9 @@ $(function() {
         // URL 생성
         var targetUrl = "../admin/list" + tabHref;
     });
+
+
 });
 
 
 
-//프로필 사진
-const profile = this.userPhoto;
-let src = 'img/profile.png';
-if (profile) {
-    src = 'usrupload/' + profile;
-}

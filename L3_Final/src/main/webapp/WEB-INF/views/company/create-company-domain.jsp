@@ -72,7 +72,7 @@
 
 <body>
     <jsp:include page="header.jsp"></jsp:include>
-	<form id="joinform" name="joinform" action="../user/loginSuccess" method="get">
+	<form id="joinform" name="joinform" action="" method="post">
 	    <div class="auth-section after-contets">
 	        <div class="accont-wrap">
 	            <div id="companyJoinMain" class="login-wrap">
@@ -181,7 +181,7 @@
        		success: function(response) {
            		if (response == 0) {  
            			alert("회사정보가 등록되었습니다.");
-           			$("#joinform").submit();
+           			location.href="../mainboard/my-dashboard"
            		} else  { 
                		$("#helpMsg").html("회사정보 등록에 실패하였습니다.");
                		return;

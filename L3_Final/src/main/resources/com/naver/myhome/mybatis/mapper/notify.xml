@@ -6,28 +6,35 @@
 
     <insert id="createalarm" parameterType="com.naver.myhome.domain.Notify">
 
-    
-                    <!-- 이름이 존재하지 않는 경우 새로운 알림을 삽입 -->
-                    insert into NOTIFY (ID, NAME, MENTIONED_ID,POST_ID, CONTENT, NOTIFY_TIME)
-                    values (notify_id.nextval, #{NAME},#{MENTIONED_ID},#{POST_ID},'언급하였습니다.', sysdate)
-   
-        </insert>
+INSERT INTO NOTIFY_POST(ID, NAME,MENTIONED_BY, MENTIONED_ID, POST_ID, CONTENT, NOTIFY_TIME)
+  VALUES (notify_postid.nextval, #{NAME},#{MENTIONED_BY}, #{MENTIONED_ID}, #{POST_ID}, '회원님을 언급하였습니다.', sysdate)
+</insert>
 
-   <!--  <select id="existsNotifyWithName" resultType="int" parameterType="int">
-        select count(*) from NOTIFY where ID = #{ID}
-    </select> -->
+                    
+   
+       
+
     <select id="existsNotifyWithName" resultType="java.lang.Integer" parameterType="int">
-    select count(*) from NOTIFY where ID = #{ID}
+    select count(*) from NOTIFY_POST where MENTIONED_ID = #{MENTIONED_ID}
 </select>
     
     <update id="updatealarm" parameterType="com.naver.myhome.domain.Notify">
-      UPDATE NOTIFY
-    SET 
-        EMAIL = 'hi',
-        CONTENT = 'hellow',
-        NOTIFY_TIME = sysdate
-    WHERE NAME = #{NAME}
+   
+	UPDATE NOTIFY_POST
+	SET 
+    CONTENT = '회원님을 재언급 하였습니다.',
+    NOTIFY_TIME = sysdate
+	WHERE MENTIONED_ID = #{MENTIONED_ID}
+
     </update>
+    
+    <select id="listalarm" resultType="com.naver.myhome.domain.Notify" parameterType="java.lang.Integer">
+    select mentioned_by, content, notify_time
+    from NOTIFY_POST
+    where mentioned_id = #{id}
+</select>
+
+
 </mapper>
 
 

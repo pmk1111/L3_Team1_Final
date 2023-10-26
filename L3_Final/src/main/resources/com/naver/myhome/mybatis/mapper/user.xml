@@ -43,18 +43,33 @@
 		delete from users
 		where email =#{email}
 	</delete>
+	
+	<update id="backInvited"> 
+	update users 
+	set company_invited= 0 
+	where id=#{id} 
+	</update>
 
 	<!-- /지니 -->
 
 	<!-- 혜원 -->
 
-	<select id="mentionUser" parameterType="String"
-		resultType="com.naver.myhome.domain.MentionUser">
-		SELECT id,name FROM users
-		WHERE name LIKE '%' || #{name} || '%'
-		AND company_invited = 1
-	</select>
+<select id="mentionUser" parameterType="map" resultType="com.naver.myhome.domain.MentionUser">
+     SELECT DISTINCT U.ID, U.NAME
+    FROM USERS U
+    INNER JOIN EMPLOYEE E ON U.ID = E.USER_ID
+    INNER JOIN TEAM T ON E.ID = T.EMPLOYEE_ID
+    INNER JOIN PROJECT P ON T.PROJECT_ID = P.ID
+    WHERE P.ID = #{projectId}
+    AND U.NAME LIKE '%' || #{name} || '%'
+</select>
 
+
+ <select id="getCreateUser" resultType="String">
+ SELECT name FROM users WHERE id = #{id}
+ 
+ </select>
+ 
 	<!-- 혜원끝 -->
 
 	<!-- #########################################주영###################################### 
@@ -71,9 +86,9 @@
 
 	<insert id="insert" parameterType="user">
 		insert into users
-		(id,email,password,name,company_invited,COMPANY_STATUS)
+		(id,email,password,name)
 		values
-		(user_id.nextval,#{email},#{password},#{name},'','')
+		(user_id.nextval,#{email},#{password},#{name})
 	</insert>
 
 	<select id="getEmplyeeInfoById" parameterType="user"
@@ -86,14 +101,14 @@
 		UPDATE USERS SET
 		EMAIL = #{email},
 		NAME = #{name},
+		SECURITY = #{security},
 		COMPANY_INVITED = #{companyInvited},
 		COMPANY_STATUS = #{companyStatus}
 		WHERE ID = #{id}
 	</update>
+	
 
-
-
-	<!-- #########################################주영###################################### 
+	<!-- #########################################주영####################################### 
 		END -->
 
 </mapper>

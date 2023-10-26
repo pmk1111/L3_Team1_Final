@@ -13,13 +13,13 @@ import com.naver.myhome.domain.Issue;
 public interface IssueMapper {
 	public int getIssueId();
 	
-	public int getListCount(); 
+	public int getListCount(int projectId); 
 	
 	public List<Issue> getIssueList(int projectId);
 	
 	public List<Issue> getStatusCount();
 	
-	public List<Issue> getMyWork(String status);
+	public List<Issue> getMyWork(String status, int userId);
 	
 	public List<Issue> getFilteredIssueList(Map<String, String> map);
 	

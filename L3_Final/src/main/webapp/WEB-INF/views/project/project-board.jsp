@@ -87,6 +87,11 @@
 		    opacity: 0;
     		animation: fadeIn 0.5s ease-in-out 0.1s forwards;			
 		}
+		
+		.team-img-empty{
+			border-radius: 50% !important;
+		}
+		
     </style>    
 </head>
 
@@ -256,7 +261,7 @@
                                                                         <div class="modal-member-profile">
                                                                         	<c:choose>
                                                                             	<c:when test="${empty TEAM.PIC}">
-                                                                                	<img class="modal-memeber-img" src="../resources/user/img/profile.png">
+                                                                                	<img class="modal-memeber-img team-img-empty" src="../resources/user/img/profile.png">
                                                                                 </c:when>
                                                                              	<c:otherwise>
                                                                              		<img class="modal-memeber-img" src="../resources/project/img/projectboard/team/${TEAM.PIC}">
@@ -655,42 +660,6 @@
     <script src="../resources/project/js/projectboard/team_Ajax.js"></script>
     	
     <script>
-
-    $('.setting-delete').click(function(event) {
-        event.preventDefault();
-        
-        var projectId = $(this).data('projectId');  // 프로젝트 ID 가져오기
-	    let token = $("meta[name='_csrf']").attr("content");
-	    let header = $("meta[name='_csrf_header']").attr("content");	
-
-        swal({
-                title: "정말 프로젝트를 삭제하시겠습니까?",
-                text: "삭제된 프로젝트는 복구가 불가능합니다.",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willExit) => {
-    	        if (willExit) {
-    	            $.ajax({
-    	                url: `../project/delete?projectId=${projectId}`,  // DELETE 요청 URL 구성
-    	                type: 'DELETE',
-				        beforeSend : function(xhr) { // 데이터를 전송하기 전에 헤더에 csrf 값을 설정합니다.
-					           xhr.setRequestHeader(header, token);
-					    },
-    	                success: function(data) {  // 성공적으로 삭제되었을 경우
-    	                        swal("완료", '프로젝트 삭제가 완료되었습니다.', "success")
-    	                        .then(() => {
-    	                            location.href="../project/project-list";  // 페이지 이동
-    	                        });
-    	                },
-    	                error: function(jqXHR, textStatus, errorThrown) {  // 실패했을 경우
-    	                    swal("실패", jqXHR.responseJSON.message || textStatus, "error");
-    	                }
-    	            });
-    	        }
-            });
-    });
     
     var todoCount = ${todoCount};
     var progressCount = ${progressCount};

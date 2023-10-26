@@ -70,90 +70,130 @@
 
           <ul class="menu-inner py-1">
 
-       
+            <li class="menu-item" style="margin:15px 0px 25px 0px;">
+              <a href="index.html" class="menu-link" style="background-color: #9F7AB0; color: white; width: 228px;">
+                <i class="menu-icon tf-icons bx bx-home-circle create-project" style="margin-left: 22px;"></i>
+                <div class="create-project" style="font-weight: bold;">새 프로젝트 만들기</div>
+              </a>
+            </li>
 
             <!-- Dashboard -->
-            
-             <li class="menu-item active">
-              <a href="${pageContext.request.contextPath}/admin/admin-dashboard" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">관리자 대시보드</div>
-              </a>
-            </li>
-            
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/admin/companyinfo" class="menu-link">
+              <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">회사 정보 </div>
+                <div data-i18n="Analytics">내 프로젝트</div>
               </a>
             </li>
 
-            
+            <li class="menu-item active">
+              <a href="tables-basic.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">대시보드</div>
+              </a>
+            </li>
 
-       
+            <!-- Layouts -->
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">즐겨찾는 프로젝트</div>
+              </a>
+            </li>
+            
 
               
 
             <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">구성원 관리</span>
+              <span class="menu-header-text">프로젝트</span>
             </li>
 
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/admin/invite" class="menu-link">
+              <a href="javascript:void(0);" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Layouts">구성원 초대</div>
-              </a>
-            </li>
-            
-            <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/admin/list" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Layouts">구성원 관리</div>
+                <div data-i18n="Layouts">프로젝트 대시보드</div>
               </a>
             </li>
 
-
-
-			 <li class="menu-header small text-uppercase">
-
-              <span class="menu-header-text">통계/리포트</span>
-            </li>
-            
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Layouts">프로젝트 관리</div>
+                <div data-i18n="Layouts">프로젝트 이슈</div>
               </a>
             </li>
 
-      
-
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Layouts">간트차트</div>
+              </a>
+            </li>
 
             <li class="menu-item">
+              <a href="${pageContext.request.contextPath}/calendar/calendar-list" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Layouts">캘린더</div>
+              </a>
+            </li>
 
-              <a href="${pageContext.request.contextPath}/admin/project-access-stats" class="menu-link">
+            <li class="menu-item">
+              <a href="${pageContext.request.contextPath}/documents/documents-list" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-copy"></i>
+                <div data-i18n="Layouts">자료 공유실</div>
+              </a>
+            </li>
 
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <div data-i18n="Layouts">북마크(즐겨찾는 게시물)</div>
+              </a>
+            </li>
+
+            <!-- Components -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">프로젝트 관리</span></li>
+            <!-- Cards -->
+            <li class="menu-item">
+              <a href="cards-basic.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-copy"></i>
+                <div data-i18n="Basic">프로젝트 설정</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="cards-basic.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">프로젝트 접속 통계</div>
+                <div data-i18n="Basic">프로젝트 멤버</div>
               </a>
             </li>
 
             <li class="menu-item">
               <a href="cards-basic.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-crown"></i>
-                <div data-i18n="Basic">사용 통계</div>
+                <div data-i18n="Basic">프로젝트 팀원 초대</div>
               </a>
             </li>
             
-            <li class="back-icon">
-         	 <div class="back-icon-float" style= "position: absolute; top: 90%; left: 70%;">
-              <a href="../mainboard/my-dashboard" class="return-link" >
-                <img src="../resources/admin/image/back.png" alt="돌아가기" style="width:30px;">
+            <!-- Misc -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
+            <li class="menu-item">
+              <a
+                href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+                target="_blank"
+                class="menu-link"
+              >
+                <i class="menu-icon tf-icons bx bx-support"></i>
+                <div data-i18n="Support">회사 직원 초대</div>
               </a>
-          	 </div>
             </li>
-       
+            <li class="menu-item">
+              <a
+                href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
+                target="_blank"
+                class="menu-link"
+              >
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Documentation">관리자</div>
+              </a>
+            </li>
           </ul>
-
         </aside>
-

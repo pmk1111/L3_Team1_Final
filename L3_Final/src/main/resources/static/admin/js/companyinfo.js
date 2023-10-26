@@ -60,9 +60,11 @@ $(document).ready(function() {
 // 전용 URL 수정
 
 $("#saveButton").click(function(){
-	var companyId = 1
-	// var companyName = $("#companyName").val() ;
+	var companyId = $("#companyId").val();
 	var companyDomain = $("#companyDomain").val(); 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content"); 
+
 	if(!companyDomain){
     		alert('전용 URL을 입력하세요');
     		return false;
@@ -76,6 +78,9 @@ $("#saveButton").click(function(){
             companyId: companyId,
             companyDomain: companyDomain
         },
+        beforeSend: function(xhr) {
+           xhr.setRequestHeader(header, token);
+             },
         async: false,
         success: function(response) {
          if(updateName == 1){
@@ -87,19 +92,23 @@ $("#saveButton").click(function(){
     }); //ajax end
         }//else end
    }); //click end  
+
+
 //회사명 수정
-
-
 		
 	$("#saveNameButton").click(function(){
-	var companyId = 1
+	var companyId = $("#companyId").val();
 	var companyName = $("#companyName").val() ;
-	//var companyDomain = $("#companyDomain").val(); 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content"); 
+
 	if(!companyName){
     		alert('회사명을 입력하세요');
     		return false;
+    		$("#companyName").focus();
 		}	else{
     // 서버로 업데이트 요청 보내기
+    console.log("여기는 ajax update")
     $.ajax({
         url: "../admin/updateName",
         type: "POST",
@@ -108,6 +117,9 @@ $("#saveButton").click(function(){
             companyName: companyName
            
         },
+ 		beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token);
+             },        
         async: false,
         success: function(response) {
          if(updateName == 1){

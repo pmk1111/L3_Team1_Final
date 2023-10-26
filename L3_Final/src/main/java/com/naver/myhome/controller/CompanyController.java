@@ -1,7 +1,5 @@
 package com.naver.myhome.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -41,7 +39,6 @@ public class CompanyController {
 	   return "company/create-company-domain";
 	}
 	
-	
 	@ResponseBody	 
 	@PostMapping("/check-duplication-domain")
 	public String chkDuplDomain(String domain) {
@@ -65,20 +62,30 @@ public class CompanyController {
 		String errCode = "";
 		
 		company.setUserId(user.getId());
-
+		
 		int resultCnt = companyService.insert(company);
         
         if(resultCnt > 0) {
         	
         	Company companyResult = companyService.selectCompanyByUser(user);
+        	User tempUser = user;
+        	
+        	tempUser.setId(user.getId());  
+            tempUser.setEmail(user.getEmail());
+        	tempUser.setSecurity("ROLE_ADMIN");
+        	tempUser.setCompanyInvited(companyResult.getId());
+        	tempUser.setCompanyStatus("1");
+        	
+        	userService.updateUserInfo(user);
+        	
+        	
         	System.out.println(companyResult.toString());
-
         	Employee insertEmployee = new Employee();
         	insertEmployee.setUser_id(user.getId());
         	insertEmployee.setCompany_id(companyResult.getId());
         	insertEmployee.setDepartment("HQ");
         	insertEmployee.setPosition("OWNER");
-        	insertEmployee.setAuth("1");
+        	insertEmployee.setAuth("Y");
 
         	employeeService.insert(insertEmployee);
         }else {

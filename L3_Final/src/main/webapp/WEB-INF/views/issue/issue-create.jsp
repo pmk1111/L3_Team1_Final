@@ -3,29 +3,7 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.textcomplete/1.8.5/jquery.textcomplete.min.js"></script>	
 
-<!-- 혜원 -->
-<!-- <script>
-    $(document).ready(function() {
-        $.ajax({
-            url: "../user/issue-mention", // 서버 엔드포인트
-            type: "POST",
-            contentType: "application/json",
-            success: function(data) {
-                // JSON 데이터를 처리하여 웹 페이지에 표시
-                var userList = data;
-                var userListElement = $("#userList");
-                userListElement.empty();
-                userList.forEach(function(mentionUser) {
-                    userListElement.append("<li>" + mentionUser.name + "</li>");
-                });
-            },
-            error: function(error) {
-                console.log("에러 발생: " + JSON.stringify(error));
-            }
-        });
-    });
-</script> -->
-<!-- 혜원끝 -->
+
 <div class="issue-modal">
 	<div class="modal-overlay"></div>
 	<form action="createIssue" name="createIssue" method="post" enctype="multipart/form-data">
@@ -92,7 +70,15 @@
 					<input type="text" class="issue-title-area" name="subject"
 						placeholder="제목을 입력하세요.">
 				</div>
-
+				
+				<!-- 혜원 -->
+					<div>
+					<label>언급</label>
+				<input list="notionchoice" id="inputnotionchoice" name="notionchoice" />
+				 <datalist id="notionchoice"></datalist>
+				 
+				</div>
+				<!-- 혜원 -->
 				<div class="issue-content-wrap">
 					<textarea class="issue-content" name="content" placeholder="내용을 입력하세요."></textarea>
 					<div id="userList"></div>

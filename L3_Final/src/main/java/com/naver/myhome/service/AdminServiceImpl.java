@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.naver.myhome.domain.Access;
+import com.naver.myhome.domain.Company;
 import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.User;
 import com.naver.myhome.mybatis.mapper.AdminMapper;
@@ -22,11 +23,11 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	//구성원 관리
-//	@Override
-//	public Company companyInfo(int companyId) {
-//		
-//		return dao.companyInfo(companyId);
-//	}
+	@Override
+	public Company companyinfo(String email) {
+		
+		return dao.companyinfo(email);
+	}
 	
 	@Override
 	public String companyName(int companyId) {
@@ -118,6 +119,10 @@ public class AdminServiceImpl implements AdminService {
 		dao.backEmp(empId);
 	}
 	
+	@Override
+	public int companyId(String email) {
+		return dao.companyId(email);
+	}
 	// 혜원
 	@Override
 	public List<Access> getAccesslist() {
@@ -136,6 +141,7 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return dao.getMonthCount();
 	}
+
 
 	
 }

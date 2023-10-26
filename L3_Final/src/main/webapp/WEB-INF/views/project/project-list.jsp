@@ -26,6 +26,17 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
     <style>
+    
+    	.dropdown{
+			display: block;
+		    border-top: none;
+		    box-shadow: none;
+		    min-width: auto;
+		    position: relative;
+		    padding-bottom: 0px;
+		    padding-top: 0px;
+    	}
+    	
     	body {
     		font-family: 'Nanum Gothic', sans-serif;
     	}
@@ -439,6 +450,7 @@
                                                 <div class="project-area part-project">
                                                     <ul class="all-project-list part-ul">
                                                         <c:forEach var="partProject" items="${partProjectList}">
+                                                        	<input type="hidden" name="projectId" value="${partProject.ID}">
                                                             <li class="list part-list">
                                                                 <div class="project-info">
                                                                     <div class="project-left">

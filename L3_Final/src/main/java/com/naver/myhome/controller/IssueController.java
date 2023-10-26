@@ -41,6 +41,7 @@ import com.naver.myhome.domain.ProjectAndUser;
 import com.naver.myhome.service.FileService;
 import com.naver.myhome.service.IssueService;
 import com.naver.myhome.service.ProjectAndUserService;
+import com.naver.myhome.service.UserService;
 import com.naver.myhome.service.NotifyService;
 
 @Controller
@@ -49,6 +50,7 @@ public class IssueController {
 
 	private static final Logger logger = LoggerFactory.getLogger(IssueController.class);
 
+	private UserService userService;
 	private IssueService issueService;
 	private FileService fileService;
 	private ProjectAndUserService projectAndUserService;
@@ -58,17 +60,24 @@ public class IssueController {
 	private String saveFolder;
 
 	@Autowired
-	public IssueController(NotifyService notifyService,IssueService issueService, FileService fileService, ProjectAndUserService projectAndUserService) {
+	public IssueController(NotifyService notifyService,IssueService issueService, 
+			FileService fileService, ProjectAndUserService projectAndUserService, 
+			UserService userService) {
 		this.issueService = issueService;
 		this.fileService = fileService;
 		this.projectAndUserService = projectAndUserService;
 		this.notifyService = notifyService;
-		
+		this.userService = userService;
+
 	}
 
 	@GetMapping(value = "/issue-list")
-	public ModelAndView issuelist(int projectId, ModelAndView mv, HttpServletRequest request, Principal principal) {
-		int listcount = issueService.getListCount();
+	public ModelAndView issuelist(ModelAndView mv, HttpServletRequest request, 
+			Principal principal, HttpSession session) {
+		int projectId = (int) session.getAttribute("projectId");
+		logger.info("선택된 프로젝트 id = " + projectId);
+
+		int listcount = issueService.getListCount(projectId);
 		List<Issue> issuelist = issueService.getIssueList(projectId);
 
 		//		시큐리티 적용 전 세션에서 id 가져오기
@@ -105,76 +114,84 @@ public class IssueController {
 
 	@ResponseBody
 	@GetMapping("/getProjectAndTeamInfo")
-	public List<ProjectAndUser> getProjectAndTeamInfo(@RequestParam int projectId){
+	public List<ProjectAndUser> getProjectAndTeamInfo(HttpSession session){
+		int projectId = (int) session.getAttribute("projectId");
 		return projectAndUserService.getProjectAndUserInfo(projectId);
 	}
-	
+
 
 	@PostMapping("createIssue")
-	public String createIssue(Issue issue, Notify notify, HttpServletRequest request, MultipartFile[] uploadfiles) throws Exception {
-	    List<Files> fileList = new ArrayList<>();
-	    int issueId = issueService.getIssueId();
-	    logger.info("가져온 이슈 번호: " + issueId);
+	public String createIssue(Issue issue, Notify notify, HttpServletRequest request, 
+			HttpSession session, Principal principal,@RequestParam(value="user_id",defaultValue="0",required=false) int mentioned_id,
+			String notionchoice,MultipartFile[] uploadfiles) throws Exception {
 
-	    issue.setId(issueId);
-	    issue.setProject_id(1);
-	    issue.setCreate_user(2);
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
+		int projectId = (int) session.getAttribute("projectId");
 
-	    issueService.createIssue(issue);
+		List<Files> fileList = new ArrayList<>();
+		int issueId = issueService.getIssueId();
+		logger.info("가져온 이슈 번호: " + issueId);
 
-	    String tagname = request.getParameter("tagname");
-	   // String user_id=request.getParameter("user_id");
-	    
-		 int user_id = Integer.parseInt(request.getParameter("user_id").trim()); 
-	  
-	    
-	    
-	    notify.setNAME(tagname);
-	    notify.setPOST_ID(issueId);
-	   notify.setMENTIONED_ID(user_id);
-	   
-	    logger.info(issue.toString());
-	    logger.info("이슈 태그: " + notify.getNAME());
-	    logger.info("user_id: " + user_id);
+		issue.setId(issueId);
+		issue.setProject_id(projectId);
+		issue.setCreate_user(userId);
 
-	   
-	        int existingNotifyCount = notifyService.existsNotifyWithName(user_id);
 
-	        if (existingNotifyCount > 0) {
-	           
-	            notifyService.updatealarm(notify);
-	            logger.info("이미 존재하는 태그. 업데이트를 수행하세요.");
-	        } else {
-	            // 존재하지 않는 경우, createalarm을 호출하여 새로운 레코드를 삽입
-	            notifyService.createalarm(notify);
-	        }
+		issueService.createIssue(issue);
+
+		  //혜원
+
+	      String create_user = userService.getCreateUser(userId);
 	    
 
-	    for (MultipartFile file : uploadfiles) {
-	        Files files = new Files();
-	        if (file.getSize() > 0) {
-	            files.setFile_size(file.getSize());
-	            logger.info("업로드 파일: " + file.getOriginalFilename());
+	      notify.setNAME(notionchoice.replace("@", ""));
+	      notify.setMENTIONED_BY(create_user);
+		   notify.setPOST_ID(issueId);
+		   notify.setMENTIONED_ID(mentioned_id);
+		   
+		    logger.info(issue.toString());
+		    logger.info("이슈 태그: " + notify.getNAME());
+		    logger.info("user_id: " + mentioned_id);
 
-	            files.setIssue_id(issueId);
-	            files.setOriginal_name(file.getOriginalFilename());
 
-	            String saveName = fileDBName(file.getOriginalFilename(), saveFolder);
-	            files.setSave_name(saveName);
+	      int existingNotifyCount = notifyService.existsNotifyWithName(mentioned_id);
 
-	            logger.info("업로드한 파일 사이즈 = " + file.getSize());
-	            logger.info("업로드 경로 = " + saveFolder);
+	      if (existingNotifyCount > 0) {
 
-	            file.transferTo(new File(saveFolder + saveName));
-	            fileList.add(files);
-	        }
-	    }
-	    logger.info("파일리스트 크기 = " + fileList.size());
-	    if (!fileList.isEmpty()) {
-	        fileService.uploadFile(fileList);
-	    }
+	         notifyService.updatealarm(notify);
+	         logger.info("이미 존재하는 태그. 업데이트를 수행하세요.");
+	      } else {
+	         // 존재하지 않는 경우, createalarm을 호출하여 새로운 레코드를 삽입
+	         notifyService.createalarm(notify);
+	      }
 
-	    return "redirect:issue-list";
+
+		for (MultipartFile file : uploadfiles) {
+			Files files = new Files();
+			if (file.getSize() > 0) {
+				files.setFile_size(file.getSize());
+				logger.info("업로드 파일: " + file.getOriginalFilename());
+
+				files.setIssue_id(issueId);
+				files.setOriginal_name(file.getOriginalFilename());
+
+				String saveName = fileDBName(file.getOriginalFilename(), saveFolder);
+				files.setSave_name(saveName);
+
+				logger.info("업로드한 파일 사이즈 = " + file.getSize());
+				logger.info("업로드 경로 = " + saveFolder);
+
+				file.transferTo(new File(saveFolder + saveName));
+				fileList.add(files);
+			}
+		}
+		logger.info("파일리스트 크기 = " + fileList.size());
+		if (!fileList.isEmpty()) {
+			fileService.uploadFile(fileList);
+		}
+
+		return "redirect:issue-list";
 	}
 
 

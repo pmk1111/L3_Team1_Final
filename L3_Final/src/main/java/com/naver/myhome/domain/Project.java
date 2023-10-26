@@ -10,6 +10,9 @@ public class Project {
     private String TITLE;
     private String SUBTITLE;
     private String COLOR;
+    private int employeeId;
+    private int COMPANYID;
+    private int AUTH;
     private Date CREATE_AT;
     private Date UPDATE_AT;
     private String CURRENTTIME;

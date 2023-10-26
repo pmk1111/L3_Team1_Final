@@ -8,11 +8,11 @@ public interface IssueService {
 	
 	public int getIssueId();
 	
-	public int getListCount();
+	public int getListCount(int projectId);
 	
 	public List<Issue> getStatusCount();
 	
-	public List<Issue> getMyWork(String status);
+	public List<Issue> getMyWork(String status, int userId);
 
 	public List<Issue> getIssueList(int projectId);
 	

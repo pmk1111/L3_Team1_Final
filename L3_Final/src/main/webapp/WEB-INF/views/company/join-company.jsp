@@ -65,7 +65,7 @@
                         <span>.widus.team</span>
                     </div>
                     <p id="helpMsg" class="join-company-url" style="display: block;">
-                        회사URL 주소는 관리자를 통해 확인할 수 있습니다.
+                        회사URL 주소는 관리자 또는 메일을 통해 확인 하실 수 있습니다.
                 </div>
                 <button id="companyJoinBtn" class="btn-join" onclick="signUpDomain()">참여하기</button>
             </div>
@@ -182,7 +182,7 @@
 	   		success: function(response) {
 	       		if (response == 0) {  
 	       			alert("신청하신 도메인 '" +domain+ "'에 정상적으로 신청이 되었습니다.");
-	       			window.location.href = "/myhome/mainboard/my-dashboard";
+	       			window.location.href = "/myhome/user/wait-approve";
 	       		} else  { 
 	       			alert("신청하신 도메인 '" +domain+ "' 은 존재하지 않는 도메인입니다. 도메인을 다시 확인해주세요.");
 	       		}

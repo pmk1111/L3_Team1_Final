@@ -64,20 +64,20 @@
     </select>
 
     <select id="countEmp" resultType="int">
-        select count(*)
-        from USERS u
-        inner join EMPLOYEE e on u.ID = e.USER_ID
-        where u.COMPANY_INVITED = #{companyId}
-        and u.COMPANY_STATUS = 1
-        and e.STATUS = 0
+        SELECT COUNT(*)
+	    FROM employee e
+	    INNER JOIN users u ON u.ID = e.USER_ID
+	    WHERE (u.COMPANY_INVITED = #{companyId} OR e.COMPANY_ID = #{companyId})
+        AND (u.COMPANY_STATUS = 1 OR u.COMPANY_STATUS IS NULL)
+        AND e.STATUS = 0
     </select>
 
     <select id="countStop" resultType="int">
-        select count(*)
-        from USERS u
-        inner join EMPLOYEE e on u.ID = e.USER_ID
-        where u.COMPANY_INVITED = #{companyId}
-        and u.COMPANY_STATUS = 1
+        SELECT COUNT(*)
+	    FROM employee e
+	    INNER JOIN users u ON u.ID = e.USER_ID
+	    WHERE (u.COMPANY_INVITED = #{companyId} OR e.COMPANY_ID = #{companyId})
+        AND (u.COMPANY_STATUS = 1 OR u.COMPANY_STATUS IS NULL)
         and e.STATUS = 1
     </select>
 
@@ -100,10 +100,10 @@
     </update>
 
     <!-- 회사 정보 -->
-    <select id="companyInfo" resultType="Company">
-        select name, domain
-        from company
-        where id = #{companyId}
+    <select id="companyinfo" resultType="Company"> 
+    	select c.id, c.name, c.domain 
+    	from company c inner join users u on u.id = c.user_id 
+    	where email = #{email} 
     </select>
 
     <select id="companyName" resultType="String">
@@ -132,6 +132,12 @@
         where id = #{companyId}
     </update>
 
+    <select id="companyId" resultType="int">
+    	select c.id
+    	from company c
+    	inner join users u on c.user_id = u.id
+    	where u.email=	#{email}
+    </select>
     <!-- 혜원 -->
     <select id="getAccesslist" resultType="Access">
         SELECT COUNT(*), user_id, connectdate

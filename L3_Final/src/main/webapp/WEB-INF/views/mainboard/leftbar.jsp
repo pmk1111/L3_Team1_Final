@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
+<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
  
           <div class="app-brand demo">
@@ -109,7 +112,7 @@
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="${pageContext.request.contextPath}/project/project-select" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Layouts">프로젝트 대시보드</div>
               </a>
@@ -175,8 +178,9 @@
             </li>
             
             <!-- Misc -->
+            <se:authorize access="hasRole('ROLE_ADMIN')">
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
-            <li class="menu-item">
+<!--             <li class="menu-item">
               <a
                 href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
                 target="_blank"
@@ -185,7 +189,8 @@
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Support">회사 직원 초대</div>
               </a>
-            </li>
+            </li> -->
+            
             <li class="menu-item">
               <a
                 href="../admin/admin-dashboard"
@@ -196,5 +201,6 @@
                 <div data-i18n="Documentation" id="adminLink">관리자</div>
               </a>
             </li>
+            </se:authorize>
           </ul>
         </aside>

@@ -9,7 +9,7 @@
     <meta name="viewport" 
     	  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
 	
-    <title>가입대기</title>
+    <title>이용중지</title>
     <meta name="description" content="" />
  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
  	
@@ -77,6 +77,9 @@
 	 .cancelwait{
 	 	margin:30px 0px 30px 650px;
 	 }
+	 .btn_move{
+	 	margin-bottom:60px
+	 }
     </style>
   </head>
 
@@ -84,22 +87,19 @@
    
       <div class="container">
        <div class="card">
-        <h2 style="text-align:center; margin-top:60px;"> 가입 요청 완료</h2>
-         <img src="../resources/admin/image/wait.png" style="width:400px; height:300px; margin-left:37%;"/>
+        <h2 style="text-align:center; margin-top:60px;"> 서비스 이용 중지</h2>
+         <img src="../resources/user/img/stop.jpg" style="width:400px; height:300px; margin-left:37%;"/>
          <br>
-          <h4 style="text-align:center;">회사 관리자에게 가입 요청</h4>
-           <p style="text-align:center;">관리자 승인 완료 시 접속할 수 있습니다.
+          <h4 style="text-align:center;">서비스 중지 상태로 이용이 불가능 합니다.</h4>
+           <p style="text-align:center;">회사 관리자에게 문의하세요.
  	   
  	   
  	   <div class="moveToLogin">
- 	    <button class="btn_move" type="button">                     	
-		로그인페이지로 이동
-		</button>
+ 	    <button class="btn_move" type="button" onclick="location.href='${pageContext.request.contextPath}/home/home' ">
+		 홈으로 이동
+		 </button>
  	   </div>
  	   
- 	   <div class="cancelwait">
- 	      <a class="cancel-link" href="/home/home">가입 요청 취소</a>
- 	   </div>
  	   </div>
       </div>
        
