@@ -38,6 +38,7 @@ public interface UserService {
 
 	List<MentionUser> mentionUser(String requestData);
 
+	public int backInvited(int id);
 
 
 

@@ -84,7 +84,7 @@ public class UserController {
 
    @PostMapping(value = "/update-process")
    public String userUpdate(User user, Model model, HttpServletRequest request,Principal principal,String check,
-         RedirectAttributes rattr) throws IllegalStateException, IOException {
+	         RedirectAttributes rattr, @AuthenticationPrincipal User user2) throws IllegalStateException, IOException{
    
    String email = principal.getName();
    
@@ -117,7 +117,8 @@ public class UserController {
          }
 
 
-   int result = userService.update(user);
+      int result = userService.update(user);
+      user2.setPic(user.getPic());
    
    System.out.println(result);
    if (result > 0) {
@@ -222,7 +223,7 @@ public class UserController {
     session.invalidate();
     
     
-    return "redirect:../home/home";
+    return "redirect:../../myhome/";
     }
   
     //가입대기 회원 로그인시 보여지는 페이지
@@ -240,8 +241,19 @@ public class UserController {
     	return "user/stop-employee";
     
     }
-    
-    
+   
+    @ResponseBody
+    @PostMapping(value = "/cancel-join")
+    public int cancelJoin(@AuthenticationPrincipal User user  ) {
+    	
+    	int id = user.getId();
+    	System.out.println("컨트롤러 캔슬조인========"+id);
+    	int cancelJoin = userService.backInvited(id); 
+    	System.out.println(cancelJoin);
+    	
+       
+    	return cancelJoin;
+    }
       
    //지니 끝
     

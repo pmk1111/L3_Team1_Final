@@ -67,6 +67,10 @@ public class UserServiceImpl implements UserService {
 	      dao.delete(email);
 	   }
 	   
+	   @Override
+		public int backInvited(int id) {
+			return dao.backInvited(id);
+		}
 	   //지니 끝
 
 	//주영   

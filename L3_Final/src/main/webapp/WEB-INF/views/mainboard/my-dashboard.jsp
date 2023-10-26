@@ -78,7 +78,7 @@
 									<div class="d-flex align-items-end">
 										<div class="col-sm-7">
 											<div class="card-body">
-												<h5 class="card-title text-primary">안녕하세요, ${pinfo.name} 🎉</h5>
+												<h5 class="card-title text-primary">안녕하세요, ${pinfo.name}님 🎉</h5>
 												<p class="mb-4">
 													오늘도 저희 <span class="fw-bold">WidUs</span>와 함께, 즐겁고 활기찬 하루를
 													보내시길 바랍니다.

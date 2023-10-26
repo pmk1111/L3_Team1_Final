@@ -10,7 +10,8 @@
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 <title>가입대기</title>
 <meta name="description" content="" />
 <link rel="stylesheet"
@@ -21,6 +22,9 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="../resources/user/js/wait-approve.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -79,13 +83,24 @@
 	margin-left: 550px;
 }
 
+.btn_cancel{
+	font-size: 15px;
+	border: none;
+	border-radius: 5px;
+	color: white;
+	background-color: #9F7AB0;
+	width: 200px;
+	height: 50px;
+	
+}
+
 .cancel-link {
 	cursor: pointer;
 	text-decoration: underline;
 }
 
 .cancelwait {
-	margin: 30px 0px 30px 650px;
+	margin: 30px 0px 30px 600px;
 }
 </style>
 </head>
@@ -97,18 +112,21 @@
 			<form action="admin/wait-approve" method="GET">
 				<input type="hidden" name="${_csrf.parameterName}"
 					value="${_csrf.token}" />
-
+					 
+				
 				<h2 style="text-align: center; margin-top: 60px;">가입 요청 완료</h2>
 				<img src="../resources/admin/image/wait.png"
 					style="width: 400px; height: 300px; margin-left: 37%;" /> <br>
 				<h4 style="text-align: center;">회사 관리자에게 가입 요청</h4>
 				<p style="text-align: center;">관리자 승인 완료 시 접속할 수 있습니다.
 				<div class="moveToLogin">
-					<button class="btn_move" type="button">로그인페이지로 이동</button>
+					<button class="btn_move" type="button">
+						로그인페이지로 이동</button>
 				</div>
 
 				<div class="cancelwait">
-					<a class="cancel-link" href="/home/home">가입 요청 취소</a>
+					<button class="btn_cancel" type="button" >
+					가입 요청 취소</button>
 				</div>
 			</form>
 		</div>

@@ -184,7 +184,7 @@
                               type="text"
                               class="form-control"
                               id="company"
-                              name="company"_
+                              name="company"
                               value="${userinfo.companyName}"
                               required readOnly
                             />
@@ -218,7 +218,7 @@
     					 
    						 <div class="mt-2">
       					     <button type="submit" class="btn btn-primary me-2" id="updateProfile" >저장</button>
-      					     <button type="reset" class="btn btn-outline-secondary">취소</button>
+      					     <button type="reset" class="btn btn-outline-secondary" onclick="history.back();">취소</button>
   					     </div>
 					  </div>
 					  </div>

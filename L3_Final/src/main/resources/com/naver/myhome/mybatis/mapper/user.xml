@@ -43,6 +43,12 @@
 		delete from users
 		where email =#{email}
 	</delete>
+	
+	<update id="backInvited"> 
+	update users 
+	set company_invited= 0 
+	where id=#{id} 
+	</update>
 
 	<!-- /지니 -->
 
