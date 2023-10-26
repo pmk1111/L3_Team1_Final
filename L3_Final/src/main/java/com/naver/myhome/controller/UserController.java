@@ -241,7 +241,8 @@ public class UserController {
     	return "user/stop-employee";
     
     }
-    
+   
+    @ResponseBody
     @PostMapping(value = "/cancel-join")
     public int cancelJoin(@AuthenticationPrincipal User user  ) {
     	

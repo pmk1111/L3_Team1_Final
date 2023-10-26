@@ -46,8 +46,9 @@
 	
 	<update id="backInvited"> 
 	update users 
-	set company_invited='' 
-	where id=#{id} </update>
+	set company_invited= 0 
+	where id=#{id} 
+	</update>
 
 	<!-- /지니 -->
 
