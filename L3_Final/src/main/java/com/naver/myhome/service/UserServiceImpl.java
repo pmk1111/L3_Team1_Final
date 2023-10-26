@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
 	public int updateUserInfo(User user) {
 		return dao.updateUserInfo(user);
 	}
-
+	
 	//주영 끝
 	
 	//혜원
@@ -111,4 +111,8 @@ public class UserServiceImpl implements UserService {
 	    System.out.println("UserServiceIm: " + dao.mentionUser(requestData));
 	    return dao.mentionUser(requestData);
 	   }
+
+	
+
+	
 }

@@ -65,7 +65,7 @@
                         <span>.widus.team</span>
                     </div>
                     <p id="helpMsg" class="join-company-url" style="display: block;">
-                        회사URL 주소는 관리자를 통해 확인할 수 있습니다.
+                        회사URL 주소는 관리자 또는 메일을 통해 확인 하실 수 있습니다.
                 </div>
                 <button id="companyJoinBtn" class="btn-join" onclick="signUpDomain()">참여하기</button>
             </div>

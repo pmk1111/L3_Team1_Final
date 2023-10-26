@@ -15,8 +15,6 @@ public interface UserMapper {
 
 		public List<User> findUser(int companyInvited);
 
-
-
 		public User isEmail(String username);
 		
 		public int insert(User user);
@@ -24,8 +22,6 @@ public interface UserMapper {
 		public int selectByMail(String eMail);
 
 		public int getUserId(String eMail);
-
-
 
 		public User getEmplyeeInfoById(User user);
 
@@ -46,6 +42,8 @@ public interface UserMapper {
       //혜원
 
 		public List<MentionUser> mentionUser(String requestData);
+
+
 
 
 

@@ -19,7 +19,7 @@ public interface UserService {
 	public User getEmplyeeInfoById(User user);
 
 	public int updateUserInfo(User user);
-
+	
 	// 지니
 	   
 	public User userInfo(String email);
@@ -37,6 +37,9 @@ public interface UserService {
 	public void delete(String email);
 
 	List<MentionUser> mentionUser(String requestData);
+
+
+
 
 	   
 	//지니 끝
