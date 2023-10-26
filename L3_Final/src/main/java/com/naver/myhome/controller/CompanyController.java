@@ -41,7 +41,6 @@ public class CompanyController {
 	   return "company/create-company-domain";
 	}
 	
-	
 	@ResponseBody	 
 	@PostMapping("/check-duplication-domain")
 	public String chkDuplDomain(String domain) {
@@ -65,14 +64,13 @@ public class CompanyController {
 		String errCode = "";
 		
 		company.setUserId(user.getId());
-
+		
 		int resultCnt = companyService.insert(company);
         
         if(resultCnt > 0) {
         	
         	Company companyResult = companyService.selectCompanyByUser(user);
         	System.out.println(companyResult.toString());
-
         	Employee insertEmployee = new Employee();
         	insertEmployee.setUser_id(user.getId());
         	insertEmployee.setCompany_id(companyResult.getId());
