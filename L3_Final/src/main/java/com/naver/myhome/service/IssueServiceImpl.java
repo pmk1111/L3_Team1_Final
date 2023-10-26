@@ -36,8 +36,8 @@ public class IssueServiceImpl implements IssueService{
 	}
 	
 	@Override
-	public List<Issue> getMyWork(String status) {
-		return mapper.getMyWork(status);
+	public List<Issue> getMyWork(String status, int userId) {
+		return mapper.getMyWork(status, userId);
 	}
 
 

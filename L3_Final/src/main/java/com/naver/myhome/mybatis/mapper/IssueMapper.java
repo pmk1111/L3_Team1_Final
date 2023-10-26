@@ -19,7 +19,7 @@ public interface IssueMapper {
 	
 	public List<Issue> getStatusCount();
 	
-	public List<Issue> getMyWork(String status);
+	public List<Issue> getMyWork(String status, int userId);
 	
 	public List<Issue> getFilteredIssueList(Map<String, String> map);
 	
