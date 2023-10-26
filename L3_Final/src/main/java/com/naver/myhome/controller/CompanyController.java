@@ -98,6 +98,7 @@ public class CompanyController {
 		
 		String retResult = "0";
 		Company domainCompany = companyService.selectByDomain(domain);
+		String companyStatus = user.getCompanyStatus();
 		
 		if(domainCompany == null) {
 			retResult =  "1";							//입력한 도메인을 가진 회사가 없을경우에 오류를 리턴 

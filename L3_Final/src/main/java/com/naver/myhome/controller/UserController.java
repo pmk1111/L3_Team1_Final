@@ -49,7 +49,7 @@ import com.naver.myhome.service.UserService;
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+   private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 
    
@@ -74,7 +74,7 @@ public class UserController {
 
 
       user= userService.userInfo(email);
-
+      System.out.println("----------------------------------------------------"+user);
       mv.addObject("userinfo",user);
       mv.setViewName("user/profile");
 
@@ -223,26 +223,41 @@ public class UserController {
     
     
     return "redirect:../home/home";
-
-   
     }
+  
+    //가입대기 회원 로그인시 보여지는 페이지
+    @GetMapping(value = "/wait-approve")
+    public String waitApprove() {
+    	
+    	return "user/wait-approve";
+    }
+    
+   
+    //이용중지 회원 로그인시 보여지는 페이지
+    @GetMapping(value = "/stop-employee")
+    public String stopEmployee() {
+    	         
+    	return "user/stop-employee";
+    
+    }
+    
+    
       
    //지니 끝
     
-	//혜원
+    //혜원
     @PostMapping("/issue-mention")
     @ResponseBody
     public List<MentionUser> mentionUsers (@RequestBody String requestData) {
-		
-		  String name = extractName(requestData);
-		  logger.info("name 뽑아낸 이름"+name);
-		  
-		  
-		  System.out.println("metion tag: " + userService.mentionUser(name)); 
-		  return userService.mentionUser(name);
-		 
-    
-        
+
+        String name = extractName(requestData);
+
+
+        System.out.println("metion tag: " + userService.mentionUser(name)); 
+        return userService.mentionUser(name);
+
+
+
     }
 
     private String extractName(String requestData) {
@@ -261,7 +276,7 @@ public class UserController {
         }
         System.out.println("names: " + names.toString());
         return names.toString().trim();
-    
+
     }
     //혜원끝
 
@@ -291,7 +306,7 @@ public class UserController {
    @ResponseBody
    @PostMapping("/check-email")
    public int checkEmail (String email) {
-	   
+      
      int checkEmail = userService.selectByMail(email);
      if(checkEmail == 0) {
        return 0;
@@ -303,7 +318,7 @@ public class UserController {
    @ResponseBody
    @PostMapping("/save-user")
    public int saveUser(User user) {
-	   
+      
      int checkEmail = userService.insert(user);
      
      if(checkEmail == 0) {
@@ -356,7 +371,7 @@ public class UserController {
             session.setAttribute("verificationCode", verificationCode);
             
             return 0;
-            		
+                  
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -368,49 +383,62 @@ public class UserController {
     @PostMapping("/check-auth-code")
     @ResponseBody
     public String joinSuccess(User user,HttpSession session) {
-    	
-    	int userAuthCode = user.getAuthNum();
-    	int sessionAuthCode = (int)session.getAttribute("verificationCode");
-    	String resultCd = "";
-    	
-    	System.out.println("1 ==> "+userAuthCode);
-    	System.out.println("2 ==> "+sessionAuthCode);
-    	
-    	
-    	
-    	if(sessionAuthCode == userAuthCode || userAuthCode == 0) {
-    		System.out.println(user.toString());
-    		String encPassword = passwordEncoder.encode(user.getPassword());
-    		user.setPassword(encPassword);
-    		userService.insert(user);
-    		
-    		resultCd = "0";
-    	}else {
-    		resultCd = "1";
-    	}
-    	
+       
+       int userAuthCode = user.getAuthNum();
+       int sessionAuthCode = (int)session.getAttribute("verificationCode");
+       String resultCd = "";
+       
+       System.out.println("1 ==> "+userAuthCode);
+       System.out.println("2 ==> "+sessionAuthCode);
+       
+       
+       
+       if(sessionAuthCode == userAuthCode || userAuthCode == 0) {
+          System.out.println(user.toString());
+          String encPassword = passwordEncoder.encode(user.getPassword());
+          user.setPassword(encPassword);
+          userService.insert(user);
+          
+          resultCd = "0";
+       }else {
+          resultCd = "1";
+       }
+       
         return resultCd;
     }
     
     // 로그인 페이지
     @GetMapping("/login")
-    public String login(Model mv, HttpSession session) {
-    	 mv.addAttribute("loginfail", session.getAttribute("loginfail"));//세션에 저장된 값을 한 번만 실행될 수 있도록 mv에 저장합니다
-         session.removeAttribute("loginfail");
-    	return "user/login";
+    public String login() {
+       return "user/login";
     }
+
+    
    
     @GetMapping("/loginSuccess")
     public String loginSuccess(@AuthenticationPrincipal User user, RedirectAttributes redirectAttrs) {
-    	System.out.println(user.toString());
-    	
-    	
-    	Employee emp = employeeService.getEmplyeeInfoById(user);
-    	
-    	if(emp == null) {					//emp 테이블에 정보가 없다면
-    		return "user/confirm";
-    	}else{								//emp 테이블에 정보가 있다면		
-    		return "mainboard/my-dashboard";
-    	}
+       System.out.println(user.toString());
+     
+       
+       Employee emp = employeeService.getEmplyeeInfoById(user);
+       
+       if(emp == null) {               //emp 테이블에 정보가 없다면
+          return "user/confirm";
+       }else if(emp.getStatus() ==1){
+    	   return "user/stop-employee";
+       }else if(user.getCompanyStatus()=="0") {
+    	   return "user/wait-approve";
+       }
+       
+       else //emp 테이블에 정보가 있다면      
+       
+          return "mainboard/my-dashboard";
+       }
+    
+
+    @GetMapping("/login-fail")
+    public String loginFail() {
+       return "user/login"; // 로그인 페이지 반환
     }
+
 }
