@@ -15,7 +15,7 @@
             <c:forEach items="${notifications}" var="notification">
                 <li class="notify-room">
                     <div class="user-latest">
-                        <p class="notify-user-id">${notification.NAME}님이</p>
+                        <p class="notify-user-id">${notification.MENTIONED_BY}님이</p>
                         <p class="latest-notify">${notification.CONTENT}</p>
                     </div>
                     <div class="update-time-area">

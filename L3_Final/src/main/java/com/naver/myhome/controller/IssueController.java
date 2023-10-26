@@ -122,8 +122,8 @@ public class IssueController {
 
 	@PostMapping("createIssue")
 	public String createIssue(Issue issue, Notify notify, HttpServletRequest request, 
-			HttpSession session, Principal principal
-			,MultipartFile[] uploadfiles) throws Exception {
+			HttpSession session, Principal principal,@RequestParam(value="user_id",defaultValue="0",required=false) int mentioned_id,
+			String notionchoice,MultipartFile[] uploadfiles) throws Exception {
 
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
@@ -140,32 +140,31 @@ public class IssueController {
 
 		issueService.createIssue(issue);
 
-		String tagname = request.getParameter("tagname");
-		// String user_id=request.getParameter("user_id");
+		  //혜원
 
-		int user_id = Integer.parseInt(request.getParameter("user_id").trim()); 
+	      String create_user = userService.getCreateUser(userId);
+	    
+
+	      notify.setNAME(notionchoice.replace("@", ""));
+	      notify.setMENTIONED_BY(create_user);
+		   notify.setPOST_ID(issueId);
+		   notify.setMENTIONED_ID(mentioned_id);
+		   
+		    logger.info(issue.toString());
+		    logger.info("이슈 태그: " + notify.getNAME());
+		    logger.info("user_id: " + mentioned_id);
 
 
+	      int existingNotifyCount = notifyService.existsNotifyWithName(mentioned_id);
 
-		notify.setNAME(tagname);
-		notify.setPOST_ID(issueId);
-		notify.setMENTIONED_ID(user_id);
+	      if (existingNotifyCount > 0) {
 
-		logger.info(issue.toString());
-		logger.info("이슈 태그: " + notify.getNAME());
-		logger.info("user_id: " + user_id);
-
-
-		int existingNotifyCount = notifyService.existsNotifyWithName(user_id);
-
-		if (existingNotifyCount > 0) {
-
-			notifyService.updatealarm(notify);
-			logger.info("이미 존재하는 태그. 업데이트를 수행하세요.");
-		} else {
-			// 존재하지 않는 경우, createalarm을 호출하여 새로운 레코드를 삽입
-			notifyService.createalarm(notify);
-		}
+	         notifyService.updatealarm(notify);
+	         logger.info("이미 존재하는 태그. 업데이트를 수행하세요.");
+	      } else {
+	         // 존재하지 않는 경우, createalarm을 호출하여 새로운 레코드를 삽입
+	         notifyService.createalarm(notify);
+	      }
 
 
 		for (MultipartFile file : uploadfiles) {
