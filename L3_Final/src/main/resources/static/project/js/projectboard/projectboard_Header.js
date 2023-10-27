@@ -346,6 +346,7 @@ $(document).ready(function() {
 	                    $admin.find('.admin-invite-button-1').remove();
 	                    $admin.find(".modal-member-role").css("display","block");
 	                    $admin.find(".modal-member-role").append('<span class="modal-member-role-span" style="color: #fff">관리자</span>');
+	                    $admin.find(".setting-manager-hire").replaceWith('<a class="setting-anchor setting-manager-fire" data-emp-id="' + empId + '"><span class="setting-span setting-span-02">관리자 해제</span></a>');
 	                    
 	                },
 	                error: function(jqXHR, textStatus, errorThrown) {
@@ -391,6 +392,8 @@ $(document).ready(function() {
 	                    $admin.find(".modal-member-name").css("width", "269px");
 	                    $admin.find('.modal-member-role-span').remove();
 	                    $admin.find(".modal-member-role").css("display","none");
+	                    
+	                    $admin.find(".setting-manager-fire").replaceWith('<a class="setting-anchor setting-manager-hire" data-emp-id="' + empId + '"><span class="setting-span setting-span-02">관리자 지정하기</span></a>');
 	                    
 	                },
 	                error: function(jqXHR, textStatus, errorThrown) {

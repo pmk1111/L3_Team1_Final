@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +39,7 @@ import com.naver.myhome.domain.Files;
 import com.naver.myhome.domain.Issue;
 import com.naver.myhome.domain.Notify;
 import com.naver.myhome.domain.ProjectAndUser;
+import com.naver.myhome.domain.User;
 import com.naver.myhome.service.FileService;
 import com.naver.myhome.service.IssueService;
 import com.naver.myhome.service.ProjectAndUserService;
@@ -303,10 +305,15 @@ public class IssueController {
 	@ResponseBody
 	public Map<String, Object> statusUpdate(@RequestParam int issueId, 
 			@RequestParam String status, 
-			@RequestParam String selectedUserId) {
+			@RequestParam String selectedUserId,
+			@AuthenticationPrincipal User customUser) {
+		
+		int sessionId = customUser.getId();
+		logger.info("세션아이디 체크" + sessionId);
+		
 		Map<String, Object> response = new HashMap<>();
 		try {
-			issueService.updateStatus(issueId, status, selectedUserId);
+			issueService.updateStatus(issueId, status, selectedUserId, sessionId);
 			response.put("status", "success");
 		} catch (Exception e) {
 			response.put("status", "error");
@@ -320,9 +327,15 @@ public class IssueController {
 	public String issueUpdate(Issue issue, @RequestParam("num") int num, 
 			@RequestParam("check") String check,
 			HttpServletRequest request, RedirectAttributes rattr,
-			MultipartFile[] uploadfiles) throws Exception{
+			MultipartFile[] uploadfiles,
+			@AuthenticationPrincipal User customUser) throws Exception{
+		
+		int sessionId = customUser.getId();
+		logger.info("세션아이디 체크" + sessionId);
+		
 		String url = "";
 		issue.setId(num);
+		issue.setSessionId(sessionId);
 		int result = issueService.issueUpdate(issue);
 
 		if(result==0) {

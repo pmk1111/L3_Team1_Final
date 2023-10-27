@@ -343,7 +343,7 @@
 																						   </c:if>
                                                                                          </div>
                                                                                         <div class="setting-line">
-                                                                                        	<c:if test="${TEAM.MY_AUTH eq 1 and TEAM.AUTH eq 1}">
+                                                                                        	<c:if test="${TEAM.USER_ID ne TEAM.MY_ID and TEAM.MY_AUTH eq 1 and TEAM.AUTH eq 1}">
                                                                                              <a class="setting-anchor setting-manager-fire">
                                                                                                 <span class="setting-span setting-span-02">관리자 해제</span>
                                                                                              </a>

@@ -80,7 +80,7 @@
                     teamList += '</div>';
                     teamList += '<div class="setting-line">';
 
-                    if (data.team[i].my_AUTH === 1 && data.team[i].auth === 1) {
+                    if (data.team[i].my_AUTH === 1 && data.team[i].auth === 1 && data.team[i].my_ID != data.team[i].user_ID) {
                         teamList += '<a class="setting-anchor setting-manager-fire" data-emp-id="' + data.team[i].employee_ID + '">';
 	                    teamList += '<span class="setting-span setting-span-02">관리자 해제</span>';
     	                teamList += '</a>';

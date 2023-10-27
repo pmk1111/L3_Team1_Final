@@ -44,8 +44,8 @@
 	</select>
 	
 	<insert id="insertTeam" parameterType="integer">
-		INSERT INTO TEAM (employee_id, project_id, auth)
-		VALUES (#{empId}, #{projectId}, 0)
+		INSERT INTO TEAM (employee_id, project_id, auth, approver)
+		VALUES (#{empId}, #{projectId}, 0, #{sessionId})
 	</insert>
 	
 	<select id="getAuth" parameterType="integer" resultType="int">
@@ -61,13 +61,13 @@
 	
 	<update id="grantAdmin">
 		UPDATE TEAM
-		SET AUTH = 1
+		SET AUTH = 1, APPROVER = #{sessionId}
 		WHERE EMPLOYEE_ID = #{empId} AND PROJECT_ID = #{projectId}
 	</update>
 	
 	<update id="revokeAdmin">
 		UPDATE TEAM
-		SET AUTH = 0
+		SET AUTH = 0, APPROVER = #{sessionId}
 		WHERE EMPLOYEE_ID = #{empId} AND PROJECT_ID = #{projectId}
 	</update>
 	
