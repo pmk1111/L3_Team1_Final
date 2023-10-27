@@ -76,8 +76,8 @@ public class IssueServiceImpl implements IssueService{
 	}
 	
 	@Override
-	public int updateStatus(int issueId, String status, String selectedUserId) {
-		return mapper.updateStatus(issueId, status, selectedUserId);
+	public int updateStatus(int issueId, String status, String selectedUserId, int sessionId) {
+		return mapper.updateStatus(issueId, status, selectedUserId, sessionId);
 		
 	}
 	

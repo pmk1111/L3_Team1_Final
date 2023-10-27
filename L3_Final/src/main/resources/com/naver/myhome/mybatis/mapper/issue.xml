@@ -104,7 +104,7 @@
   	(#{id}, #{project_id}, 
   	#{create_user}, #{type},
   	#{priority}, #{subject}, #{content},
-  	#{status}, #{create_user}, #{assigned}, SYSDATE, SYSDATE)
+  	#{status}, #{create_user}, #{assigned}, #{create_user}, SYSDATE, SYSDATE)
   </insert>
 
 	<select id="getIssueDetail" resultType="issue">
@@ -130,6 +130,7 @@
   <if test="selectedUserId != null and selectedUserId != ''" >
     , assigned = #{selectedUserId}
   </if>
+  , MODIFIER = #{sessionId}
   WHERE id = #{issueId}
 </update>
 	
@@ -150,7 +151,8 @@
 				subject = #{subject},
 				content = #{content},
 				status = #{status},
-				assigned = #{assigned}
+				assigned = #{assigned},
+				MODIFIER = #{sessionId}
 		where id = #{id}
 				
 	</update>

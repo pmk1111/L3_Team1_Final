@@ -92,6 +92,13 @@
 			border-radius: 50% !important;
 		}
 		
+		.baro-span a {
+		    transition: font-size 0.1s ease-in-out;
+		}
+		
+		.baro-span a:hover {
+		    font-size: 16px;
+		}
     </style>    
 </head>
 
@@ -123,7 +130,7 @@
 
                                     <!-- Project Information -->
                                     <div class="project-left">
-                                        <a class="select-color" style="background-color: ${project.COLOR};"></a>
+                                        <a class="select-color mainboard-color" style="background-color: ${project.COLOR};"></a>
 
                                         <!-- 색 선택 모달 -->
                                         <div id="modal-background">
@@ -157,6 +164,35 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        
+										<div class="modify-background" style="display: none">
+										    <div class="modify-project">
+										    	<div class="modify-header">
+										    		<span style="font-size: 17px; font-weight: 700;">프로젝트 수정</span>
+										    	</div>
+										    	<hr style="margin:12px;">
+										        <div class="modify-body">
+										            <div class="modify-body-info">
+										            	<div class="modify-color">
+										                	<a class="select-color color-in-modify-modal" style="background-color: ${project.COLOR};"></a>
+										            	</div>
+										            	<div class="project-infor">
+											                <div class="modify-title">
+											                    <input class="modify-input input-title" type="text" value="${project.TITLE}">
+											                </div>
+											                <div class="modify-subtitle">
+											                    <input class="modify-input input-subtitle" type="text" value="${project.SUBTITLE}">
+											                </div>
+										                </div>
+										            </div>
+										        </div>
+										        <hr style="margin:12px;">
+										        <div class="modify-footer">
+										        	<button type="button" class="modify-cancle">취소</button>
+                                                    <button type="button" class="modify-submit">확인</button>
+										        </div>
+										    </div>
+										</div>
 
                                         <div class="project-information">
                                             <div class="project-up">
@@ -179,7 +215,7 @@
                                                                 <span>프로젝트 번호</span>
                                                                 <em id="detailSettingProjectSrno">${project.ID}</em>
                                                             </div>
-
+															
                                                             <div class="setting-menu">
                                                                 <div class="setting-line">
                                                                     <a class="setting-anchor setting-exit">
@@ -192,20 +228,22 @@
                                                                         <div class="tooltip-text">프로젝트 나가기 시, 프로젝트 목록에서 삭제되며 게시물 작성 및 수정이 불가합니다.</div>
                                                                     </div>
                                                                 </div>
-
-                                                                <div class="setting-line">
-                                                                    <a class="setting-anchor setting-edit">
-                                                                        <img class="setting-img edit" src="../resources/project/img/projectboard/edit.svg">
-                                                                        <span class="setting-span">프로젝트 수정</span>
-                                                                    </a>
-                                                                </div>
-
+																
+																<c:if test="${Auth == 1}">
+																<div class="setting-line">
+																    <a class="setting-anchor setting-edit" data-project-id="${project.ID}">
+																        <img class="setting-img edit" src="../resources/project/img/projectboard/edit.svg">
+																        <span class="setting-span">프로젝트 수정</span>
+																    </a>
+																</div>
+																
                                                                 <div class="setting-line">
                                                                     <a class="setting-anchor setting-delete" data-project-id="${project.ID}">
                                                                         <img class="setting-img bin" src="../resources/project/img/projectboard/bin.svg">
                                                                         <span class="setting-span">프로젝트 삭제</span>
                                                                     </a>
                                                                 </div>
+                                                                </c:if>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -261,7 +299,7 @@
                                                                         <div class="modal-member-profile">
                                                                         	<c:choose>
                                                                             	<c:when test="${empty TEAM.PIC}">
-                                                                                	<img class="modal-memeber-img team-img-empty" src="../resources/user/img/profile.png">
+                                                                                	<img class="modal-memeber-img team-img-empty" src="../resources/user/img/profile.png" style="border-radius:50%">
                                                                                 </c:when>
                                                                              	<c:otherwise>
                                                                              		<img class="modal-memeber-img" src="../resources/project/img/projectboard/team/${TEAM.PIC}">
@@ -299,19 +337,19 @@
 																						    </a>    
 																						   </c:if>
 																						   <c:if test="${TEAM.MY_AUTH eq 1 and TEAM.MY_ID ne TEAM.USER_ID}">
-																						   	<a class="setting-anchor setting-fire">
+																						   	<a class="setting-anchor setting-fire" data-emp-id="${TEAM.EMPLOYEE_ID}">
 																						       <span class="setting-span setting-span-02">프로젝트 내보내기</span>
 																						   	</a>
 																						   </c:if>
                                                                                          </div>
                                                                                         <div class="setting-line">
-                                                                                        	<c:if test="${TEAM.MY_AUTH eq 1 and TEAM.AUTH eq 1}">
+                                                                                        	<c:if test="${TEAM.USER_ID ne TEAM.MY_ID and TEAM.MY_AUTH eq 1 and TEAM.AUTH eq 1}">
                                                                                              <a class="setting-anchor setting-manager-fire">
                                                                                                 <span class="setting-span setting-span-02">관리자 해제</span>
                                                                                              </a>
                                                                                             </c:if>
                                                                                             <c:if test="${TEAM.MY_AUTH eq 1 and TEAM.AUTH eq 0}">
-                                                                                             <a class="setting-anchor setting-manager-hire">
+                                                                                             <a class="setting-anchor setting-manager-hire" >
                                                                                                 <span class="setting-span setting-span-02">관리자 지정하기</span>
                                                                                              </a>                                                                                             
                                                                                             </c:if>
@@ -488,7 +526,7 @@
                                 <div class="card h-300">
                                     <div class="row row-bordered g-0">
                                         <div>
-                                            <h5 class="card-header m-0 me-2 pb-3" style="font-weight: bold; display: inline-block">최근 이슈 <span style="color: #899bbd; font-size: 14px; font-weight: 500;"><a href="../issue/issue-list?projectId=${projectId}" style="cursor:pointer; color:#392a85;"> | 바로가기</a></span>
+                                            <h5 class="card-header m-0 me-2 pb-3" style="font-weight: bold; display: inline-block">최근 이슈 <span class="baro-span" style="color: #899bbd; font-size: 14px; font-weight: 500;"><a href="../issue/issue-list?projectId=${projectId}" style="cursor:pointer; color:#392a85;"> | 바로가기</a></span>
                                             </h5>
                                             <div class="datatable-search" style="display: inline-block; float: right; margin-right: 14px;">
                                                 <input id="searchInput" class="datatable-input form-control" placeholder="Search..." type="search" title="Search within table" style="margin-top: 18px;">
@@ -669,6 +707,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         var myChart = echarts.init(document.querySelector("#trafficChart"));
 
+        
         var option = {
             tooltip: {
                 trigger: 'item'
