@@ -32,6 +32,8 @@ public class Issue {
     private int resolvedcount;
     private int donecount;
     
+    private int sessionId;
+    
     private List<MultipartFile> files = new ArrayList<>();    // 첨부파일 List
 
 	@Override
