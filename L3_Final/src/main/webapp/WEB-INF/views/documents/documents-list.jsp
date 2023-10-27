@@ -105,7 +105,7 @@
                                             <div class="container">
                                                 <h3 style="margin-bottom: 30px; font-weight: 700;">파일함</h3>
                                                 <input type="text" class="file-search" placeholder="검색어를 입력하세요.">
-                                                <table class="table table-striped">
+                                                <table class="table">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">선택</th>
@@ -116,77 +116,28 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>주간 업무 계획 및 보고서 양식.xlsx</td>
-                                                            <td>8.78kb</td>
-                                                            <td>옥진석</td>
-                                                            <td>2023-09-09 19:21</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">2</th>
-                                                            <td>2023년 00회사 주간 회의</td>
-                                                            <td>-</td>
-                                                            <td>옥진석</td>
-                                                            <td>2023-09-09 19:21</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">3</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">4</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">5</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">6</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">7</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">8</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">9</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">10</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                    </tbody>
+                                                    <tbody>
+													    <c:choose>
+													        <c:when test="${isEmpty}">
+													            <tr>
+													                <td colspan="5" style="text-align:center;">
+													                    <img src="../resources/documents/img/search-null.svg" alt="No documents found" />
+													                </td>
+													            </tr>
+													        </c:when>
+													        <c:otherwise>
+													            <c:forEach var="document" items="${documents}">
+													                <tr>
+													                    <th scope="row">${document.id}</th>
+													                    <td><a href="다운로드URL/${document.id}">${document.originalName}</a></td>
+													                    <td><a href="다운로드URL/${document.id}">${document.fileSize}</a></td>
+													                    <td><a href="다운로드URL/${document.id}">${document.createUser}</a></td>
+													                    <td><a href="다운로드URL/${document.id}">${document.createdAt}</a></td>
+													                </tr>
+													            </c:forEach>
+													        </c:otherwise>
+													    </c:choose>
+													</tbody>
                                                 </table>
 
                                             </div>
