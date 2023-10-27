@@ -16,6 +16,10 @@ $(document).ready(function(){
 		}
 	}) //setting-icon click
 	
+
+		
+		
+	
 	$(document).click(function(e){
 	    if (!$(e.target).hasClass('issue-setting-icon') && !$(e.target).hasClass('issue-setting-dropdown') && !$(e.target).is('li')){
 	        IssueSettingDropdown.fadeOut(200);
@@ -288,8 +292,40 @@ function addStatusUpdateHandler(clickedButton, newStatus) {
 	    });
 	});
 	
+	//북마크 애니메이션 
+	var img = $("#bookmark");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	var issueId = $("#issue_id").val() 
+
+	img.click(function() { //마우스 클릭시 
+		
+	   	$this = $(this);
+	   
+		$.ajax({
+	        url: '../bookmark/bookmark',
+	        data: {
+	            issueId: issueId
+	         },
+	         beforeSend: function(xhr) {
+                 xhr.setRequestHeader(header, token);
+             },
+             async:false,
+             type: "POST",
+	         success: function(result) {
+	         		if(result === 1) {
+	         		console.log("성공인가요?")
+	         		  	$this.attr('src', '../resources/bookmark/img/bookmark_purple.png');
+					} else  {
+					console.log("지워졌나요?")
+					  	$this.attr('src', '../resources/bookmark/img/bookmark.png');
+					}	               
+	   
+	      }//success end
+	    }); //ajax end
+   	 });
+	});//document end
 	
-});// document ready
 
 	function clip(){
 		var url = '';

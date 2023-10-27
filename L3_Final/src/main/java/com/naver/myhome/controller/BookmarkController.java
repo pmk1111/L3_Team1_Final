@@ -1,70 +1,72 @@
 package com.naver.myhome.controller;
 
-import java.io.File;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.naver.myhome.domain.Files;
-import com.naver.myhome.domain.Issue;
-import com.naver.myhome.domain.ProjectAndUser;
-import com.naver.myhome.service.FileService;
-import com.naver.myhome.service.IssueService;
-import com.naver.myhome.service.ProjectAndUserService;
+import com.naver.myhome.domain.Bookmark;
+import com.naver.myhome.domain.User;
+import com.naver.myhome.service.BookmarkService;
+
 
 @Controller
-@RequestMapping(value = "/main")
+@RequestMapping(value = "/bookmark")
 public class BookmarkController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BookmarkController.class);
 
-	private IssueService issueService;
-	private FileService fileService;
+	private BookmarkService bookmarkService;
+	
 	
 
-
-	public BookmarkController(IssueService issueService, FileService fileService) {
-		this.issueService = issueService;
-		this.fileService = fileService;
+	@Autowired
+	public BookmarkController(BookmarkService bookmarkService) {
+		this.bookmarkService = bookmarkService;
 		
 	}
+
+	@ResponseBody
+	@PostMapping(value = "/bookmark")
+	public int Bookmark(@AuthenticationPrincipal User user,@RequestParam ("issueId") int issueId ) {
+
+		int userId = user.getId();
+		
+		int result = bookmarkService.checkBookmark(userId, issueId);
+		System.out.println("컨트롤러 결과보기"+result);
+		
+		if(result == 0) {
+			bookmarkService.addBookmark(userId, issueId);
+			return 1;
+		} else {
+			bookmarkService.deleteBookmark(userId, issueId);
+			return -1;
+		}
 	
-	@GetMapping(value = "/bookmark")
-	public String bookmark(ModelAndView mv, HttpServletRequest request, Principal principal) {
-		return "bookmark/bookmark";
+		
 	}
-
-
-
-
-
+	@ResponseBody
+	@GetMapping(value = "/bookmark-list")
+	public ModelAndView issuelist(ModelAndView mv, @AuthenticationPrincipal User user ) {
+		int userId = user.getId();
+		logger.info("여기는 이슈리스트이 북마크 아이디"+userId);
+		int bookmarkCount = bookmarkService.countBookmark(userId);
+		logger.info("여기는 이슈리스트이 북마크 카운트"+bookmarkCount);
+		List<Bookmark> bookmarkList = bookmarkService.getBookmarkList(userId);
+		logger.info("여기는 이슈리스트이 북마크 리스트"+bookmarkList);
+		mv.setViewName("bookmark/bookmark");
+		mv.addObject("bookmarkList", bookmarkList);
+		mv.addObject("bookmarkCount" ,bookmarkCount);
+		return mv;
+	}
+	
 }

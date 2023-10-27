@@ -40,6 +40,8 @@ import com.naver.myhome.domain.Issue;
 import com.naver.myhome.domain.Notify;
 import com.naver.myhome.domain.ProjectAndUser;
 import com.naver.myhome.domain.User;
+
+import com.naver.myhome.service.BookmarkService;
 import com.naver.myhome.service.FileService;
 import com.naver.myhome.service.IssueService;
 import com.naver.myhome.service.ProjectAndUserService;
@@ -57,6 +59,7 @@ public class IssueController {
 	private FileService fileService;
 	private ProjectAndUserService projectAndUserService;
 	private NotifyService notifyService;
+	private BookmarkService bookmarkService;
 
 	@Value("${file.upload.path}")
 	private String saveFolder;
@@ -64,12 +67,13 @@ public class IssueController {
 	@Autowired
 	public IssueController(NotifyService notifyService,IssueService issueService, 
 			FileService fileService, ProjectAndUserService projectAndUserService, 
-			UserService userService) {
+			UserService userService, BookmarkService bookmarkService) {
 		this.issueService = issueService;
 		this.fileService = fileService;
 		this.projectAndUserService = projectAndUserService;
 		this.notifyService = notifyService;
 		this.userService = userService;
+		this.bookmarkService = bookmarkService;
 
 	}
 
@@ -278,14 +282,16 @@ public class IssueController {
 
 
 	@GetMapping("/issue-detail")
-	public ModelAndView issueDetail(int num, ModelAndView mv, HttpServletRequest request, 
+	public ModelAndView issueDetail(int num, ModelAndView mv, HttpServletRequest request, @AuthenticationPrincipal User user,
 			@RequestHeader(value = "referer", required = false) String beforeURL) {
 		logger.info("referer: " + beforeURL);
 
 		Issue issue = issueService.getIssueDetail(num);
 		List<Files> filelist = fileService.getFileList(num);
+		
+		int bookmarkCk = bookmarkService.checkBookmark(user.getId(), num);
 
-		if(issue==null) {
+		if (issue == null) {
 			logger.info("상세보기 실패");
 			mv.setViewName("issue/no-issue-content");
 			mv.addObject("url", request.getRequestURI());
@@ -294,7 +300,8 @@ public class IssueController {
 			logger.info("상세보기 성공");
 			mv.setViewName("issue/issue-detail");
 			mv.addObject("issuedata", issue);
-			mv.addObject("filelist",filelist);
+			mv.addObject("filelist", filelist);
+			mv.addObject("bookmarkCk", bookmarkCk);
 			mv.addObject("showAlert", false);
 		}
 
