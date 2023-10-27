@@ -287,6 +287,11 @@
 			font-size:13px;
 		}
 		
+		.setting-img-dot{
+			cursor:pointer;
+			height: 13px
+		}
+		
     </style>
 </head>
 
@@ -359,46 +364,10 @@
                                                                         <div class="project-information">
                                                                             <div class="project-up">
                                                                                 <div class="favorite-project" style="">
-                                                                                    <img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${favoritProject.ID}">
+                                                                                    <img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${favoritProject.ID}" data-my-auth="${favoritProject.MY_AUTH}">
                                                                                 </div>
                                                                                 <div class="setting">
-                                                                                    <div class="dropdown">
-                                                                                        <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                                                        </button>
-                                                                                        <div class="dropdown-menu" aria-labelledby="cardOpt3">
-                                                                                            <div class="project-setup-header">
-                                                                                                <span>프로젝트 번호</span>
-                                                                                                <em id="detailSettingProjectSrno">${favoritProject.ID}</em>
-                                                                                            </div>
-
-                                                                                            <div class="setting-menu">
-                                                                                                <div class="setting-line">
-                                                                                                    <a class="setting-anchor setting-exit"> <img class="setting-img share" src="../resources/project/img/projectboard/share.svg">
-                                                                                                        <span class="setting-span">프로젝트 나가기</span>
-                                                                                                    </a>
-
-                                                                                                    <div class="tooltip-container">
-                                                                                                        <img class="setting-info" src="../resources/project/img/projectboard/info.svg">
-                                                                                                        <div class="tooltip-text">프로젝트 나가기 시, 프로젝트
-                                                                                                            목록에서 삭제되며 게시물 작성 및 수정이 불가합니다.</div>
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div class="setting-line">
-                                                                                                    <a class="setting-anchor setting-edit"> <img class="setting-img edit" src="../resources/project/img/projectboard/edit.svg">
-                                                                                                        <span class="setting-span">프로젝트 수정</span>
-                                                                                                    </a>
-                                                                                                </div>
-
-                                                                                                <div class="setting-line">
-                                                                                                    <a class="setting-anchor setting-delete"> <img class="setting-img bin" src="../resources/project/img/projectboard/bin.svg">
-                                                                                                        <span class="setting-span">프로젝트 삭제</span>
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                	<img class="setting-img-dot" src="../resources/project/img/dot.png">
                                                                                 </div>
                                                                                 <div class="project-name">
                                                                                     <a href="project?projectId=${favoritProject.ID}"><span class="project-name-span">${favoritProject.TITLE}</span></a>
@@ -458,46 +427,10 @@
                                                                         <div class="project-information">
                                                                             <div class="project-up">
                                                                                 <div class="favorite-project" style="">
-                                                                                    <img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${partProject.ID}">
+                                                                                    <img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="${partProject.ID}" data-my-auth="${partProject.MY_AUTH}">
                                                                                 </div>
                                                                                 <div class="setting">
-                                                                                    <div class="dropdown">
-                                                                                        <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                                                        </button>
-                                                                                        <div class="dropdown-menu" aria-labelledby="cardOpt3">
-                                                                                            <div class="project-setup-header">
-                                                                                                <span>프로젝트 번호</span>
-                                                                                                <em id="detailSettingProjectSrno">${partProject.ID}</em>
-                                                                                            </div>
-
-                                                                                            <div class="setting-menu">
-                                                                                                <div class="setting-line">
-                                                                                                    <a class="setting-anchor setting-exit"> <img class="setting-img share" src="../resources/project/img/projectboard/share.svg">
-                                                                                                        <span class="setting-span">프로젝트 나가기</span>
-                                                                                                    </a>
-
-                                                                                                    <div class="tooltip-container">
-                                                                                                        <img class="setting-info" src="../resources/project/img/projectboard/info.svg">
-                                                                                                        <div class="tooltip-text">프로젝트 나가기 시, 프로젝트
-                                                                                                            목록에서 삭제되며 게시물 작성 및 수정이 불가합니다.</div>
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div class="setting-line">
-                                                                                                    <a class="setting-anchor setting-edit"> <img class="setting-img edit" src="../resources/project/img/projectboard/edit.svg">
-                                                                                                        <span class="setting-span">프로젝트 수정</span>
-                                                                                                    </a>
-                                                                                                </div>
-
-                                                                                                <div class="setting-line">
-                                                                                                    <a class="setting-anchor setting-delete"> <img class="setting-img bin" src="../resources/project/img/projectboard/bin.svg">
-                                                                                                        <span class="setting-span">프로젝트 삭제</span>
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                	<img class="setting-img-dot" src="../resources/project/img/dot.png">
                                                                                 </div>
                                                                                 <div class="project-name">
                                                                                     <a href="project?projectId=${partProject.ID}"><span class="project-name-span">${partProject.TITLE}</span></a>
@@ -538,7 +471,61 @@
                                             </div>
                                         </div>
 
+										<div class="setting-background" style="display: none">
+											<div id="setting-project">
+                                                    <div class="project-setup-header">
+                                                        <span>프로젝트 번호</span>
+                                                        <em id="detailSettingProjectSrno"></em>
+                                                    </div>
 
+                                                    <div class="setting-menu">
+                                                        <div class="setting-line">
+                                                            <a class="setting-anchor setting-exit"> <img class="setting-img share" src="../resources/project/img/projectboard/share.svg">
+                                                                <span class="setting-span">프로젝트 나가기</span>
+                                                            </a>
+
+                                                            <div class="tooltip-container">
+                                                                <img class="setting-info" src="../resources/project/img/projectboard/info.svg">
+                                                                <div class="tooltip-text">프로젝트 나가기 시, 프로젝트
+                                                                    목록에서 삭제되며 게시물 작성 및 수정이 불가합니다.</div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="setting-line">
+                                                            <a class="setting-anchor setting-delete"> <img class="setting-img bin" src="../resources/project/img/projectboard/bin.svg">
+                                                                <span class="setting-span">프로젝트 삭제</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+											</div>
+										</div>
+										
+										<script>
+											$(function(){
+											    $(document).on('click', '.setting-img-dot', function(event) {
+											        event.stopPropagation(); // 이벤트 버블링 방지
+
+											        var projectId = $(this).closest('li').find('.star').data('project-id'); 
+											        var myAuth = $(this).closest('li').find('.star').data('my-auth'); // my_auth 값을 가져옴
+
+											        // my_auth 값에 따라서 프로젝트 삭제 메뉴 보이기/숨기기
+											        if (myAuth == 0) {
+											            $('.setting-delete').hide();
+											        } else {
+											            $('.setting-delete').show();
+											        }
+
+											        $("#detailSettingProjectSrno").text(projectId);
+											        $(".setting-background").fadeIn(300);
+											    });
+
+											    // 모달 창 외부 클릭 시 모달 창 닫기
+											    $(document).on('click', function() {
+											        $('.setting-background').fadeOut(300);
+											    });
+											})
+										</script>
+										
                                         <div class="allProject" style="display:none">
 
                                             <div class="search-title">
@@ -657,45 +644,13 @@
 								favList += '<div class="project-information">';								
 								favList += '<div class="project-up">';								
 								favList += '<div class="favorite-project">';								
-								favList += '<img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data.favoritProjectList[i].id + '">';								
-								favList += '</div>';								
+								favList += '<img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data.favoritProjectList[i].id + '" data-my-auth="' + data.favoritProjectList[i].my_auth + '">';								
+								favList += '</div>';	
+								
 								favList += '<div class="setting">';								
-								favList += '<div class="dropdown">';								
-								favList += '<button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';								
-								favList += '<i class="bx bx-dots-vertical-rounded" style="margin:0 5px 0 5px"></i>';								
-								favList += '</button>';								
-								favList += '<div class="dropdown-menu" aria-labelledby="cardOpt3">';								
-								favList += '<div class="project-setup-header">';								
-								favList += '<span>프로젝트 번호</span>';								
-								favList += '<em id="detailSettingProjectSrno">' + data.favoritProjectList[i].id + '</em>';								
-								favList += '</div>';								
-								favList += '<div class="setting-menu">';								
-								favList += '<div class="setting-line">';								
-								favList += '<a class="setting-anchor setting-exit">';								
-								favList += '<img class="setting-img share" src="../resources/project/img/projectboard/share.svg">';								
-								favList += '<span class="setting-span">프로젝트 나가기</span>';								
-								favList += '</a>';								
-								favList += '<div class="tooltip-container">';								
-								favList += '<img class="setting-info" src="../resources/project/img/projectboard/info.svg">';								
-								favList += '<div class="tooltip-text">프로젝트 나가기 시, 프로젝트 목록에서 삭제되며 게시물 작성 및 수정이 불가합니다.</div>';								
-								favList += '</div>';								
-								favList += '</div>';								
-								favList += '<div class="setting-line">';								
-								favList += '<a class="setting-anchor setting-edit">';								
-								favList += '<img class="setting-img edit" src="../resources/project/img/projectboard/edit.svg">';								
-								favList += '<span class="setting-span">프로젝트 수정</span>';								
-								favList += '</a>';								
-								favList += '</div>';								
-								favList += '<div class="setting-line">';								
-								favList += '<a class="setting-anchor setting-delete">';								
-								favList += '<img class="setting-img bin" src="../resources/project/img/projectboard/bin.svg">';								
-								favList += '<span class="setting-span">프로젝트 삭제</span>';								
-								favList += '</a>';								
-								favList += '</div>';								
-								favList += '</div>';								
-								favList += '</div>';								
-								favList += '</div>';								
-								favList += '</div>';								
+								favList += '<img class="setting-img-dot" src="../resources/project/img/dot.png">';								
+								favList += '</div>';	
+								
 								favList += '<div class="project-name">';								
 								favList += '<a href="project?projectId=' + data.favoritProjectList[i].id + '">';								
 								favList += '<span class="project-name-span">' + data.favoritProjectList[i].title + '</span>';								
@@ -733,45 +688,13 @@
 								partList += '<div class="project-information">';								
 								partList += '<div class="project-up">';								
 								partList += '<div class="favorite-project">';								
-								partList += '<img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data.partProjectList[i].id + '">';								
-								partList += '</div>';								
+								partList += '<img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data.partProjectList[i].id + '" data-my-auth="' + data.partProjectList[i].my_auth + '">';								
+								partList += '</div>';			
+								
 								partList += '<div class="setting">';								
-								partList += '<div class="dropdown">';								
-								partList += '<button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';								
-								partList += '<i class="bx bx-dots-vertical-rounded" style="margin:0 5px 0 5px"></i>';								
-								partList += '</button>';								
-								partList += '<div class="dropdown-menu" aria-labelledby="cardOpt3">';								
-								partList += '<div class="project-setup-header">';								
-								partList += '<span>프로젝트 번호</span>';								
-								partList += '<em id="detailSettingProjectSrno">' + data.partProjectList[i].id + '</em>';								
-								partList += '</div>';								
-								partList += '<div class="setting-menu">';								
-								partList += '<div class="setting-line">';								
-								partList += '<a class="setting-anchor setting-exit">';								
-								partList += '<img class="setting-img share" src="../resources/project/img/projectboard/share.svg">';								
-								partList += '<span class="setting-span">프로젝트 나가기</span>';								
-								partList += '</a>';								
-								partList += '<div class="tooltip-container">';								
-								partList += '<img class="setting-info" src="../resources/project/img/projectboard/info.svg">';								
-								partList += '<div class="tooltip-text">프로젝트 나가기 시, 프로젝트 목록에서 삭제되며 게시물 작성 및 수정이 불가합니다.</div>';								
-								partList += '</div>';								
-								partList += '</div>';								
-								partList += '<div class="setting-line">';								
-								partList += '<a class="setting-anchor setting-edit">';								
-								partList += '<img class="setting-img edit" src="../resources/project/img/projectboard/edit.svg">';								
-								partList += '<span class="setting-span">프로젝트 수정</span>';								
-								partList += '</a>';								
-								partList += '</div>';								
-								partList += '<div class="setting-line">';								
-								partList += '<a class="setting-anchor setting-delete">';								
-								partList += '<img class="setting-img bin" src="../resources/project/img/projectboard/bin.svg">';								
-								partList += '<span class="setting-span">프로젝트 삭제</span>';								
-								partList += '</a>';								
-								partList += '</div>';								
-								partList += '</div>';								
-								partList += '</div>';								
-								partList += '</div>';								
-								partList += '</div>';								
+								partList += '<img class="setting-img-dot" src="../resources/project/img/dot.png">';								
+								partList += '</div>';				
+								
 								partList += '<div class="project-name">';								
 								partList += '<a href="project?projectId=' + data.partProjectList[i].id + '"><span class="project-name-span">' + data.partProjectList[i].title + '</span></a>';								
 								partList += '<img class="team-count-img" src="../resources/project/img/person.svg" style="margin-left:8.5px">';								
@@ -895,45 +818,13 @@
 								allList += '<div class="project-information">';								
 								allList += '<div class="project-up">';								
 								allList += '<div class="favorite-project">';								
-								allList += '<img class="star all-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data[i].id + '">';								
-								allList += '</div>';								
+								allList += '<img class="star all-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data[i].id + '" data-my-auth="' + data.my_auth + '">';								
+								allList += '</div>';		
+								
 								allList += '<div class="setting">';								
-								allList += '<div class="dropdown">';								
-								allList += '<button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';								
-								allList += '<i class="bx bx-dots-vertical-rounded" style="margin:0 5px 0 5px"></i>';								
-								allList += '</button>';								
-								allList += '<div class="dropdown-menu" aria-labelledby="cardOpt3">';								
-								allList += '<div class="project-setup-header">';								
-								allList += '<span>프로젝트 번호</span>';								
-								allList += '<em id="detailSettingProjectSrno">' + data[i].id + '</em>';								
-								allList += '</div>';								
-								allList += '<div class="setting-menu">';								
-								allList += '<div class="setting-line">';								
-								allList += '<a class="setting-anchor setting-exit">';								
-								allList += '<img class="setting-img share" src="../resources/project/img/projectboard/share.svg">';								
-								allList += '<span class="setting-span">프로젝트 나가기</span>';								
-								allList += '</a>';								
-								allList += '<div class="tooltip-container">';								
-								allList += '<img class="setting-info" src="../resources/project/img/projectboard/info.svg">';								
-								allList += '<div class="tooltip-text">프로젝트 나가기 시, 프로젝트 목록에서 삭제되며 게시물 작성 및 수정이 불가합니다.</div>';								
-								allList += '</div>';								
-								allList += '</div>';								
-								allList += '<div class="setting-line">';								
-								allList += '<a class="setting-anchor setting-edit">';								
-								allList += '<img class="setting-img edit" src="../resources/project/img/projectboard/edit.svg">';								
-								allList += '<span class="setting-span">프로젝트 수정</span>';								
-								allList += '</a>';								
-								allList += '</div>';								
-								allList += '<div class="setting-line">';								
-								allList += '<a class="setting-anchor setting-delete">';								
-								allList += '<img class="setting-img bin" src="../resources/project/img/projectboard/bin.svg">';								
-								allList += '<span class="setting-span">프로젝트 삭제</span>';								
-								allList += '</a>';								
-								allList += '</div>';								
-								allList += '</div>';								
-								allList += '</div>';								
-								allList += '</div>';								
-								allList += '</div>';								
+								allList += '<img class="setting-img-dot" src="../resources/project/img/dot.png">';								
+								allList += '</div>';
+								
 								allList += '<div class="project-name">';								
 								allList += '<a href="project?projectId=' + data[i].id + '">';								
 								allList += '<span class="project-name-span">' + data[i].title + '</span>';								

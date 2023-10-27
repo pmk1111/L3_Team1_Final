@@ -18,4 +18,10 @@ public interface TeamService {
 
 	public Integer getAuth(int sessionId, int projectId);
 
+	public void exitTeam(int projectId, int employeeId);
+
+	public void grantAdmin(int empId, int projectId);
+
+	public void revokeAdmin(int empId, int projectId);
+
 }
