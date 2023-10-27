@@ -324,3 +324,11 @@
         .activity-badge.light-border {
             border-color: #323232;
         }
+        
+        .recent-activity{
+	        margin-left: 6%;
+		    margin-top: 4%;
+		    overflow: auto;
+		    max-height: 268px;
+		    width: 600px;
+        }

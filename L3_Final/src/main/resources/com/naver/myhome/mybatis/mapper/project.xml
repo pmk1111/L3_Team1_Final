@@ -167,4 +167,15 @@
 		where id = #{projectId} 
 	</update>
 	
+	<select id="getRecentStatus" resultType="RecentStatus">
+		SELECT rs.TABLE_NAME, rs.CHANGE_TYPE, u.NAME as MASTER, update_rs.NEW_DATA AS UPDATE_DATA
+		FROM RECENT_STATUS rs
+		JOIN USERS u ON TRIM(SUBSTR(rs.CREATOR_MODIFIER, INSTR(rs.CREATOR_MODIFIER, '-') + 2)) = TO_CHAR(u.ID)
+		LEFT JOIN (
+		    SELECT ID, NEW_DATA
+		    FROM RECENT_STATUS
+		    WHERE TABLE_NAME = 'PROJECT' AND CHANGE_TYPE = 'UPDATE' AND PROJECT_ID = #{project_id}
+		) update_rs ON rs.ID = update_rs.ID
+		WHERE rs.PROJECT_ID = #{project_id}
+	</select>
 </mapper>

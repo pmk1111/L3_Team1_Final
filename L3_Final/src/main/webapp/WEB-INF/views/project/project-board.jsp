@@ -606,48 +606,60 @@
                                         <h5 class="card-header m-0 me-2 pb-3" style="font-weight: bold">최근 활동<span style="color: #899bbd; font-size: 16px; font-weight: 400;"></span>
                                         </h5>
 
-                                        <div class="activity" style="margin-left:6%; margin-top:4%">
-
-                                            <div class="activity-item d-flex">
-                                                <div class="activite-label">32 min</div>
-                                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                                <div class="activity-content">JJOCK - 'Lowest'으로 우선 순위 변경 : <a href="#" class="fw-bold text-dark">프로젝트 생성/수정/삭제 페이지 제작 계획</a> </div>
-                                            </div><!-- End activity item-->
-
-                                            <div class="activity-item d-flex">
+                                        <div class="activity recent-activity">
+                                        
+											<c:forEach var="rs" items="${recentStatus}">
+												<c:if test="${rs.TABLE_NAME eq 'PROJECT' and rs.CHANGE_TYPE eq 'INSERT'}">
+		                                            <div class="activity-item d-flex">
+		                                                <div class="activite-label">32 min</div>
+		                                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+		                                                <div class="activity-content"><strong>축하합니다!</strong> ${rs.MASTER }님이 프로젝트를 생성하였습니다. </div>
+		                                            </div><!-- End activity item-->
+	                                            </c:if>
+												<c:if test="${rs.TABLE_NAME eq 'PROJECT' and rs.CHANGE_TYPE eq 'UPDATE'}">
+		                                            <div class="activity-item d-flex">
+		                                                <div class="activite-label">32 min</div>
+		                                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+		                                                <div class="activity-content">${rs.MASTER } - <strong>${rs.UPDATE_DATA}</strong>로 프로젝트 제목이 변경되었습니다. </div>
+		                                            </div><!-- End activity item-->
+	                                            </c:if>
+											</c:forEach>
+											
+                                           <!--  <div class="activity-item d-flex">
                                                 <div class="activite-label">56 min</div>
                                                 <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                                                <div class="activity-content">[공지] 즐거운 추석 보내세요!</div>
-                                            </div><!-- End activity item-->
+                                                <div class="activity-content">[공지] 즐거운 추석 보내세요!</div><a href="#" class="fw-bold text-dark">프로젝트 생성/수정/삭제 페이지 제작 계획</a>
+                                            </div>End activity item
 
                                             <div class="activity-item d-flex">
                                                 <div class="activite-label">2 hrs</div>
                                                 <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
                                                 <div class="activity-content"> Voluptates corrupti molestias voluptatem</div>
-                                            </div><!-- End activity item-->
+                                            </div>End activity item
 
                                             <div class="activity-item d-flex">
                                                 <div class="activite-label">1 day</div>
                                                 <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
                                                 <div class="activity-content">Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore </div>
-                                            </div><!-- End activity item-->
+                                            </div>End activity item
 
                                             <div class="activity-item d-flex">
                                                 <div class="activite-label">2 days</div>
                                                 <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
                                                 <div class="activity-content">Est sit eum reiciendis exercitationem</div>
-                                            </div><!-- End activity item-->
+                                            </div>End activity item
 
                                             <div class="activity-item d-flex">
                                                 <div class="activite-label">4 weeks</div>
                                                 <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
                                                 <div class="activity-content">Dicta dolorem harum nulla eius. Ut quidem quidem sit quas</div>
-                                            </div><!-- End activity item-->
-
+                                            </div>End activity item -->
+                                             
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
 

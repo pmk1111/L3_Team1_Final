@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.naver.myhome.domain.Issue;
 import com.naver.myhome.domain.Project;
+import com.naver.myhome.domain.RecentStatus;
 import com.naver.myhome.domain.User;
 import com.naver.myhome.service.IssueService;
 import com.naver.myhome.service.ProjectService;
@@ -216,6 +217,8 @@ public class ProjectController {
 		Integer highCount = projectService.highCount(selectedProjectId);
 		Integer middleCount = projectService.middleCount(selectedProjectId);
 		Integer lowCount = projectService.lowCount(selectedProjectId);
+		
+		List<RecentStatus> rs = projectService.getRecentStatus(projectId);
 
 		mv.setViewName("project/project-board");
 		mv.addObject("projectId", selectedProjectId);
@@ -223,6 +226,8 @@ public class ProjectController {
 
 		mv.addObject("Auth", getAuth);
 
+		mv.addObject("recentStatus", rs);
+		
 		mv.addObject("issuelist", issuelist);
 
 		mv.addObject("doneCount", doneCount);
