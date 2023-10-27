@@ -4,15 +4,15 @@ import lombok.Data;
 
 @Data
 public class Bookmark {
-	private int id;
-	private int userId;
-	private int issueId;
-	private String regDate;
-	private String type;
-	private String subject;
-	private String title;
-	private String name;
-	private String currentTime;
-	
-	
+   private int id;
+   private int user_id;
+   private int issue_id;
+   private String regDate;
+   private String type;
+   private String subject;
+   private String title;
+   private String name;
+   private String currentTime;
+   
+   
 }
