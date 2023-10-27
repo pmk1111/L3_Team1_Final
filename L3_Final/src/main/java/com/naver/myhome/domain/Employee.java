@@ -17,4 +17,9 @@ public class Employee {
 	private String pic;
 	private String phone;
 	
+//	mk for chat
+	private String user_name;
+	private String user_pic;
+	private String user_email;
+	
 }
