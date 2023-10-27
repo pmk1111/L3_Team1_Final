@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr"
@@ -13,38 +13,13 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-<link rel="stylesheet" href="/css/search-bar.css">
+<title>북마크 리스트</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<!-- Favicon -->
-<link rel="icon" type="image/x-icon"
-	href="../resources/mainboard/assets/img/favicon/favicon.ico" />
 
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-	href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-	rel="stylesheet" />
+<jsp:include page="../template/cssTemplate.jsp"></jsp:include>
 
-<!-- Icons. Uncomment required icon fonts -->
-<link rel="stylesheet"
-	href="../resources/mainboard/assets/vendor/fonts/boxicons.css" />
 
-<!-- Core CSS -->
-<link rel="stylesheet"
-	href="../resources/mainboard/assets/vendor/css/core.css"
-	class="template-customizer-core-css" />
-<link rel="stylesheet"
-	href="../resources/mainboard/assets/vendor/css/theme-default.css"
-	class="template-customizer-theme-css" />
-<link rel="stylesheet" href="../resources/mainboard/assets/css/demo.css" />
-
-<!-- Vendors CSS -->
-<link rel="stylesheet"
-	href="../resources/mainboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-<link rel="stylesheet"
-	href="../resources/mainboard/assets/vendor/libs/apex-charts/apex-charts.css" />
 
 <style>
 body {
@@ -239,8 +214,7 @@ h6{
 											<div style="display: flex; align-items: center;">
 												<img src="../resources/project/img/projectboard/search.svg"
 													style="margin-right: 7px; height: 30px; opacity: 0.4;">
-												<form name="bookmark-search-form" autocomplete="off"
-													method="post">
+												<form name="bookmark-search-form" autocomplete="off" method="post">
 													<div class="search-bookmark">
 														<div class="search-area">
 															<input type="text" class="bookmark-search"
@@ -256,32 +230,30 @@ h6{
 											<hr>
 											<div class="search-title">
 												<span class="search-result-title">전체 <span
-													class="all-bookmark-count"></span>
+													class="all-bookmark-count">${bookmarkCount}</span>
 												</span>
 											</div>
-
+											
 											<div class="bookmark-area">
-												<c:forEach var="bookmark" items="${bookmark}">
+											
+												<c:forEach var="bookmark" items="${bookmarkList}">
 												  <ul class="myBookmarkContent">
 													<li class="bookmark-search-item">
-														<div class="fixed-kind">
-														  <i class="icons-task">
-														   ::before
-														  </i>
-														  <span class="bookmark-category">${bookmark.category}</span>
-														 </div>
-															<div class="search-text-wrap">
-																<div class="contentTitle">
-																  <p class="contents-tit">${bookmark.title}</p>
-																</div>
-																<p class="content-project">
-																 <em class="project-name">${bookmark.projectName}</em></p>
-															</div>
+													  <div class="fixed-kind">
+														  <span class="bookmark-type">${bookmark.type}</span>
+													  </div>
+														<div class="contentTitle">
+														  <div class="content-cmt">
+																  <p class="contents-tit">${bookmark.subject}</p>
+														  </div>
+														  <p class="content-project">
+																 <em class="project-name">${bookmark.title}</em></p>
+														</div>
 															<div class="bookmark-list-right">
-															  <div class="bookmark-list-name">${bookmark.writer}</div>
+															  <div class="bookmark-list-name">${bookmark.name}</div>
 															  <div class="bookmark-list-date">	 
 														      <div class="recent-modify">
-															<c:set var="timeDiff" value="${bookmark.CURRENTTIME}" />
+															<c:set var="timeDiff" value="${bookmark.currentTime}" />
 
 															<c:if test="${timeDiff lt 1}">
 																<span>방금 전</span>
@@ -318,7 +290,7 @@ h6{
 							
 
 								  <!--   북마크가 없는 경우 -->
-	                    <c:if test="${empty myTotalWorks && empty search_word }">
+	                    <c:if test="${empty bookmarkList && empty search_word }">
 	                       <h6>북마크한 글이 없습니다.</h6>
 	                    </c:if>
 	                    
@@ -383,21 +355,7 @@ h6{
 	
 
 	<!-- Core JS -->
-	<script
-		src="../resources/mainboard/assets/vendor/libs/jquery/jquery.js"></script>
-	<script
-		src="../resources/mainboard/assets/vendor/libs/popper/popper.js"></script>
-	<script src="../resources/mainboard/assets/vendor/js/bootstrap.js"></script>
-	<script
-		src="../resources/mainboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-	<script src="../resources/mainboard/assets/vendor/js/menu.js"></script>
-	<!-- Vendors JS -->
-	<script
-		src="../resources/mainboard/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-	<!-- Main JS -->
-	<script src="../resources/mainboard/assets/js/main.js"></script>
-	<!-- Page JS -->
-	<script src="../resources/mainboard/assets/js/dashboards-analytics.js"></script>
+	 <jsp:include page="../template/jsTemplate.jsp"></jsp:include>
 	
 </body>
 </html>

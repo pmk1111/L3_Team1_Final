@@ -32,8 +32,10 @@
       .leftbar-close{background-color: #9F7AB0; border-radius: 50%;}
       pre{font-family: var(--bs-body-font-family) !important}
       
-      
-      
+      .issue-header{display: flex;
+    				justify-content: space-between;}
+    				
+	  
       .upload-file-content{display:flex; align-items:center; margin: 15px 0px; width: 100%; height: 60px; border:1.4px solid #d9dee3; border-radius: 5px; padding:0 10px}
       .file-item{margin:10px 0;}
       .file-item{border-style:none; background-color: white}
@@ -70,10 +72,24 @@
                 <div class="card">
 
                   <div class="card-body issue-card">
-                    <div class="issue-location">
-                      프로젝트 / ${issuedata.project_name} / ${issuedata.subject}
-
-                    </div>
+                    <div class="issue-header">
+    				  <div class="issue-location">
+       					 프로젝트 / ${issuedata.project_name} / ${issuedata.subject}
+    				  </div>
+    				  <div class="bookmark-area">
+        				<div class="bookmark-icon">
+           				    <c:choose>
+        				   <c:when test ="${bookmarkCk==0 }">
+           				     <img src="../resources/bookmark/img/bookmark.png" id="bookmark" alt="북마크" width=25px>
+           				   </c:when>
+           				   <c:otherwise>
+           				    <img src="../resources/bookmark/img/bookmark_purple.png" id="bookmark" alt="북마크" width=25px>
+           				   </c:otherwise>
+           				 </c:choose>
+       				    </div>
+   	 				  </div>
+					</div>
+                    
                     <hr class="issue-hr">
 
                     <div class="issue-write-info">
