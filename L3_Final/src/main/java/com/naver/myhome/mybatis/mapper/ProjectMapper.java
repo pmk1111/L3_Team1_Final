@@ -13,7 +13,7 @@ public interface ProjectMapper {
 	
 	public int Insert(Project project);
 	
-	public List<Project> getAllProjectList();
+	public List<Project> getAllProjectList(int employeeId);
 	
 	public List<Project> getFavoritProjectList(int employeeId);
 	
@@ -56,5 +56,7 @@ public interface ProjectMapper {
 	public void deleteProject(int projectId);
 
 	public int getEmpId(int sessionId);
+
+	public void modifyProject(String color, String title, String subtitle, int projectId, int sessionId);
 
 }

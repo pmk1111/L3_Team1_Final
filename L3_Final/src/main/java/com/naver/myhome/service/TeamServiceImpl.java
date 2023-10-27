@@ -47,5 +47,20 @@ public class TeamServiceImpl implements TeamService {
 	public Integer getAuth(int sessionId, int projectId) {
 		return mapper.getAuth(sessionId, projectId);
 	}
+
+	@Override
+	public void exitTeam(int projectId, int employeeId) {
+			mapper.exitTeam(projectId, employeeId);
+	}
+
+	@Override
+	public void grantAdmin(int empId, int projectId) {
+		mapper.grantAdmin(empId, projectId);
+	}
+
+	@Override
+	public void revokeAdmin(int empId, int projectId) {
+		mapper.revokeAdmin(empId, projectId);
+	}
 	
 }

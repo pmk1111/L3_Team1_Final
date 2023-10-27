@@ -7,8 +7,10 @@
 	    <selectKey keyProperty="ID" resultType="int" order="BEFORE">
 	        SELECT PROJECT_ID.NEXTVAL FROM DUAL
 	    </selectKey>
-	    	INSERT INTO PROJECT (ID, TITLE, SUBTITLE, COMPANY_ID)
-	    	VALUES (#{ID}, #{TITLE}, #{SUBTITLE}, (SELECT COMPANY_ID FROM EMPLOYEE WHERE ID = #{employeeId}))
+	    INSERT INTO PROJECT (ID, TITLE, SUBTITLE, COMPANY_ID, CREATOR)
+	    SELECT #{ID}, #{TITLE}, #{SUBTITLE}, EMPLOYEE.COMPANY_ID, EMPLOYEE.USER_ID
+	    FROM EMPLOYEE 
+	    WHERE EMPLOYEE.ID = #{employeeId}
 	</insert>
 	
 	<select id="getEmpId" resultType="int">
@@ -19,12 +21,15 @@
 
     <select id="getAllProjectList" resultType="com.naver.myhome.domain.Project">
         SELECT PROJECT.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = PROJECT.ID ) AS TEAMCOUNT
+        , (SELECT AUTH FROM TEAM WHERE EMPLOYEE_ID = #{employeeId} AND PROJECT_ID = PROJECT.ID) AS MY_AUTH
         FROM PROJECT
+        WHERE COMPANY_ID = (SELECT COMPANY_ID FROM EMPLOYEE WHERE ID = #{employeeId})
         ORDER BY CREATED_AT DESC
     </select>
     
     <select id="getFavoritProjectList" resultType="com.naver.myhome.domain.Project">
         SELECT P.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = P.ID ) AS TEAMCOUNT
+        , (SELECT AUTH FROM TEAM WHERE EMPLOYEE_ID = #{employeeId} AND PROJECT_ID = P.ID) AS MY_AUTH
         FROM PROJECT P
         JOIN FAVORITES F ON P.ID = F.PROJECT_ID
         WHERE F.EMPLOYEE_ID = #{employeeId}
@@ -33,12 +38,14 @@
     
     <select id="getPartProjectList" resultType="com.naver.myhome.domain.Project">
 		SELECT p.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = P.ID ) AS TEAMCOUNT
+		, (SELECT AUTH FROM TEAM WHERE EMPLOYEE_ID = #{employeeId} AND PROJECT_ID = P.ID) AS MY_AUTH
 		FROM PROJECT P
 		JOIN TEAM T ON P.ID = T.PROJECT_ID
 		WHERE T.EMPLOYEE_ID = #{employeeId}
 		AND P.ID NOT IN (
 		    SELECT F.PROJECT_ID
 		    FROM FAVORITES F
+		    WHERE F.EMPLOYEE_ID = #{empoyeeId}
 		)
 		ORDER BY CREATED_AT DESC
     </select>
@@ -97,7 +104,7 @@
 	SELECT COALESCE(
 	    (SELECT COUNT(*)
 	     FROM ISSUE
-	     WHERE UPDATED_AT >= SYSDATE - INTERVAL '7' DAY AND PRIORITY = 'Critical' AND PROJECT_ID = #{projectId}
+	     WHERE UPDATED_AT >= SYSDATE - INTERVAL '7' DAY AND PRIORITY = 'critical' AND PROJECT_ID = #{projectId}
 	     GROUP BY PRIORITY), 0) FROM dual
     </select>
     
@@ -153,5 +160,11 @@
 		DELETE PROJECT
 		WHERE ID = #{projectId}
 	</delete>
+	
+	<update id="modifyProject">
+		update project
+		set color=#{color}, title = #{title}, subtitle = #{subtitle}, modifier = #{sessionId}
+		where id = #{projectId} 
+	</update>
 	
 </mapper>
