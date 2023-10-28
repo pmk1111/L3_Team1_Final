@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -95,21 +96,15 @@ public class ChatController {
 	public boolean createRoom(@RequestParam int participant, Principal principal) {
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
-		
-		logger.info("가져온 사용자 정보 = " + userId);
-		logger.info("가져온 참여자 정보 = " + participant);
-		
 		int employeeId = employeeService.getEmployeeId(userId);
-		logger.info("가져온 내 직원 id = " + employeeId);
 		
 		ChatRoom chatRoom = chatRoomService.getChatRoomInfo(employeeId, participant);
-		logger.info("가져온 채팅방 정보 = " + chatRoom);
 		
 		int getResult=0;
 		if(chatRoom == null) {
 			getResult = chatRoomService.createChatRoom(employeeId, participant);
+			logger.info("채팅방 생성 성공...!");
 		}
-		logger.info("createRoom 결과 = " + getResult);
 		
 		boolean result = false;
 		if(getResult == 1) {
@@ -136,8 +131,33 @@ public class ChatController {
 		ChatRoom chatRoom = chatRoomService.getChatRoomInfo(employeeId, participant);
 		int selectedRoomNum = chatRoom.getId();
 		logger.info("가져온 채팅방은...?? = " + selectedRoomNum);
-		
+
 		return selectedRoomNum;
+	}
+	
+	@PostMapping("/update-read-cnt")
+	@ResponseBody
+	public boolean updateReadCnt(@RequestParam int selectedRoomNum, Principal principal) {
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
+		
+		logger.info("가져온 사용자 정보 = " + userId);
+		
+		int employeeId = employeeService.getEmployeeId(userId);
+		
+		ChatRoom chatRoom = chatRoomService.getChatRoomInfoById(selectedRoomNum);
+		logger.info("업데이트할 채팅방 = " + selectedRoomNum);
+		int notRead = chatRoom.getNot_read();
+		int resentSender = chatRoom.getResent_sender();
+		
+		boolean result = false;
+		if(notRead == 1 && resentSender != employeeId) {
+			chatRoomService.updateReadCnt(selectedRoomNum);
+			result = true;
+		} else if(notRead == 0) {
+			result = false;
+		}
+		return result;
 	}
 	
 	@GetMapping("/get-chat-list")
@@ -149,17 +169,34 @@ public class ChatController {
 		logger.info("가져온 사용자 정보 = " + userId);
 		
 		int employeeId = employeeService.getEmployeeId(userId);
-		logger.info("가져온 safasfasfsa 직원 id = " + employeeId);
-		logger.info("가져온 참여자 정보 = " + msgTo);
+//		logger.info("가져온 safasfasfsa 직원 id = " + employeeId);
+//		logger.info("가져온 참여자 정보 = " + msgTo);
 		
 		ChatRoom chatRoom = chatRoomService.getChatRoomInfo(employeeId, msgTo);
 		int selectedRoomNum = chatRoom.getId();
-		logger.info("가져온 채팅방은...?? = " + selectedRoomNum);
+//		logger.info("가져온 채팅방은...?? = " + selectedRoomNum);
+		
+		int resentSender = chatRoom.getResent_sender();
+		int notRead = chatRoom.getNot_read();
+		
+		if(resentSender != employeeId && notRead == 1) {
+			chatRoomService.updateReadCnt(selectedRoomNum);
+		}
 		
 		List<Chat> chatList = chatService.getChatList(selectedRoomNum);
-		for(Chat chat : chatList) {
-			logger.info("가져온 채팅 리스트" + chat);
-		}
+//		for(Chat chat : chatList) {
+//			logger.info("가져온 채팅 리스트" + chat);
+//		}
+		
+		return chatList;
+		
+	}
+	
+	@GetMapping("/get-chat-list-by-id")
+	@ResponseBody
+	public List<Chat> getChatList(@RequestParam int selectedRoomNum){
+
+		List<Chat> chatList = chatService.getChatList(selectedRoomNum);
 		
 		return chatList;
 		
@@ -179,14 +216,14 @@ public class ChatController {
 		int selectedRoomNum = chatRoom.getId();
 		logger.info("선택한 채팅방 번호 = " + selectedRoomNum);
 		
-		logger.info("보낼 메시지 = " + resultText);
-		logger.info("메시지 받는 사람 = " + msgTo);
+//		logger.info("보낼 메시지 = " + resultText);
+//		logger.info("메시지 받는 사람 = " + msgTo);
 		int sqlResult = chatService.insertChat(resultText, selectedRoomNum, employeeId, msgTo);
 		
 		boolean result = false;
 		if(sqlResult == 1) {
 			result = true;
-			chatRoomService.updateResentContent(resultText, selectedRoomNum);
+			chatRoomService.updateResentContent(resultText, selectedRoomNum, employeeId);
 		} else {
 			result = false;
 		}

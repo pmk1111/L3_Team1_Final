@@ -3,6 +3,7 @@
 
 
 <article class="chatting-layer">
+	<input type="hidden" class="selected-room-num" name="selectedRoomNum" value="">
 	<div class="chat-menu-top">
 		<strong class="chat-menu-txt">채팅</strong>
 		<button class="chat-menu-close-btn">
@@ -90,10 +91,41 @@
 </article>
 
 <script>
-//웹소켓으로 전송할 텍스트가 줄바꿈이 적용되게 함
+var ws;
 var csrfToken = $("meta[name='_csrf']").attr("content");
 
-$('.chat-icon, .chat-room').click(function () {
+const chattingLayer = $('.chatting-layer');
+const chattingRoom = $('.chatting-room');
+const CreateChat = $('.create-chat-icon').attr('src');
+const backBtn = $('.back-btn');
+
+//채팅방 업데이트 날짜를 파싱하는 함수임
+function chatRoomUpdateDate(updated_at) {
+    const currentDate = new Date();
+    const messageDate = new Date(updated_at);
+
+    if (currentDate.toDateString() === messageDate.toDateString()) {
+        // 오늘인 경우
+        return '오늘';
+    } else {
+        currentDate.setDate(currentDate.getDate() - 1); // 어제의 날짜
+        if (currentDate.toDateString() === messageDate.toDateString()) {
+            // 어제인 경우
+            return '어제';
+        } else {
+            // 그 외의 경우 yyyy-MM-dd 형식으로 표시
+            const year = messageDate.getFullYear();
+            const month = (messageDate.getMonth() + 1).toString().padStart(2, '0');
+            const day = messageDate.getDate().toString().padStart(2, '0');
+            return year + '-' + month + '-' + day;
+        }
+    }
+}//chatRoomUpdateDate end
+
+
+
+
+function getChatRoomList() {
     $.ajax({
         type: "GET",
         url: "${pageContext.request.contextPath}/get-chat-room-list",
@@ -103,16 +135,28 @@ $('.chat-icon, .chat-room').click(function () {
         success: function (response) {
             $('.chat-list').empty();
             if (response.length > 0) {
-                str = '<li class="chat-room" data-room-id="3">'
-                str += '<div class="chat-img-user-latest">'
-                str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>'
-                str += '<div class="user-latest">'
-                str += '<p class="chat-user-id">JJok</p>'
-                str += '<p class="latest-chat">' + response.resent_content + '</p></div>'
-                str += '<div class="update-time-area">'
-                str += '<span class="update-time">' + response.updated_at + '</span></div></li>'
+                response.forEach(function (item) {
+										
+                		if(item.not_read === 1 && item.resent_sender == item.other_participant_id){
+                    	str = '<li class="chat-room" value="' + item.id + '" style="background-color:#e6e7ff;">'
+                		} else{
+                			str = '<li class="chat-room" value=" ' + item.id + '">'
+                		}
+                    str += '<input type="hidden" class="other-participant" value="' + item.other_participant_id + '">'
+                    str += '<div class="chat-img-user-latest">'
+                    str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>'
+                    str += '<div class="user-latest">'
+                    str += '<p class="chat-user-id">' + item.participant_name + '</p>'
+                    if(item.resent_content.length > 20){
+                    	str += '<p class="latest-chat">' + item.resent_content.substring(0, 20) + '...</p></div>'
+                    } else{
+                    	str += '<p class="latest-chat">' + item.resent_content + '</p></div>'
+                    }
+                    str += '<div class="update-time-area">'
+                    str += '<span class="update-time">' + chatRoomUpdateDate(item.updated_at) + '</span></div></li>'
 
-                $('.chat-list').append(str);
+                    $('.chat-list').append(str);
+                });//forEach end
                 //수정 필요
             } else {
                 str = '<h4 class="no-chat-room">채팅방이 없습니다.</h4>'
@@ -123,8 +167,286 @@ $('.chat-icon, .chat-room').click(function () {
             console.error("Error: " + error);
         }
     }) // ajax end
-}) // .chat-icon, .chat-room click end
+};//getChatRoomList end
 
+$('.chat-room-list').click(function () {
+    
+}) //.chat-room click end
+
+$(document).on('click', '.chat-room', function () {
+    let chatRoomId = $(this).val();
+    let otherParticipant = $(this).find('.other-participant').val();
+    console.log('선택한 채팅방 = ' + chatRoomId);
+    $('.msg-to').val($('.other-participant').val());
+
+    getChatListById(chatRoomId, otherParticipant);
+
+    const chatUserName = $(this).find('.chat-user-id');
+    console.log(chatUserName.text());
+    $('.chat-user-txt').text(chatUserName.text());
+
+    $('.chatting-layer').css('display', 'none');
+    $('.chatting-room').css('display', 'block');
+
+    try {
+
+        if (ws !== undefined && ws.readyState !== WebSocket.CLOSED) {
+            console.log("WebSocket is already opened.");
+            return;
+        }
+
+        var url = "ws://" + location.host + "${pageContext.request.contextPath}/echo.do?roomNum=" + chatRoomId;
+        // 여기 url에 roomnumber 붙여서 보낸 다음, handler에서 쿼리스트링으로 추출한다.
+        ws = new WebSocket(url);
+        console.log(url);
+
+
+    } catch (error) {
+        console.error("방 번호 가져오기 실패: " + error);
+    }
+
+    ws.onopen = function (event) {
+        console.log('연결되었습니다.')
+        console.log('연결정보' + event);
+    };
+    ws.onmessage = function (event) {
+        console.log('전송 이벤트 발생.')
+        console.log("onmessage로 찍힌 값 = " + event.data);
+        writeResponse(event.data);
+    }
+
+    $('.chat-menu-close-btn, .back-btn').click(function () {
+        if (ws !== undefined && ws.readyState === WebSocket.OPEN) {
+            ws.close();
+        }
+
+        ws.onclose = function (event) {
+            console.log("Connection closed!!");
+        };
+    });
+
+    $('.chat-icon').click(function () { //채팅창 열린 상태에서 이거 누르면 닫히게 되니 display가 none인데 웹소켓 열려있으면 닫아버림
+        if ($('.chatting-layer').css('display') === 'none' && ws !== undefined && ws.readyState === WebSocket.OPEN) {
+            ws.close();
+        }
+        ws.onclose = function (event) {
+            console.log("Connection closed!!");
+
+        };
+    });
+
+    $('.alarm-icon').click(function () {
+        if ($('.chatting-room').css('display') === 'block') {
+            $('.chatting-room').css('display', 'none');
+            ws.close();
+        }
+        ws.onclose = function (event) {
+            console.log("Connection closed!!");
+
+        };
+    }) //alarm-icon click end
+
+    $('.alarm-icon').click(function () {
+        if ($('.chatting-layer').css('display') === 'block') {
+            $('.chatting-layer').css('display', 'none');
+        }
+    });
+});//chatroom click end
+
+//getChatList
+function getChatListById(chatRoomId, otherParticipant) {
+    let previousMessageDate = null; // 이전 메시지의 날짜를 저장할 변수
+    $.ajax({
+        type: "GET",
+        url: "${pageContext.request.contextPath}/get-chat-list-by-id",
+        data: { selectedRoomNum: chatRoomId },
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        },
+        success: function (response) {
+            $('.wrap').empty();
+            let nowDate = new Date();
+            let nowDateParse = getYyyyMmDd(nowDate);
+            console.log("파싱된 오늘 날짜는 = " + nowDateParse);
+
+            response.forEach(function (item) {
+                let msgCreateDate = new Date(item.created_at);
+                let msgCreateDateParse = getYyyyMmDd(msgCreateDate);
+                console.log("파싱된 메시지 작성일 = " + msgCreateDateParse);
+
+                // 날짜 구분 표시를 위한 비교
+                if (previousMessageDate !== msgCreateDateParse) {
+                    let formattedDateWithDay = formatKoreanDateWithDay(msgCreateDateParse);
+                    let dateDisplay = '<div class="chat-date"><span class="chat-date-txt">' + formattedDateWithDay + '</span></div>';
+                    $('.wrap').append(dateDisplay);
+                    previousMessageDate = msgCreateDateParse; // 이전 메시지의 날짜 업데이트
+                }
+
+                let sendTime = new Date(item.created_at);
+                let hours = sendTime.getHours();
+                let minutes = sendTime.getMinutes();
+                let period = "오전";
+
+                if (hours === 0) {
+                    hours = 12; // 오전 12시를 00으로 표시
+                } else if (hours === 12) {
+                    period = "오후";
+                } else if (hours > 12) {
+                    period = "오후";
+                    hours -= 12;
+                }
+
+                // 시간과 분을 두 자리로 표시하기
+                let formattedHours = hours < 10 ? '0' + hours : hours;
+                let formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+                let MsgsendTime = period + " " + formattedHours + ":" + formattedMinutes;
+
+                if (item.msg_from == otherParticipant) {
+                    let str = '<div class="chat not-me">';
+                    str += '<div class="icon">';
+                    str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>';
+                    str += '<input type="hidden" class="receiver" value="' + otherParticipant + '">'
+                    str += '<div class="textbox">' + item.content + '</div>';
+                    str += '<div class="chat-read-send">';
+                    str += '<span class="read-count">1</span>';
+                    str += '<span class="send-time">' + MsgsendTime + '</span></div></div>'
+                    $('.wrap').append(str);
+                } else {
+                    let str = '<div class="chat me">';
+                    str += '<div class="icon">';
+                    str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>';
+                    str += '<input type="hidden" class="receiver" value="' + item.msg_from + '">'
+                    str += '<div class="textbox">' + item.content + '</div>';
+                    str += '<div class="chat-read-send">';
+                    str += '<span class="read-count">1</span>';
+                    str += '<span class="send-time">' + MsgsendTime + '</span></div></div>'
+                    $('.wrap').append(str);
+                }
+            }); // forEach end
+        },
+        error: function (error) {
+            console.error("Error: " + error);
+        }
+    }); //ajax end
+}; // getChatList end
+
+$('.chat-icon').click(function () {
+    if (chattingLayer.css('display') === 'none' && chattingRoom.css('display') === 'none') {
+        chattingLayer.fadeIn(100);
+        $('.on').removeClass('on');
+        $('.chat-on').addClass('on');
+
+        $('.chat-contact-area').hide();
+        $('.chat-list-area').show();
+
+        getChatRoomList();
+    } else {
+        chattingLayer.fadeOut(100);
+        chattingRoom.fadeOut(100);
+    }
+}); // chat-icon click end
+
+
+$('.chat-menu-close-btn').click(function () {
+    chattingLayer.fadeOut(100);
+    chattingRoom.fadeOut(100);
+});
+
+$('#contactbtn').click(function () {
+    $('.chat-on').removeClass('on');
+    $('.contact').addClass('on');
+    $('.chat-contact-area').show();
+    $('.chat-list-area').hide();
+});
+
+$('#chatbtn').click(function () {
+	getChatRoomList();
+    $('.on').removeClass('on');
+    $('.chat-on').addClass('on');
+    $('.chat-contact-area').hide();
+    $('.chat-list-area').show();
+});
+
+$('.create-chat-icon').hover(
+    function () {
+        if (CreateChat === '../resources/mainboard/assets/img/chat-lightgrey.svg') {
+            $(this).attr('src', '../resources/mainboard/assets/img/chat-hover.svg');
+        }
+    },
+    function () {
+        $(this).attr('src', '../resources/mainboard/assets/img/chat-lightgrey.svg');
+    }
+);
+
+$('.create-chat-icon, .chat-room').click(function () {
+    chattingLayer.css('display', 'none');
+    chattingRoom.css('display', 'block');
+}); // chattingRoom open click end
+
+
+function updateReadCnt(selectedRoomId){
+	$.ajax({
+    	type: "POST",
+    	url: "${pageContext.request.contextPath}/update-read-cnt",
+    	data:{selectedRoomNum:selectedRoomId},
+      beforeSend: function (xhr) {
+				xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+     	},
+     	success: function(result){
+     		if(result === true){
+     			console.log("not-read 업데이트 성공...!");
+     		} else if(result === false){
+     			console.log("안 읽은 메시지가 없습니다.");
+     		}
+     	},
+        error: function (error) {
+            console.error("not-read 업데이트 실패...!: " + error);
+        }
+    });//ajax end
+}
+
+$(document).on('click', '.chat-room', function(){
+	   const selectedRoomId = $(this).val();
+	    console.log("선택한 채팅방 = " + selectedRoomId);
+	    
+	  	updateReadCnt(selectedRoomId);
+});
+
+const chatWriteInput = $('#chat-write-input');
+
+chatWriteInput.text('shift+enter는 줄바꿈, enter는 입력입니다.');
+
+chatWriteInput.on('blur', function () {
+    if ($(this).text() === '') {
+        $(this).text('shift+enter는 줄바꿈, enter는 입력입니다.');
+    }
+});
+
+chatWriteInput.on('focus', function () {
+    if ($(this).text() === 'shift+enter는 줄바꿈, enter는 입력입니다.') {
+        $(this).text('');
+    }
+});
+
+
+
+chatWriteInput.on('keydown', function (e) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+        e.preventDefault();
+        var inputText = $(this).text();
+        console.log(inputText);
+        $(this).text('');
+    }
+});
+
+backBtn.click(function () {
+    chattingRoom.css('display', 'none');
+    chattingLayer.css('display', 'block');
+}); //backbtn click end
+
+
+
+//contact click
 $('.contact').click(function () {
     $.ajax({
         type: "GET",
@@ -159,42 +481,33 @@ $('.contact').click(function () {
     })
 }); // contact click end
 
-
-
-
-
-
 function convertNewlinesToBr(inputText) {
     return inputText.replace(/\n/g, '<br>');
 }
-/*      $('button:eq(1)').prop('disabled', true);
- $('button:eq(2)').prop('disabled', true);  */
 
+//비동기 호출 값을 가져오기 위한 promise
+function getRoomNum(participantId) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: "${pageContext.request.contextPath}/get-room-num",
+            data: { participant: participantId },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+            },
+            success: function (result) {
+                resolve(result);
+                console.log('방 번호 결과 = ' + result);
+            },
+            error: function (error) {
+                reject(error);
+            }
+        });
+    });
+}
 
- //비동기 호출 값을 가져오기 위한 promise
- function getRoomNum(participantId) {
-	    return new Promise((resolve, reject) => {
-	        $.ajax({
-	            type: "GET",
-	            url: "${pageContext.request.contextPath}/get-room-num",
-	            data: { participant: participantId },
-	            beforeSend: function (xhr) {
-	                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-	            },
-	            success: function (result) {
-	                resolve(result);
-	            },
-	            error: function (error) {
-	                reject(error);
-	            }
-	        });
-	    });
-	}
-
-var ws;
-//채팅 생성 버튼을 클릭한 경우  
-$(document).on('click', '.create-chat', async function () { // 비동기로 가져온 값을 path parameter로 넣기 위한 async
-    //.chat-room 이벤트를 따로 넣어야 할 듯
+// 채팅 생성 버튼을 클릭한 경우
+$(document).on('click', '.create-chat', async function () {
     const chatUserName = $(this).parents('.contact-user').find('.chat-user-id');
     console.log(chatUserName.text());
     $('.chat-user-txt').text(chatUserName.text());
@@ -203,7 +516,9 @@ $(document).on('click', '.create-chat', async function () { // 비동기로 가�
     $('.chatting-room').css('display', 'block');
 
     const participantId = $(this).parent('.contact-user').find('.employee-id').val();
-    console.log("선택한 동료 정보 = " + $('.employee-id').val());
+    console.log("선택한 동료 정보 = " + participantId);
+
+    // 채팅방 먼저 생성
     $.ajax({
         type: "POST",
         url: "${pageContext.request.contextPath}/create-room",
@@ -211,11 +526,58 @@ $(document).on('click', '.create-chat', async function () { // 비동기로 가�
         beforeSend: function (xhr) {
             xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
         },
-        success: function (result) {
+        success: async function (result) {
             if (result == true) {
                 console.log("채팅방이 생성되었습니다.");
+
+                // 방이 생성된 후에 방 번호를 가져옴
+                try {
+                    const roomNum = await getRoomNum(participantId);
+                    $('.selected-room-num').val(roomNum);
+                    console.log("roomNum값은...? = " + roomNum);
+
+                    const url = "ws://" + location.host + "${pageContext.request.contextPath}/echo.do?roomNum=" + roomNum;
+                    ws = new WebSocket(url);
+                    console.log(url);
+
+                    ws.onopen = function (event) {
+                        console.log('연결되었습니다.')
+                        console.log('연결정보' + event);
+                    };
+                    ws.onmessage = function (event) {
+                        console.log('전송 이벤트 발생.')
+                        console.log("onmessage로 찍힌 값 = " + event.data);
+                        writeResponse(event.data);
+                    }
+
+                    getChatList(participantId); // 채팅 리스트 호출
+
+                } catch (error) {
+                    console.error("방 번호 가져오기 실패: " + error);
+                }
             } else if (result == false) {
                 console.log("이미 개설된 채팅방입니다.");
+                const roomNum = await getRoomNum(participantId);
+                $('.selected-room-num').val(roomNum);
+                console.log("roomNum값은...? = " + roomNum);
+								
+                updateReadCnt(roomNum);
+                
+                const url = "ws://" + location.host + "${pageContext.request.contextPath}/echo.do?roomNum=" + roomNum;
+                ws = new WebSocket(url);
+                console.log(url);
+
+                ws.onopen = function (event) {
+                    console.log('연결되었습니다.')
+                    console.log('연결정보' + event);
+                };
+                ws.onmessage = function (event) {
+                    console.log('전송 이벤트 발생.')
+                    console.log("onmessage로 찍힌 값 = " + event.data);
+                    writeResponse(event.data);
+                }
+
+                getChatList(participantId); // 채팅 리스트 호출
             }
 
             $('.msg-to').val(participantId);
@@ -223,47 +585,49 @@ $(document).on('click', '.create-chat', async function () { // 비동기로 가�
         error: function (error) {
             console.error("Error: " + error);
         }
-    }) // create room ajax end  
+    });
     
-    let roomNum;
+    if (ws !== undefined && ws.readyState !== WebSocket.CLOSED) {
+        console.log("WebSocket is already opened.");
+        return;
+    }
 
-    try {
-        roomNum = await getRoomNum(participantId);
-        console.log("roomNum값은...? = " + roomNum);
-
-        getChatList(participantId); // 채팅 리스트 호출
-
-        if (ws !== undefined && ws.readyState !== WebSocket.CLOSED) {
-            console.log("WebSocket is already opened.");
-            return;
-        }
-
-        var url = "ws://" + location.host + "${pageContext.request.contextPath}/echo.do?roomNum=" + {roomNum};
-        // 여기 url에 roomnumber 붙여서 보내기
-        ws = new WebSocket(url);
-        console.log(url);
-
-        ws.onopen = function (event) {
-            console.log('연결되었습니다.')
-            console.log('연결정보' + event);
-        };
-        ws.onmessage = function (event) {
-            console.log('전송 이벤트 발생.')
-            console.log("onmessage로 찍힌 값 = " + event.data);
-            writeResponse(event.data);
+    $('.chat-menu-close-btn, .back-btn').click(function () {
+        if (ws !== undefined && ws.readyState === WebSocket.OPEN) {
+            ws.close();
         }
 
         ws.onclose = function (event) {
             console.log("Connection closed!!");
-            $('.create-chat').prop('disabled', false);
-            $('.send-messagebtn').prop('disabled', true)
         };
-    } catch (error) {
-        console.error("방 번호 가져오기 실패: " + error);
-    }
+    });
 
-}); //contact-list click end
+    $('.chat-icon').click(function () {
+        if ($('.chatting-layer').css('display') === 'none' && ws !== undefined && ws.readyState === WebSocket.OPEN) {
+            ws.close();
+        }
+        ws.onclose = function (event) {
+            console.log("Connection closed!!");
+        };
+    });
 
+    $('.alarm-icon').click(function () {
+        if ($('.chatting-room').css('display') === 'block') {
+            $('.chatting-room').css('display', 'none');
+            ws.close();
+        }
+        ws.onclose = function (event) {
+            console.log("Connection closed!!");
+        };
+    });
+});
+
+//채팅방 목록 불러오기
+$('.back-btn').click(function(){
+	getChatRoomList();
+});
+
+//getYyyyMmDd
 function getYyyyMmDd(date) {
     let year = date.getFullYear();
     let month = '' + (date.getMonth() + 1);
@@ -275,7 +639,7 @@ function getYyyyMmDd(date) {
 }
 
 function formatKoreanDateWithDay(dateString) {
-		let date = new Date(dateString);
+    let date = new Date(dateString);
     let year = date.getFullYear();
     let month = '' + (date.getMonth() + 1);
     let day = '' + date.getDate();
@@ -283,9 +647,9 @@ function formatKoreanDateWithDay(dateString) {
     return year + '년' + month + '월' + day + '일 ';
 }
 
-
+//getChatList
 function getChatList(participantId) {
-	let previousMessageDate = null; // 이전 메시지의 날짜를 저장할 변수
+    let previousMessageDate = null; // 이전 메시지의 날짜를 저장할 변수
     $.ajax({
         type: "GET",
         url: "${pageContext.request.contextPath}/get-chat-list",
@@ -338,7 +702,7 @@ function getChatList(participantId) {
                     str += '<input type="hidden" class="receiver" value="' + participantId + '">'
                     str += '<div class="textbox">' + item.content + '</div>';
                     str += '<div class="chat-read-send">';
-                    str += '<span class="read-count">1</span>';
+                    str += '<span class="read-count"></span>';
                     str += '<span class="send-time">' + MsgsendTime + '</span></div></div>'
                     $('.wrap').append(str);
                 } else {
@@ -348,7 +712,7 @@ function getChatList(participantId) {
                     str += '<input type="hidden" class="receiver" value="' + item.msg_from + '">'
                     str += '<div class="textbox">' + item.content + '</div>';
                     str += '<div class="chat-read-send">';
-                    str += '<span class="read-count">1</span>';
+                    str += '<span class="read-count"></span>';
                     str += '<span class="send-time">' + MsgsendTime + '</span></div></div>'
                     $('.wrap').append(str);
                 }
@@ -359,8 +723,6 @@ function getChatList(participantId) {
         }
     }); //ajax end
 }; // getChatList end
-
-
 
 
 
@@ -381,22 +743,25 @@ function send() {
         $("#chat-write-input").focus();
         return false;
     } else {
-    	
+
         let msgCreateDate = new Date();
         let msgCreateDateParse = getYyyyMmDd(msgCreateDate);
-    	
-    	var chatCnt = $('.wrap').children().length;
-    	if(chatCnt == 0){
+
+        var chatCnt = $('.wrap').children().length;
+        if (chatCnt == 0) {
             let formattedDateWithDay = formatKoreanDateWithDay(msgCreateDateParse);
             let dateDisplay = '<div class="chat-date"><span class="chat-date-txt">' + formattedDateWithDay + '</span></div>';
             $('.wrap').append(dateDisplay);
-    	}
-            
-            
-            
+        }
+
+
+
         var text = $("#chat-write-input").text() + "," + '${name}';
         var lastIndexComma = text.lastIndexOf(',');
         var resultText = text.substring(0, lastIndexComma);
+
+        let selectedRoomNum = $('.selected-room-num').val();
+        console.log('현재 접속한 채팅방 = ' + selectedRoomNum);
 
         let msgTo = $('.msg-to').val();
         console.log("메시지 보낼 사람 = " + msgTo);
@@ -450,7 +815,7 @@ function send() {
         str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>';
         str += '<div class="textbox">' + resultText + '</div>';
         str += '<div class="chat-read-send">';
-        str += '<span class="read-count">1</span>';
+        str += '<span class="read-count"></span>';
         str += '<span class="send-time">' + formattedTime + '</span></div></div>'
         $('.wrap').append(str);
 
@@ -461,21 +826,18 @@ function send() {
 
 
 function writeResponse(rtext) {
-	
 
-	
-	
     let msgCreateDate = new Date();
     let msgCreateDateParse = getYyyyMmDd(msgCreateDate);
-	
-	var chatCnt = $('.wrap').children().length;
-	if(chatCnt == 0){
+
+    var chatCnt = $('.wrap').children().length;
+    if (chatCnt == 0) {
         let formattedDateWithDay = formatKoreanDateWithDay(msgCreateDateParse);
         let dateDisplay = '<div class="chat-date"><span class="chat-date-txt">' + formattedDateWithDay + '</span></div>';
         $('.wrap').append(dateDisplay);
-	}
-	
-	
+    }
+
+
     var currentTime = new Date();
     var hours = currentTime.getHours();
     var minutes = currentTime.getMinutes();
@@ -504,10 +866,11 @@ function writeResponse(rtext) {
     str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>';
     str += '<div class="textbox">' + resultTxt + '</div>';
     str += '<div class="chat-read-send">';
-    str += '<span class="read-count">1</span>';
+    str += '<span class="read-count"></span>';
     str += '<span class="send-time">' + formattedTime + '</span></div></div>'
     $('.wrap').append(str);
 };
+
 
 	 
 
