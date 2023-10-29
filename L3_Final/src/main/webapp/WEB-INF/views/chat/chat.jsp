@@ -142,8 +142,8 @@ function getNotReadCnt(){
 function pollNotReadCnt() {
     setInterval(function() {
     	getNotReadCnt(); // 위에서 정의한 함수 호출
-      console.log('안 읽은 메시지 이력 polling');
-    }, 3000); // 5초마다 요청을 보내도록 설정 (원하는 시간으로 조정 가능)
+      /* console.log('안 읽은 메시지 이력 polling'); */
+    }, 5000); // 5초마다 요청을 보내도록 설정 (원하는 시간으로 조정 가능)
 }
 
 pollNotReadCnt();
@@ -197,9 +197,9 @@ function pollChatRoomList() {
     setInterval(function() {
         if ($('.chat-list-area').css('display') !== 'none') {
             getChatRoomList(); // 위에서 정의한 함수 호출
-            console.log('채팅방 목록 polling');
+           /*  console.log('채팅방 목록 polling'); */
         }
-    }, 3000); // 5초마다 요청을 보내도록 설정 (원하는 시간으로 조정 가능)
+    }, 5000); 
 }
 
 // 폴링 시작
@@ -304,12 +304,12 @@ function getChatListById(chatRoomId, otherParticipant) {
             $('.wrap').empty();
             let nowDate = new Date();
             let nowDateParse = getYyyyMmDd(nowDate);
-            console.log("파싱된 오늘 날짜는 = " + nowDateParse);
+            /* console.log("파싱된 오늘 날짜는 = " + nowDateParse); */
 
             response.forEach(function (item) {
                 let msgCreateDate = new Date(item.created_at);
                 let msgCreateDateParse = getYyyyMmDd(msgCreateDate);
-                console.log("파싱된 메시지 작성일 = " + msgCreateDateParse);
+                /* console.log("파싱된 메시지 작성일 = " + msgCreateDateParse); */
 
                 // 날짜 구분 표시를 위한 비교
                 if (previousMessageDate !== msgCreateDateParse) {
@@ -459,8 +459,8 @@ setInterval(function() {
 if($('.chatting-room').css('display') === 'block'){
 	const num = $('.selected-room-num').val();
 	const otherParticipant = $('.chatting-room').find('.msg-to').val();
-	console.log("현재 접속 중인 채팅방 : " + num);
-	console.log("나와 대화 중인 상대 : " + otherParticipant);
+/* 	console.log("현재 접속 중인 채팅방 : " + num);
+	console.log("나와 대화 중인 상대 : " + otherParticipant); */
 	$.ajax({
 		type: "GET",
 		url: "${pageContext.request.contextPath}/get-room-info",
@@ -475,7 +475,7 @@ if($('.chatting-room').css('display') === 'block'){
 		}
 	});//ajax end
 }
-}, 200);
+}, 1000);
 
 const chatWriteInput = $('#chat-write-input');
 
