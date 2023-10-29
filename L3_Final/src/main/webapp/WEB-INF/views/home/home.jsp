@@ -37,6 +37,14 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap">
+  	
+<style>
+	body {
+		font-family: 'Nanum Gothic', sans-serif;
+  	}
+</style>
 </head>
 
 <body>
@@ -50,7 +58,7 @@
       <div class="row">
         <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
           <h1>업무 관리의 첫 걸음</h1>
-          <h2>WidUs와 함께 나와 팀의 프로젝트를 보다 빠르고 쉽게 관리하세요!</h2>
+          <h2> WidUs와 함께 프로젝트를 보다 빠르고 쉽게 관리하세요!</h2>
           <div class="d-flex justify-content-center justify-content-lg-start">
             <a href="../myhome/user/join" class="btn-get-started scrollto">지금 시작하기</a>
             <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>소개 영상</span></a>
@@ -111,22 +119,25 @@
 
         <div class="row content">
           <div class="col-lg-6">
-            <p>
-             기존의 “보고-진행-결재-진행”의 그룹웨어 시스템은 조직 레이어가 증가하게 되어 업무의 효율성이 떨어진다는 단점을 해결하기 위해 만들어진 저희 
-             WidUs의 특징은 아래와 같습니다.
+            <p style="font-weight:600; font-size:14.5px;">
+				기존의 협업툴에 만족하지 못한 저희는 더 나은 도구를 창조하고자 'WidUs'의 개발을 시작하였습니다.<br>
+				대규모 업무를 체계적으로 관리하고, 맞춤형 기능을 제공함으로써 사용자의 편의성을 높였습니다. <br>
+				이제 저희가 제작한 'WidUs'를 통해 효율적이고 만족스러운 업무 환경을 경험해 보시길 바랍니다.
             </p>
-            <ul>
+            <ul style="font-size:12.5px;">
               <li><i class="ri-check-double-line"></i> 사용자들이 실제로 필요로 하는 기능들을 개발하는 데에 집중하였습니다.</li>
-              <li><i class="ri-check-double-line"></i> 지라의 강력한 이슈트래킹 시스템을 모티브로 삼아 업무 추적에 효과적입니다.</li>
-              <li><i class="ri-check-double-line"></i> 회사단위 대규모 프로젝트를 위한 업무 협업 툴로도 효과적입니다.</li>
+              <li><i class="ri-check-double-line"></i> 타 협업툴들의 강력한 이슈트래킹 시스템을 융합하고 도입하여 업무 추적에 효과적입니다.</li>
+              <li><i class="ri-check-double-line"></i> 다양한 소통 기능으로 인해 대규모 프로젝트를 위한 업무 협업 툴로 효과적입니다.</li>
             </ul>
           </div>
-          <div class="col-lg-6 pt-4 pt-lg-0">
-            <p>
-			WidUs의 목표는 단순히 업무 처리 속도를 높이거나 생산성만 증대시키는 것이 아닙니다. 
+          <div class="col-lg-6 pt-4 pt-lg-0" style="display: flex; flex-direction: column; justify-content: flex-start;">
+            <p style="font-weight:600; font-size:14.5px;">
+			WidUs의 목표는 단순히 업무 처리 속도를 높이거나 생산성만 증대시키는 것이 아닙니다. <br>
 			모든 구성원이 자신의 역량과 장점을 최대화 할 수 있는 환경을 만들어 함께 성장하는 조직 문화를 만드는 것에 중점을 두고 있습니다.
             </p>
-            <a href="#" class="btn-learn-more">Learn More</a>
+            <div>
+            	<a href="../myhome/user/join" class="btn-learn-more" >바로 시작하기</a>
+            </div>
           </div>
         </div>
 
@@ -142,23 +153,23 @@
             <img src="home/assets/img/skills.png" class="img-fluid" alt="">
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left" data-aos-delay="100">
-            <h3>Voluptatem dignissimos provident quasi corporis voluptates</h3>
-            <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
+            <h3 style="font-weight:600">저희의 개발 환경을 소개합니다</h3>
+            <p class="fst-italic" style="font-size:14.5px">
+              저희 팀에서는 체계적이고 효율적인 개발을 위해 다양한 기술을 활용하고 있습니다. <br>
+              현재 저희가 주로 사용한 기술들을 소개드리겠습니다.
             </p>
 
             <div class="skills-content">
 
               <div class="progress">
-                <span class="skill">HTML <i class="val">100%</i></span>
+                <span class="skill">Spring Boot<i class="val">100%</i></span>
                 <div class="progress-bar-wrap">
                   <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
 
               <div class="progress">
-                <span class="skill">CSS <i class="val">90%</i></span>
+                <span class="skill">Oracle <i class="val">90%</i></span>
                 <div class="progress-bar-wrap">
                   <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -172,7 +183,7 @@
               </div>
 
               <div class="progress">
-                <span class="skill">Photoshop <i class="val">55%</i></span>
+                <span class="skill">Html & CSS <i class="val">55%</i></span>
                 <div class="progress-bar-wrap">
                   <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -187,7 +198,7 @@
     </section><!-- End Skills Section -->
 
     <!-- ======= Services Section ======= -->
-    <section id="services" class="services section-bg">
+<!--     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -231,10 +242,10 @@
         </div>
 
       </div>
-    </section><!-- End Services Section -->
+    </section>End Services Section -->
 
     <!-- ======= Cta Section ======= -->
-<!--     <section id="cta" class="cta">
+<!-- <section id="cta" class="cta">
       <div class="container" data-aos="zoom-in">
 
         <div class="row">
@@ -251,7 +262,7 @@
     </section>End Cta Section -->
 
     <!-- ======= Portfolio Section ======= -->
-    <!-- <section id="portfolio" class="portfolio">
+<!-- <section id="portfolio" class="portfolio">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -376,11 +387,11 @@
 
           <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
             <div class="member d-flex align-items-start">
-              <div class="pic"><img src="resources/home/assets/img/team/team-1.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="resources/project/img/projectboard/team/user1.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Chief Executive Officer</span>
-                <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
+                <h4>김수연</h4>
+                <span style="font-weight:600">Teacher</span>
+                <p>한 학기동안 이끌어주셔서 정말 감사드립니다.</p>
                 <div class="social">
                   <a href=""><i class="ri-twitter-fill"></i></a>
                   <a href=""><i class="ri-facebook-fill"></i></a>
@@ -393,11 +404,11 @@
 
           <div class="col-lg-6 mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="200">
             <div class="member d-flex align-items-start">
-              <div class="pic"><img src="resources/home/assets/img/team/team-2.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="resources/project/img/projectboard/team/user2.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Product Manager</span>
-                <p>Aut maiores voluptates amet et quis praesentium qui senda para</p>
+                <h4>박민기</h4>
+                <span style="font-weight:600">조 장</span>
+                <p>채팅, 개인 대시보드, 캘린더, 이슈 CRUD</p>
                 <div class="social">
                   <a href=""><i class="ri-twitter-fill"></i></a>
                   <a href=""><i class="ri-facebook-fill"></i></a>
@@ -410,11 +421,11 @@
 
           <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="300">
             <div class="member d-flex align-items-start">
-              <div class="pic"><img src="resources/home/assets/img/team/team-3.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="resources/project/img/projectboard/team/user3.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>CTO</span>
-                <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
+                <h4>김주영</h4>
+                <span style="font-weight:600">조 원</span>
+                <p>로그인 & 회원가입, 프로젝트 검색, 파일함</p>
                 <div class="social">
                   <a href=""><i class="ri-twitter-fill"></i></a>
                   <a href=""><i class="ri-facebook-fill"></i></a>
@@ -427,11 +438,28 @@
 
           <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="400">
             <div class="member d-flex align-items-start">
-              <div class="pic"><img src="resources/home/assets/img/team/team-4.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="resources/project/img/projectboard/team/user4.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Amanda Jepson</h4>
-                <span>Accountant</span>
-                <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
+                <h4>김혜원</h4>
+                <span style="font-weight:600">조 원</span>
+                <p>알림 & 언급, 할당된 작업 게시판</p>
+                <div class="social">
+                  <a href=""><i class="ri-twitter-fill"></i></a>
+                  <a href=""><i class="ri-facebook-fill"></i></a>
+                  <a href=""><i class="ri-instagram-fill"></i></a>
+                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="400">
+            <div class="member d-flex align-items-start">
+              <div class="pic"><img src="resources/project/img/projectboard/team/user5.jpg" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>옥진석</h4>
+                <span style="font-weight:600">조 원</span>
+                <p>프로젝트 리스트, 프로젝트 대시보드, 프로젝트 CRUD</p>
                 <div class="social">
                   <a href=""><i class="ri-twitter-fill"></i></a>
                   <a href=""><i class="ri-facebook-fill"></i></a>
@@ -442,7 +470,22 @@
             </div>
           </div>
 
-        </div>
+          <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="400">
+            <div class="member d-flex align-items-start">
+              <div class="pic"><img src="resources/project/img/projectboard/team/user6.jpg" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>한혜진</h4>
+                <span style="font-weight:600">조 원</span>
+                <p>마이 페이지, 관리자 페이지</p>
+                <div class="social">
+                  <a href=""><i class="ri-twitter-fill"></i></a>
+                  <a href=""><i class="ri-facebook-fill"></i></a>
+                  <a href=""><i class="ri-instagram-fill"></i></a>
+                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                </div>
+              </div>
+            </div>
+          </div>
 
       </div>
     </section><!-- End Team Section -->
