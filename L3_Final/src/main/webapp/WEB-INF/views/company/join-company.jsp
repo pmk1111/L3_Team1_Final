@@ -50,7 +50,7 @@
 
 <body>
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    <jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="../user/header.jsp"></jsp:include>
 
     <div class="auth-section after-contets">
         <div class="accont-wrap">

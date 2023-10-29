@@ -1,12 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <meta name="_csrf" content="${_csrf.token}">
 <meta name="_csrf_header" content="${_csrf.headerName}">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap">
+    
+<style>
+  	body {
+  		font-family: 'Nanum Gothic', sans-serif;
+  	}
+</style>
+
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
     <div class="app-brand demo">
-        <a href="index.html" class="app-brand-link">
+        <a href="../mainboard/my-dashboard" class="app-brand-link">
             <span class="app-brand-logo demo">
                 <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <defs>
@@ -54,111 +63,89 @@
     <ul class="menu-inner py-1">
 
         <li class="menu-item" style="margin:15px 0px 25px 0px;">
-            <a href="${pageContext.request.contextPath}/project/create-project" class="menu-link" style="background-color: #9F7AB0; color: white; width: 228px;">
+            <a href="${pageContext.request.contextPath}/project/create-project" class="menu-link create-item" style="background-color: #9F7AB0; color: white; width: 228px; top: 10px;">
                 <i class="menu-icon tf-icons bx bx-home-circle create-project" style="margin-left: 22px;"></i>
                 <div class="create-project" style="font-weight: bold;">새 프로젝트 만들기</div>
             </a>
         </li>
 
         <!-- Dashboard -->
-        <li class="menu-item">
-            <a class="menu-link" href="${pageContext.request.contextPath}/project/project-list">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">내 프로젝트</div>
-            </a>
-        </li>
-
-        <li class="menu-item active">
-            <a href="${pageContext.request.contextPath}/mainboard/my-dashboard" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">내 대시보드</div>
-            </a>
-        </li>
-
-        <!-- Layouts -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">즐겨찾는 프로젝트</div>
-            </a>
-        </li>
-
-
-
-
+        
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">프로젝트</span>
-        </li>
-
-        <li class="menu-item">
-            <a href="${pageContext.request.contextPath}/project/project-select" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+        </li>   
+                
+		<li class="menu-item project-header" >
+			<div class="menu-link" style="width: 100%; margin-left: -14px; height: 42.5px;">
+			    <a class="menu-link project-link" href="${pageContext.request.contextPath}/project/project-list" >
+			            <i class="menu-icon tf-icons bx bx-list-ul"></i>
+			            <div data-i18n="Analytics">내 프로젝트</div>
+			    </a>
+		    	<img class="project-dropdown" src="../resources/project/img/arrow/chevron-up.svg" style="margin-left:30px">
+		    </div>
+		</li>
+        
+        <li class="menu-item project-item">
+            <a href="${pageContext.request.contextPath}/project/project-select" class="menu-link my-link">
+                <i class="menu-icon tf-icons bx bxs-dashboard"></i>
                 <div data-i18n="Layouts">프로젝트 대시보드</div>
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="${pageContext.request.contextPath}/issue/issue-list" class="menu-link">
+        <li class="menu-item project-item">
+            <a href="${pageContext.request.contextPath}/issue/issue-list" class="menu-link issue-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Layouts">프로젝트 이슈</div>
+                <div data-i18n="Layouts">이슈 보드</div>
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Layouts">간트차트</div>
+        <li class="menu-item project-item">
+            <a href="${pageContext.request.contextPath}/documents/documents-list" class="menu-link dm-link">
+                <i class="menu-icon tf-icons bx bx-copy"></i>
+                <div data-i18n="Layouts">자료 공유실</div>
             </a>
+        </li>        
+        
+		
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">내 업무</span>
+        </li>
+        
+        <li class="menu-item my-header">
+        	<div class="menu-link" style="width: 100%; margin-left: -14px; height: 42.5px;">
+	            <a href="${pageContext.request.contextPath}/mainboard/my-dashboard" class="menu-link my-link">
+	                <i class="menu-icon tf-icons bx bxs-dashboard"></i>
+	                <div data-i18n="Tables">내 대시보드</div>
+	            </a>
+	            <img src="../resources/project/img/arrow/chevron-down.svg" style="margin-left:30px">
+            </div>
         </li>
 
         <li class="menu-item">
-            <a href="${pageContext.request.contextPath}/calendar/calendar-list" class="menu-link">
+            <a href="${pageContext.request.contextPath}/total/mywork" class="menu-link work-link">
+                <i class="menu-icon tf-icons bx bx-task"></i>
+                <div data-i18n="Layouts">내 담당 업무</div>
+            </a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="${pageContext.request.contextPath}/bookmark/bookmark-list" class="menu-link bm-link">
+                <i class="menu-icon tf-icons bx bx-bookmark"></i>
+                <div data-i18n="Layouts">북마크</div>
+            </a>
+        </li>        
+        
+        <li class="menu-item">
+            <a href="${pageContext.request.contextPath}/calendar/calendar-list" class="menu-link cal-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Layouts">캘린더</div>
             </a>
         </li>
-
-        <li class="menu-item">
-            <a href="${pageContext.request.contextPath}/documents/documents-list" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-copy"></i>
-                <div data-i18n="Layouts">자료 공유실</div>
-            </a>
-        </li>
-
-        <li class="menu-item">
-            <a href="${pageContext.request.contextPath}/bookmark/bookmark-list" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Layouts">북마크(즐겨찾는 게시물)</div>
-            </a>
-        </li>
-
-        <!-- Components -->
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">프로젝트 관리</span></li>
-        <!-- Cards -->
-        <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-copy"></i>
-                <div data-i18n="Basic">프로젝트 설정</div>
-            </a>
-        </li>
-
-        <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">프로젝트 멤버</div>
-            </a>
-        </li>
-
-        <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-crown"></i>
-                <div data-i18n="Basic">프로젝트 팀원 초대</div>
-            </a>
-        </li>
-
+        
+        <br>
         <!-- Misc -->
         <se:authorize access="hasRole('ROLE_ADMIN')">
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
             <!--             <li class="menu-item">
               <a
                 href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
@@ -171,7 +158,7 @@
             </li> -->
 
             <li class="menu-item">
-                <a href="../admin/admin-dashboard" target="_blank" class="menu-link">
+                <a href="../admin/admin-dashboard" target="_blank" class="menu-link ad-link">
                     <i class="menu-icon tf-icons bx bx-file"></i>
                     <div data-i18n="Documentation" id="adminLink">관리자</div>
                 </a>
@@ -179,3 +166,170 @@
         </se:authorize>
     </ul>
 </aside>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+$(document).ready(function() {
+	
+	var $menuItems = $('.menu-item');
+
+	$menuItems.each(function() {
+	    var $item = $(this);
+
+	    // '새 프로젝트 만들기' 항목에는 액션을 적용하지 않음
+	    if ($item.find('.create-project').length === 0) {
+	        $item.hover(
+	            function() {
+	                $item.addClass('active');
+	            },
+	            function() {
+	                $item.removeClass('active');
+	            }
+	        );
+	    }
+	});
+    
+    
+    // 드롭다운
+	$('.my-header img').click(function() {
+	    if ($('.my-header').nextUntil('br').is(':visible')) {
+	        $('.my-header').nextUntil('br').slideUp(400);
+	    } else {
+	        $('.my-header').nextUntil('br').slideDown(400);
+	    }
+	
+	    var src = $(this).attr('src');
+	    if (src.indexOf('chevron-down.svg') !== -1) {
+	        $(this).attr('src', '../resources/project/img/arrow/chevron-up.svg');
+	    } else {
+	        $(this).attr('src', '../resources/project/img/arrow/chevron-down.svg');
+	    }
+	});
+    
+    // 세션에 프로젝트 아이디 체크
+    var projectId = <c:out value="${sessionScope.projectId != null}"/>;
+    
+    if (projectId) {
+        $(".project-dropdown").attr('src', '../resources/project/img/arrow/chevron-down.svg');
+        $(".project-item").slideDown(400);
+        
+        $(".project-dropdown").click(function(){
+        var src = $(".project-dropdown").attr('src');
+	    if (src.indexOf('chevron-down.svg') !== -1) {
+	        $(this).attr('src', '../resources/project/img/arrow/chevron-up.svg');
+	        $(".project-item").slideUp(400);
+	    } else {
+	        $(this).attr('src', '../resources/project/img/arrow/chevron-down.svg');
+	        $(".project-item").slideDown(400);
+	    }
+        });
+    } else {
+        $(".project-item").slideUp(400);
+    }
+    
+    $(".project-dropdown").click(function(event) {
+        event.stopPropagation(); // 이벤트 버블링 방지
+        if (!projectId) {
+            alert("프로젝트 선택 후 사용가능합니다.");
+        }
+    });
+    
+    $(".project-header").click(function() {
+        var currentUrl = window.location.pathname; // 현재 페이지의 URL을 가져옵니다.
+
+        if (currentUrl === "${pageContext.request.contextPath}/project/project-list") {
+            if (!projectId) {
+                alert("프로젝트를 선택해주세요.");
+            }
+        }
+    });
+    
+    // 호버 이벤트
+    $(".bm-link").hover(
+	    function() { 
+	        $(this).find('i').addClass('bx-tada');
+	    },
+	    function() { 
+	        $(this).find('i').removeClass('bx-tada');
+	    }
+    );
+    
+    $(".my-link").hover(
+	    function() { 
+	        $(this).find('i').addClass('bx-tada');
+	    },
+	    function() { 
+	        $(this).find('i').removeClass('bx-tada');
+	    }		
+    );
+    
+    $(".project-link").hover(
+	    function() { 
+	        $(this).find('i').addClass('bx-tada');
+	    },
+	    function() { 
+	        $(this).find('i').removeClass('bx-tada');
+	    }		
+    );
+    
+	$(".issue-link").hover(
+	    function() { 
+	        $(this).find('i').addClass('bx-tada');
+	    },
+	    function() { 
+	        $(this).find('i').removeClass('bx-tada');
+	    }		
+	);   
+	
+	$(".dm-link").hover(
+	    function() { 
+	        $(this).find('i').addClass('bx-tada');
+	    },
+	    function() { 
+	        $(this).find('i').removeClass('bx-tada');
+	    }		
+	);   
+	
+	$(".cal-link").hover(
+		function() { 
+		    $(this).find('i').addClass('bx-tada');
+		},
+		function() { 
+		    $(this).find('i').removeClass('bx-tada');
+		}		
+	);   
+	
+	$(".ad-link").hover(
+		function() { 
+		    $(this).find('i').addClass('bx-tada');
+		},
+		function() { 
+		    $(this).find('i').removeClass('bx-tada');
+		}		
+	);  
+	
+	$(".work-link").hover(
+		function() { 
+		    $(this).find('i').addClass('bx-tada');
+		},
+		function() { 
+		    $(this).find('i').removeClass('bx-tada');
+		}		
+	);  
+	
+	// 크리에이트 색상 변경
+    $(".create-item").hover(
+        function() { // 마우스를 올렸을 때
+            $(this).css("background-color", "#75508F");
+        },
+        function() { // 마우스를 떠났을 때
+            $(this).css("background-color", "#9F7AB0");
+        }
+    );
+
+
+});
+
+</script>
