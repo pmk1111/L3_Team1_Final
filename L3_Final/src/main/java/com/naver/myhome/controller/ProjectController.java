@@ -86,9 +86,10 @@ public class ProjectController {
 	@GetMapping(value = "/project-list")
 	public ModelAndView projectList(ModelAndView mv, @AuthenticationPrincipal User customUser, HttpSession session) {
 
-		if (session.getAttribute("projectId") != null) {
-			session.removeAttribute("projectId");
-		}
+		
+		 /* if (session.getAttribute("projectId") != null) {
+		  session.removeAttribute("projectId"); } */
+		 
 
 		int sessionId = customUser.getId();
 
@@ -183,9 +184,7 @@ public class ProjectController {
 	public ModelAndView projectBoard(ModelAndView mv, @AuthenticationPrincipal User customUser, 
 			HttpSession session, int projectId) {
 		
-		if(session.getAttribute("projectId") == null) {
-			session.setAttribute("projectId", projectId);
-		}
+		session.setAttribute("projectId", projectId);
 		
 		logger.info("유저아이디" + customUser);
 
