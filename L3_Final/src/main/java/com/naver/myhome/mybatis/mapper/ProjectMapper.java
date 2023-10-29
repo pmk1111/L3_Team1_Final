@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.naver.myhome.domain.Project;
+import com.naver.myhome.domain.RecentStatus;
 
 @Mapper
 @Repository
@@ -58,5 +59,7 @@ public interface ProjectMapper {
 	public int getEmpId(int sessionId);
 
 	public void modifyProject(String color, String title, String subtitle, int projectId, int sessionId);
+
+	public List<RecentStatus> getRecentStatus(int projectId);
 
 }

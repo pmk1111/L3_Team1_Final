@@ -143,6 +143,7 @@
 				    $('.chat-icon').attr('src', '../resources/mainboard/assets/img/chat.svg');
 				  }
 				);
+		
 			$("#logout").click(function(event){
 				event.preventDefault();
 				$("form[name=logout]").submit();

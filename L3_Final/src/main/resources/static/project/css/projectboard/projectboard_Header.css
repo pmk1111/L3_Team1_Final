@@ -667,6 +667,9 @@
 	font-size: 13px;
 	font-weight: 550;
 	color: #00000;
+	background-image: url(../../img/projectboard/search.svg);
+    background-repeat: no-repeat;
+    background-position: 4% 50%;
 }
 
 ::placeholder {
@@ -786,14 +789,17 @@
 	min-width: 50px;
 	width: 140px;
 	margin-top: 8px !important;
-	min-height: 75px;
-	height: 75px;
+	height:auto;
 }
 
 }
 .setting-span-02 {
 	font-size: 12px;
 	font-family: inherit;
+}
+
+.exit-span {
+	top:6px !important;
 }
 
 .setting-menu-padding {
@@ -1053,7 +1059,8 @@
     box-shadow: 20px 20px 30px rgba(0, 0, 0, .2);
     border-radius: 10px;
     width: 200px !important;
-    height: 120px;
+    height: auto;
+    max-height: 120px;
     margin: 0 auto !important;
     margin-top: 20% !important;
     text-align: center;
@@ -1061,4 +1068,18 @@
 
 .project-setup-header {
 	border-radius: 5px 5px 0 0;
+}
+
+.status-admin {
+	width: 50px;
+    height: 20px;
+    line-height: 20px;
+    background: #9F7AB0;
+    border-radius: 200px;
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+    position: relative;
+    display: inline-block;
+    top: -2px;
 }
