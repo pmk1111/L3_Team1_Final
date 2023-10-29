@@ -71,7 +71,7 @@
 </head>
 
 <body>
-    <jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="../user/header.jsp"></jsp:include>
 	<form id="joinform" name="joinform" action="" method="post">
 	    <div class="auth-section after-contets">
 	        <div class="accont-wrap">

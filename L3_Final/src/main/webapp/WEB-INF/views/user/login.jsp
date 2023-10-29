@@ -47,10 +47,15 @@
 		font-family: 'Nanum Gothic', sans-serif;
   	}
   	
+	.password-container {
+	  position: relative;
+	}
+	
 	.eye {
-		position: absolute;
-	    right: 34.5%;
-	    top: 48.2%;
+		display:none;
+	    position: absolute;
+	    right: 30px;
+	    top: 59%;
 	    transform: translateY(-50%);
 	}
 	
@@ -226,10 +231,10 @@
                      <input type="text" id="email" class="email" name="email" maxLength="30" placeholder="이메일을 입력하세요" required>
                      <p class="errMsg" id="email_message">오류메세지 영역</p>
                  </div>
-				<div>
+				<div class="password-container">
 				  <b class="bTxt">비밀번호</b><br>
 				  <input type="password" id="password" placeholder="비밀번호를 입력하세요" class="pw" name="password" required>
-				  <img src="../resources/jj/img/eye_gray.svg" class="eye" style="display: none;">
+				  <img src="../resources/jj/img/eye_gray.svg" class="eye">
 				  <!-- <p class="errMsg" id="pw_message">오류메세지 영역</p> -->
 				</div>
              </div>
