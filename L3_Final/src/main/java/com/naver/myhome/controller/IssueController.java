@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,9 +39,13 @@ import com.naver.myhome.domain.Files;
 import com.naver.myhome.domain.Issue;
 import com.naver.myhome.domain.Notify;
 import com.naver.myhome.domain.ProjectAndUser;
+import com.naver.myhome.domain.User;
+
+import com.naver.myhome.service.BookmarkService;
 import com.naver.myhome.service.FileService;
 import com.naver.myhome.service.IssueService;
 import com.naver.myhome.service.ProjectAndUserService;
+import com.naver.myhome.service.UserService;
 import com.naver.myhome.service.NotifyService;
 
 @Controller
@@ -49,29 +54,35 @@ public class IssueController {
 
 	private static final Logger logger = LoggerFactory.getLogger(IssueController.class);
 
+	private UserService userService;
 	private IssueService issueService;
 	private FileService fileService;
 	private ProjectAndUserService projectAndUserService;
 	private NotifyService notifyService;
+	private BookmarkService bookmarkService;
 
 	@Value("${file.upload.path}")
 	private String saveFolder;
 
 	@Autowired
-	public IssueController(NotifyService notifyService,IssueService issueService, FileService fileService, ProjectAndUserService projectAndUserService) {
+	public IssueController(NotifyService notifyService,IssueService issueService, 
+			FileService fileService, ProjectAndUserService projectAndUserService, 
+			UserService userService, BookmarkService bookmarkService) {
 		this.issueService = issueService;
 		this.fileService = fileService;
 		this.projectAndUserService = projectAndUserService;
 		this.notifyService = notifyService;
-		
+		this.userService = userService;
+		this.bookmarkService = bookmarkService;
+
 	}
 
 	@GetMapping(value = "/issue-list")
 	public ModelAndView issuelist(ModelAndView mv, HttpServletRequest request, 
-									Principal principal, HttpSession session) {
+			Principal principal, HttpSession session) {
 		int projectId = (int) session.getAttribute("projectId");
 		logger.info("선택된 프로젝트 id = " + projectId);
-		
+
 		int listcount = issueService.getListCount(projectId);
 		List<Issue> issuelist = issueService.getIssueList(projectId);
 
@@ -113,74 +124,80 @@ public class IssueController {
 		int projectId = (int) session.getAttribute("projectId");
 		return projectAndUserService.getProjectAndUserInfo(projectId);
 	}
-	
+
 
 	@PostMapping("createIssue")
-	public String createIssue(Issue issue, Notify notify,
-			@RequestParam(value="user_id",defaultValue="0",required=false) int user_id,
-			String notionchoice, MultipartFile[] uploadfiles) throws Exception {
-	    List<Files> fileList = new ArrayList<>();
-	    int issueId = issueService.getIssueId();
-	    logger.info("가져온 이슈 번호: " + issueId);
+	public String createIssue(Issue issue, Notify notify, HttpServletRequest request, 
+			HttpSession session, Principal principal,@RequestParam(value="user_id",defaultValue="0",required=false) int mentioned_id,
+			String notionchoice,MultipartFile[] uploadfiles) throws Exception {
 
-	    issue.setId(issueId);
-	    issue.setProject_id(1);
-	    issue.setCreate_user(2);
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
+		int projectId = (int) session.getAttribute("projectId");
 
-	    issueService.createIssue(issue);
+		List<Files> fileList = new ArrayList<>();
+		int issueId = issueService.getIssueId();
+		logger.info("가져온 이슈 번호: " + issueId);
 
-	
+		issue.setId(issueId);
+		issue.setProject_id(projectId);
+		issue.setCreate_user(userId);
 
-	    
-	    
-	    notify.setNAME(notionchoice.replace("@", ""));
-	    notify.setPOST_ID(issueId);
-	   notify.setMENTIONED_ID(4);
-	   
-	    logger.info(issue.toString());
-	    logger.info("이슈 태그: " + notify.getNAME());
-	    logger.info("user_id: " + user_id);
 
-	   
-	        int existingNotifyCount = notifyService.existsNotifyWithName(user_id);
+		issueService.createIssue(issue);
 
-	        if (existingNotifyCount > 0) {
-	           
-	            notifyService.updatealarm(notify);
-	            logger.info("이미 존재하는 태그. 업데이트를 수행하세요.");
-	        } else {
-	            // 존재하지 않는 경우, createalarm을 호출하여 새로운 레코드를 삽입
-	            notifyService.createalarm(notify);
-	            //알림의 넣을 값 구하기
-	            
-	        }
+		  //혜원
+
+	      String create_user = userService.getCreateUser(userId);
 	    
 
-	    for (MultipartFile file : uploadfiles) {
-	        Files files = new Files();
-	        if (file.getSize() > 0) {
-	            files.setFile_size(file.getSize());
-	            logger.info("업로드 파일: " + file.getOriginalFilename());
+	      notify.setNAME(notionchoice.replace("@", ""));
+	      notify.setMENTIONED_BY(create_user);
+		   notify.setPOST_ID(issueId);
+		   notify.setMENTIONED_ID(mentioned_id);
+		   
+		    logger.info(issue.toString());
+		    logger.info("이슈 태그: " + notify.getNAME());
+		    logger.info("user_id: " + mentioned_id);
 
-	            files.setIssue_id(issueId);
-	            files.setOriginal_name(file.getOriginalFilename());
 
-	            String saveName = fileDBName(file.getOriginalFilename(), saveFolder);
-	            files.setSave_name(saveName);
+	      int existingNotifyCount = notifyService.existsNotifyWithName(mentioned_id);
 
-	            logger.info("업로드한 파일 사이즈 = " + file.getSize());
-	            logger.info("업로드 경로 = " + saveFolder);
+	      if (existingNotifyCount > 0) {
 
-	            file.transferTo(new File(saveFolder + saveName));
-	            fileList.add(files);
-	        }
-	    }
-	    logger.info("파일리스트 크기 = " + fileList.size());
-	    if (!fileList.isEmpty()) {
-	        fileService.uploadFile(fileList);
-	    }
+	         notifyService.updatealarm(notify);
+	         logger.info("이미 존재하는 태그. 업데이트를 수행하세요.");
+	      } else {
+	         // 존재하지 않는 경우, createalarm을 호출하여 새로운 레코드를 삽입
+	         notifyService.createalarm(notify);
+	      }
 
-	    return "redirect:issue-list";
+
+		for (MultipartFile file : uploadfiles) {
+			Files files = new Files();
+			if (file.getSize() > 0) {
+				files.setFile_size(file.getSize());
+				logger.info("업로드 파일: " + file.getOriginalFilename());
+
+				files.setIssue_id(issueId);
+				files.setOriginal_name(file.getOriginalFilename());
+
+				String saveName = fileDBName(file.getOriginalFilename(), saveFolder);
+				files.setSave_name(saveName);
+
+				logger.info("업로드한 파일 사이즈 = " + file.getSize());
+				logger.info("업로드 경로 = " + saveFolder);
+
+				file.transferTo(new File(saveFolder + saveName));
+				fileList.add(files);
+			}
+		}
+		logger.info("파일리스트 크기 = " + fileList.size());
+		if (!fileList.isEmpty()) {
+			fileService.uploadFile(fileList);
+		}
+
+		return "redirect:issue-list";
 	}
 
 
@@ -265,14 +282,16 @@ public class IssueController {
 
 
 	@GetMapping("/issue-detail")
-	public ModelAndView issueDetail(int num, ModelAndView mv, HttpServletRequest request, 
+	public ModelAndView issueDetail(int num, ModelAndView mv, HttpServletRequest request, @AuthenticationPrincipal User user,
 			@RequestHeader(value = "referer", required = false) String beforeURL) {
 		logger.info("referer: " + beforeURL);
 
 		Issue issue = issueService.getIssueDetail(num);
 		List<Files> filelist = fileService.getFileList(num);
+		
+		int bookmarkCk = bookmarkService.checkBookmark(user.getId(), num);
 
-		if(issue==null) {
+		if (issue == null) {
 			logger.info("상세보기 실패");
 			mv.setViewName("issue/no-issue-content");
 			mv.addObject("url", request.getRequestURI());
@@ -281,7 +300,8 @@ public class IssueController {
 			logger.info("상세보기 성공");
 			mv.setViewName("issue/issue-detail");
 			mv.addObject("issuedata", issue);
-			mv.addObject("filelist",filelist);
+			mv.addObject("filelist", filelist);
+			mv.addObject("bookmarkCk", bookmarkCk);
 			mv.addObject("showAlert", false);
 		}
 
@@ -292,10 +312,15 @@ public class IssueController {
 	@ResponseBody
 	public Map<String, Object> statusUpdate(@RequestParam int issueId, 
 			@RequestParam String status, 
-			@RequestParam String selectedUserId) {
+			@RequestParam String selectedUserId,
+			@AuthenticationPrincipal User customUser) {
+		
+		int sessionId = customUser.getId();
+		logger.info("세션아이디 체크" + sessionId);
+		
 		Map<String, Object> response = new HashMap<>();
 		try {
-			issueService.updateStatus(issueId, status, selectedUserId);
+			issueService.updateStatus(issueId, status, selectedUserId, sessionId);
 			response.put("status", "success");
 		} catch (Exception e) {
 			response.put("status", "error");
@@ -309,9 +334,15 @@ public class IssueController {
 	public String issueUpdate(Issue issue, @RequestParam("num") int num, 
 			@RequestParam("check") String check,
 			HttpServletRequest request, RedirectAttributes rattr,
-			MultipartFile[] uploadfiles) throws Exception{
+			MultipartFile[] uploadfiles,
+			@AuthenticationPrincipal User customUser) throws Exception{
+		
+		int sessionId = customUser.getId();
+		logger.info("세션아이디 체크" + sessionId);
+		
 		String url = "";
 		issue.setId(num);
+		issue.setSessionId(sessionId);
 		int result = issueService.issueUpdate(issue);
 
 		if(result==0) {

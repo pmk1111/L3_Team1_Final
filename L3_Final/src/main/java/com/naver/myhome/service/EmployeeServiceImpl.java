@@ -1,5 +1,7 @@
 package com.naver.myhome.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +30,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dao.insert(employee);
 	}
 	//주영END
+	
+	//mk for chat
+	@Override
+	public List<Employee> getEmployeeListForChat(int userId) {
+		return dao.getEmployeeListForChat(userId);
+	}
+
+	@Override
+	public int getEmployeeId(int userId) {
+		return dao.getEmployeeId(userId);
+	}
 	
 }

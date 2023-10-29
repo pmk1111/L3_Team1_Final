@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.naver.myhome.domain.Issue;
 import com.naver.myhome.domain.Project;
+import com.naver.myhome.domain.RecentStatus;
 import com.naver.myhome.domain.User;
 import com.naver.myhome.service.IssueService;
 import com.naver.myhome.service.ProjectService;
@@ -111,6 +112,8 @@ public class ProjectController {
 		int sessionId = customUser.getId();
 
 		int employeeId = projectService.getEmpId(sessionId);
+		
+		logger.info("part = " + employeeId);
 
 		List<Project> favoritProjectList = projectService.getFavoritProjectList(employeeId);
 		List<Project> partProjectList = projectService.getPartProjectList(employeeId);
@@ -124,9 +127,13 @@ public class ProjectController {
 
 	@ResponseBody
 	@GetMapping(value = "/all-tabs")
-	public List<Project> getAllTabs() {
+	public List<Project> getAllTabs(@AuthenticationPrincipal User customUser) {
 
-		List<Project> data = projectService.getAllProjectList();
+		int sessionId = customUser.getId();
+
+		int employeeId = projectService.getEmpId(sessionId);
+		
+		List<Project> data = projectService.getAllProjectList(employeeId);
 
 		return data;
 	}
@@ -134,7 +141,7 @@ public class ProjectController {
 	@ResponseBody
 	@GetMapping("/participate")
 	public Integer favoritCheck(@RequestParam(name = "projectId", required = true) int projectId,
-			@AuthenticationPrincipal User customUser) {
+								@AuthenticationPrincipal User customUser) {
 
 		int sessionId = customUser.getId();
 
@@ -148,8 +155,12 @@ public class ProjectController {
 	@ResponseBody
 	@PostMapping("/favorite")
 	public Integer toggleFavorite(@RequestParam(name = "projectId", required = true) int projectId,
-			@RequestParam(name = "employeeId", required = true) int employeeId) {
+								  @AuthenticationPrincipal User customUser) {
 
+		int sessionId = customUser.getId();
+
+		int employeeId = projectService.getEmpId(sessionId);
+		
 		Integer result = projectService.checkFavorite(projectId, employeeId);
 
 		if (result == null) {
@@ -175,6 +186,8 @@ public class ProjectController {
 		if(session.getAttribute("projectId") == null) {
 			session.setAttribute("projectId", projectId);
 		}
+		
+		logger.info("유저아이디" + customUser);
 
 		int selectedProjectId = (int) session.getAttribute("projectId");
 
@@ -204,13 +217,17 @@ public class ProjectController {
 		Integer highCount = projectService.highCount(selectedProjectId);
 		Integer middleCount = projectService.middleCount(selectedProjectId);
 		Integer lowCount = projectService.lowCount(selectedProjectId);
+		
+		List<RecentStatus> rs = projectService.getRecentStatus(projectId);
 
 		mv.setViewName("project/project-board");
 		mv.addObject("projectId", selectedProjectId);
 		mv.addObject("project", project);
 
-		mv.addObject("getAuth", getAuth);
+		mv.addObject("Auth", getAuth);
 
+		mv.addObject("recentStatus", rs);
+		
 		mv.addObject("issuelist", issuelist);
 
 		mv.addObject("doneCount", doneCount);
@@ -241,6 +258,34 @@ public class ProjectController {
 	public void deleteProject(@RequestParam(name = "projectId") int projectId) {
 		projectService.deleteProject(projectId);
 	}
+	
+	@ResponseBody
+	@GetMapping("/modify")
+	public void modifyProject(@RequestParam(name = "color") String color,
+							  @RequestParam(name = "title") String title,
+							  @RequestParam(name = "subtitle") String subtitle,
+							  @RequestParam(name = "projectId") int projectId,
+							  @AuthenticationPrincipal User customUser) {
+		
+		int sessionId = customUser.getId();
+		
+		projectService.modifyProject(color, title, subtitle, projectId, sessionId);
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/recent")
+	public  List<RecentStatus> recentStatus(HttpSession session) {
+		
+		int selectedProjectId = (int) session.getAttribute("projectId");
+		
+		logger.info("recent 프로젝트 아이디 : " + selectedProjectId);
+		
+		List<RecentStatus> data = projectService.getRecentStatus(selectedProjectId);
+		
+		return data;
+	}
+	
 	// JJ's Controller End
 
 }

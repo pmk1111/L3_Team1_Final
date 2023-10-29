@@ -6,8 +6,8 @@
 
     <insert id="createalarm" parameterType="com.naver.myhome.domain.Notify">
 
-INSERT INTO NOTIFY_POST(ID, NAME, MENTIONED_ID, POST_ID, CONTENT, NOTIFY_TIME)
-  VALUES (notify_postid.nextval, #{NAME}, #{MENTIONED_ID}, #{POST_ID}, '언급하였습니다.', sysdate)
+INSERT INTO NOTIFY_POST(ID, NAME,MENTIONED_BY, MENTIONED_ID, POST_ID, CONTENT, NOTIFY_TIME)
+  VALUES (notify_postid.nextval, #{NAME},#{MENTIONED_BY}, #{MENTIONED_ID}, #{POST_ID}, '회원님을 언급하였습니다.', sysdate)
 </insert>
 
                     
@@ -22,17 +22,19 @@ INSERT INTO NOTIFY_POST(ID, NAME, MENTIONED_ID, POST_ID, CONTENT, NOTIFY_TIME)
    
 	UPDATE NOTIFY_POST
 	SET 
-    CONTENT = '재언급 되었습니다',
+    CONTENT = '회원님을 재언급 하였습니다.',
     NOTIFY_TIME = sysdate
 	WHERE MENTIONED_ID = #{MENTIONED_ID}
 
     </update>
     
     <select id="listalarm" resultType="com.naver.myhome.domain.Notify" parameterType="java.lang.Integer">
-    select name, content, notify_time
+    select mentioned_by, content, notify_time
     from NOTIFY_POST
     where mentioned_id = #{id}
 </select>
+
+
 </mapper>
 
 

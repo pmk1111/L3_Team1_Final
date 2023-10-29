@@ -147,7 +147,7 @@
             </li>
 
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath}/main/bookmark" class="menu-link">
+              <a href="${pageContext.request.contextPath}/bookmark/bookmark-list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-detail"></i>
                 <div data-i18n="Layouts">북마크(즐겨찾는 게시물)</div>
               </a>

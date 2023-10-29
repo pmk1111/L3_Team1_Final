@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.naver.myhome.mybatis.mapper.ChatRoomMapper">
+	<select id="getChatRoomInfo"
+		resultType="com.naver.myhome.domain.ChatRoom">
+		SELECT * FROM chatroom
+		WHERE
+		(create_by = #{employeeId} AND participant = #{participant})
+		OR
+		(create_by = #{participant} AND participant = #{employeeId})
+	</select>
+
+	<select id="getChatRoomList"
+		resultType="com.naver.myhome.domain.ChatRoom">
+		SELECT * FROM chatroom
+		WHERE
+		(create_by = #{employeeId} OR participant = #{employeeId})
+		AND (resent_content IS NOT NULL AND resent_content != '')
+	</select>
+
+	<insert id="createChatRoom">
+		<selectKey order="BEFORE" keyProperty="id" resultType="int">
+			select chatroom_id.nextval from dual
+		</selectKey>
+		insert into chatroom
+		values
+		(#{id}, #{employeeId}, #{participant}, null,
+		SYSDATE, null)
+	</insert>
+	
+	<update id="updateResentContent">
+		update chatroom
+		set resent_content = #{resultText},
+		updated_at = SYSDATE
+		where id = #{selectedRoomNum}
+	</update>
+</mapper>

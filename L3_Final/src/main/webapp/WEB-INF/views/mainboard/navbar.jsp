@@ -11,6 +11,7 @@
 </style>
 	<script src="${pageContext.request.contextPath}/notify/js/notify.js"></script>
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="${pageContext.request.contextPath}/notify/js/notify.js"></script>
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
   
 	<div
@@ -143,6 +144,7 @@
 				    $('.chat-icon').attr('src', '../resources/mainboard/assets/img/chat.svg');
 				  }
 				);
+		
 			$("#logout").click(function(event){
 				event.preventDefault();
 				$("form[name=logout]").submit();

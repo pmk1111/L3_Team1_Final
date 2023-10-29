@@ -36,8 +36,8 @@ public class IssueServiceImpl implements IssueService{
 	}
 	
 	@Override
-	public List<Issue> getMyWork(String status) {
-		return mapper.getMyWork(status);
+	public List<Issue> getMyWork(String status, int userId) {
+		return mapper.getMyWork(status, userId);
 	}
 
 
@@ -76,8 +76,8 @@ public class IssueServiceImpl implements IssueService{
 	}
 	
 	@Override
-	public int updateStatus(int issueId, String status, String selectedUserId) {
-		return mapper.updateStatus(issueId, status, selectedUserId);
+	public int updateStatus(int issueId, String status, String selectedUserId, int sessionId) {
+		return mapper.updateStatus(issueId, status, selectedUserId, sessionId);
 		
 	}
 	

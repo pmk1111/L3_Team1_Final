@@ -19,61 +19,33 @@
 
     <meta name="description" content="" />
     
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../resources/user/assets/vendor/fonts/boxicons.css" />
-
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="../resources/user/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../resources/user/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../resources/user/assets/css/demo.css" />
-
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../resources/user/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
-    <!-- Page CSS -->
-
-    <!-- Helpers -->
-    <script src="../user/assets/vendor/js/helpers.js"></script>
-
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../user/assets/js/config.js"></script>
+   <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
+   
+   
     <style>
     body {
-    		font-family: 'Nanum Gothic', sans-serif;
-    	}
+          font-family: 'Nanum Gothic', sans-serif;
+       }
     .changepassword { margin: 20px 0px 40px 0px}
-	.changepwd { background-color: white;
-				 border: 1px solid #d9dee3;
-				 color: #697a8d;
-				 border-radius: 5px;
-			
-	}
-	.pwdsubmit {border: 1px solid #d9dee3;
- 	  						    background-color: white;
- 	  						    color: #697a8d;
- 	  						    box-shadow:none;
- 	  						    border-radius:5px;}
- 	#fileName {font-size: 13px;}
- 	
+   .changepwd { background-color: white;
+             border: 1px solid #d9dee3;
+             color: #697a8d;
+             border-radius: 5px;
+         
+   }
+   .pwdsubmit {border: 1px solid #d9dee3;
+                            background-color: white;
+                            color: #697a8d;
+                            box-shadow:none;
+                            border-radius:5px;}
+    #fileName {font-size: 13px;}
+    
     </style>
     <script>
     const result ="${result}";
-		if(result == 'success'){
-		 alert("회원 정보가 수정되었습니다.")
-	}
+      if(result == 'success'){
+       alert("회원 정보가 수정되었습니다.")
+   }
     </script>
   </head>
   <body>
@@ -84,14 +56,14 @@
         
         <!-- Menu -->
 
-		<jsp:include page="../mainboard/leftbar.jsp"></jsp:include>
-		<!-- / Menu -->
+      <jsp:include page="../mainboard/leftbar.jsp"></jsp:include>
+      <!-- / Menu -->
 
 
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
-		  <jsp:include page="../mainboard/navbar.jsp"></jsp:include>
+        <jsp:include page="../mainboard/navbar.jsp"></jsp:include>
           <!-- / Navbar -->
 
           <!-- Content wrapper -->
@@ -117,25 +89,25 @@
                     <div class="card-body">
                       <div class="d-flex align-items-start align-items-sm-center gap-4">
                       <c:choose>
-  							<c:when test="${not empty userinfo.pic}">
-    							<img src="${pageContext.request.contextPath}/upload${userinfo.pic}" alt="프로필 사진"
-    							class="d-block rounded"
-                         		 height="150"
-                         		 width="150"
-                         		 id="uploadedAvatar"
-                       			 />
-    							
-  							</c:when>
- 					 		<c:otherwise>
-   								 <img src="${pageContext.request.contextPath}/user/assets/img/avatars/profile.png" alt="기본 프로필 사진"
-   								 class="d-block rounded"
-                         		 height="150"
-                         		 width="150"
-                         		 id="uploadedAvatar"
-                       			 />
-   								
- 					 		</c:otherwise>
-					</c:choose>
+                       <c:when test="${not empty userinfo.pic}">
+                         <img src="${pageContext.request.contextPath}/upload${userinfo.pic}" alt="프로필 사진"
+                         class="d-block rounded"
+                                height="150"
+                                width="150"
+                                id="uploadedAvatar"
+                                 />
+                         
+                       </c:when>
+                       <c:otherwise>
+                            <img src="${pageContext.request.contextPath}/user/assets/img/avatars/profile.png" alt="기본 프로필 사진"
+                            class="d-block rounded"
+                                height="150"
+                                width="150"
+                                id="uploadedAvatar"
+                                 />
+                           
+                       </c:otherwise>
+               </c:choose>
                      
                        
                         <div class="button-wrapper">
@@ -184,7 +156,7 @@
                               type="text"
                               class="form-control"
                               id="company"
-                              name="company"_
+                              name="company"
                               value="${userinfo.companyName}"
                               required readOnly
                             />
@@ -212,17 +184,17 @@
                         
                           
                       <div class="changepassword">
-                       		<button type="button" class="changepwd"><a href="${pageContext.request.contextPath}/user/change-pwd"> 비밀번호 변경</a></button>
+                             <button type="button" class="changepwd"><a href="${pageContext.request.contextPath}/user/change-pwd"> 비밀번호 변경</a></button>
                        </div>
-    					 
-    					 
-   						 <div class="mt-2">
-      					     <button type="submit" class="btn btn-primary me-2" id="updateProfile" >저장</button>
-      					     <button type="reset" class="btn btn-outline-secondary">취소</button>
-  					     </div>
-					  </div>
-					  </div>
-					  
+                    
+                    
+                      <div class="mt-2">
+                          <button type="submit" class="btn btn-primary me-2" id="updateProfile" >저장</button>
+                          <button type="reset" class="btn btn-outline-secondary" onclick="history.back();">취소</button>
+                      </div>
+                 </div>
+                 </div>
+                 
                       </form>
                     </div>
                     <!-- /Account -->
@@ -256,48 +228,16 @@
                 </div>
               </div>
             </div>
-                  
-            <!-- / Content -->
-
             
-
             <div class="content-backdrop fade"></div>
           </div>
-        
-          <!-- Content wrapper -->
-        </div>
-        
-        <!-- / Layout page -->
-      </div>
-
+       </div>
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
-    </div>
-    <!-- / Layout wrapper -->
-
-
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="../resources/user/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../resources/user/assets/vendor/libs/popper/popper.js"></script>
-    <script src="../resources/user/assets/vendor/js/bootstrap.js"></script>
-    <script src="../resources/user/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
-    <script src="../resources/user/assets/vendor/js/menu.js"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-
-    <!-- Main JS -->
-    <script src="../resources/user/assets/js/main.js"></script>
-
-    <!-- Page JS -->
-    <script src="../resources/user/assets/js/pages-account-settings-account.js"></script>
-
-   	<script src="../resources/user/js/profile.js"></script>
-    <!-- Place this tag in your head or just before your close body tag. -->
     
-  
-
+    <jsp:include page="../template/jsTemplate.jsp"></jsp:include>
+   <script src="../resources/user/js/profile.js"></script>
+    
+    
   </body>
 </html>

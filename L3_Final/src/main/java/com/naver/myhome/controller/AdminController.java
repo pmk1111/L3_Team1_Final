@@ -266,11 +266,7 @@ public class AdminController {
 
 
 
-    @GetMapping(value = "/wait-approve")
-    public String regwait() {
-        return "admin/wait-approve";
-    }
-
+ 
 
 
     //

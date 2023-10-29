@@ -19,7 +19,7 @@ public interface IssueMapper {
 	
 	public List<Issue> getStatusCount();
 	
-	public List<Issue> getMyWork(String status);
+	public List<Issue> getMyWork(String status, int userId);
 	
 	public List<Issue> getFilteredIssueList(Map<String, String> map);
 	
@@ -31,7 +31,7 @@ public interface IssueMapper {
 
 	public Issue getIssueDetail(int num);
 	
-	public int updateStatus(int issueId, String status, String selectedUserId);
+	public int updateStatus(int issueId, String status, String selectedUserId, int sessionId);
 	
 	public int issueUpdate(Issue issue);
 

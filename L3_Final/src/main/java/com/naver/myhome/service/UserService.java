@@ -35,11 +35,19 @@ public interface UserService {
 	public int update(User user);
 
 	public void delete(String email);
+	
+	public int backInvited(int id);
+	//지니 끝
+	
+	//혜원
 
-	List<MentionUser> mentionUser(String requestData);
+	public List<MentionUser> mentionUser(Map<String, Object> parameters);
+
+	public String getCreateUser(int userId);
+   //혜원끝
 
 	   
-	//지니 끝
+
 	
 
 

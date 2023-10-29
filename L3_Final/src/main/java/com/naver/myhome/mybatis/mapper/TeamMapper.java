@@ -1,7 +1,6 @@
 package com.naver.myhome.mybatis.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -21,11 +20,15 @@ public interface TeamMapper {
 	public List<Team> inviteTeam(int projectId);
 
     public List<Integer> findId(List<String> userNames);
-    
-    public void insertTeam(Map<String, Object> params);
 
-	public void insertTeam(int empId, int projectId);
+	public void insertTeam(int empId, int projectId, int sessionId);
 
 	public Integer getAuth(int sessionId, int projectId);
+
+	public void exitTeam(int projectId, int employeeId);
+
+	public void grantAdmin(int empId, int projectId, int sessionId);
+
+	public void revokeAdmin(int empId, int projectId, int sessionId);
 
 }

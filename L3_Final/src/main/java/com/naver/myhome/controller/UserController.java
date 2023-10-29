@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -84,7 +86,7 @@ public class UserController {
 
    @PostMapping(value = "/update-process")
    public String userUpdate(User user, Model model, HttpServletRequest request,Principal principal,String check,
-         RedirectAttributes rattr) throws IllegalStateException, IOException {
+	         RedirectAttributes rattr, @AuthenticationPrincipal User user2) throws IllegalStateException, IOException{
    
    String email = principal.getName();
    
@@ -117,7 +119,8 @@ public class UserController {
          }
 
 
-   int result = userService.update(user);
+      int result = userService.update(user);
+      user2.setPic(user.getPic());
    
    System.out.println(result);
    if (result > 0) {
@@ -222,7 +225,7 @@ public class UserController {
     session.invalidate();
     
     
-    return "redirect:../home/home";
+    return "redirect:../../myhome/";
     }
   
     //가입대기 회원 로그인시 보여지는 페이지
@@ -240,21 +243,40 @@ public class UserController {
     	return "user/stop-employee";
     
     }
-    
-    
+   
+    @ResponseBody
+    @PostMapping(value = "/cancel-join")
+    public int cancelJoin(@AuthenticationPrincipal User user  ) {
+    	
+    	int id = user.getId();
+    	System.out.println("컨트롤러 캔슬조인========"+id);
+    	int cancelJoin = userService.backInvited(id); 
+    	System.out.println(cancelJoin);
+    	
+       
+    	return cancelJoin;
+    }
       
    //지니 끝
     
     //혜원
     @PostMapping("/issue-mention")
     @ResponseBody
-    public List<MentionUser> mentionUsers (@RequestBody String requestData) {
+    public List<MentionUser> mentionUsers (@RequestBody String requestData,HttpSession session) {
 
         String name = extractName(requestData);
+        int projectId = (int) session.getAttribute("projectId");
+        System.out.println("project id:"+projectId);
+        System.out.println("name:"+name);
 
 
-        System.out.println("metion tag: " + userService.mentionUser(name)); 
-        return userService.mentionUser(name);
+     
+        
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("projectId", projectId);
+        parameters.put("name", name);
+
+        return userService.mentionUser(parameters);
 
 
 
@@ -409,9 +431,11 @@ public class UserController {
     
     // 로그인 페이지
     @GetMapping("/login")
-    public String login() {
-       return "user/login";
-    }
+    public String login(Model mv, HttpSession session) {
+    	mv.addAttribute("loginfail", session.getAttribute("loginfail"));//세션에 저장된 값을 한 번만 실행될 수 있도록 mv에 저장합니다
+        session.removeAttribute("loginfail");
+   	return "user/login";
+   }
 
     
    
@@ -432,7 +456,7 @@ public class UserController {
        
        else //emp 테이블에 정보가 있다면      
        
-          return "mainboard/my-dashboard";
+          return "redirect:/mainboard/my-dashboard";
        }
     
 
