@@ -365,12 +365,13 @@
                 <!-- Navbar -->
 
                 <jsp:include page="../mainboard/navbar.jsp"></jsp:include>
+               	<jsp:include page="../chat/chat.jsp"></jsp:include>
+               	<jsp:include page="../notify/notify.jsp"></jsp:include>
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
                     <!-- Content -->
 
-                    <jsp:include page="../chat/chat.jsp"></jsp:include>
 
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <div class="row">
