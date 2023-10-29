@@ -78,27 +78,31 @@ margin: 20px 0 0 0;
     height: 52px;
     width: 640px;
     border-radius: 8px;
-    font-size: 16xp;
-    font-wdight: 500;
+    font-size: 15px;
+    font-weight: 500;
     border: none;
     outline: none;
     display: block;
     margin: auto;
     margin-top: 40px;
 }
+
+
 .errMsg{
-margin-top:5px;
-margin-bottom:5px;
+margin-top:7px;
+margin-bottom:7px;
 visibility: hidden;
+margin-left : 6px;
 }	
+
 #confirmBtn{
 	margin-top:20px;
 	margin-bottom: 20px;
-	font-size: 22px;
+	font-size: 21px;
 	font-weight: 700;
 }
 .guest-or{
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 }
 #login, #googlelogin {
     border: 1px solid #000; 
@@ -135,22 +139,4 @@ visibility: hidden;
 .guest-or {
   position: relative;
   text-align: center;
-}
-
-.guest-or::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: -20px; /* adjust this value to move the line left or right */
-  height: 1px; /* adjust this value to change the line's thickness */
-  background-color: #000; /* adjust this color for the line color */
-}
-
-.guest-or::after {
-   content:"";
-   position:absolute;
-   top:50%;
-   right:-20px; /* Here we use 'right' instead of 'left' to place it on the right side. Adjust as needed.*/
-   height :1px ;
-   background-color:#000 ;
 }

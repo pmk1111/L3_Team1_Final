@@ -28,6 +28,10 @@
     <!-- ======================================================== * Template Name: Arsha * Updated: Jul 27 2023 with Bootstrap v5.3.1
      * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ * Author: BootstrapMade.com
      * License: https://bootstrapmade.com/license/ ======================================================== -->
+     
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+      
     <style>
         .modalarea {
             display: none;
@@ -73,22 +77,28 @@
             width: 100%;
             margin-bottom: 20px;
         }
-    </style>
-
+        
+    /* 진석 css */
+   	body {
+		font-family: 'Nanum Gothic', sans-serif;
+  	}
+    
+    
+ </style>
 </head>
 
 <body>
 
-    <jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="../user/header.jsp"></jsp:include>
 
     <form id="joinform" name="joinform" action="login" method="get">
 
         <div class="auth-section after-contets">
             <div class="accont-wrap">
-                <div class="account">개인회원</div>
+                <div class="account">회원 가입</div>
                 <div class="formDiv">
                     <div>
-                        <b class="bTxt">이메일 주소</b>
+                        <b class="bTxt">이메일</b>
                         <br>
                         <input type="text" id="email"  class="email" name="email" maxLength="30" onfocusout = "checkEmail(this)" placeholder="이메일을 입력하세요" required >
                         <p class="errMsg" id="email_message">오류메세지 영역</p>
