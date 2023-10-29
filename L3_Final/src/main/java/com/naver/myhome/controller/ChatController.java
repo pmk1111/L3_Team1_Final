@@ -59,6 +59,20 @@ public class ChatController {
 		m.addAttribute("name", principal.getName());
 		return "chat/chat";
 	}
+	
+	@GetMapping("get-not-read-cnt")
+	@ResponseBody
+	public int getNotReadCnt(Principal principal){
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
+		
+		int employeeId = employeeService.getEmployeeId(userId);
+		logger.info("가져온 내 직원 id = " + employeeId);
+		
+		int notReadCnt = chatRoomService.getNotReadCnt(employeeId);
+		
+		return notReadCnt;
+	}
 
 	@GetMapping("/get-chat-employee-list")
 	@ResponseBody
@@ -133,6 +147,14 @@ public class ChatController {
 		logger.info("가져온 채팅방은...?? = " + selectedRoomNum);
 
 		return selectedRoomNum;
+	}
+	
+	@GetMapping("/get-room-info")
+	@ResponseBody
+	public ChatRoom getRoomInfo(@RequestParam int selectedRoomNum) {
+		ChatRoom chatRoom = chatRoomService.getChatRoomInfoById(selectedRoomNum);
+		
+		return chatRoom;
 	}
 	
 	@PostMapping("/update-read-cnt")

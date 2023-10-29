@@ -19,6 +19,11 @@ public class ChatRoomServiceImpl implements ChatRoomService{
 	}
 	
 	@Override
+	public int getNotReadCnt(int employeeId) {
+		return mapper.getNotReadCnt(employeeId);
+	}
+	
+	@Override
 	public ChatRoom getChatRoomInfo(int employeeId, int participant) {
 		return mapper.getChatRoomInfo(employeeId, participant);
 	}
@@ -48,7 +53,5 @@ public class ChatRoomServiceImpl implements ChatRoomService{
 	public void updateReadCnt(int selectedRoomNum) {
 		mapper.updateReadCnt(selectedRoomNum);
 	}
-
-
 
 }

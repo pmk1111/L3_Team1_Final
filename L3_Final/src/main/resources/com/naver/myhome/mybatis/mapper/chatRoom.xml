@@ -4,6 +4,19 @@
 
 <mapper
 	namespace="com.naver.myhome.mybatis.mapper.ChatRoomMapper">
+	
+	<select id="getNotReadCnt" resultType="int">
+		select count(*) from chatroom
+		where 
+		(
+			create_by = #{employeeId}
+			OR
+			participant = #{employeeId}
+		)
+		and resent_sender != #{employeeId}
+		and not_read = 1
+	</select>
+	
 	<select id="getChatRoomInfo"
 		resultType="com.naver.myhome.domain.ChatRoom">
 		SELECT * FROM chatroom

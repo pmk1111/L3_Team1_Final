@@ -122,8 +122,31 @@ function chatRoomUpdateDate(updated_at) {
     }
 }//chatRoomUpdateDate end
 
+function getNotReadCnt(){
+	$.ajax({
+		type: "GET",
+		url: "${pageContext.request.contextPath}/get-not-read-cnt",
+		beforeSend: function (xhr) {
+			xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+		},
+		success: function(result){
+			if(result !== 0  && $('.chat-not-read').css('display')==='none'){
+				$('.chat-not-read').css('display', 'block');
+			} else if(result === 0 & $('.chat-not-read').css('display')==='block'){
+				$('.chat-not-read').css('display', 'none');
+			}
+		}
+	});
+}
 
+function pollNotReadCnt() {
+    setInterval(function() {
+    	getNotReadCnt(); // 위에서 정의한 함수 호출
+      console.log('안 읽은 메시지 이력 polling');
+    }, 3000); // 5초마다 요청을 보내도록 설정 (원하는 시간으로 조정 가능)
+}
 
+pollNotReadCnt();
 
 function getChatRoomList() {
     $.ajax({
@@ -169,6 +192,20 @@ function getChatRoomList() {
     }) // ajax end
 };//getChatRoomList end
 
+// 내가 속한 채팅 리스트를 호출해오는 polling 함수
+function pollChatRoomList() {
+    setInterval(function() {
+        if ($('.chat-list-area').css('display') !== 'none') {
+            getChatRoomList(); // 위에서 정의한 함수 호출
+            console.log('채팅방 목록 polling');
+        }
+    }, 3000); // 5초마다 요청을 보내도록 설정 (원하는 시간으로 조정 가능)
+}
+
+// 폴링 시작
+pollChatRoomList();
+
+
 $('.chat-room-list').click(function () {
     
 }) //.chat-room click end
@@ -177,7 +214,7 @@ $(document).on('click', '.chat-room', function () {
     let chatRoomId = $(this).val();
     let otherParticipant = $(this).find('.other-participant').val();
     console.log('선택한 채팅방 = ' + chatRoomId);
-    $('.msg-to').val($('.other-participant').val());
+    $('.msg-to').val(otherParticipant);
 
     getChatListById(chatRoomId, otherParticipant);
 
@@ -308,7 +345,7 @@ function getChatListById(chatRoomId, otherParticipant) {
                     str += '<input type="hidden" class="receiver" value="' + otherParticipant + '">'
                     str += '<div class="textbox">' + item.content + '</div>';
                     str += '<div class="chat-read-send">';
-                    str += '<span class="read-count">1</span>';
+                    str += '<span class="read-count"></span>';
                     str += '<span class="send-time">' + MsgsendTime + '</span></div></div>'
                     $('.wrap').append(str);
                 } else {
@@ -318,7 +355,7 @@ function getChatListById(chatRoomId, otherParticipant) {
                     str += '<input type="hidden" class="receiver" value="' + item.msg_from + '">'
                     str += '<div class="textbox">' + item.content + '</div>';
                     str += '<div class="chat-read-send">';
-                    str += '<span class="read-count">1</span>';
+                    str += '<span class="read-count"></span>';
                     str += '<span class="send-time">' + MsgsendTime + '</span></div></div>'
                     $('.wrap').append(str);
                 }
@@ -338,7 +375,7 @@ $('.chat-icon').click(function () {
 
         $('.chat-contact-area').hide();
         $('.chat-list-area').show();
-
+				
         getChatRoomList();
     } else {
         chattingLayer.fadeOut(100);
@@ -350,6 +387,7 @@ $('.chat-icon').click(function () {
 $('.chat-menu-close-btn').click(function () {
     chattingLayer.fadeOut(100);
     chattingRoom.fadeOut(100);
+    $('.chat-list-area').css('display', 'none');
 });
 
 $('#contactbtn').click(function () {
@@ -365,6 +403,9 @@ $('#chatbtn').click(function () {
     $('.chat-on').addClass('on');
     $('.chat-contact-area').hide();
     $('.chat-list-area').show();
+    if( $('.chat-list-area').css('display') === 'none'){
+    	$('.chat-list-area').css('display', 'block');
+    }
 });
 
 $('.create-chat-icon').hover(
@@ -409,8 +450,32 @@ $(document).on('click', '.chat-room', function(){
 	   const selectedRoomId = $(this).val();
 	    console.log("선택한 채팅방 = " + selectedRoomId);
 	    
+	    $('.selected-room-num').val(selectedRoomId);
 	  	updateReadCnt(selectedRoomId);
 });
+
+// 상대방이 메시지를 보냈는데 내가 해당 채팅방에 잇는 경우에 실행
+setInterval(function() {
+if($('.chatting-room').css('display') === 'block'){
+	const num = $('.selected-room-num').val();
+	const otherParticipant = $('.chatting-room').find('.msg-to').val();
+	console.log("현재 접속 중인 채팅방 : " + num);
+	console.log("나와 대화 중인 상대 : " + otherParticipant);
+	$.ajax({
+		type: "GET",
+		url: "${pageContext.request.contextPath}/get-room-info",
+		data: {selectedRoomNum:num},
+		beforeSend: function (xhr) {
+			xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+		},
+		success: function(response){
+			if(response.resent_sender == otherParticipant){
+				updateReadCnt(num);
+			}
+		}
+	});//ajax end
+}
+}, 200);
 
 const chatWriteInput = $('#chat-write-input');
 
