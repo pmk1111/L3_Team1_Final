@@ -27,7 +27,7 @@
 			<div class="nav-item d-flex align-items-center">
 				<i class="bx bx-search fs-4 lh-0"></i> <input type="text"
 					class="form-control border-0 shadow-none" placeholder="Search..."
-					aria-label="Search..." />
+					aria-label="Search..." style="padding: 0.4375rem 0.875rem !important; margin:0 !important;"/>
 			</div>
 		</div>
 		<!-- /Search -->
@@ -36,7 +36,11 @@
 			<!-- Place this tag where you want the button to render. -->
 			<li class="nav-item bell-chat-icon">
 				<img alt="알림" src="../resources/mainboard/assets/img/bell.svg" class="alarm-icon">
-				<img alt="채팅" src="../resources/mainboard/assets/img/chat.svg" class="chat-icon">
+				<div class="chat-icon-wrapper" style="display: inline-block; position:relative; margin-left: 5px;">
+					<img alt="채팅" src="../resources/mainboard/assets/img/chat.svg" class="chat-icon">
+					<div class="chat-not-read" style="
+								position:absolute; top:80%; left:50%; background-color: red; width: 8px; height: 8px; border-radius: 50%; display: none"></div>
+				</div>
 			</li>
 	
 
