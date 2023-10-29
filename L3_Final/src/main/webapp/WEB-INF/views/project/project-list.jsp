@@ -292,6 +292,62 @@
 			height: 13px
 		}
 		
+		.modal-member-role {
+			width: 55px;
+		    height: 20px;
+		    line-height: 24px;
+		    background: #9F7AB0;
+		    border-radius: 200px;
+		    color: #fff;
+		    text-align: center;
+		    font-size: 11px;
+		    display: inline-block;
+		    top: 5px;
+		    margin-left: 10px;
+		}
+		
+		.modal-member-role-span {
+			left: 22%;
+		}
+		
+		#setting-project {
+			padding:0;
+			width: 230px !important;
+			max-height:141px;
+		}
+		
+		.project-setup-header {
+			font-size: 16px;
+		    font-weight: 600;
+		}
+		
+		.setting-img {
+			width: 25px;
+		    margin-top: 4px;
+		}
+		
+		.setting-span {
+			top: 5px;
+		    font-size: 15px;
+		}
+		
+		.setting-info{
+			width: 20px;
+		    margin-top: 6px;
+		}
+		
+		#setting-project > div.setting-menu.auth-menu {
+			padding: 1.5px 0 11px 0 !important;
+		}
+		
+		#setting-project > div.setting-menu.none-auth {
+    		padding: 1.5px 0 10px 0 !important
+		}
+		
+		.project-setup-header span {
+    		line-height: 37px;
+    	}
+    	
     </style>
 </head>
 
@@ -371,12 +427,20 @@
                                                                                 </div>
                                                                                 <div class="project-name">
                                                                                     <a href="project?projectId=${favoritProject.ID}"><span class="project-name-span">${favoritProject.TITLE}</span></a>
+                                                                                    
+                                                                                    <c:if test="${favoritProject.MY_AUTH == 1 }">
+					                                                                    <div class="modal-member-role">
+					                                                                    	<span class="modal-member-role-span" style="color: #fff">관리자</span>
+					                                                                    </div>                                                                                    
+				                                                                    </c:if>
+				                                                                    
                                                                                     <img class="team-count-img" src="../resources/project/img/person.svg">
                                                                                     <span class="team-count-span">${favoritProject.TEAMCOUNT}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    
                                                                     <div class="recent-modify">
                                                                         <c:set var="timeDiff" value="${favoritProject.CURRENTTIME}" />
 
@@ -434,13 +498,22 @@
                                                                                 </div>
                                                                                 <div class="project-name">
                                                                                     <a href="project?projectId=${partProject.ID}"><span class="project-name-span">${partProject.TITLE}</span></a>
+                                                                                    
+                                                                                    <c:if test="${partProject.MY_AUTH == 1 }">
+	                                                                                    <div class="modal-member-role">
+	                                                                    					<span class="modal-member-role-span" style="color: #fff">관리자</span>
+	                                                                    				</div>
+	                                                                    			</c:if>
+                                                                    				
                                                                                     <img class="team-count-img" src="../resources/project/img/person.svg">
                                                                                     <span class="team-count-span">${partProject.TEAMCOUNT}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    
                                                                     <div class="recent-modify">
+                                                                    
                                                                         <c:set var="timeDiff" value="${partProject.CURRENTTIME}" />
 
                                                                         <c:if test="${timeDiff lt 1}">
@@ -478,7 +551,21 @@
                                                         <em id="detailSettingProjectSrno"></em>
                                                     </div>
 
-                                                    <div class="setting-menu">
+                                                    <div class="setting-menu none-auth">
+                                                        <div class="setting-line">
+                                                            <a class="setting-anchor setting-exit"> <img class="setting-img share" src="../resources/project/img/projectboard/share.svg">
+                                                                <span class="setting-span">프로젝트 나가기</span>
+                                                            </a>
+
+                                                            <div class="tooltip-container">
+                                                                <img class="setting-info" src="../resources/project/img/projectboard/info.svg">
+                                                                <div class="tooltip-text">프로젝트 나가기 시, 프로젝트
+                                                                    목록에서 삭제되며 게시물 작성 및 수정이 불가합니다.</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="setting-menu auth-menu">
                                                         <div class="setting-line">
                                                             <a class="setting-anchor setting-exit"> <img class="setting-img share" src="../resources/project/img/projectboard/share.svg">
                                                                 <span class="setting-span">프로젝트 나가기</span>
@@ -510,9 +597,11 @@
 
 											        // my_auth 값에 따라서 프로젝트 삭제 메뉴 보이기/숨기기
 											        if (myAuth == 0) {
-											            $('.setting-delete').hide();
+											        	$('.none-auth').show();
+											            $('.auth-menu').hide();
 											        } else {
-											            $('.setting-delete').show();
+											            $('.auth-menu').show();
+											            $('.none-auth').hide();
 											        }
 
 											        $("#detailSettingProjectSrno").text(projectId);
@@ -544,6 +633,27 @@
                             </div>
                         </div>
                     </div>
+                                        <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                            <div class="mb-2 mb-md-0">
+                                ©
+                                <script>
+                                    document.write(new Date().getFullYear());
+                                </script>
+                                (주)WidUs
+                            </div>
+                            <div>
+                                <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+                                <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+                                <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
+                                <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- Footer -->
+
+                    <div class="content-backdrop fade"></div>
                 </div>
             </div>
         </div>
@@ -556,7 +666,7 @@
 
     <script>
         $(document).ready(function() {
-            
+        	
             $('#searchInput').on('keyup', function() {
                 var value = $(this).val().toLowerCase();
 
@@ -633,10 +743,12 @@
                         	$('.personalProject').show();
                             $('.allProject').hide();
                         	
+                            console.log(data);
 							var favList = '';
 							var partList = '';
 							
 							for(var i=0; i< data.favoritProjectList.length; i++) {
+								
 								favList += '<li class="list fav-list">';								
 								favList += '<div class="project-info">'; 								
 								favList += '<div class="project-left">';								
@@ -644,23 +756,31 @@
 								favList += '<div class="project-information">';								
 								favList += '<div class="project-up">';								
 								favList += '<div class="favorite-project">';								
-								favList += '<img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data.favoritProjectList[i].id + '" data-my-auth="' + data.favoritProjectList[i].my_auth + '">';								
+								favList += '<img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data.favoritProjectList[i].id + '" data-my-auth="' + data.favoritProjectList[i].my_AUTH + '">';								
 								favList += '</div>';	
 								
 								favList += '<div class="setting">';								
-								favList += '<img class="setting-img-dot" src="../resources/project/img/dot.png">';								
+								favList += '<img class="setting-img-dot" src="../resources/project/img/dot.png" style="padding-left: 5px; padding-right: 5px;">';								
 								favList += '</div>';	
 								
 								favList += '<div class="project-name">';								
 								favList += '<a href="project?projectId=' + data.favoritProjectList[i].id + '">';								
 								favList += '<span class="project-name-span">' + data.favoritProjectList[i].title + '</span>';								
-								favList += '</a>';								
+								favList += '</a>';		
+								
+								if (data.favoritProjectList[i].my_AUTH === 1){
+									favList += '<div class="modal-member-role">';	
+									favList += '<span class="modal-member-role-span" style="color: #fff">관리자</span>';	
+									favList += '</div>';
+								}
+								
 								favList += '<img class="team-count-img" src="../resources/project/img/person.svg" style="margin-left:8.5px">';								
 								favList += '<span class="team-count-span" style="margin-left:4px">' + data.favoritProjectList[i].teamcount + '</span>';								
 								favList += '</div>';								
 								favList += '</div>';								
 								favList += '</div>';								
-								favList += '</div>';								
+								favList += '</div>';							
+								
 								favList += '<div class="recent-modify">';
 								var timeDiff = data.favoritProjectList[i].currenttime;
 								
@@ -688,21 +808,29 @@
 								partList += '<div class="project-information">';								
 								partList += '<div class="project-up">';								
 								partList += '<div class="favorite-project">';								
-								partList += '<img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data.partProjectList[i].id + '" data-my-auth="' + data.partProjectList[i].my_auth + '">';								
+								partList += '<img class="star favorite-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data.partProjectList[i].id + '" data-my-auth="' + data.partProjectList[i].my_AUTH + '">';								
 								partList += '</div>';			
 								
 								partList += '<div class="setting">';								
-								partList += '<img class="setting-img-dot" src="../resources/project/img/dot.png">';								
+								partList += '<img class="setting-img-dot" src="../resources/project/img/dot.png" style="padding-left: 5px; padding-right: 5px;">';								
 								partList += '</div>';				
 								
 								partList += '<div class="project-name">';								
-								partList += '<a href="project?projectId=' + data.partProjectList[i].id + '"><span class="project-name-span">' + data.partProjectList[i].title + '</span></a>';								
+								partList += '<a href="project?projectId=' + data.partProjectList[i].id + '"><span class="project-name-span">' + data.partProjectList[i].title + '</span></a>';
+								
+								if (data.partProjectList[i].my_AUTH === 1){
+									partList += '<div class="modal-member-role">';			
+									partList += '<span class="modal-member-role-span" style="color: #fff">관리자</span>';			
+									partList += '</div>';			
+								}
+								
 								partList += '<img class="team-count-img" src="../resources/project/img/person.svg" style="margin-left:8.5px">';								
 								partList += '<span class="team-count-span" style="margin-left:4px">' + data.partProjectList[i].teamcount + '</span>';								
 								partList += '</div>';								
 								partList += '</div>';								
 								partList += '</div>';								
-								partList += '</div>';								
+								partList += '</div>';	
+								
 								partList += '<div class="recent-modify">';
 								var timeDiff = data.partProjectList[i].currenttime;
 								
@@ -803,6 +931,7 @@
                         url: '../project/all-tabs',
                         method: 'GET',
                         success: function(data) {
+                        	
                         	$('.personalProject').hide();
                             $('.allProject').show(); 
                         	
@@ -818,24 +947,33 @@
 								allList += '<div class="project-information">';								
 								allList += '<div class="project-up">';								
 								allList += '<div class="favorite-project">';								
-								allList += '<img class="star all-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data[i].id + '" data-my-auth="' + data.my_auth + '">';								
+								allList += '<img class="star all-star" src="../resources/project/img/projectboard/icon_star.png" data-project-id="' + data[i].id + '" data-my-auth="' + data[i].my_AUTH + '">';								
 								allList += '</div>';		
 								
 								allList += '<div class="setting">';								
-								allList += '<img class="setting-img-dot" src="../resources/project/img/dot.png">';								
+								allList += '<img class="setting-img-dot" src="../resources/project/img/dot.png" style="padding-left: 5px; padding-right: 5px;">';								
 								allList += '</div>';
 								
 								allList += '<div class="project-name">';								
 								allList += '<a href="project?projectId=' + data[i].id + '">';								
 								allList += '<span class="project-name-span">' + data[i].title + '</span>';								
 								allList += '</a>';								
+								
+								if (data[i].my_AUTH === 1){
+									allList += '<div class="modal-member-role">';			
+									allList += '<span class="modal-member-role-span" style="color: #fff">관리자</span>';			
+									allList += '</div>';			
+								}
+								
 								allList += '<img class="team-count-img" src="../resources/project/img/person.svg" style="margin-left:8.5px">';								
 								allList += '<span class="team-count-span" style="margin-left:4px">' + data[i].teamcount + '</span>';								
 								allList += '</div>';								
 								allList += '</div>';								
 								allList += '</div>';								
 								allList += '</div>';								
+								
 								allList += '<div class="recent-modify">';
+								
 								var timeDiff = data[i].currenttime;
 								
 								if (timeDiff < 1) {
@@ -849,6 +987,7 @@
 								} else if (timeDiff >= 10080 && timeDiff < 43200) {
 									allList += '<span>' + Math.floor(timeDiff / (7 *24 *60)) + ' 주 전</span>';
 								}
+								
 								allList += '</div>';
 								allList += '</div>';								
 								allList += '</li>';								

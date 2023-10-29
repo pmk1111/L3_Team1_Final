@@ -1,4 +1,3 @@
-$(document).ready(function() {
 
     $('.star').each(function() {
         var $this = $(this);
@@ -130,9 +129,9 @@ $(document).ready(function() {
                 id: id
             },
             success: function(response) {
-            	console.log(selected_class);
                 $(".select-color" + selected_class).css("background", activeColor);
                 $(".select-color" + ".color-in-modify-modal").css("background", activeColor);
+                getRecentStatus();
             } 
         });
     });
@@ -167,12 +166,12 @@ $(document).ready(function() {
             },
             success: function(response) {
             	selected_class = '.mainboard-color';
-            	console.log("123 " + selected_class);
                 $(".select-color" + selected_class).css("background", modify_color);
                 $(".project-name-span").text(modify_title);
                 $(".discription span").text(modify_subtitle);
                 $('.modify-background').css('display', 'none');
                 $('#modal-background').css('backgorund-color', 'rgba(0, 0, 0, .8)');
+                getRecentStatus();
             } 
     	})
     })    
@@ -348,6 +347,8 @@ $(document).ready(function() {
 	                    $admin.find(".modal-member-role").append('<span class="modal-member-role-span" style="color: #fff">관리자</span>');
 	                    $admin.find(".setting-manager-hire").replaceWith('<a class="setting-anchor setting-manager-fire" data-emp-id="' + empId + '"><span class="setting-span setting-span-02">관리자 해제</span></a>');
 	                    
+	                    getRecentStatus();
+	                    
 	                },
 	                error: function(jqXHR, textStatus, errorThrown) {
 	                    swal("실패", jqXHR.responseJSON.message || textStatus, "error");
@@ -395,6 +396,8 @@ $(document).ready(function() {
 	                    
 	                    $admin.find(".setting-manager-fire").replaceWith('<a class="setting-anchor setting-manager-hire" data-emp-id="' + empId + '"><span class="setting-span setting-span-02">관리자 지정하기</span></a>');
 	                    
+	                    getRecentStatus();
+	                    
 	                },
 	                error: function(jqXHR, textStatus, errorThrown) {
 	                    swal("실패", jqXHR.responseJSON.message || textStatus, "error");
@@ -441,7 +444,6 @@ $(document).ready(function() {
             });
     });
 	
-    // 친구 초대 모달
     $('.memberlist').click(function() {
         event.preventDefault();
         $('#modal-background-invite').fadeIn(300);
@@ -490,7 +492,25 @@ $(document).ready(function() {
         // Set the last visible list item's border to none
         $('#member-list-ul li:visible:last').css('border-bottom', 'none');
     });
-
+    
+	$('#find-emp').on('keyup', function() {
+	    var searchTerm = $(this).val().toLowerCase();
+	
+	    $('#member-invite-ul li').css('border-bottom', '');
+	
+	    $('#member-invite-ul li').each(function() {
+	        var memberName = $(this).find('.modal-member-name-span').text().toLowerCase();
+	
+	        if (memberName.includes(searchTerm)) {
+	            $(this).show();
+	        } else {
+	            $(this).hide();
+	        }
+	    });
+	
+	    // Set the last visible list item's border to none
+	    $('#member-invite-ul li:visible:last').css('border-bottom', 'none');
+	});
 
     $('.modal-submit-exit').click(function(event) {
         event.preventDefault();
@@ -507,4 +527,3 @@ $(document).ready(function() {
         }
     });
     
-});

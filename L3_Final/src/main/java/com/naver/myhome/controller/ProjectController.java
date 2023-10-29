@@ -270,8 +270,21 @@ public class ProjectController {
 		int sessionId = customUser.getId();
 		
 		projectService.modifyProject(color, title, subtitle, projectId, sessionId);
+		
 	}
 	
+	@ResponseBody
+	@PostMapping("/recent")
+	public  List<RecentStatus> recentStatus(HttpSession session) {
+		
+		int selectedProjectId = (int) session.getAttribute("projectId");
+		
+		logger.info("recent 프로젝트 아이디 : " + selectedProjectId);
+		
+		List<RecentStatus> data = projectService.getRecentStatus(selectedProjectId);
+		
+		return data;
+	}
 	
 	// JJ's Controller End
 
