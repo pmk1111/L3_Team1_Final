@@ -70,14 +70,16 @@
         <div class="layout-container">
             <!-- Menu -->
 
-            <jsp:include page="leftbar.jsp"></jsp:include>
+            <jsp:include page="../mainboard/leftbar.jsp"></jsp:include>
             <!-- / Menu -->
 
             <!-- Layout container -->
             <div class="layout-page">
                 <!-- Navbar -->
 
-                <jsp:include page="navbar.jsp"></jsp:include>
+                <jsp:include page="../mainboard/navbar.jsp"></jsp:include>
+               	<jsp:include page="../chat/chat.jsp"></jsp:include>
+               	<jsp:include page="../notify/notify.jsp"></jsp:include>
 
                 <!-- / Navbar -->
                 <div class="container-xxl flex-grow-1 container-p-y" id="searcharea2">

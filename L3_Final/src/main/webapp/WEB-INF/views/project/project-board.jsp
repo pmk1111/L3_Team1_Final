@@ -122,6 +122,9 @@
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
 
+               <jsp:include page="../chat/chat.jsp"></jsp:include>
+               <jsp:include page="../notify/notify.jsp"></jsp:include>
+               
                     <!-- Content -->
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <div class="row">
