@@ -3,27 +3,32 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.MytotalworkMapper">
-	
 
-  
-
-<select id="getSearchList" resultType="Mytotalwork">
+<select id="getSearchList" resultMap="MytotalWork">
   SELECT
+    P.ID,
     P.TITLE,
+    I.ID,
     I.SUBJECT,
     I.STATUS
-    FROM
+  FROM
     project P
     JOIN issue I ON P.ID = I.PROJECT_ID
-    <where>
-        <if test="search_field != null">
-            AND (P.TITLE LIKE '%' || #{search_word} || '%' OR I.SUBJECT LIKE '%' || #{search_word} || '%')
-        </if>
-    </where>
+  <where>
+    <if test="search_field != null">
+      AND (P.TITLE LIKE '%' || #{search_word} || '%' OR I.SUBJECT LIKE '%' || #{search_word} || '%')
+    </if>
+  </where>
 </select>
+<resultMap id="MytotalWork" type="com.naver.myhome.domain.Mytotalwork">
+  <result property="project_id" column="project_id" />
+  <result property="TITLE" column="TITLE" />
+  <collection property="issues" ofType="com.naver.myhome.domain.Mytotalwork">
+    <result property="ID" column="ID" />
+    <result property="SUBJECT" column="SUBJECT" />
+    <result property="STATUS" column="STATUS" />
+  </collection>
+</resultMap>
 
-
-
-  
 
 </mapper>
