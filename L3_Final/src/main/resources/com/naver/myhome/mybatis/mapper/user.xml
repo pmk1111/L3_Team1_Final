@@ -12,10 +12,10 @@
 	</select>
 
 	<select id="isId" resultType="user">
-		SELECT u.pic, u.password,u.email, u.name, u.phone, c.name AS company_name
-		FROM users u
-		LEFT JOIN company c ON u.id = c.user_id
-		WHERE u.email = #{email}
+		select u.pic, u.name, u.email, u.password, u.phone, e.id, c.name as companyName, e.department, e.position 
+		from users u inner join company c on u.id = c.user_id 
+		inner join employee e on u.id = e.user_id 
+		where u.email = #{email}
 	</select>
 
 	<update id="update" parameterType="user">

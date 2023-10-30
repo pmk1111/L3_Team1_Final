@@ -26,10 +26,12 @@ public class User implements UserDetails {
 
 	private String companyStatus;
 	private String security;
-	private Date createdAt;
+	private Date created_at;
 	private int authNum;
 
 	private String companyName;			//회사명변경을위해 필요한 생성자 지니
+	private String department;
+	private String position;
 
 	
 	

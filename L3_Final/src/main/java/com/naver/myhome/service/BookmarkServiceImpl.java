@@ -1,7 +1,9 @@
 package com.naver.myhome.service;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,8 +44,11 @@ public class BookmarkServiceImpl implements BookmarkService {
 	}
 
 	@Override
-	public List<Bookmark> getBookmarkList(int userId) {
-		return dao.getBookmarkList(userId);
+	   public List<Bookmark> getSearchList(int userId, String search_word) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search_word", "%"+search_word+"%");
+		map.put("userId", userId);
+		return dao.getSearchList(map);
 	}
 
 	

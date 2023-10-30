@@ -1,6 +1,7 @@
 package com.naver.myhome.mybatis.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,6 +18,6 @@ public interface BookmarkMapper {
 	
 	int countBookmark(int userId);
 	
-	List<Bookmark> getBookmarkList(int userId);
+	public List<Bookmark> getSearchList(Map<String, Object> map);
 
 }

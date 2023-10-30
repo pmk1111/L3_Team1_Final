@@ -99,6 +99,29 @@
         where id=#{empId}
     </update>
 
+	<!--  직원 정보 상세보기 -->
+	<select id="employeeInfo" resultType="Employee"> 
+		select u.name, u.email, u.password, u.phone, e.id, c.name as company_name, e.department, e.position 
+		from employee e 
+		inner join company c on c.id = e.company_id 
+		inner join users u on u.id = e.user_id 
+		where e.id = #{empId} 
+	</select>
+	
+<!--  직원 정보 업데이트  -->
+	<update id="updateEmpInfo"> 
+		UPDATE employee 
+		SET department = #{department}, 
+		position = #{position} 
+		WHERE id = #{id} 
+	</update>
+		
+	<update id="updateUserInfo"> 
+		UPDATE users 
+		SET name = #{name}, phone = #{phone} 
+		WHERE id = (SELECT user_id FROM employee WHERE id = #{id}) 
+	</update>
+
     <!-- 회사 정보 -->
     <select id="companyinfo" resultType="Company"> 
     	select c.id, c.name, c.domain 
