@@ -4,26 +4,30 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authentication property="principal" var="pinfo" />
 <style>
-.notification-icon-container {
-    position: relative;
-    display: inline-block;
-}
+    .notification-icon-container {
+        position: relative;
+        display: inline-block;
+    }
 
 
-.notification-count-badge {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    width: 14px; /* 원하는 크기로 조정 */
-    height: 14px; /* 원하는 크기로 조정 */
-    text-align: center;
-    font-size: 8px; /* 작은 폰트 크기로 조정 */
-    line-height: 14px; /* 아이콘과 텍스트 중앙 정렬을 위한 높이 설정 */
-    display:none;
-}
+    .notification-count-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        width: 14px;
+        /* 원하는 크기로 조정 */
+        height: 14px;
+        /* 원하는 크기로 조정 */
+        text-align: center;
+        font-size: 8px;
+        /* 작은 폰트 크기로 조정 */
+        line-height: 14px;
+        /* 아이콘과 텍스트 중앙 정렬을 위한 높이 설정 */
+        display: none;
+    }
 
     .alarm-icon+.chat-icon {
         margin-left: 10px
@@ -53,7 +57,6 @@
         <!-- Search -->
         <div class="navbar-nav align-items-center">
             <div class="nav-item d-flex align-items-center">
-                <i class="bx bx-search fs-4 lh-0"></i> <input type="text" class="form-control border-0 shadow-none" placeholder="Search..." aria-label="Search..." style="padding: 0.4375rem 0.875rem !important; margin:0 !important;" />
             </div>
         </div>
         <!-- /Search -->
@@ -61,14 +64,14 @@
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- Place this tag where you want the button to render. -->
             <li class="nav-item bell-chat-icon">
-                  <div class="notification-icon-container">
-    <img alt="알림" src="../resources/mainboard/assets/img/bell.svg" class="alarm-icon">
-    <span class="notification-count-badge">0</span>
-</div>
-                <div class="chat-icon-wrapper" style="display: inline-block; position:relative; margin-left: 5px;">
+                <div class="notification-icon-container">
+                    <img alt="알림" src="../resources/mainboard/assets/img/bell.svg" class="alarm-icon">
+                    <span class="notification-count-badge">0</span>
+                </div>
+                <div class="chat-icon-wrapper" style="display: inline-block; position:relative; margin-left: 10px;">
                     <img alt="채팅" src="../resources/mainboard/assets/img/chat.svg" class="chat-icon">
                     <div class="chat-not-read">
-                    	<span class="not-read-cnt"></span>
+                        <span class="not-read-cnt"></span>
                     </div>
                 </div>
             </li>
@@ -88,50 +91,62 @@
                     </div>
 
                 </a>
+
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">
+                    <li>
+                        <a class="dropdown-item" href="#">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
                                         <c:choose>
                                             <c:when test="${empty pinfo.pic}">
-                                                <img src="${pageContext.request.contextPath}/user/img/profile.png" alt="Default Profile Image" class="w-px-40 h-auto rounded-circle" />
+                                                <img src="${pageContext.request.contextPath}/user/img/profile.png" alt="Default Profile Image" class="w-px-40 h-px-40 rounded-circle" />
                                             </c:when>
                                             <c:otherwise>
-                                                <img src="${pageContext.request.contextPath}/upload${pinfo.pic}" alt="User Profile Image" class="w-px-40 h-auto rounded-circle" />
+                                                <img src="${pageContext.request.contextPath}/upload${pinfo.pic}" alt="User Profile Image" class="w-px-40 h-px-40 rounded-circle" />
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
                                 </div>
-                                <div class="flex-grow-1">
+                                <div class="flex-grow-1" style="display: flex; justify-content: center; align-items: center;">
                                     <span class="fw-semibold d-block">${pinfo.name}</span>
                                     <%--  <small class="text-muted">${userinfo.po }</small> --%>
                                 </div>
                             </div>
-                        </a></li>
+                        </a>
+                    </li>
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>
-                    <li><a class="dropdown-item" href="../user/profile"> <i class="bx bx-user me-2"></i> <span class="align-middle">My
-                                Profile</span>
-                        </a></li>
-                    <li><a class="dropdown-item" href="#"> <i class="bx bx-cog me-2"></i> <span class="align-middle">Settings</span>
-                        </a></li>
-                    <li><a class="dropdown-item" href="#"> <span class="d-flex align-items-center align-middle"> <i class="flex-shrink-0 bx bx-credit-card me-2"></i> <span class="flex-grow-1 align-middle">Billing</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                            </span>
-                        </a></li>
+
+                    <li>
+                        <a class="dropdown-item" href="../user/profile">
+                            <i class="bx bx-user me-2"></i>
+                            <span class="align-middle">My Profile</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item setting-item" >
+                            <i class="bx bx-cog me-2"></i>
+                            <span class="align-middle">Settings</span>
+                        </a>
+                    </li>
+
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>
+
                     <li>
-                        <form action="${pageContext.request.contextPath}/user/logout" method="post" style="margin-bottom:0px" name="logout">
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/user/logout">
-                                <i class="bx bx-power-off me-2"></i> <span id="logout" class="align-middle">
-                                	Log Out</span>
-                            </a>
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-                        </form>
+                    	<div class="dropdown-item">
+	                        <form action="${pageContext.request.contextPath}/user/logout" method="post" style="margin-bottom:0px" name="logout">
+	                            <i class="bx bx-power-off me-2"></i> 
+	                            <span id="logout" class="align-middle"> Log Out</span>
+	                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+	                        </form>
+                        </div>
                     </li>
+
                 </ul>
             </li>
             <!--/ User -->
@@ -170,32 +185,36 @@
             event.preventDefault();
             $("form[name=logout]").submit();
         })
-     // 아직 읽지 않은 알림 수를 가져오는 함수
-		function getUnreadNotificationCount() {
-		    $.ajax({
-		        url: '../getUnreadNotificationCount', // 서버의 컨트롤러 엔드포인트 URL
-		        type: 'GET',
-		        success: function(unreadCount) {
-		            // unreadCount에 아직 읽지 않은 알림의 개수가 반환됨
-		            updateNotificationCount(unreadCount);
-		        },
-		        error: function(xhr, status, error) {
-		            console.error('Error:', error);
-		        }
-		    });
-		}
+        // 아직 읽지 않은 알림 수를 가져오는 함수
+        function getUnreadNotificationCount() {
+            $.ajax({
+                url: '../getUnreadNotificationCount', // 서버의 컨트롤러 엔드포인트 URL
+                type: 'GET',
+                success: function(unreadCount) {
+                    // unreadCount에 아직 읽지 않은 알림의 개수가 반환됨
+                    updateNotificationCount(unreadCount);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
 
-		// 알림 카운트를 업데이트하는 함수
-		function updateNotificationCount(count) {
-		    var countBadge = $('.notification-count-badge');
-		    if (count === 0) {
-		        countBadge.hide(); // 0일 때 뱃지를 숨김
-		    } else {
-		        countBadge.text(count).show(); // 0이 아닐 때 뱃지를 보이고 텍스트 업데이트
-		    }
-		}
+        // 알림 카운트를 업데이트하는 함수
+        function updateNotificationCount(count) {
+            var countBadge = $('.notification-count-badge');
+            if (count === 0) {
+                countBadge.hide(); // 0일 때 뱃지를 숨김
+            } else {
+                countBadge.text(count).show(); // 0이 아닐 때 뱃지를 보이고 텍스트 업데이트
+            }
+        }
 
-		
-		    getUnreadNotificationCount();
+
+        getUnreadNotificationCount();
     }); // ready end
+    
+    $('.setting-item').click(function(){
+    	alert("서비스 준비중입니다.");
+    })
 </script>
