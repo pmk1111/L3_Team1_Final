@@ -221,7 +221,7 @@
 
 .notify-list {
     width: 100%;
-    height: calc(100vh - 202px);
+	height: calc(100vh - 230px);
     overflow: auto
 }
 

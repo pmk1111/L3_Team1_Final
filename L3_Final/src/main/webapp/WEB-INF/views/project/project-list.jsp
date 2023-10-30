@@ -349,6 +349,9 @@
     		line-height: 37px;
     	}
     	
+    	.chat-menu-area ul{
+    		margin-bottom:16px !important;
+    	}
     </style>
 </head>
 
