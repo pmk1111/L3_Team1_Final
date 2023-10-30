@@ -4,18 +4,20 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.IssueMapper">
 
-	<resultMap id="IssueResultMap" type="com.naver.myhome.domain.Issue">
-    <id property="id" column="id"/>
-    <!-- 다른 필드에 대한 매핑 -->
-    <result property="totalcount" column="totalcount"/>
-    <result property="todocount" column="todocount"/>
-    <result property="progresscount" column="progresscount"/>
-    <result property="resolvedcount" column="resolvedcount"/>
-    <result property="donecount" column="donecount"/>
-</resultMap>
-	
+	<resultMap id="IssueResultMap"
+		type="com.naver.myhome.domain.Issue">
+		<id property="id" column="id" />
+		<!-- 다른 필드에 대한 매핑 -->
+		<result property="totalcount" column="totalcount" />
+		<result property="todocount" column="todocount" />
+		<result property="progresscount" column="progresscount" />
+		<result property="resolvedcount" column="resolvedcount" />
+		<result property="donecount" column="donecount" />
+	</resultMap>
+
 	<select id="getIssueId" resultType="int">
-		select issue_id.nextval from dual
+		select issue_id.nextval from
+		dual
 	</select>
 
 	<select id="getListCount" resultType="int">
@@ -25,140 +27,115 @@
 
 	<select id="getIssueList" resultType="issue">
 		select i.*,
-		(SELECT name FROM users WHERE id = i.create_user) AS create_user_name
+		(SELECT name FROM users WHERE id = i.create_user) AS
+		create_user_name
 		from issue i
 		where project_id = #{projectId}
-		order by created_at desc
+		order by
+		created_at desc
 		<!-- 프로젝트 id는 세션 또는 쿠키에서 가져온 값으로 대체 -->
 	</select>
-	
+
 	<select id="getStatusCount" resultType="issue">
 		SELECT
-    	count(*) AS totalcount,
-    	SUM(CASE WHEN status = 'To Do' THEN 1 ELSE 0 END) AS todocount,
-    	SUM(CASE WHEN status = 'In Progress' THEN 1 ELSE 0 END) AS progresscount,
-    	SUM(CASE WHEN status = 'Resolved' THEN 1 ELSE 0 END) AS resolvedcount,
-    	SUM(CASE WHEN status = 'Done' THEN 1 ELSE 0 END) AS donecount
+		count(*) AS totalcount,
+		SUM(CASE WHEN status = 'To Do' THEN 1 ELSE 0 END) AS todocount,
+		SUM(CASE WHEN status = 'In Progress' THEN 1 ELSE 0 END) AS progresscount,
+		SUM(CASE WHEN status = 'Resolved' THEN 1 ELSE 0 END) AS resolvedcount,
+		SUM(CASE WHEN status = 'Done' THEN 1 ELSE 0 END) AS donecount
 		FROM issue
-	</select>
-	
-
-	<select id="getFilteredIssueList" resultType="com.naver.myhome.domain.Issue">
-  	SELECT i.*,
-  	(SELECT name FROM users WHERE id = i.create_user) AS create_user_name
-  	FROM issue i
-		<where>
-  		<if test='issueStatus != "-"'>
-    		status = #{issueStatus}
-  		</if>
-  		<if test='issuePriority != "-"'>
-    		AND priority = #{issuePriority}
-  		</if>
- 		</where>
-  	ORDER BY created_at DESC
+		WHERE project_id IN 
+		(SELECT project_id FROM team WHERE employee_id = #{employeeId})
 	</select>
 
-	<select id="searchIssues" resultType="com.naver.myhome.domain.Issue">
-   	SELECT i.*,
-   	(SELECT name FROM users WHERE id = i.create_user) AS create_user_name
+
+	<select id="getFilteredIssueList"
+		resultType="com.naver.myhome.domain.Issue">
+		SELECT i.*,
+		(SELECT name FROM users WHERE id = i.create_user) AS create_user_name
 		FROM issue i
-			WHERE UPPER(subject) LIKE '%' || UPPER(#{searchText}) || '%'
-   		OR UPPER(create_user) LIKE '%' || UPPER(#{searchText}) || '%'
-   		ORDER BY created_at DESC
-  </select>
-  
-  <select id="getMyWork" resultType="com.naver.myhome.domain.Issue">
-  SELECT * FROM issue
 		<where>
-  		<if test='status != "" and status != null'>
-    		status = #{status}
-  		</if>
- 		</where>
- 		and assigned = #{userId}
-  	ORDER BY created_at DESC
-  </select>
-  
- <!--  <select id="getProjectList" resultType="com.naver.myhome.domain.Project">
-  	select project_name from project
-  	where project_joiner.user_id = #{user.id}
-  </select> -->
-  
-  <insert id="createIssue">
-  	<!-- <selectKey order="BEFORE" keyProperty="user_name" resultType="String">
-		select user_name from usr where user_id=1 
-  	</selectKey> -->
-  	
-<!-- 다른 항목들이 완료되었을 때 사용할 쿼리
-		insert into issue
-  	values
-  	(#{issue_id},
-  	(select project_id from project where project_name = #{project_name}),
-  	(select name from user where id=#{create_user}),
-  	#{issue_type}, #{issue_priority}, #{issue_subject}, #{issue_content}, #{issue_status},
-  	#{create_user},
-  	#{issue_assigned}, SYSDATE) -->
-  	<!-- 사용자 식별번호를 세션에서 가져와서 그 값을 작성자, 보고자에 넣어야 함. 그 값을 통해 화면에 표시되는 값은 유저 이름-->
-  	
-  	insert into issue 
-  	values
-  	(#{id}, #{project_id}, 
-  	#{create_user}, #{type},
-  	#{priority}, #{subject}, #{content},
-  	#{status}, #{create_user}, #{assigned}, #{create_user}, SYSDATE, SYSDATE)
+			<if test='issueStatus != "-"'>
+				status = #{issueStatus}
+			</if>
+			<if test='issuePriority != "-"'>
+				AND priority = #{issuePriority}
+			</if>
+		</where>
+		ORDER BY created_at DESC
+	</select>
+
+	<select id="searchIssues"
+		resultType="com.naver.myhome.domain.Issue">
+		SELECT i.*,
+		(SELECT name FROM users WHERE id = i.create_user) AS create_user_name
+		FROM
+		issue i
+		WHERE UPPER(subject) LIKE '%' || UPPER(#{searchText}) || '%'
+		OR UPPER(create_user) LIKE '%' || UPPER(#{searchText}) || '%'
+		ORDER BY created_at DESC
+	</select>
+
+	<select id="getMyWork"
+		resultType="com.naver.myhome.domain.Issue">
+		SELECT * FROM issue
+		<where>
+			<if test='status != "" and status != null'>
+				status = #{status}
+			</if>
+		</where>
+		and assigned = #{userId}
+		ORDER BY created_at DESC
+		<!-- userId로 가져오는 이유는, 이슈 등록시 사용되는 projectAndUser 쿼리에서 가져오는 userId가 employee, 
+			team, project테이블을 join해서 userId를 추출해온 다음 그 값으로 이슈를 등록하기 때문 -->
+	</select>
+
+	 <insert id="createIssue">
+     insert into issue 
+     values
+     (#{id}, #{project_id}, 
+     #{create_user}, #{type},
+     #{priority}, #{subject}, #{content},
+     #{status}, #{create_user}, #{assigned}, #{create_user}, SYSDATE, SYSDATE,#{mentioned})
   </insert>
 
 	<select id="getIssueDetail" resultType="issue">
-		<!-- select 
-		(select project_name from project where project_id = #{project_id}),
-		(select name from user where id=1),
-		issue_subject, issue_content, issue_reporter, issue_assigned, issue_created
-		from issue -->
-		
 		SELECT
-    i.*,
-    (SELECT name FROM users WHERE id = i.create_user) AS create_user_name,
-    (SELECT NAME FROM users WHERE id = i.assigned) AS assigned_user_name,
-    (SELECT TITLE FROM project WHERE id = 
-        (SELECT project_id FROM ISSUE WHERE id = #{num})) as project_name
-    FROM issue i
-    WHERE i.id = #{num}
+		i.*,
+		(SELECT name FROM users WHERE id = i.create_user) AS create_user_name,
+		(SELECT NAME FROM users WHERE id = i.assigned) AS assigned_user_name,
+		(SELECT TITLE FROM project WHERE id =
+		(SELECT project_id FROM ISSUE WHERE id = #{num})) as project_name
+		FROM issue i
+		WHERE i.id = #{num}
 	</select>
-	
-<update id="updateStatus">
-  UPDATE issue
-  SET status = #{status}
-  <if test="selectedUserId != null and selectedUserId != ''" >
-    , assigned = #{selectedUserId}
-  </if>
-  , MODIFIER = #{sessionId}
-  WHERE id = #{issueId}
-</update>
-	
-	<update id="issueUpdate" parameterType="issue">
-	<!-- 	update issue
-		set project_id = #{project_id},
-				issue_type = #{issue_type},
-				issue_priority = #{issue_priority},
-				issue_subject = #{issue_subject},
-				issue_content = #{issue_content},
-				issue_status = #{issue_status},
-				issue_assigned = #{issue_assigned},
-		where issue_id = #{issue_id} -->
-		
-		update issue
-		set type = #{type},
-				priority = #{priority},
-				subject = #{subject},
-				content = #{content},
-				status = #{status},
-				assigned = #{assigned},
-				MODIFIER = #{sessionId}
-		where id = #{id}
-				
+
+	<update id="updateStatus">
+		UPDATE issue
+		SET status = #{status}
+		<if test="selectedUserId != null and selectedUserId != ''">
+			, assigned = #{selectedUserId}
+		</if>
+		, MODIFIER = #{sessionId}
+		WHERE id = #{issueId}
 	</update>
-	
+
+	<update id="issueUpdate" parameterType="issue">
+		update issue
+		set type =
+		#{type},
+		priority = #{priority},
+		subject = #{subject},
+		content = #{content},
+		status = #{status},
+		assigned = #{assigned},
+		MODIFIER = #{sessionId}
+		where id = #{id}
+
+	</update>
+
 	<delete id="issueDelete">
-	delete from issue
-	where id = #{id}
+		delete from issue
+		where id = #{id}
 	</delete>
 </mapper>
