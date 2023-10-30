@@ -241,46 +241,44 @@
                                                     </span>
 
 
-                                                    <c:if test="${!empty myTotalWorks}">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>프로젝트 이름</th>
-                                                                    <th>시작일</th>
-                                                                    <th>종료일</th>
-                                                                    <th>상태</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <c:forEach items="${myTotalWorks}" var="myTotalWorks" varStatus="status">
+<c:if test="${!empty myTotalWorks}">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>프로젝트 이름</th>
+                <th>시작일</th>
+                <th>종료일</th>
+                <th>상태</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach items="${myTotalWorks}" var="project">
 
-                                                                    <c:if test="${status.count == 1}">
-                                                                        <!-- 프로젝트 1 -->
-                                                                        <tr class="main-row">
-                                                                            <td class="main-cell">${myTotalWorks.TITLE}</td>
-                                                                            <td>2013-01-01</td>
-                                                                            <td>2013-01-01</td>
-                                                                            <td>${myTotalWorks.STATUS}</td>
+                <!-- 프로젝트 -->
+                <tr class="main-row">
+                    <td class="main-cell">${project.TITLE}</td>
+                    <td>2013-01-01</td>
+                    <td>2013-01-01</td>
+                    <td>${project.STATUS}</td>
+                </tr>
+                
+                <c:forEach items="${project.issues}" var="issue">
 
-                                                                        </tr>
-                                                                    </c:if>
-                                                                    <c:forEach items="${myTotalWorks.issues}" var="e">
+                    <!-- 이슈 -->
+                    <tr class="sub-row" style="display: none;">
+                        <td class="sub-cell">${issue.SUBJECT}</td>
+                        <td>2013-01-01</td>
+                        <td>2013-01-01</td>
+                        <td>${issue.STATUS}</td>
 
-                                                                        <!-- 이슈 1 -->
-                                                                        <tr class="sub-row" style="display: none;">
-                                                                            <td class="sub-cell">${e.SUBJECT}</td>
-                                                                            <td>2013-01-01</td>
-                                                                            <td>2013-01-01</td>
-                                                                            <td>${e.STATUS}</td>
+                    </tr>
 
-                                                                        </tr>
+                </c:forEach>
 
-                                                                    </c:forEach>
-
-                                                                </c:forEach>
-                                                            </tbody>
-                                                        </table>
-                                                    </c:if>
+            </c:forEach>  
+       </tbody>
+    </table>
+</c:if>
 
                                                 </div>
                                             </form>
@@ -368,31 +366,26 @@
 
 
         // 클릭 이벤트 핸들러
-        document.addEventListener("click", function(e) {
-            // 클릭한 요소가 .main-row 클래스를 가진 <tr> 또는 .main-cell 클래스를 가진 <td>인지 확인
-            if (e.target.classList.contains('main-row') || e.target.classList.contains('main-cell')) {
-                // 클릭한 <tr> 또는 <td>의 부모인 <tr> 요소 (상위 행) 찾기
-                var mainRow = e.target.closest('tbody');
+document.addEventListener("click", function(e) {
+    // 클릭한 요소가 .main-row 클래스를 가진 <tr> 또는 .main-cell 클래스를 가진 <td>인지 확인
+    if (e.target.classList.contains('main-row') || e.target.classList.contains('main-cell')) {
+        // 클릭한 <tr> 또는 <td>의 부모인 <tr> 요소 (상위 행) 찾기
+        var mainRow = e.target.closest('.main-row');
 
+        // 상위 행의 하위 요소인 .sub-row 요소들 찾기
+        var subRows = $(mainRow).nextUntil('.main-row');
 
-
-                $(mainRow).find('.sub-row').each(function(index, item) {
-                    if ($(item).css('display') == "none") {
-                        $(item).css('display', 'table-row')
-                        $('.main-row').addClass('open')
-
-                    } else {
-
-                        $(item).css('display', 'none')
-                        $('.main-row').removeClass('open')
-                    }
-
-
-                })
-
-
+        subRows.each(function(index, item) {
+            if ($(item).css('display') == "none") {
+                $(item).css('display', 'table-row');
+                $(mainRow).addClass('open');
+            } else {
+                $(item).css('display', 'none');
+                $(mainRow).removeClass('open');
             }
         });
+    }
+});
     </script>
 
 </body>
