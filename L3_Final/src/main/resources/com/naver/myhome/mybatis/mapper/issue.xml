@@ -129,7 +129,9 @@
 		content = #{content},
 		status = #{status},
 		assigned = #{assigned},
-		MODIFIER = #{sessionId}
+		MODIFIER = #{sessionId},
+		mentioned = #{mentioned}
+		
 		where id = #{id}
 
 	</update>

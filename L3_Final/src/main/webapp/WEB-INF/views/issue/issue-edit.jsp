@@ -65,6 +65,14 @@
 				<div class="issue-title-wrap">
 					<input type="text" class="issue-title-area" name="subject" value="${issuedata.subject}" placeholder="제목을 입력하세요.">
 				</div>
+					<!-- 혜원 -->
+					<div>
+					<label>언급</label>
+				<input list="notionchoice" id="inputnotionchoice" name="notionchoice"  value="${issuedata.mentioned}"/>
+				 <datalist id="notionchoice"></datalist>
+				 
+				</div>
+				<!-- 혜원 -->
 
 				<div class="issue-content-wrap">
 					<textarea class="issue-content-txtarea" name="content" placeholder="내용을 입력하세요.">${issuedata.content}</textarea>

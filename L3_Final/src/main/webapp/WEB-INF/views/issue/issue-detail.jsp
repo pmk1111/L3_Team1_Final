@@ -150,10 +150,10 @@
                           <button type="button" class="status-btn" data-value="Done">Done</button>
                         </div>
                       </div>
-                      <div class="issue-assigned-area">
-                        <div class="issue-assigned-area">
-                        	<span>언급</span><span class="assigned-user">${issuedata.mentioned}</span>
-                      	</div>   
+                       <div class="issue-assigned-area">
+                        <div class="issue-mention-area" style="display:none">
+                           <span>언급</span><span class="mention-user">${issuedata.mentioned}</span>
+                         </div>   
                         <span>담당자</span><span class="assigned-user">${issuedata.assigned_user_name}</span>
                       </div>
                       <hr class="issue-hr">
@@ -404,6 +404,11 @@ function getProjectIdAndTeam() {
         }
     }); //ajax end
 } // getProjectIdAndTeam end
+const MentionedUserName = $('.mention-user').text();
+
+if(MentionedUserName !== null && MentionedUserName !== ''){
+   $('.issue-mention-area').css('display', 'block');
+}
 </script>
   </body>
 </html>
