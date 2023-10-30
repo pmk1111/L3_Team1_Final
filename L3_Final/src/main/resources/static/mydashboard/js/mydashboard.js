@@ -292,26 +292,33 @@ $(document).ready(function () {
 
 
     function animatePercentage() {
-        // totalWorkCount를 한 번만 계산하도록 수정
-        const totalWorkCount = parseInt($(".total-work span").text());
+    // totalWorkCount를 한 번만 계산하도록 수정
+    const totalWorkCount = parseInt($(".total-work span").text());
 
-        $(".situation-list").not(".total-work").each(function () {
-            const workCount = parseInt($(this).find("span").text());
-            const percent = Math.floor((workCount / totalWorkCount) * 100);
+    $(".situation-list").not(".total-work").each(function () {
+        const workCount = parseInt($(this).find("span").text());
+        // Calculate the percent
+        const percent = Math.floor((workCount / totalWorkCount) * 100);
 
-            console.log(workCount);
+        console.log(workCount);
+        if (isNaN(percent)) {
+            // If percent is NaN, display "0%".
+            $(this).find(".js-chart-percent").text("0%");
+        } else {
             $(this).find(".js-chart-percent").prop('Counter', 0).animate({
                 Counter: percent
             }, {
                 duration: 1000,
                 easing: 'swing',
                 step: function (now) {
-                    // 이 부분에서 Math.round 사용하지 않음
+                    // Display the percentage with Math.round
                     $(this).text(Math.round(now) + "%");
                 }
             });
-        });
-    }
+        }
+    });
+}
+
 
 
     // counter 코드는 그대로 유지
