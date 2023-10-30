@@ -124,4 +124,10 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return dao.getCreateUser(userId);
 	}
+	
+		@Override
+	public String getAssignUser(int assignedValue) {
+		// TODO Auto-generated method stub
+		return dao.getAssignedUser(assignedValue);
+	}
 }

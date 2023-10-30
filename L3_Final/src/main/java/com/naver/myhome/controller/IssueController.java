@@ -129,6 +129,7 @@ public class IssueController {
 	@PostMapping("createIssue")
 	public String createIssue(Issue issue, Notify notify, HttpServletRequest request, 
 			HttpSession session, Principal principal,@RequestParam(value="user_id",defaultValue="0",required=false) int mentioned_id,
+				@RequestParam(value = "assigned") int assignedValue,
 			String notionchoice,MultipartFile[] uploadfiles) throws Exception {
 
 		String userEmail = principal.getName();
@@ -149,28 +150,40 @@ public class IssueController {
 		  //혜원
 
 	      String create_user = userService.getCreateUser(userId);
+	      String assign_user = userService.getAssignUser(assignedValue);
 	    
+   if (mentioned_id > 0) {
+	    	    Notify mentionNotify = new Notify();
+	    	    mentionNotify.setNAME(notionchoice.replace("@", ""));
+	    	    mentionNotify.setMENTIONED_BY(create_user);
+	    	    mentionNotify.setPOST_ID(issueId);
+	    	    mentionNotify.setMENTIONED_ID(mentioned_id);
+	    	    mentionNotify.setCONTENT("언급 하였습니다.");
+	    	    mentionNotify.setNOTIFY_STATUS(0);
+	    	 
+	    	    notifyService.createalarm(mentionNotify);
+	    	}
 
-	      notify.setNAME(notionchoice.replace("@", ""));
-	      notify.setMENTIONED_BY(create_user);
-		   notify.setPOST_ID(issueId);
-		   notify.setMENTIONED_ID(mentioned_id);
+	    	if (assignedValue > 0) {
+	    	    Notify assignNotify = new Notify();
+	    	    assignNotify.setNAME(assign_user);
+	    	    assignNotify.setMENTIONED_BY(create_user);
+	    	    assignNotify.setPOST_ID(issueId);
+	    	    assignNotify.setMENTIONED_ID(assignedValue);
+	    	    assignNotify.setCONTENT("담당자로 설정하였습니다.");
+	    	    assignNotify.setNOTIFY_STATUS(0);
+	    	    
+	    	    notifyService.createalarm(assignNotify);
+	    	}
+
+
 		   
 		    logger.info(issue.toString());
 		    logger.info("이슈 태그: " + notify.getNAME());
 		    logger.info("user_id: " + mentioned_id);
 
 
-	      int existingNotifyCount = notifyService.existsNotifyWithName(mentioned_id);
 
-	      if (existingNotifyCount > 0) {
-
-	         notifyService.updatealarm(notify);
-	         logger.info("이미 존재하는 태그. 업데이트를 수행하세요.");
-	      } else {
-	         // 존재하지 않는 경우, createalarm을 호출하여 새로운 레코드를 삽입
-	         notifyService.createalarm(notify);
-	      }
 
 
 		for (MultipartFile file : uploadfiles) {

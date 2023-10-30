@@ -4,6 +4,27 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authentication property="principal" var="pinfo" />
 <style>
+.notification-icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+
+.notification-count-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 14px; /* 원하는 크기로 조정 */
+    height: 14px; /* 원하는 크기로 조정 */
+    text-align: center;
+    font-size: 8px; /* 작은 폰트 크기로 조정 */
+    line-height: 14px; /* 아이콘과 텍스트 중앙 정렬을 위한 높이 설정 */
+    display:none;
+}
+
     .alarm-icon+.chat-icon {
         margin-left: 10px
     }
@@ -40,7 +61,10 @@
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- Place this tag where you want the button to render. -->
             <li class="nav-item bell-chat-icon">
-                <img alt="알림" src="../resources/mainboard/assets/img/bell.svg" class="alarm-icon">
+                  <div class="notification-icon-container">
+    <img alt="알림" src="../resources/mainboard/assets/img/bell.svg" class="alarm-icon">
+    <span class="notification-count-badge">0</span>
+</div>
                 <div class="chat-icon-wrapper" style="display: inline-block; position:relative; margin-left: 5px;">
                     <img alt="채팅" src="../resources/mainboard/assets/img/chat.svg" class="chat-icon">
                     <div class="chat-not-read" style="position:absolute; top:80%; left:50%; background-color: red; width: 8px; height: 8px; border-radius: 50%; display: none"></div>
@@ -144,5 +168,32 @@
             event.preventDefault();
             $("form[name=logout]").submit();
         })
+     // 아직 읽지 않은 알림 수를 가져오는 함수
+		function getUnreadNotificationCount() {
+		    $.ajax({
+		        url: '../getUnreadNotificationCount', // 서버의 컨트롤러 엔드포인트 URL
+		        type: 'GET',
+		        success: function(unreadCount) {
+		            // unreadCount에 아직 읽지 않은 알림의 개수가 반환됨
+		            updateNotificationCount(unreadCount);
+		        },
+		        error: function(xhr, status, error) {
+		            console.error('Error:', error);
+		        }
+		    });
+		}
+
+		// 알림 카운트를 업데이트하는 함수
+		function updateNotificationCount(count) {
+		    var countBadge = $('.notification-count-badge');
+		    if (count === 0) {
+		        countBadge.hide(); // 0일 때 뱃지를 숨김
+		    } else {
+		        countBadge.text(count).show(); // 0이 아닐 때 뱃지를 보이고 텍스트 업데이트
+		    }
+		}
+
+		
+		    getUnreadNotificationCount();
     }); // ready end
 </script>

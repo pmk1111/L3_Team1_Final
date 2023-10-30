@@ -262,8 +262,8 @@ public class UserController {
     //혜원
     @PostMapping("/issue-mention")
     @ResponseBody
-    public List<MentionUser> mentionUsers (@RequestBody String requestData,HttpSession session) {
-
+    public List<MentionUser> mentionUsers (@RequestBody String requestData,HttpSession session,@AuthenticationPrincipal User user) {
+		int userId = user.getId();
         String name = extractName(requestData);
         int projectId = (int) session.getAttribute("projectId");
         System.out.println("project id:"+projectId);
@@ -275,6 +275,7 @@ public class UserController {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("projectId", projectId);
         parameters.put("name", name);
+		parameters.put("userId", userId);
 
         return userService.mentionUser(parameters);
 
