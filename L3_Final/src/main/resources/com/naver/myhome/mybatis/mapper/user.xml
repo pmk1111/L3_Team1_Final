@@ -111,6 +111,11 @@
 		WHERE ID = #{id}
 	</update>
 	
+	<select id="getEmail" resultType="string">
+		SELECT email FROM USERS
+		WHERE id = #{userId}
+	</select>
+	
 
 	<!-- #########################################주영####################################### 
 		END -->
