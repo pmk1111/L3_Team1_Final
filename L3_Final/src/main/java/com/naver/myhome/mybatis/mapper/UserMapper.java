@@ -55,7 +55,8 @@ public interface UserMapper {
 		public String getCreateUser(int userId);
 		//혜원끝
 
-
+		//mk
+		public String getEmail(int userId);
 
 	}
 

@@ -143,7 +143,7 @@ public class IssueController {
 		issue.setId(issueId);
 		issue.setProject_id(projectId);
 		issue.setCreate_user(userId);
-
+		issue.setMentioned(notionchoice.replace("@", ""));
 
 		issueService.createIssue(issue);
 
@@ -298,8 +298,9 @@ public class IssueController {
 	public ModelAndView issueDetail(int num, ModelAndView mv, HttpServletRequest request, @AuthenticationPrincipal User user,
 			@RequestHeader(value = "referer", required = false) String beforeURL) {
 		logger.info("referer: " + beforeURL);
-
+		
 		Issue issue = issueService.getIssueDetail(num);
+		
 		List<Files> filelist = fileService.getFileList(num);
 		
 		int bookmarkCk = bookmarkService.checkBookmark(user.getId(), num);
@@ -310,11 +311,21 @@ public class IssueController {
 			mv.addObject("url", request.getRequestURI());
 			mv.addObject("showAlert", true);
 		} else {
+			int issueCreater = issue.getCreate_user();
+			int issueAssigner = issue.getAssigned();
+			
+			String createrEmail = userService.getEmail(issueCreater);
+			String assignerEmail = userService.getEmail(issueAssigner);
+			logger.info("작성자 이메일 = " + createrEmail);
+			logger.info("담당자 email = " + assignerEmail);
+			
 			logger.info("상세보기 성공");
 			mv.setViewName("issue/issue-detail");
 			mv.addObject("issuedata", issue);
 			mv.addObject("filelist", filelist);
 			mv.addObject("bookmarkCk", bookmarkCk);
+			mv.addObject("createrEmail", createrEmail);
+			mv.addObject("assignerEmail", assignerEmail);
 			mv.addObject("showAlert", false);
 		}
 

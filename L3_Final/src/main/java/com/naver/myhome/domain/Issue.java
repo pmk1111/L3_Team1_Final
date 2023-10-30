@@ -26,6 +26,7 @@ public class Issue {
    private String assigned_user_name;
    private String project_name;
    private String mentioned;
+   private String creater_pic;
    
     private int totalcount;
     private int todocount;

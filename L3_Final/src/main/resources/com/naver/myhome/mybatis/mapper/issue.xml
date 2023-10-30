@@ -101,7 +101,7 @@
 
 	<select id="getIssueDetail" resultType="issue">
 		SELECT
-		i.*,
+		i.*, (SELECT pic from users where id = i.create_user) As creater_pic,
 		(SELECT name FROM users WHERE id = i.create_user) AS create_user_name,
 		(SELECT NAME FROM users WHERE id = i.assigned) AS assigned_user_name,
 		(SELECT TITLE FROM project WHERE id =
