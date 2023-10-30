@@ -167,7 +167,11 @@ function getChatRoomList() {
                 		}
                     str += '<input type="hidden" class="other-participant" value="' + item.other_participant_id + '">'
                     str += '<div class="chat-img-user-latest">'
-                    str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>'
+                    if(item.participant_pic !== null){
+                    	str += '<img class="chat-user-img" src="${pageContext.request.contextPath}/upload' + item.participant_pic + '" alt=""></div>'
+                    } else{
+                    	str += '<img class="chat-user-img" src="${pageContext.request.contextPath}/user/img/profile.png" alt=""></div>'
+                    }
                     str += '<div class="user-latest">'
                     str += '<p class="chat-user-id">' + item.participant_name + '</p>'
                     if(item.resent_content.length > 20){
@@ -215,13 +219,17 @@ $(document).on('click', '.chat-room', function () {
     let otherParticipant = $(this).find('.other-participant').val();
     console.log('선택한 채팅방 = ' + chatRoomId);
     $('.msg-to').val(otherParticipant);
-
-    getChatListById(chatRoomId, otherParticipant);
+    
+    let participantImg = $(this).find('.chat-user-img').attr("src");
+		chatUserImg = $('.chatting-room').find('.chat-user-img')
+		
+    getChatListById(chatRoomId, otherParticipant, participantImg);
 
     const chatUserName = $(this).find('.chat-user-id');
     console.log(chatUserName.text());
     $('.chat-user-txt').text(chatUserName.text());
-
+		chatUserImg.attr('src', participantImg);
+    
     $('.chatting-layer').css('display', 'none');
     $('.chatting-room').css('display', 'block');
 
@@ -291,7 +299,7 @@ $(document).on('click', '.chat-room', function () {
 });//chatroom click end
 
 //getChatList
-function getChatListById(chatRoomId, otherParticipant) {
+function getChatListById(chatRoomId, otherParticipant, participantImg) {
     let previousMessageDate = null; // 이전 메시지의 날짜를 저장할 변수
     $.ajax({
         type: "GET",
@@ -323,6 +331,8 @@ function getChatListById(chatRoomId, otherParticipant) {
                 let hours = sendTime.getHours();
                 let minutes = sendTime.getMinutes();
                 let period = "오전";
+                let myProfileImg = $('.avatar-online').find('img').attr("src");
+                console.log("내 이미지 = " + myProfileImg);
 
                 if (hours === 0) {
                     hours = 12; // 오전 12시를 00으로 표시
@@ -341,7 +351,7 @@ function getChatListById(chatRoomId, otherParticipant) {
                 if (item.msg_from == otherParticipant) {
                     let str = '<div class="chat not-me">';
                     str += '<div class="icon">';
-                    str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>';
+                    str += '<img class="chat-user-img" src="' + participantImg + '" alt=""></div>';
                     str += '<input type="hidden" class="receiver" value="' + otherParticipant + '">'
                     str += '<div class="textbox">' + item.content + '</div>';
                     str += '<div class="chat-read-send">';
@@ -351,7 +361,7 @@ function getChatListById(chatRoomId, otherParticipant) {
                 } else {
                     let str = '<div class="chat me">';
                     str += '<div class="icon">';
-                    str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>';
+                    str += '<img class="chat-user-img" src="' + myProfileImg + '" alt=""></div>';
                     str += '<input type="hidden" class="receiver" value="' + item.msg_from + '">'
                     str += '<div class="textbox">' + item.content + '</div>';
                     str += '<div class="chat-read-send">';
@@ -525,7 +535,11 @@ $('.contact').click(function () {
                 response.forEach(function (item) {
                     let str = '<li class="contact-user">';
                     str += '<div class="chat-img-user-latest">';
-                    str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt="">';
+                    if(item.user_pic !== null){
+                    	str += '<img class="chat-user-img" src="${pageContext.request.contextPath}/upload' + item.user_pic + '" alt="">';
+                    } else{
+                    	str += '<img class="chat-user-img" src="${pageContext.request.contextPath}/user/img/profile.png" alt="">';
+                    }
                     str += '</div>';
                     str += '<input type="hidden" class="employee-id" name="employeeId" value="' + item.id + '">'
                     str += '<div class="contact-user-info">';
@@ -581,7 +595,11 @@ $(document).on('click', '.create-chat', async function () {
     $('.chatting-room').css('display', 'block');
 
     const participantId = $(this).parent('.contact-user').find('.employee-id').val();
+    let participantImg = $(this).parent('.contact-user').find('.chat-user-img').attr('src');
     console.log("선택한 동료 정보 = " + participantId);
+    console.log("선택한 동료의 프로필 이미지 = " + participantImg);
+    
+    $('.chatting-room').find('.chat-user-img').attr('src', participantImg);
 
     // 채팅방 먼저 생성
     $.ajax({
@@ -615,7 +633,7 @@ $(document).on('click', '.create-chat', async function () {
                         writeResponse(event.data);
                     }
 
-                    getChatList(participantId); // 채팅 리스트 호출
+                    getChatList(participantId, participantImg); // 채팅 리스트 호출
 
                 } catch (error) {
                     console.error("방 번호 가져오기 실패: " + error);
@@ -642,7 +660,7 @@ $(document).on('click', '.create-chat', async function () {
                     writeResponse(event.data);
                 }
 
-                getChatList(participantId); // 채팅 리스트 호출
+                getChatList(participantId, participantImg); // 채팅 리스트 호출
             }
 
             $('.msg-to').val(participantId);
@@ -713,7 +731,7 @@ function formatKoreanDateWithDay(dateString) {
 }
 
 //getChatList
-function getChatList(participantId) {
+function getChatList(participantId, participantImg) {
     let previousMessageDate = null; // 이전 메시지의 날짜를 저장할 변수
     $.ajax({
         type: "GET",
@@ -745,6 +763,8 @@ function getChatList(participantId) {
                 let hours = sendTime.getHours();
                 let minutes = sendTime.getMinutes();
                 let period = "오전";
+                let myProfileImg = $('.avatar-online').find('img').attr("src");
+                console.log("내 이미지 = " + myProfileImg);
 
                 if (hours === 0) {
                     hours = 12; // 오전 12시를 00으로 표시
@@ -763,7 +783,7 @@ function getChatList(participantId) {
                 if (item.msg_from == participantId) {
                     let str = '<div class="chat not-me">';
                     str += '<div class="icon">';
-                    str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>';
+                    str += '<img class="chat-user-img" src="' + participantImg + '" alt=""></div>';
                     str += '<input type="hidden" class="receiver" value="' + participantId + '">'
                     str += '<div class="textbox">' + item.content + '</div>';
                     str += '<div class="chat-read-send">';
@@ -773,7 +793,7 @@ function getChatList(participantId) {
                 } else {
                     let str = '<div class="chat me">';
                     str += '<div class="icon">';
-                    str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>';
+                    str += '<img class="chat-user-img" src="' + myProfileImg + '" alt=""></div>';
                     str += '<input type="hidden" class="receiver" value="' + item.msg_from + '">'
                     str += '<div class="textbox">' + item.content + '</div>';
                     str += '<div class="chat-read-send">';
@@ -824,6 +844,7 @@ function send() {
         var text = $("#chat-write-input").text() + "," + '${name}';
         var lastIndexComma = text.lastIndexOf(',');
         var resultText = text.substring(0, lastIndexComma);
+        let myProfileImg = $('.avatar-online').find('img').attr("src");
 
         let selectedRoomNum = $('.selected-room-num').val();
         console.log('현재 접속한 채팅방 = ' + selectedRoomNum);
@@ -877,7 +898,7 @@ function send() {
 
         let str = '<div class="chat me">';
         str += '<div class="icon">';
-        str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>';
+        str += '<img class="chat-user-img" src="' + myProfileImg + '" alt=""></div>';
         str += '<div class="textbox">' + resultText + '</div>';
         str += '<div class="chat-read-send">';
         str += '<span class="read-count"></span>';
@@ -894,6 +915,7 @@ function writeResponse(rtext) {
 
     let msgCreateDate = new Date();
     let msgCreateDateParse = getYyyyMmDd(msgCreateDate);
+    let participantImg = $('.chatting-room').find('.chat-user-img').attr("src");
 
     var chatCnt = $('.wrap').children().length;
     if (chatCnt == 0) {
@@ -928,7 +950,7 @@ function writeResponse(rtext) {
 
     let str = '<div class="chat not-me">';
     str += '<div class="icon">';
-    str += '<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" alt=""></div>';
+    str += '<img class="chat-user-img" src="' + participantImg + '" alt=""></div>';
     str += '<div class="textbox">' + resultTxt + '</div>';
     str += '<div class="chat-read-send">';
     str += '<span class="read-count"></span>';

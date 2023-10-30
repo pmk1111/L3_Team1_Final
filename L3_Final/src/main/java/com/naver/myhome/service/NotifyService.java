@@ -17,5 +17,20 @@ public interface NotifyService {
 
 	public List<Notify> getNotificationsForUser(int userId);
 
+
+	public void updatedNotifications(int userId, int notifyId);
+
+
+	public void deleteNotifications(int userId);
+
+
+	public int getUnreadNotificationCount(int userId);
+
+
+	
+
+
+
+
 	
 }

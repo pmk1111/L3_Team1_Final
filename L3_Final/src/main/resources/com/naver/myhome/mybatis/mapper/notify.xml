@@ -6,8 +6,8 @@
 
     <insert id="createalarm" parameterType="com.naver.myhome.domain.Notify">
 
-INSERT INTO NOTIFY_POST(ID, NAME,MENTIONED_BY, MENTIONED_ID, POST_ID, CONTENT, NOTIFY_TIME)
-  VALUES (notify_postid.nextval, #{NAME},#{MENTIONED_BY}, #{MENTIONED_ID}, #{POST_ID}, '회원님을 언급하였습니다.', sysdate)
+INSERT INTO NOTIFY_POST(ID, NAME,MENTIONED_BY, MENTIONED_ID, POST_ID, CONTENT, NOTIFY_TIME,NOTIFY_STATUS)
+  VALUES (notify_postid.nextval, #{NAME},#{MENTIONED_BY}, #{MENTIONED_ID}, #{POST_ID}, #{CONTENT},sysdate,#{NOTIFY_STATUS})
 </insert>
 
                     
@@ -29,11 +29,28 @@ INSERT INTO NOTIFY_POST(ID, NAME,MENTIONED_BY, MENTIONED_ID, POST_ID, CONTENT, N
     </update>
     
     <select id="listalarm" resultType="com.naver.myhome.domain.Notify" parameterType="java.lang.Integer">
-    select mentioned_by, content, notify_time
+    select notify_status,id,post_id,name,mentioned_by, content, notify_time
     from NOTIFY_POST
     where mentioned_id = #{id}
+   ORDER BY notify_status ASC, notify_time DESC
 </select>
 
+<update id="updatedNotifications" parameterType="java.lang.Integer">
+  UPDATE notify_post
+  SET NOTIFY_STATUS = 1
+  WHERE mentioned_id = #{userId} and id = #{notifyId}
+</update>
+
+<delete id="deleteNotifications" parameterType="java.lang.Integer">
+ delete from notify_post
+ where id = #{notifyId}
+
+</delete>
+
+<select id="getUnreadNotificationCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+SELECT COUNT(*) FROM notify_post WHERE mentioned_id = #{id} AND notify_status = 0
+
+</select>
 
 </mapper>
 
