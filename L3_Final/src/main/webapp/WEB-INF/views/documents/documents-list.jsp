@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE html>
+
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../resources/mainboard/assets/" data-template="vertical-menu-template-free">
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
 <head>
     <meta charset="utf-8" />
@@ -70,6 +77,9 @@
         #documentarea2 {
             margin-top: 100px;
         }
+        .extension-icon{
+        	width:30px;
+        }
     </style>
 </head>
 
@@ -79,14 +89,14 @@
         <div class="layout-container">
             <!-- Menu -->
 
-            <jsp:include page="leftbar.jsp"></jsp:include>
+            <jsp:include page="../mainboard/leftbar.jsp"></jsp:include>
             <!-- / Menu -->
 
             <!-- Layout container -->
             <div class="layout-page">
                 <!-- Navbar -->
 
-                <jsp:include page="navbar.jsp"></jsp:include>
+                <jsp:include page="../mainboard/navbar.jsp"></jsp:include>
 
                 <!-- / Navbar -->
                 <div class="container-xxl flex-grow-1 container-p-y" id="documentarea2">
@@ -104,11 +114,12 @@
                                         <div class="container-xxl flex-grow-1 container-p-y">
                                             <div class="container">
                                                 <h3 style="margin-bottom: 30px; font-weight: 700;">파일함</h3>
-                                                <input type="text" class="file-search" placeholder="검색어를 입력하세요.">
+                                                <input type="text" class="file-search" placeholder="검색어를 입력하세요." id = "keyword"><button onclick="searchDocument()">검색</button>
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col">선택</th>
+                                                            <th scope="col">바로가기</th>
+                                                            <th scope="col">다운로드</th>
                                                             <th scope="col">파일명</th>
                                                             <th scope="col">용량</th>
                                                             <th scope="col">등록자</th>
@@ -116,27 +127,8 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tbody>
-													    <c:choose>
-													        <c:when test="${isEmpty}">
-													            <tr>
-													                <td colspan="5" style="text-align:center;">
-													                    <img src="../resources/documents/img/search-null.svg" alt="No documents found" />
-													                </td>
-													            </tr>
-													        </c:when>
-													        <c:otherwise>
-													            <c:forEach var="document" items="${documents}">
-													                <tr>
-													                    <th scope="row">${document.id}</th>
-													                    <td><a href="다운로드URL/${document.id}">${document.originalName}</a></td>
-													                    <td><a href="다운로드URL/${document.id}">${document.fileSize}</a></td>
-													                    <td><a href="다운로드URL/${document.id}">${document.createUser}</a></td>
-													                    <td><a href="다운로드URL/${document.id}">${document.createdAt}</a></td>
-													                </tr>
-													            </c:forEach>
-													        </c:otherwise>
-													    </c:choose>
+                                                   <tbody id = "printDocumentBody">
+													  
 													</tbody>
                                                 </table>
 
@@ -145,8 +137,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
 
@@ -207,6 +197,73 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+	
 </body>
+<script type="text/javascript">
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
 
+    $(document).ready(function(){
+        searchDocument();
+    });
+
+    function searchDocument() {
+        const keyword = $("#keyword").val();
+
+        $.ajax({
+            url: '../documents/search-documents-list',
+            type: 'POST',
+            data: { keyword: keyword },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (response) {
+                if (response.length == 0) {
+                    $("#printDocumentBody").html('<tr><td colspan="5" style="text-align:center;"><img src="../resources/documents/img/search-null.svg" alt="문서를 찾을 수 없습니다"></td></tr>');
+                } else {
+                    var printTxt = '';
+                    for (var i = 0; i < response.length; i++) {
+                        printTxt += '<tr>';
+                        printTxt += '<th scope="row" onclick="issueDetail(\'' + response[i].issueId + '\')">' + response[i].issueId + '</th>';
+                        printTxt += '<td><a href="/myhome/documents/down?saveName=' + encodeURIComponent(response[i].saveName) + '&originalName=' + encodeURIComponent(response[i].originalName) + '">';
+
+                        let split = response[i].originalName.split('.'); 
+                        let extension = split[split.length - 1].toLowerCase(); 
+
+                        if(extension === 'txt') { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/txt-icon.png" alt="텍스트 아이콘">';
+                        } else if(['jpg', 'jpeg', 'png', 'gif', 'svg', 'bmp'].includes(extension)) { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/img-icon.png" alt="이미지 아이콘">'; 
+                        } else if(['xlsx', 'xlsm', 'xlsb', 'xltx'].includes(extension)) { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/exel-icon.png" alt="엑셀 아이콘">'; 
+                        } else if(['hwp', 'hwpx'].includes(extension)) { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/hwp-icon.png" alt="한글 아이콘">'; 
+                        } else if(['pptx', 'pptm', 'ppt'].includes(extension)) { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/ppt-icon.png" alt="파워포인트 아이콘">'; 
+                        } else if(extension === 'pdf') { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/pdf-icon.png" alt="PDF 아이콘">'; 
+                        } else { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/default-icon.png" alt="기본 아이콘">'; 
+                        } 
+
+                        printTxt += '</a></td>';
+                        printTxt += '<td>' + response[i].originalName + '</td>';
+                        printTxt += '<td>' + response[i].fileSize + ' KB</td>';
+                        printTxt += '<td>' + response[i].name + '</td>';
+                        printTxt += '<td>' + response[i].createdAt + '</td>';
+                        printTxt += '</tr>';
+                    }
+                    $("#printDocumentBody").html(printTxt);
+                }
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function issueDetail(issueId){
+        window.location.href = '/myhome/issue/issue-detail?num=' + issueId;
+    }
+</script>
 </html>
