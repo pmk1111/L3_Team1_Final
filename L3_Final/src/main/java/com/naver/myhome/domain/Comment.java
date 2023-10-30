@@ -13,6 +13,9 @@ public class Comment {
 	private String content;
 	
 	private String comment_user_name;
+	private String comment_user_email;
+	private String comment_user_pic;
+	
 	@Override
 	public String toString() {
 		return "Comment [id=" + id + ", issue_id=" + issue_id + ", created_at=" + created_at + ", user_id=" + user_id

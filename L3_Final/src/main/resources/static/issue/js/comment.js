@@ -3,6 +3,9 @@ $(document).ready(function () {
     const maxLines = 10;
     const CommentMaxLength = 500;
     var csrfToken = $("meta[name='_csrf']").attr("content");
+    
+    const cmtImg = $('.nav-item').find('.avatar').find('img').attr('src');
+    $('.comment-writer-img').attr('src', cmtImg);
 
     $('#comment-textarea').on('input', function () {
         let lines = $(this).val().split('\n');
@@ -44,16 +47,26 @@ $(document).ready(function () {
                 xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
             },
             success: function (rdata) {
+							let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+							let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
                 $('.comment-list').empty();
                 if (rdata.length > 0) { // 배열에 데이터가 있는지 확인
                     console.log(rdata); console.log(rdata);
                     $(rdata).each(function () {
                         let str = '';
+												
                         str += '<div class="comments" data-comment-id="' + this.id + '">';
-                        str += '<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto comment-writer-img" />';
+                        str += '<input type="hidden" class="commnet-user-email" value="' + this.comment_user_email + '">'
+                        if(this.comment_user_pic !== null){
+	                        str += '<img src="' + contextPath + '/upload' + this.comment_user_pic + '" alt class="w-px-40 h-auto" />';
+                        } else{
+                        	str += '<img src="' + contextPath + '/user/img/profile.png" alt class="w-px-40 h-auto" />'
+                        }
                         // 나중에 해당 유저의 사진 가져옴
                         str += '<span class="comment-writer">' + this.comment_user_name + '</span> <sup class="comment-created">' + this.created_at + '</sup>';
-                        str += '<sup class="comment-edit">수정</sup><sup class="comment-delete">삭제</sup>'
+												if($('.auth').val() !== null && $('.auth').val() === this.comment_user_email){
+                        	str += '<sup class="comment-edit">수정</sup><sup class="comment-delete">삭제</sup>'
+                        }
                         str += '<br><div class="comment-content">';
                         str += '<span>' + this.content + '</span></div>';
                         str += '</div>';
@@ -73,6 +86,7 @@ $(document).ready(function () {
 
     getCommentList();
 
+		
     $('.comment-submit-btn').click(function () {
         var content = $('#comment-textarea').val().replace(/\n/g, "<br>");
 
@@ -118,7 +132,7 @@ $(document).ready(function () {
         // 댓글 수정 양식을 생성하고 표시
         var editForm = `
          <div class="comments create-comment" style="border-bottom: 1px solid lightgrey">
-             <img src="../resources/mainboard/assets/img/avatars/1.png" class="w-px-40 h-auto comment-writer-img" />
+             <img src="${cmtImg}" class="w-px-40 h-auto comment-writer-img" />
              <div class="comment-input-submit">
                  <textarea id="edit-comment-textarea-${commentId}" class="comment-input" name="comment_content" maxlength="500" rows="10" cols="50" placeholder="댓글 내용을 입력하세요.">${commentContent}</textarea>
                  <button type="button" class="comment-submit-btn" data-comment-id="${commentId}">댓글 수정</button>

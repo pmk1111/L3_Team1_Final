@@ -17,16 +17,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.naver.myhome.domain.Comment;
 import com.naver.myhome.service.CommentService;
+import com.naver.myhome.service.UserService;
 
 @RequestMapping(value="comment")
 @Controller
 public class CommentController {
 	private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 	
+	private UserService userService;
 	private CommentService commentService;
 	
 	@Autowired
-	public CommentController(CommentService commentService) {
+	public CommentController(UserService userService, CommentService commentService) {
+		this.userService = userService;
 		this.commentService = commentService;
 	}
 	
@@ -35,7 +38,7 @@ public class CommentController {
 	public List<Comment> getCommentList(int issue_id,
 	        @RequestHeader(value = "referer", required = false) String beforeURL) {
 	    logger.info("referer: " + beforeURL);
-
+	    
 	    List<Comment> commentlist = commentService.getCommentList(issue_id);
 	    System.out.println(commentlist);
 	    return commentlist;
@@ -44,10 +47,9 @@ public class CommentController {
 	@PostMapping("/commentAdd")
 	@ResponseBody
 	public int commentAdd(Comment comment, HttpSession session, HttpServletRequest request, Principal principal) {
-		int userId = 2;
 		
-//		String userEmail = principal.getName();
-//		int userId = userService.getUserId(userEmail);
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
 		
 		comment.setUser_id(userId);
 		int result = commentService.commentAdd(comment);
