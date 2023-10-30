@@ -80,6 +80,15 @@
         .extension-icon{
         	width:30px;
         }
+        #searchBtn{
+        	margin-left:15px;
+        	width:70px;
+        	height:35px;
+		    color: #fff;
+		    background-color: #696cff;
+		    border-color: #696cff;
+		    box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+		}
     </style>
 </head>
 
@@ -120,7 +129,7 @@
                                         <div class="container-xxl flex-grow-1 container-p-y">
                                             <div class="container">
                                                 <h3 style="margin-bottom: 30px; font-weight: 700;">파일함</h3>
-                                                <input type="text" class="file-search" placeholder="검색어를 입력하세요." id = "keyword"><button onclick="searchDocument()">검색</button>
+                                                <input type="text" class="file-search" placeholder="검색어를 입력하세요." id = "keyword"><button id="searchBtn" onclick="searchDocument()">검색</button>
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
@@ -134,7 +143,6 @@
                                                     </thead>
                                                     <tbody>
                                                    <tbody id = "printDocumentBody">
-													  
 													</tbody>
                                                 </table>
 
@@ -225,7 +233,7 @@
             },
             success: function (response) {
                 if (response.length == 0) {
-                    $("#printDocumentBody").html('<tr><td colspan="5" style="text-align:center;"><img src="../resources/documents/img/search-null.svg" alt="문서를 찾을 수 없습니다"></td></tr>');
+                    $("#printDocumentBody").html('<tr><td colspan="6" style="text-align:center;"><img src="../resources/documents/img/search-null.svg" alt="문서를 찾을 수 없습니다"></td></tr>');
                 } else {
                     var printTxt = '';
                     for (var i = 0; i < response.length; i++) {
