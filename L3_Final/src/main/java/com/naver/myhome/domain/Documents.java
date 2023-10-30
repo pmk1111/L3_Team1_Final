@@ -1,11 +1,20 @@
 package com.naver.myhome.domain;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
 public class Documents  {
-	private String original_name;
-	private long file_size;
-	private int create_user;
-	private String created_at;
+	private int userId;
+	private String keyword;
+	private String name;
+	private int issueId;
+	private String originalName;
+	private String saveName;
+	private long fileSize;
+	private Date createdAt;
 }
+
+
+
