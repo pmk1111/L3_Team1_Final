@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.naver.myhome.domain.Notify;
@@ -31,7 +32,7 @@ public class NotificationController {
 		this.notifyService = NotifyService;
 		
 	}
-
+  
     @GetMapping("/getNotifications")
     @ResponseBody
     public List<Notify> NotifyService(ModelAndView mv, HttpServletRequest request,@AuthenticationPrincipal User user) {
@@ -42,4 +43,31 @@ public class NotificationController {
 	
 		return notify;
     }
+    @GetMapping("/updateNotifications")
+    @ResponseBody
+    public void updateNotifications(@RequestParam("notificationId") int notificationId,@AuthenticationPrincipal User user) {
+        int userId = user.getId();
+      
+        notifyService.updatedNotifications(userId,notificationId);
+    }
+    
+    @GetMapping("/deleteNotifications")
+    @ResponseBody
+    public void deleteNotifications(@RequestParam("notificationId") int notificationId,@AuthenticationPrincipal User user) {
+     
+        notifyService.deleteNotifications(notificationId);
+    }
+    
+    @GetMapping("/getUnreadNotificationCount")
+    @ResponseBody
+    public int getUnreadNotificationCount(@AuthenticationPrincipal User user) {
+        // 여기에서 실제로 아직 읽지 않은 알림의 개수를 조회하고 반환
+    	 int userId = user.getId();
+        int unreadCount = notifyService.getUnreadNotificationCount(userId);
+        return unreadCount;
+    }
+
+
+    
+    
 }

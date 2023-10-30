@@ -52,12 +52,12 @@ public class SendMail {
                content += " <br><br>";
                content += " <P>아래 버튼을 눌러 함께할 수 있습니다.</p><br>";
                content += " <div style=\"width: 350px; height: 25px;\"> "
-                     +  " <a href='https://localhost:9400/myhome/company/join-company' "
+                     +  " <a href='http://localhost:9400/myhome/user/join' "
                      +  " style=\"display: block; margin: 0; padding: 20px 0; color: #ffffff; font-weight: bold; "
                      +  " font-size: 17px; border-radius: 8px; text-decoration: none; font-family: 'Malgun Gothic',"
                      +  " '맑은 고딕', Arial, sans-serif; white-space: nowrap; background: #5f5ab9; text-align: center;\"\n"
                      +  " target=\"_blank\" rel=\"noreferrer noopener\">참여하기</a>"
-                       +  " </div>";
+                     +  " </div>";
                helper.setText(content, true);
                
                FileSystemResource file = new FileSystemResource(new File(sendfile));

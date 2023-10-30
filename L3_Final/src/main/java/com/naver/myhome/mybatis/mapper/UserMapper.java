@@ -51,11 +51,12 @@ public interface UserMapper {
 		public List<MentionUser> mentionUser(Map<String, Object> parameters);
 
 
-
+		public String getAssignedUser(int assignedValue);
 		public String getCreateUser(int userId);
 		//혜원끝
 
-
+		//mk
+		public String getEmail(int userId);
 
 	}
 

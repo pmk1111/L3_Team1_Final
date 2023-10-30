@@ -3,6 +3,7 @@ package com.naver.myhome.service;
 import java.util.List;
 
 import com.naver.myhome.domain.Project;
+import com.naver.myhome.domain.RecentStatus;
 
 public interface ProjectService {
 	
@@ -53,5 +54,7 @@ public interface ProjectService {
 	public int getEmpId(int sessionId);
 
 	public void modifyProject(String color, String title, String subtitle, int projectId, int sessionId);
+
+	public List<RecentStatus> getRecentStatus(int projectId);
 
 }

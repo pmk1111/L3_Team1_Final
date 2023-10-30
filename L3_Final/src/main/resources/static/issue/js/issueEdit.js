@@ -1,3 +1,72 @@
+  $(document).ready(function () {
+  
+      
+$("#inputnotionchoice").on("input", function() {
+    var textarea = $(this);
+    var text = textarea.val();
+
+  
+    var mentionPattern = /@([\w가-힣]+)/g;
+    var matches = text.match(mentionPattern);
+
+    if (matches && matches.length > 0) {
+       
+        var mention = matches[0];
+
+        
+        sendDataToServer(mention);
+    }
+});
+
+
+function sendDataToServer(mention) {
+    
+   
+    var token = $("meta[name='_csrf']").attr("content");
+      var header = $("meta[name='_csrf_header']").attr("content");
+    $.ajax({
+        type: "POST",
+        url: "../user/issue-mention",
+        data: mention,
+        contentType: "application/json; charset=UTF-8",
+        dataType: "JSON",
+        beforeSend : function(xhr)
+                 {   //데이터를 전송하기 전에 헤더에 csrf값을 설정합니다.
+                    xhr.setRequestHeader(header, token);         
+                 },
+        success: function(response) {
+           
+            console.log('데이터가 서버로 전송되었습니다.');
+            console.log(response);
+           
+            output='';
+           	if (response.length > 0) {
+           	$(response).each(function(index,item){
+           	
+           	
+           	 output += "<option value=@"+item.name + " data-id="+item.id+"></option>"
+           	 
+           	
+           	
+           	})
+           	$("#notionchoice").html(output)
+           	console.log(output);
+           	inputdata = $("#inputnotionchoice").val()
+           	console.log(inputdata);
+          
+           	
+           	}
+           	else{
+           	$("#notionchoice").html(output)
+              
+        }},
+        error: function(jqXHR, textStatus, errorThrown) {
+            
+            console.error('데이터 전송 중 오류가 발생했습니다:', errorThrown);
+        }
+    });
+    
+}
 	$('.issue-edit').click(function(){
 	
 		if($('.issue-setting-dropdown').css('display') === 'block'){
@@ -67,7 +136,18 @@ $('modal-overlay').click(function () {
     const issue_content = $('.issue-content-txtarea').val();
     const issue_reporter = $('.issue-reporter-selected').val();
     const issue_assigned = $(".issue-assigned-selected").val();
-    const issue_priority = $('.issue-priority-selected').val()
+    const issue_priority = $('.issue-priority-selected').val();
+    
+      //혜원
+     
+     
+      var issue_tag = ''; 
+     const selectedOptionValue = $('#inputnotionchoice').val().trim();
+    if (selectedOptionValue != '' && $('#notionchoice option[value="' + selectedOptionValue + '"]').length === 0) {
+        alert('항목에 있는 값만 고르세요');
+        return false;
+    }
+    //혜원
 
     if (project_name === "") {
       alert("프로젝트를 선택해주세요.");
@@ -101,9 +181,19 @@ $('modal-overlay').click(function () {
 
     // issue_content_html를 폼의 hidden 필드에 저장
     $('.hidden-issue-content').val(issue_content_html);
+    //혜원
+     user_id = $("#notionchoice option").data("id");
+          if(user_id == undefined)
+          user_id = 0;
+           
+       
 
-    // 이후 폼을 서버로 제출
-    $('form[name="createIssue"]').submit();
+          
+          
+         
+        $('form[name="issueUpdate"]').append('<input type="hidden" name="user_id" value="' + user_id + '">');
+    //혜원끝
+
   });
   
   // 이벤트 위임을 사용하여 document에 클릭 이벤트 핸들러를 추가
@@ -236,4 +326,11 @@ const fileInput = document.querySelector('.add-file');
     if ($(".issue-edit-modal").css('display') === 'block') {
       $(".issue-edit-modal").fadeOut(200);
     }
+    
+ 
+
+
+
+//혜원끝
+  });
   });

@@ -333,7 +333,8 @@
 	margin: 0;
 	padding: 5px 0;
 	width: 200px;
-	height: 106px;
+	height:auto;
+	max-height: 106px;
 	border: 1px solid black;
 	border-radius: 5px;
 	list-style: none;

@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +39,9 @@ import com.naver.myhome.domain.Files;
 import com.naver.myhome.domain.Issue;
 import com.naver.myhome.domain.Notify;
 import com.naver.myhome.domain.ProjectAndUser;
+import com.naver.myhome.domain.User;
+
+import com.naver.myhome.service.BookmarkService;
 import com.naver.myhome.service.FileService;
 import com.naver.myhome.service.IssueService;
 import com.naver.myhome.service.ProjectAndUserService;
@@ -55,6 +59,7 @@ public class IssueController {
 	private FileService fileService;
 	private ProjectAndUserService projectAndUserService;
 	private NotifyService notifyService;
+	private BookmarkService bookmarkService;
 
 	@Value("${file.upload.path}")
 	private String saveFolder;
@@ -62,12 +67,13 @@ public class IssueController {
 	@Autowired
 	public IssueController(NotifyService notifyService,IssueService issueService, 
 			FileService fileService, ProjectAndUserService projectAndUserService, 
-			UserService userService) {
+			UserService userService, BookmarkService bookmarkService) {
 		this.issueService = issueService;
 		this.fileService = fileService;
 		this.projectAndUserService = projectAndUserService;
 		this.notifyService = notifyService;
 		this.userService = userService;
+		this.bookmarkService = bookmarkService;
 
 	}
 
@@ -123,6 +129,7 @@ public class IssueController {
 	@PostMapping("createIssue")
 	public String createIssue(Issue issue, Notify notify, HttpServletRequest request, 
 			HttpSession session, Principal principal,@RequestParam(value="user_id",defaultValue="0",required=false) int mentioned_id,
+				@RequestParam(value = "assigned") int assignedValue,
 			String notionchoice,MultipartFile[] uploadfiles) throws Exception {
 
 		String userEmail = principal.getName();
@@ -136,35 +143,47 @@ public class IssueController {
 		issue.setId(issueId);
 		issue.setProject_id(projectId);
 		issue.setCreate_user(userId);
-
+		issue.setMentioned(notionchoice.replace("@", ""));
 
 		issueService.createIssue(issue);
 
 		  //혜원
 
 	      String create_user = userService.getCreateUser(userId);
+	      String assign_user = userService.getAssignUser(assignedValue);
 	    
+   if (mentioned_id > 0) {
+	    	    Notify mentionNotify = new Notify();
+	    	    mentionNotify.setNAME(notionchoice.replace("@", ""));
+	    	    mentionNotify.setMENTIONED_BY(create_user);
+	    	    mentionNotify.setPOST_ID(issueId);
+	    	    mentionNotify.setMENTIONED_ID(mentioned_id);
+	    	    mentionNotify.setCONTENT("언급 하였습니다.");
+	    	    mentionNotify.setNOTIFY_STATUS(0);
+	    	 
+	    	    notifyService.createalarm(mentionNotify);
+	    	}
 
-	      notify.setNAME(notionchoice.replace("@", ""));
-	      notify.setMENTIONED_BY(create_user);
-		   notify.setPOST_ID(issueId);
-		   notify.setMENTIONED_ID(mentioned_id);
+	    	if (assignedValue > 0) {
+	    	    Notify assignNotify = new Notify();
+	    	    assignNotify.setNAME(assign_user);
+	    	    assignNotify.setMENTIONED_BY(create_user);
+	    	    assignNotify.setPOST_ID(issueId);
+	    	    assignNotify.setMENTIONED_ID(assignedValue);
+	    	    assignNotify.setCONTENT("담당자로 설정하였습니다.");
+	    	    assignNotify.setNOTIFY_STATUS(0);
+	    	    
+	    	    notifyService.createalarm(assignNotify);
+	    	}
+
+
 		   
 		    logger.info(issue.toString());
 		    logger.info("이슈 태그: " + notify.getNAME());
 		    logger.info("user_id: " + mentioned_id);
 
 
-	      int existingNotifyCount = notifyService.existsNotifyWithName(mentioned_id);
 
-	      if (existingNotifyCount > 0) {
-
-	         notifyService.updatealarm(notify);
-	         logger.info("이미 존재하는 태그. 업데이트를 수행하세요.");
-	      } else {
-	         // 존재하지 않는 경우, createalarm을 호출하여 새로운 레코드를 삽입
-	         notifyService.createalarm(notify);
-	      }
 
 
 		for (MultipartFile file : uploadfiles) {
@@ -276,23 +295,37 @@ public class IssueController {
 
 
 	@GetMapping("/issue-detail")
-	public ModelAndView issueDetail(int num, ModelAndView mv, HttpServletRequest request, 
+	public ModelAndView issueDetail(int num, ModelAndView mv, HttpServletRequest request, @AuthenticationPrincipal User user,
 			@RequestHeader(value = "referer", required = false) String beforeURL) {
 		logger.info("referer: " + beforeURL);
-
+		
 		Issue issue = issueService.getIssueDetail(num);
+		
 		List<Files> filelist = fileService.getFileList(num);
+		
+		int bookmarkCk = bookmarkService.checkBookmark(user.getId(), num);
 
-		if(issue==null) {
+		if (issue == null) {
 			logger.info("상세보기 실패");
 			mv.setViewName("issue/no-issue-content");
 			mv.addObject("url", request.getRequestURI());
 			mv.addObject("showAlert", true);
 		} else {
+			int issueCreater = issue.getCreate_user();
+			int issueAssigner = issue.getAssigned();
+			
+			String createrEmail = userService.getEmail(issueCreater);
+			String assignerEmail = userService.getEmail(issueAssigner);
+			logger.info("작성자 이메일 = " + createrEmail);
+			logger.info("담당자 email = " + assignerEmail);
+			
 			logger.info("상세보기 성공");
 			mv.setViewName("issue/issue-detail");
 			mv.addObject("issuedata", issue);
-			mv.addObject("filelist",filelist);
+			mv.addObject("filelist", filelist);
+			mv.addObject("bookmarkCk", bookmarkCk);
+			mv.addObject("createrEmail", createrEmail);
+			mv.addObject("assignerEmail", assignerEmail);
 			mv.addObject("showAlert", false);
 		}
 
@@ -303,10 +336,15 @@ public class IssueController {
 	@ResponseBody
 	public Map<String, Object> statusUpdate(@RequestParam int issueId, 
 			@RequestParam String status, 
-			@RequestParam String selectedUserId) {
+			@RequestParam String selectedUserId,
+			@AuthenticationPrincipal User customUser) {
+		
+		int sessionId = customUser.getId();
+		logger.info("세션아이디 체크" + sessionId);
+		
 		Map<String, Object> response = new HashMap<>();
 		try {
-			issueService.updateStatus(issueId, status, selectedUserId);
+			issueService.updateStatus(issueId, status, selectedUserId, sessionId);
 			response.put("status", "success");
 		} catch (Exception e) {
 			response.put("status", "error");
@@ -320,10 +358,49 @@ public class IssueController {
 	public String issueUpdate(Issue issue, @RequestParam("num") int num, 
 			@RequestParam("check") String check,
 			HttpServletRequest request, RedirectAttributes rattr,
-			MultipartFile[] uploadfiles) throws Exception{
+			MultipartFile[] uploadfiles,
+			@AuthenticationPrincipal User customUser,
+			Notify notify,@RequestParam(value="user_id",defaultValue="0",required=false) int mentioned_id,
+			@RequestParam(value = "assigned") int assignedValue,String notionchoice) throws Exception{
+		
+		int sessionId = customUser.getId();
+		logger.info("세션아이디 체크" + sessionId);
+		
 		String url = "";
 		issue.setId(num);
+		issue.setSessionId(sessionId);
+		issue.setMentioned(notionchoice.replace("@", ""));
 		int result = issueService.issueUpdate(issue);
+		
+		  //혜원
+
+	      String create_user = userService.getCreateUser(sessionId);
+	      String assign_user = userService.getAssignUser(assignedValue);
+	    
+ if (mentioned_id > 0) {
+	    	    Notify mentionNotify = new Notify();
+	    	    mentionNotify.setNAME(notionchoice.replace("@", ""));
+	    	    mentionNotify.setMENTIONED_BY(create_user);
+	    	    mentionNotify.setPOST_ID(num);
+	    	    mentionNotify.setMENTIONED_ID(mentioned_id);
+	    	    mentionNotify.setCONTENT("언급 하였습니다.");
+	    	    mentionNotify.setNOTIFY_STATUS(0);
+	    	 
+	    	    notifyService.createalarm(mentionNotify);
+	    	}
+
+	    	if (assignedValue > 0) {
+	    	    Notify assignNotify = new Notify();
+	    	    assignNotify.setNAME(assign_user);
+	    	    assignNotify.setMENTIONED_BY(create_user);
+	    	    assignNotify.setPOST_ID(num);
+	    	    assignNotify.setMENTIONED_ID(assignedValue);
+	    	    assignNotify.setCONTENT("담당자로 설정하였습니다.");
+	    	    assignNotify.setNOTIFY_STATUS(0);
+	    	    
+	    	    notifyService.createalarm(assignNotify);
+	    	}
+        //혜원
 
 		if(result==0) {
 			logger.info("게시판 수정 실패");

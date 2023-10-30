@@ -94,12 +94,18 @@
 
             <!-- Layout container -->
             <div class="layout-page">
+            
                 <!-- Navbar -->
 
                 <jsp:include page="../mainboard/navbar.jsp"></jsp:include>
 
                 <!-- / Navbar -->
+                
                 <div class="container-xxl flex-grow-1 container-p-y" id="documentarea2">
+                
+	               <jsp:include page="../chat/chat.jsp"></jsp:include>
+	               <jsp:include page="../notify/notify.jsp"></jsp:include>
+	               
                     <div class="row">
                         <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4 issue-list" id="documentarea1">
                             <div class="card">

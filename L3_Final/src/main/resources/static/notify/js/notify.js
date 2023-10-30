@@ -43,6 +43,73 @@ $(document).ready(function() {
         notreadNotifyArea.hide();
         notifyListArea.show();
     });
+    
+
+  //  $('.notify-layer').on('click','.notify-room',function() {
+ //   var postId = $(this).data('post-id'); 
+ //   window.location.href = '/myhome/issue/issue-detail?num=' + postId; 
+//});
+$('.notify-layer').on('click', '.notify-room', function (event) {
+    // 이벤트 기본 동작을 중단하여 페이지 이동을 막습니다.
+    event.preventDefault();
+
+    var postId = $(this).data('post-id');
+     var notificationId = $(this).data('id');
+
+    // DB를 업데이트하기 위한 Ajax 요청을 보냅니다.
+    $.ajax({
+        url: "/myhome/updateNotifications", // DB 업데이트를 처리하는 서버 엔드포인트
+        type: 'GET', // 또는 'GET'을 사용할 수 있습니다.
+        data: {
+        
+            postId: postId,
+            notificationId: notificationId
+        },
+        success: function (response) {
+            // DB 업데이트가 성공하면 페이지 이동을 수행합니다.
+            window.location.href = '/myhome/issue/issue-detail?num=' + postId;
+        },
+        error: function (xhr, status, error) {
+            console.log("Error: " + error);
+            // DB 업데이트 중 오류가 발생하면 적절한 조치를 취합니다.
+        }
+    });
+});
+
+function addDeleteButton(notificationId) {
+    var deleteButton = `<button class="delete-notification"  data-id="${notificationId}">
+    <img src="../resources/chat/img/close.svg" alt="닫기"></button>`;
+    var notificationItem = $(`li[data-id="${notificationId}"]`);
+    notificationItem.find('.update-time-area').append(deleteButton);
+}
+
+
+$('.notify-layer').on('click', '.delete-notification', function (event) {
+    event.preventDefault();
+
+  
+   var notificationId = $(this).data('id');
+
+
+    // DB를 업데이트하고 알림 삭제하기 위한 Ajax 요청을 보냅니다.
+    $.ajax({
+        url: "/myhome/deleteNotifications", // DB 업데이트 및 알림 삭제를 처리하는 서버 엔드포인트
+        type: 'GET',
+        data: {
+            notificationId: notificationId
+        },
+        success: function (response) {
+         $(`li[data-id="${notificationId}"]`).remove();
+   
+            loadNotifications();
+        },
+        error: function (xhr, status, error) {
+            console.log("Error: " + error);
+            
+        }
+    });
+});
+
 
     function getNotifications() {
         if (isActive) {
@@ -61,18 +128,23 @@ $(document).ready(function() {
                 } else {
                     for (var i = 0; i < data.length; i++) {
                         var notification = data[i];
+                         var isReadClass = notification.notify_STATUS === 1 ? "read" : "unread"; 
                         var notificationItem = `
-                            <li class="notify-room">
+                      
+                            
+                            <li class="notify-room ${isReadClass}" data-id="${notification.id}" data-post-id="${notification.post_ID}">
                                 <div class="user-latest">
-                                    <p class="notify-user-id">${notification.mentioned_BY}님이</p>
+                                    <p class="notify-user-id">${notification.mentioned_BY}님이 ${notification.name}님을</p>
                                     <p class="latest-notify">${notification.content}</p>
                                 </div>
                                 <div class="update-time-area">
                                     <span class="update-time">${notification.notify_TIME}</span>
                                 </div>
                             </li>
+                    
                         `;
                         notificationList.append(notificationItem);
+                        addDeleteButton(notification.id); // 삭제 버튼 추가
                     }
                    }
                 },
@@ -82,6 +154,7 @@ $(document).ready(function() {
             });
         }
     }
+
 
     // 페이지 로드 후 초기 알림 목록 업데이트
     getNotifications();

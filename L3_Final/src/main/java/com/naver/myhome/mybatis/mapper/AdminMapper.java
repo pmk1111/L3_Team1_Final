@@ -53,6 +53,12 @@ public interface AdminMapper {
 		
 		public int companyId(String email);
 		
+		public Employee employeeInfo(int empId);
+
+		public void updateEmpInfo(Employee employee);
+		
+		public void updateUserInfo(Employee employee);
+		
 		// 혜원
 		public List<Access> getAccesslist();
 

@@ -22,31 +22,178 @@ pageEncoding="UTF-8"%>
     <link href="../resources/home/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="../resources/home/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> <!-- Template Main CSS File -->
     <link href="../resources/home/assets/css/home.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap">
     <style>
-        .footer-top {
-            margin-top: 200px;
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            background-color: #F5F5F9;
+        }
+
+        .row-login {
+            margin-top: 75px;
+            margin-bottom: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            height: 750px;
+            width: 1100px;
+        }
+
+        .card {
+            background-clip: padding-box;
+            box-shadow: 0 2px 6px 0 rgba(67, 89, 113, 0.12);
+        }
+
+        .card-body {
+            margin: 0 15px 0 15px;
+        }
+
+        .create-company {
+            width: 100%;
+            height: 260px;
+        }
+
+        .bg-1 {
+            background: #ECEFF1;
+            color: #37474f;
+        }
+
+        .bg-1 .button {
+            color: #37474f;
+            border-color: #37474f;
+        }
+
+        .button {
+            width: 100%;
+            float: left;
+            display: block;
+            margin: 1em;
+            padding: 1em 2em;
+            border: none;
+            background: none;
+            color: inherit;
+            vertical-align: middle;
+            position: relative;
+            z-index: 1;
+            -webkit-backface-visibility: hidden;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .button:focus {
+            outline: none;
+        }
+
+        .button>span {
+            vertical-align: middle;
+        }
+
+        /* Rayen */
+        .button--rayen {
+            overflow: hidden;
+            padding: 0;
+            width: 100%;
+        }
+
+        .button--rayen.button--inverted {
+            color: #fff;
+        }
+
+        .button--rayen::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #9F7AB0;
+            color: #fff;
+            -webkit-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
+        }
+
+        .button--rayen.button--inverted::before {
+            background: #9F7AB0;
+            color: #fff;
+        }
+
+        .button--rayen>span {
+            display: block;
+        }
+
+        .button--rayen::before,
+        .button--rayen>span {
+            padding: 1em 2em;
+            -webkit-transition: -webkit-transform 0.3s;
+            transition: transform 0.3s;
+            -webkit-transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+            transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+        }
+
+        .button--rayen:hover::before {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .button--rayen:hover>span {
+            -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100%, 0);
+        }
+
+        .button--border-thin {
+            border: 1px solid;
+        }
+
+        .button--text-thick {
+            font-weight: 600;
+        }
+
+        .button--text-upper {
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .button--size-s {
+            font-size: 14px;
         }
     </style>
 </head>
 
 <body>
     <jsp:include page="header.jsp"></jsp:include>
-    <form id="submitForm"> <input type="hidden" id="joinType" name="joinType" />
-        <div class="auth-section after-contets">
-            <div class="accont-wrap">
-                <div class="account">시작하기</div>
-                <div class="jm-cont0">
-                    <!-- 회사 계정생성 --> <img src="../resources/user/img/newcompany.png" alt="#" class="create-company"> </div>
-                <div class="join-main-container">
-                    <div class="jmcont2">
-                        <!-- 회사 가입하기-->
-                        <img src="../resources/user/img/joincompany.svg" alt="#" style="width: 680px; height: 170px;" class="join-company">
+
+    <div class="container-xxl flex-grow-1 container-p-y" style="display:flex; justify-content:center; align-items: center;">
+        <div class="row-login">
+            <!-- Total Revenue -->
+            <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4 jj-login" style="height:100%">
+                <div class="card" style="height:100%">
+                    <div class="card-body project-list-card-body" style="height:100%">
+                        <form id="submitForm">
+                            <input type="hidden" id="joinType" name="joinType" />
+                            <div class="auth-section after-contets">
+                                <div class="accont-wrap">
+                                    <div class="account">시작하기</div>
+                                    <div class="jm-cont0">
+                                        <!-- 회사 계정생성 --> <img src="../resources/user/img/newcompany.png" alt="#" class="create-company"> </div>
+                                    <br>
+                                    <div class="jmcont2">
+                                        <!-- 회사 가입하기-->
+                                        <div class="box bg-1 join-company">
+                                            <button type="button" class="button button--rayen button--border-thin button--text-thick button--text-upper button--size-s" data-text="기존 회사에 참여하기" style="width:100%; border-radius:10px; right: 14px;"><span>기존 회사에 참여하기</span></button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
-
         </div>
-    </form>
+    </div>
+    
     <div id="signupFooterArea" style="display: block;">
         <!-- ======= Footer ======= -->
         <footer id="footer">
@@ -98,10 +245,10 @@ pageEncoding="UTF-8"%>
                                 <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+
 
             <div class="container footer-bottom clearfix">
                 <div class="copyright">
@@ -127,41 +274,37 @@ pageEncoding="UTF-8"%>
     <script src="../resources/home/assets/js/main.js"></script>
 
     <script>
-	    $(function() {
-	        $(".create-company").click(function() {
-	            window.location.href = '../company/create-company-domain';
-	        });
-	        
-	        $(".join-user").click(function() {
-	           	
-	        });
-	        
-	        $(".join-company").click(function() {
-	            window.location.href = '../company/join-company';
-	        });  
-	    });
-	    
-	    
-		function createSingleProject(){
-			$.ajax({
-		   		url: '../user/create-single-project',
-		       	type: 'POST',
-		       	beforeSend: function(xhr) {
-		           xhr.setRequestHeader(header, token);
-		       	},
-		   		success: function(response) {
-		       		if (response == 0) {  
-		       			alert("프로젝트가 정상적으로 생성되었습니다.");
-		       			//페이지 이동//
-		       		} else  { 
-		       			alert("프로젝트 생성이 실패하였습니다.");
-		       		}
-		   		},
-		   		error: function(error) {
-		       		console.error(error);
-		   		}
-			});
-		}
+        $(function() {
+            $(".create-company").click(function() {
+                window.location.href = '../company/create-company-domain';
+            });
+
+            $(".join-company").click(function() {
+                window.location.href = '../company/join-company';
+            });
+        });
+
+
+        function createSingleProject() {
+            $.ajax({
+                url: '../user/create-single-project',
+                type: 'POST',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(response) {
+                    if (response == 0) {
+                        alert("프로젝트가 정상적으로 생성되었습니다.");
+                        //페이지 이동//
+                    } else {
+                        alert("프로젝트 생성이 실패하였습니다.");
+                    }
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        }
     </script>
 </body>
 

@@ -344,3 +344,30 @@ a {
 	content: "▶";
 	color: #ececff;
 }
+
+.no-chat-room{
+	position:absolute;
+	top:50%;
+	left:30%
+}
+
+
+.chat-not-read {
+    position: absolute;
+    top: 0;
+    right: 25%;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    font-size: 8px;
+    line-height: 14px;
+    display: none;
+}
+.not-read-cnt{
+	position:relative;
+	display:inline-block;
+	left:0.7px;
+}

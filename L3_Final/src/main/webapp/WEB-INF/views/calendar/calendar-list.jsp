@@ -67,6 +67,7 @@
           <!-- Navbar -->
 
           <jsp:include page="../mainboard/navbar.jsp"></jsp:include>
+          <jsp:include page="../chat/chat.jsp"></jsp:include>
 
           <!-- / Navbar -->
           <div class="container-xxl flex-grow-1 container-p-y" id="calendararea2">

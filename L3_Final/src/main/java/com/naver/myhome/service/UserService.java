@@ -42,14 +42,12 @@ public interface UserService {
 	//혜원
 
 	public List<MentionUser> mentionUser(Map<String, Object> parameters);
-
+	public String getAssignUser(int assignedValue);
 	public String getCreateUser(int userId);
    //혜원끝
 
-	   
-
-	
-
+	//mk
+	public String getEmail(int userId);
 
 
 }

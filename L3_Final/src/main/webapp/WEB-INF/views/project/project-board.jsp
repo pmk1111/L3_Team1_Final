@@ -122,6 +122,9 @@
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
 
+               <jsp:include page="../chat/chat.jsp"></jsp:include>
+               <jsp:include page="../notify/notify.jsp"></jsp:include>
+               
                     <!-- Content -->
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <div class="row">
@@ -281,9 +284,11 @@
                                                     <li class="nav-item" role="presentation">
                                                         <button class="nav-link team-tab active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">목록</button>
                                                     </li>
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link invite-tab" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">초대</button>
-                                                    </li>
+                                                    <c:if test="${Auth eq 1 }">
+	                                                    <li class="nav-item" role="presentation">
+	                                                        <button class="nav-link invite-tab" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">초대</button>
+	                                                    </li>
+                                                    </c:if>
                                                 </ul>
                                                 <div class="modal-search-list">
                                                     <div class="modal-search">
@@ -325,34 +330,36 @@
                                                                         </div>
                                                                         <div class="setting member-setting">
                                                                             <div class="dropdown">
-                                                                                <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                                                </button>
+	                                                                               	<button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                                                                   <i class="bx bx-dots-vertical-rounded"></i>
+	                                                                               	</button>
                                                                                 <div class="dropdown-menu drop-width" aria-labelledby="cardOpt3">
                                                                                     <div class="setting-menu setting-menu-padding">
                                                                                         <div class="setting-line">
 																						   <c:if test="${TEAM.USER_ID eq TEAM.MY_ID}">
 																						   	<a class="setting-anchor setting-exit">
-																						       <span class="setting-span setting-span-02">프로젝트 나가기</span>
+																						       <span class="setting-span setting-span-02 exit-span">프로젝트 나가기</span>
 																						    </a>    
 																						   </c:if>
-																						   <c:if test="${TEAM.MY_AUTH eq 1 and TEAM.MY_ID ne TEAM.USER_ID}">
-																						   	<a class="setting-anchor setting-fire" data-emp-id="${TEAM.EMPLOYEE_ID}">
-																						       <span class="setting-span setting-span-02">프로젝트 내보내기</span>
-																						   	</a>
-																						   </c:if>
-                                                                                         </div>
-                                                                                        <div class="setting-line">
-                                                                                        	<c:if test="${TEAM.MY_AUTH eq 1 and TEAM.AUTH eq 1}">
-                                                                                             <a class="setting-anchor setting-manager-fire">
-                                                                                                <span class="setting-span setting-span-02">관리자 해제</span>
-                                                                                             </a>
-                                                                                            </c:if>
-                                                                                            <c:if test="${TEAM.MY_AUTH eq 1 and TEAM.AUTH eq 0}">
-                                                                                             <a class="setting-anchor setting-manager-hire" >
-                                                                                                <span class="setting-span setting-span-02">관리자 지정하기</span>
-                                                                                             </a>                                                                                             
-                                                                                            </c:if>
+																							<c:if test="${TEAM.MY_AUTH eq 1}">
+																							    <c:if test="${TEAM.MY_ID ne TEAM.USER_ID}">
+																							        <a class="setting-anchor setting-fire" data-emp-id="${TEAM.EMPLOYEE_ID}">
+																							            <span class="setting-span setting-span-02">프로젝트 내보내기</span>
+																							        </a>
+																							    </c:if>
+																							    <div class="setting-line">
+																							        <c:if test="${TEAM.USER_ID ne TEAM.MY_ID and TEAM.AUTH eq 1}">
+																							            <a class="setting-anchor setting-manager-fire">
+																							                <span class="setting-span setting-span-02">관리자 해제</span>
+																							            </a>
+																							        </c:if>
+																							        <c:if test="${TEAM.AUTH eq 0}">
+																							            <a class="setting-anchor setting-manager-hire" >
+																							                <span class="setting-span setting-span-02">관리자 지정하기</span>
+																							            </a>                                                                                             
+																							        </c:if>
+																							    </div>
+																							</c:if>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -370,7 +377,7 @@
                                                     <div class="modal-content-wrapper">
                                                         <div class="modal-search-invite">
 							                              <div class="modal-search modal-search-invite-02">
-							                                  <input class="modal-search-input" type="text" id="image-input" placeholder="이름으로 검색">
+							                                  <input class="modal-search-input" type="text" id="find-emp" placeholder="이름으로 검색">
 							                              </div>
 							                              <div class="modal-search-memberlist">
 							                              	<ul id="member-invite-ul">
@@ -606,48 +613,523 @@
                                         <h5 class="card-header m-0 me-2 pb-3" style="font-weight: bold">최근 활동<span style="color: #899bbd; font-size: 16px; font-weight: 400;"></span>
                                         </h5>
 
-                                        <div class="activity" style="margin-left:6%; margin-top:4%">
+                                        <div class="activity recent-activity">
+                                        
+											<c:forEach var="rs" items="${recentStatus}">
+											
+												<c:if test="${rs.GUIDE eq '프로젝트 생성'}">
+		                                            <div class="activity-item d-flex">
+		                                                <div class="activite-label">
+		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
 
-                                            <div class="activity-item d-flex">
-                                                <div class="activite-label">32 min</div>
-                                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                                <div class="activity-content">JJOCK - 'Lowest'으로 우선 순위 변경 : <a href="#" class="fw-bold text-dark">프로젝트 생성/수정/삭제 페이지 제작 계획</a> </div>
-                                            </div><!-- End activity item-->
+                                                           <c:if test="${timeDiff lt 1}">
+                                                               <span style="font-size:13px">방금 전</span>
+                                                           </c:if>
 
-                                            <div class="activity-item d-flex">
-                                                <div class="activite-label">56 min</div>
-                                                <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                                                <div class="activity-content">[공지] 즐거운 추석 보내세요!</div>
-                                            </div><!-- End activity item-->
+                                                           <c:if test="${timeDiff ge 1 and timeDiff lt 60}">
+                                                               <span style="font-size:13px">${timeDiff} 분 전</span>
+                                                           </c:if>
 
-                                            <div class="activity-item d-flex">
-                                                <div class="activite-label">2 hrs</div>
-                                                <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                                                <div class="activity-content"> Voluptates corrupti molestias voluptatem</div>
-                                            </div><!-- End activity item-->
+                                                           <c:if test="${timeDiff ge 60 and timeDiff lt 1440}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div 60)} 시간 전</span>
+                                                           </c:if>
 
-                                            <div class="activity-item d-flex">
-                                                <div class="activite-label">1 day</div>
-                                                <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                                                <div class="activity-content">Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore </div>
-                                            </div><!-- End activity item-->
+                                                           <c:if test="${timeDiff ge (24*60) and timeDiff lt (7*24*60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (24*60))} 일 전</span>
+                                                           </c:if>
 
-                                            <div class="activity-item d-flex">
-                                                <div class="activite-label">2 days</div>
-                                                <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                                                <div class="activity-content">Est sit eum reiciendis exercitationem</div>
-                                            </div><!-- End activity item-->
+                                                           <c:if test="${timeDiff ge (7 *24 *60) and timeDiff lt (30 *24 *60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (7*24*60))} 주</span>
+                                                           </c:if>		
+														</div>
+														
+															<c:if test="${rs.COLOR eq 'COLOR1'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR2'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR3'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR4'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR5'}">
+		                                                		<i class='bi bi-circle-fill activity-badge muted align-self-start'></i>
+		                                                	</c:if>
+		                                                	
+		                                                <div class="activity-content"><strong>축하합니다!</strong>  <strong>${rs.MASTER }</strong>님이 새 프로젝트를 생성하였습니다. </div>
+		                                            </div><!-- End activity item-->
+	                                            </c:if>
+												
+												<c:if test="${rs.GUIDE eq '프로젝트 수정'}">
+		                                            <div class="activity-item d-flex">
+		                                                <div class="activite-label">
+		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
 
-                                            <div class="activity-item d-flex">
-                                                <div class="activite-label">4 weeks</div>
-                                                <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                                                <div class="activity-content">Dicta dolorem harum nulla eius. Ut quidem quidem sit quas</div>
-                                            </div><!-- End activity item-->
+                                                           <c:if test="${timeDiff lt 1}">
+                                                               <span style="font-size:13px">방금 전</span>
+                                                           </c:if>
 
+                                                           <c:if test="${timeDiff ge 1 and timeDiff lt 60}">
+                                                               <span style="font-size:13px">${timeDiff} 분 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 60 and timeDiff lt 1440}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div 60)} 시간 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (24*60) and timeDiff lt (7*24*60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (24*60))} 일 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (7 *24 *60) and timeDiff lt (30 *24 *60)}">
+                                                               <span style="font-size:12px">${Integer.valueOf(timeDiff div (7*24*60))} 주</span>
+                                                           </c:if>		
+														</div>
+														
+															<c:if test="${rs.COLOR eq 'COLOR1'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR2'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR3'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR4'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR5'}">
+		                                                		<i class='bi bi-circle-fill activity-badge muted align-self-start'></i>
+		                                                	</c:if>
+		                                                	
+		                                                <div class="activity-content"><strong>${rs.MASTER }</strong>님이 프로젝트 명을 <strong>${rs.UPDATE_DATA}</strong>로 변경하였습니다. </div>
+		                                            </div><!-- End activity item-->
+	                                            </c:if>
+	                                            
+	                                            <c:if test="${rs.GUIDE eq '팀 초대'}">
+		                                            <div class="activity-item d-flex">
+		                                                <div class="activite-label">
+		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
+
+                                                           <c:if test="${timeDiff lt 1}">
+                                                               <span style="font-size:13px">방금 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 1 and timeDiff lt 60}">
+                                                               <span style="font-size:13px">${timeDiff} 분 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 60 and timeDiff lt 1440}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div 60)} 시간 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (24*60) and timeDiff lt (7*24*60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (24*60))} 일 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (7 *24 *60) and timeDiff lt (30 *24 *60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (7*24*60))} 주</span>
+                                                           </c:if>		
+														</div>
+														
+															<c:if test="${rs.COLOR eq 'COLOR1'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR2'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR3'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR4'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR5'}">
+		                                                		<i class='bi bi-circle-fill activity-badge muted align-self-start'></i>
+		                                                	</c:if>
+		                                                	
+		                                                <div class="activity-content"><strong>${rs.MASTER }</strong>님이 <strong>${rs.SELECTED_USER}</strong>님을 프로젝트에 초대하였습니다. </div>
+		                                            </div><!-- End activity item-->		                                                	                                            	
+	                                            </c:if>
+	                                            
+	                                            <c:if test="${rs.GUIDE eq '팀 권한 변경' and rs.UPDATE_DATA eq '1' }">
+		                                            <div class="activity-item d-flex">
+		                                                <div class="activite-label">
+		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
+
+                                                           <c:if test="${timeDiff lt 1}">
+                                                               <span style="font-size:13px">방금 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 1 and timeDiff lt 60}">
+                                                               <span style="font-size:13px">${timeDiff} 분 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 60 and timeDiff lt 1440}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div 60)} 시간 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (24*60) and timeDiff lt (7*24*60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (24*60))} 일 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (7 *24 *60) and timeDiff lt (30 *24 *60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (7*24*60))} 주</span>
+                                                           </c:if>		
+														</div>
+														
+															<c:if test="${rs.COLOR eq 'COLOR1'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR2'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR3'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR4'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR5'}">
+		                                                		<i class='bi bi-circle-fill activity-badge muted align-self-start'></i>
+		                                                	</c:if>
+		                                                	
+		                                                <div class="activity-content"><strong>${rs.MASTER }</strong>님이 <strong>${rs.SELECTED_USER}</strong>님에게 <div class="status-admin"><span class="status-span" style="color: #fff">관리자</span></div> 권한을 부여하였습니다. </div>
+		                                            </div><!-- End activity item-->		                                                	                                            	
+	                                            </c:if>
+	                                            
+	                                            <c:if test="${rs.GUIDE eq '팀 권한 변경' and rs.UPDATE_DATA eq '0' }">
+		                                            <div class="activity-item d-flex">
+		                                                <div class="activite-label">
+		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
+
+                                                           <c:if test="${timeDiff lt 1}">
+                                                               <span style="font-size:13px">방금 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 1 and timeDiff lt 60}">
+                                                               <span style="font-size:13px">${timeDiff} 분 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 60 and timeDiff lt 1440}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div 60)} 시간 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (24*60) and timeDiff lt (7*24*60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (24*60))} 일 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (7 *24 *60) and timeDiff lt (30 *24 *60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (7*24*60))} 주</span>
+                                                           </c:if>		
+														</div>
+														
+															<c:if test="${rs.COLOR eq 'COLOR1'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR2'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR3'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR4'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR5'}">
+		                                                		<i class='bi bi-circle-fill activity-badge muted align-self-start'></i>
+		                                                	</c:if>
+		                                                	
+		                                                <div class="activity-content"><strong>${rs.MASTER }</strong>님이 <strong>${rs.SELECTED_USER}</strong>님의 <div class="status-admin"><span class="status-span" style="color: #fff">관리자</span></div> 권한을 해제하였습니다. </div>
+		                                            </div><!-- End activity item-->		                                                	                                            	
+	                                            </c:if>		             
+	                                            
+	                                            <c:if test="${rs.GUIDE eq '이슈 생성'}">
+		                                            <div class="activity-item d-flex">
+		                                                <div class="activite-label">
+		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
+
+                                                           <c:if test="${timeDiff lt 1}">
+                                                               <span style="font-size:12px">방금 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 1 and timeDiff lt 60}">
+                                                               <span style="font-size:12px">${timeDiff} 분 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 60 and timeDiff lt 1440}">
+                                                               <span style="font-size:12px">${Integer.valueOf(timeDiff div 60)} 시간 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (24*60) and timeDiff lt (7*24*60)}">
+                                                               <span style="font-size:12px">${Integer.valueOf(timeDiff div (24*60))} 일 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (7 *24 *60) and timeDiff lt (30 *24 *60)}">
+                                                               <span style="font-size:12px">${Integer.valueOf(timeDiff div (7*24*60))} 주</span>
+                                                           </c:if>		
+														</div>
+														
+															<c:if test="${rs.COLOR eq 'COLOR1'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR2'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR3'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR4'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR5'}">
+		                                                		<i class='bi bi-circle-fill activity-badge muted align-self-start'></i>
+		                                                	</c:if>
+		                                                	
+		                                                <div class="activity-content"><strong>${rs.MASTER }</strong>님이 이슈 
+		                                                
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '버그'}">
+		                                                		<img src="../resources/issue/img/bug.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '작업'}">
+		                                                		<img src="../resources/issue/img/task.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '에픽'}">
+		                                                		<img src="../resources/issue/img/epic.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>		                                                	
+		                                                	
+		                                                	<strong><a  href="../issue/issue-detail?num=${rs.ROW_ID}" >${rs.UPDATE_DATA}</a></strong>를 게시하였습니다. </div>
+		                                            </div><!-- End activity item-->		                                                	                                            	
+	                                            </c:if>
+	                                            
+	                                            <c:if test="${rs.GUIDE eq '타입 변경'}">
+		                                            <div class="activity-item d-flex">
+		                                            
+		                                                <div class="activite-label">
+		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
+
+                                                           <c:if test="${timeDiff lt 1}">
+                                                               <span style="font-size:13px">방금 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 1 and timeDiff lt 60}">
+                                                               <span style="font-size:13px">${timeDiff} 분 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 60 and timeDiff lt 1440}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div 60)} 시간 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (24*60) and timeDiff lt (7*24*60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (24*60))} 일 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (7 *24 *60) and timeDiff lt (30 *24 *60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (7*24*60))} 주</span>
+                                                           </c:if>		
+														</div>
+														
+															<c:if test="${rs.COLOR eq 'COLOR1'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR2'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR3'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR4'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR5'}">
+		                                                		<i class='bi bi-circle-fill activity-badge muted align-self-start'></i>
+		                                                	</c:if>
+		                                                	
+		                                                <div class="activity-content"><strong>${rs.MASTER }</strong>님이 "${rs.UPDATE_DATA}"(으)로 타입 변경 : 
+		                                                
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '버그'}">
+		                                                		<img src="../resources/issue/img/bug.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '작업'}">
+		                                                		<img src="../resources/issue/img/task.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '에픽'}">
+		                                                		<img src="../resources/issue/img/epic.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	
+		                                                	<strong><a href="../issue/issue-detail?num=${rs.ROW_ID}" style="font-size:15px"> ${rs.ISSUE_SUBJECT}</a></strong></div>
+		                                                	
+		                                            </div><!-- End activity item-->		                                                	                                            	
+	                                            </c:if>
+	                                            
+	                                            <c:if test="${rs.GUIDE eq '담당자 변경'}">
+		                                            <div class="activity-item d-flex">
+		                                                <div class="activite-label">
+		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
+
+                                                           <c:if test="${timeDiff lt 1}">
+                                                               <span style="font-size:13px">방금 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 1 and timeDiff lt 60}">
+                                                               <span style="font-size:13px">${timeDiff} 분 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 60 and timeDiff lt 1440}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div 60)} 시간 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (24*60) and timeDiff lt (7*24*60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (24*60))} 일 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (7 *24 *60) and timeDiff lt (30 *24 *60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (7*24*60))} 주</span>
+                                                           </c:if>		
+														</div>
+														
+															<c:if test="${rs.COLOR eq 'COLOR1'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR2'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR3'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR4'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR5'}">
+		                                                		<i class='bi bi-circle-fill activity-badge muted align-self-start'></i>
+		                                                	</c:if>
+		                                                	
+		                                                <div class="activity-content"><strong>${rs.MASTER }</strong>님이 <strong>${rs.CHANGED_USER}</strong>님으로 이슈 담당자 변경 : 
+		                                                
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '버그'}">
+		                                                		<img src="../resources/issue/img/bug.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '작업'}">
+		                                                		<img src="../resources/issue/img/task.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '에픽'}">
+		                                                		<img src="../resources/issue/img/epic.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	
+		                                                	<strong><a href="../issue/issue-detail?num=${rs.ROW_ID}" style="font-size:15px"> ${rs.ISSUE_SUBJECT}</a></strong></div>
+		                                            </div><!-- End activity item-->		                                                	                                            	
+	                                            </c:if>		 	                                            		                                            		                                            
+	                                            
+	                                            <c:if test="${rs.GUIDE eq '우선순위 변경'}">
+		                                            <div class="activity-item d-flex">
+		                                                <div class="activite-label">
+		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
+
+                                                           <c:if test="${timeDiff lt 1}">
+                                                               <span style="font-size:13px">방금 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 1 and timeDiff lt 60}">
+                                                               <span style="font-size:13px">${timeDiff} 분 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 60 and timeDiff lt 1440}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div 60)} 시간 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (24*60) and timeDiff lt (7*24*60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (24*60))} 일 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (7 *24 *60) and timeDiff lt (30 *24 *60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (7*24*60))} 주</span>
+                                                           </c:if>		
+														</div>
+														
+															<c:if test="${rs.COLOR eq 'COLOR1'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR2'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR3'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR4'}">
+		                                                		<i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+		                                                	</c:if>
+															<c:if test="${rs.COLOR eq 'COLOR5'}">
+		                                                		<i class='bi bi-circle-fill activity-badge muted align-self-start'></i>
+		                                                	</c:if>
+		                                                	
+		                                                <div class="activity-content"><strong>${rs.MASTER }</strong>님이 "${rs.UPDATE_DATA}"(으)로 우선순위 변경 : 
+		                                                
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '버그'}">
+		                                                		<img src="../resources/issue/img/bug.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '작업'}">
+		                                                		<img src="../resources/issue/img/task.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '에픽'}">
+		                                                		<img src="../resources/issue/img/epic.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	
+		                                                	<strong><a href="../issue/issue-detail?num=${rs.ROW_ID}" style="font-size:15px"> ${rs.ISSUE_SUBJECT}</a></strong></div>
+		                                            </div><!-- End activity item-->		                                                	                                            	
+	                                            </c:if>	
+	                                            
+	                                            <c:if test="${rs.GUIDE eq '상태 변경'}">
+		                                            <div class="activity-item d-flex">
+		                                                <div class="activite-label">
+		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
+
+                                                           <c:if test="${timeDiff lt 1}">
+                                                               <span style="font-size:13px">방금 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 1 and timeDiff lt 60}">
+                                                               <span style="font-size:13px">${timeDiff} 분 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge 60 and timeDiff lt 1440}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div 60)} 시간 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (24*60) and timeDiff lt (7*24*60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (24*60))} 일 전</span>
+                                                           </c:if>
+
+                                                           <c:if test="${timeDiff ge (7 *24 *60) and timeDiff lt (30 *24 *60)}">
+                                                               <span style="font-size:13px">${Integer.valueOf(timeDiff div (7*24*60))} 주</span>
+                                                           </c:if>		
+														</div>
+		                                                <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+		                                                <div class="activity-content"><strong>${rs.MASTER }</strong>님이 "${rs.UPDATE_DATA}"(으)로 상태 변경 : 
+		                                                
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '버그'}">
+		                                                		<img src="../resources/issue/img/bug.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '작업'}">
+		                                                		<img src="../resources/issue/img/task.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	<c:if test="${rs.ISSUE_TYPE eq '에픽'}">
+		                                                		<img src="../resources/issue/img/epic.svg" class="issuetype-icon" style="padding-bottom: 4px;">
+		                                                	</c:if>
+		                                                	
+		                                                	<strong><a href="../issue/issue-detail?num=${rs.ROW_ID}" style="font-size:15px"> ${rs.ISSUE_SUBJECT}</a></strong></div>
+		                                            </div><!-- End activity item-->		                                                	                                            	
+	                                            </c:if>	
+	                                            	                                            	                                            
+											</c:forEach>
+                                             
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
 
@@ -692,6 +1174,7 @@
     <script src="../resources/project/js/projectboard/main.js"></script>
 
 	<!-- ProjectBoard JS -->
+	<script src="../resources/project/js/projectboard/activity_Ajax.js"></script>
     <script src="../resources/project/js/projectboard/projectboard_Header.js"></script>
     <script src="../resources/project/js/projectboard/projectboard_table.js"></script>
     
@@ -781,7 +1264,7 @@
             },
             yAxis: {
                 type: 'value',
-                interval: 1
+                interval: 10
             },
             series: [{
                 data: [allCriticalCount, highCount, middleCount, lowCount],

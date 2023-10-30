@@ -16,12 +16,12 @@
     <meta name="_csrf" content="${_csrf.token}">
     <meta name="_csrf_header" content="${_csrf.headerName}">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -243,9 +243,11 @@
                                                                                     <td>
                                                                                         <c:out value="${emp.id}" />
                                                                                     </td>
-                                                                                    <td>
-                                                                                        <c:out value="${emp.name}" />
+                                                                                    <td id="empDetail">
+                                                                                     <button type="button" class="empDetail" data-emp-id="${emp.id}" data-toggle="modal"	data-target="#myModal"  >
+                                                                                       <c:out value="${emp.name}" /></button>
                                                                                     </td>
+                                                                                    
                                                                                     <td>
                                                                                         <c:out value="${emp.department}" />
                                                                                     </td>
@@ -280,7 +282,9 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
-
+														
+												
+														
                                                         <div class="tab-pane fade" id="userstop">
                                                             <table class="table">
                                                                 <thead>
@@ -358,6 +362,7 @@
             <!-- / Layout wrapper -->
         </div>
     </div>
+    	<jsp:include page="employee-info.jsp"/>
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="../resources/mainboard/assets/vendor/libs/jquery/jquery.js"></script>
@@ -418,8 +423,44 @@
             searchTable);
         document.getElementById("filterSelect").addEventListener("change",
             searchTable);
-        
+    
+
+        //직원정보 상세조회
+        $('.empDetail').click(function(){
+    	   var empId = $(this).data("emp-id");
+      console.log(empId);
+    	    $.ajax({
+    	      type: "GET",
+    	      url: "employee-info",
+    	      data: {
+    	    	  empId: empId,
+    	         
+    	      },
+    	      
+    	      success: function (response) {
+    	    	  
+    	        console.log("성공");
+    	        $('input[name=id]').val(response.id);
+    	        $('input[name=name]').val(response.name);
+    	        $('input[name=email]').val(response.email);
+    	        $('input[name=company_name]').val(response.company_name);
+    	        $('input[name=department]').val(response.department);
+    	        $('input[name=position]').val(response.position);
+    	        $('input[name=phone]').val(response.phone);
+    	        
+    	        
+    	        },
+    	        error: function (error) {
+    	          console.error("Error: " + error);
+    	        }
+    	    }); //ajax end
+    	    });  //  
         	
+    	/* 모달 */
+    /* 	function empDetail(){
+    		$('.empDetail').load("../admin/employee-info");
+    	} */
+    	
         /* 정상 탭 */
         $('.employee-tab').click(function(){
             let token = $("meta[name='_csrf']").attr("content");
@@ -458,18 +499,21 @@
                         } else {
                         	empList += '<img src="../upload' + emp[i].pic + '" alt="프로필 사진" width="25" height="25">';
                         }
-                        // 각 필드에 대해 null 체크 후 값 할당
-                        var department = (emp[i].department !== null) ? emp[i].department : '';
-                        var position = (emp[i].position !== null) ? emp[i].position : '';
-                		var phone = (emp[i].phone !== null) ? 	emp.phone : '';
-                		
+                        
+                    
                     	empList += '</td>';
                     	empList += '<td>' + emp[i].id + '</td>';
                     	empList += '<td>' + emp[i].name + '</td>';
-                    	empList += '<td>' + department + '</td>';
-                    	empList += '<td>' + position + '</td>';
+                    	// 각 필드에 대해 null 체크 후 값 할당
+                    	 if(emp[i].department ==null ||emp[i].position == null || emp[i].phone == null){
+                    		 emp[i].department = '';
+                    		 emp[i].position  = '';
+                    		 emp[i].phone = '';
+             		   }
+                    	empList += '<td>' + emp[i].department + '</td>';
+                    	empList += '<td>' + emp[i].position + '</td>';
                     	empList += '<td>' + emp[i].email + '</td>';
-                    	empList += '<td>' + phone + '</td>';
+                    	empList += '<td>' + emp[i].phone + '</td>';
                     	empList += '<td>';
                     	empList += '<p>정상</p>';
                     	empList += '<button class="user-stop" data-employeeId="'+ emp[i].id + '">[이용중지]</button>';
@@ -595,9 +639,10 @@
               
                     
                     for (var i = 0; i < user.length; i++) {
-                        waitList += '<tr>';
+                        console.log(user)
+                    	waitList += '<tr>';
                         waitList += '<td>';
-
+			
                         var userPic = user[i].pic;
                         if (userPic === null) {
                             waitList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
@@ -613,6 +658,7 @@
                         waitList += '<button class="approveUser" data-userId="' + user[i].id + '">[승인]</button>';
                         waitList += '<button class="rejectUser" data-userId="' + user[i].id + '">[거절]</button>';
                         waitList += '</tr>'
+                        console.log(user[i].createdAt);
                     }
 
                     $('.wait-user').html(waitList);
@@ -814,8 +860,9 @@
         }); // click event handler 종료 괄호와 세미콜론
         
     </script>
-
-
+ 
+ 
+   
 </body>
 
 </html>

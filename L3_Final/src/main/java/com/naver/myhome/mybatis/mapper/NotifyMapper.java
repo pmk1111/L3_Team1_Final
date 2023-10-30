@@ -21,4 +21,10 @@ public interface NotifyMapper {
 
 	public List<Notify> listalarm(int userId);
 
+	public void updatedNotifications(int userId, int notifyId);
+
+	public void deleteNotifications(int notifyId);
+
+	public int getUnreadNotificationCount(int userId);
+
 }

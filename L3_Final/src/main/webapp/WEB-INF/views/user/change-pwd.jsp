@@ -179,7 +179,7 @@ em {
 											</p>
 
 											<!-- content -->
-											<form id="changePassword" method="POST" action="../user/update-pwd">
+											<form id="changePassword" method="POST" action="../user/update-pwd"  autocomplete="off">
 											  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 											    <input type="hidden" id="userEmail" name="userEmail" value="${email}">
 											  

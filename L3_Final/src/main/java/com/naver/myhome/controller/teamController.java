@@ -71,13 +71,16 @@ public class teamController {
 	@ResponseBody
 	@PostMapping(value="/insert-team")
 	public void insertTeam(@RequestParam(name="empIds[]") List<Integer> empIds,
-		            	   @RequestParam(name="projectId") int projectId) {
+		            	   @RequestParam(name="projectId") int projectId,
+		            	   @AuthenticationPrincipal User customUser) {
 		
 		logger.info("empIds = " + empIds.size());
 		
+		int sessionId = customUser.getId();
+		
 	    for (int empId : empIds) {
 	    	logger.info("empid = " + empId);
-	        teamService.insertTeam(empId, projectId);
+	        teamService.insertTeam(empId, projectId, sessionId);
 	    }
 
 	}
@@ -113,17 +116,23 @@ public class teamController {
 	@ResponseBody
 	@PostMapping(value="/grant-admin")
 	public void grantAdmin(@RequestParam(name = "projectId") int projectId, 
-	         			   @RequestParam(name = "empId") int empId) {
+	         			   @RequestParam(name = "empId") int empId,
+	         			   @AuthenticationPrincipal User customUser) {
 		
-	    teamService.grantAdmin(empId, projectId);
+		int sessionId = customUser.getId();
+		
+	    teamService.grantAdmin(empId, projectId, sessionId);
 	}
 	
 	@ResponseBody
 	@PostMapping(value="/revoke-admin")
 	public void revokeAdmin(@RequestParam(name = "projectId") int projectId, 
-	         			   @RequestParam(name = "empId") int empId) {
+	         			   @RequestParam(name = "empId") int empId,
+	         			   @AuthenticationPrincipal User customUser) {
 		
-	    teamService.revokeAdmin(empId, projectId);
+		int sessionId = customUser.getId();
+		
+	    teamService.revokeAdmin(empId, projectId, sessionId);
 	}
 	
 	// JJ's Controller End

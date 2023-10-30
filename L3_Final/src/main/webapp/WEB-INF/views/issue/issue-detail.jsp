@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html lang="en"class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
@@ -32,8 +33,10 @@
       .leftbar-close{background-color: #9F7AB0; border-radius: 50%;}
       pre{font-family: var(--bs-body-font-family) !important}
       
-      
-      
+      .issue-header{display: flex;
+    				justify-content: space-between;}
+    				
+	  
       .upload-file-content{display:flex; align-items:center; margin: 15px 0px; width: 100%; height: 60px; border:1.4px solid #d9dee3; border-radius: 5px; padding:0 10px}
       .file-item{margin:10px 0;}
       .file-item{border-style:none; background-color: white}
@@ -43,7 +46,8 @@
 
   <body>
   	<input type="hidden" name="num" value="${param.num}"  id="issue_id">
-  
+  	<input type="hidden" class="create-user-email" value="${createrEmail}">
+  	<input type="hidden" class="assigned-user-email" value="${assignerEmail}">
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -70,18 +74,39 @@
                 <div class="card">
 
                   <div class="card-body issue-card">
-                    <div class="issue-location">
-                      프로젝트 / ${issuedata.project_name} / ${issuedata.subject}
-
-                    </div>
+                    <div class="issue-header">
+    				  <div class="issue-location">
+       					 프로젝트 / ${issuedata.project_name} / ${issuedata.subject}
+    				  </div>
+    				  <div class="bookmark-area">
+        				<div class="bookmark-icon">
+           				    <c:choose>
+        				   <c:when test ="${bookmarkCk==0 }">
+           				     <img src="../resources/bookmark/img/bookmark.png" id="bookmark" alt="북마크" width=25px>
+           				   </c:when>
+           				   <c:otherwise>
+           				    <img src="../resources/bookmark/img/bookmark_purple.png" id="bookmark" alt="북마크" width=25px>
+           				   </c:otherwise>
+           				 </c:choose>
+       				    </div>
+   	 				  </div>
+					</div>
+                    
                     <hr class="issue-hr">
 
                     <div class="issue-write-info">
                     	<div class="issue-writer-date">
-                      	<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto user-img" />
+                    	<c:choose>
+                    	<c:when test="${issuedata.creater_pic == null || issuedata.creater_pic == ''}">
+                      	<img src="${pageContext.request.contextPath}/user/assets/img/avatars/profile.png" alt class="w-px-40 h-auto user-img" />
+                      </c:when>
+                      <c:otherwise>
+                      	<img src="${pageContext.request.contextPath}/upload${issuedata.creater_pic}" alt class="w-px-40 h-auto user-img" />
+                      </c:otherwise>
+                      </c:choose>
                       	<span class="issue-writer">${issuedata.create_user_name}</span> <sup class="issue-create">${issuedata.created_at}</sup>
                       </div>
-                      
+                      <input type="hidden" class="creater-mail" value="${createrEmail }">
                       
                      <div class="issue-option">
                       <img src="../resources/issue/img/settings.svg" class="issue-setting-icon">
@@ -91,16 +116,21 @@
                       		<img src="../resources/issue/img/copyurl.svg" class="issue-setting-icon link-copy-icon">
                       		<span>링크 복사</span>
                       	</li>
+                      	<sec:authorize access="isAuthenticated()">
+													<sec:authentication property="principal" var="pinfo" />
+													<input type="hidden" class="auth" value="${pinfo.username }">
+													<c:if test="${createrEmail == pinfo.username || pinfo.username == 'admin' }">
+                      			<li class="issue-dropdown-item issue-edit" onclick="getProjectIdAndTeam()">
+                      				<img src="../resources/issue/img/edit.svg" class="issue-setting-icon edit-icon">
+                      				<span>수정</span>
+                      			</li>
                       	
-                      	<li class="issue-dropdown-item issue-edit" onclick="getProjectIdAndTeam()">
-                      		<img src="../resources/issue/img/edit.svg" class="issue-setting-icon edit-icon">
-                      		<span>수정</span>
-                      	</li>
-                      	
-                      	<li class="issue-dropdown-item issue-delete">
-                      		<img src="../resources/issue/img/trash.svg" class="issue-setting-icon delete-icon">
-                      		<span>삭제</span>
-                      	</li>
+                      			<li class="issue-dropdown-item issue-delete">
+                      				<img src="../resources/issue/img/trash.svg" class="issue-setting-icon delete-icon">
+                      				<span>삭제</span>
+                      			</li>
+                      		</c:if>
+                      	</sec:authorize>
                       </ul>
                       </div>
                       
@@ -120,7 +150,10 @@
                           <button type="button" class="status-btn" data-value="Done">Done</button>
                         </div>
                       </div>
-                      <div class="issue-assigned-area">
+                       <div class="issue-assigned-area">
+                        <div class="issue-mention-area" style="display:none">
+                           <span>언급</span><span class="mention-user">${issuedata.mentioned}</span>
+                         </div>   
                         <span>담당자</span><span class="assigned-user">${issuedata.assigned_user_name}</span>
                       </div>
                       <hr class="issue-hr">
@@ -371,6 +404,11 @@ function getProjectIdAndTeam() {
         }
     }); //ajax end
 } // getProjectIdAndTeam end
+const MentionedUserName = $('.mention-user').text();
+
+if(MentionedUserName !== null && MentionedUserName !== ''){
+   $('.issue-mention-area').css('display', 'block');
+}
 </script>
   </body>
 </html>

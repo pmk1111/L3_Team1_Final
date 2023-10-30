@@ -39,8 +39,8 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public void insertTeam(int empId, int projectId) {
-		mapper.insertTeam(empId, projectId);
+	public void insertTeam(int empId, int projectId, int sessionId) {
+		mapper.insertTeam(empId, projectId, sessionId);
 	}
 
 	@Override
@@ -54,13 +54,13 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public void grantAdmin(int empId, int projectId) {
-		mapper.grantAdmin(empId, projectId);
+	public void grantAdmin(int empId, int projectId, int sessionId) {
+		mapper.grantAdmin(empId, projectId, sessionId);
 	}
 
 	@Override
-	public void revokeAdmin(int empId, int projectId) {
-		mapper.revokeAdmin(empId, projectId);
+	public void revokeAdmin(int empId, int projectId, int sessionId) {
+		mapper.revokeAdmin(empId, projectId, sessionId);
 	}
 	
 }
