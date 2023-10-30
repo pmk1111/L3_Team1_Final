@@ -2,7 +2,6 @@ package com.naver.myhome.service;
 
 import java.util.List;
 
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +28,8 @@ public class MytotalworkServiceImpl implements MytotalworkService{
 
 
 	@Override
-	public List<Mytotalwork> getSearchList(String search_word) {
-		// TODO Auto-generated method stub
-		return dao.getSearchList(search_word);
+	public List<Mytotalwork> getSearchList(int sessionId, String search_word) {
+		return dao.getSearchList(sessionId, search_word);
 	}
 
 
