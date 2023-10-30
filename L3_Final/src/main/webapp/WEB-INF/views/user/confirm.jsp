@@ -193,6 +193,7 @@ pageEncoding="UTF-8"%>
             </div>
         </div>
     </div>
+    
     <div id="signupFooterArea" style="display: block;">
         <!-- ======= Footer ======= -->
         <footer id="footer">
@@ -244,11 +245,9 @@ pageEncoding="UTF-8"%>
                                 <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-
 
 
             <div class="container footer-bottom clearfix">
