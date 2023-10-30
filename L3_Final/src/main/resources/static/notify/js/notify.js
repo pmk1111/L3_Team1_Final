@@ -86,6 +86,7 @@ function addDeleteButton(notificationId) {
 
 $('.notify-layer').on('click', '.delete-notification', function (event) {
     event.preventDefault();
+    event.stopPropagation();
 
   
    var notificationId = $(this).data('id');
