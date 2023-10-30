@@ -44,6 +44,24 @@ public class NotifyServiceImpl implements NotifyService{
 		return dao.listalarm(userId);
 	}
 
+	@Override
+	public void updatedNotifications(int userId,int notifyId) {
+		// TODO Auto-generated method stub
+		 dao.updatedNotifications(userId,notifyId);
+	}
+
+	@Override
+	public void deleteNotifications(int notificationId) {
+		// TODO Auto-generated method stub
+		dao.deleteNotifications(notificationId);
+	}
+
+	@Override
+	public int getUnreadNotificationCount(int userId) {
+		// TODO Auto-generated method stub
+		return dao.getUnreadNotificationCount(userId);
+	}
+
 	
 
 

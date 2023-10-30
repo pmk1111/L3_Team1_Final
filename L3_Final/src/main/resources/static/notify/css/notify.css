@@ -1,4 +1,19 @@
 @charset "UTF-8";
+.delete-notification {
+	position: relative;
+    float: right;
+    background-color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border-style: none;
+    margin:auto;
+}
+
+.read{
+	
+	background:#f5f5f5;
+}
 
 .no-notification {
     margin-left:160px;
@@ -154,6 +169,7 @@
     right: 19px;
     font-size: 12px;
     color: #cfcfcf;
+    
 }
 
 .notify-user-img {

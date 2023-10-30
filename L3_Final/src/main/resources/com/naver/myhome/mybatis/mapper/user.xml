@@ -62,12 +62,16 @@
     INNER JOIN PROJECT P ON T.PROJECT_ID = P.ID
     WHERE P.ID = #{projectId}
     AND U.NAME LIKE '%' || #{name} || '%'
+	AND U.ID != #{userId}
 </select>
 
 
  <select id="getCreateUser" resultType="String">
  SELECT name FROM users WHERE id = #{id}
+ </select>
  
+  <select id="getAssignedUser" resultType="String">
+ select name from users where id = #{id}
  </select>
  
 	<!-- 혜원끝 -->
