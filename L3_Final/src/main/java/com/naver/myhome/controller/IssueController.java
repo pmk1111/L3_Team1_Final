@@ -359,7 +359,9 @@ public class IssueController {
 			@RequestParam("check") String check,
 			HttpServletRequest request, RedirectAttributes rattr,
 			MultipartFile[] uploadfiles,
-			@AuthenticationPrincipal User customUser) throws Exception{
+			@AuthenticationPrincipal User customUser,
+			Notify notify,@RequestParam(value="user_id",defaultValue="0",required=false) int mentioned_id,
+			@RequestParam(value = "assigned") int assignedValue,String notionchoice) throws Exception{
 		
 		int sessionId = customUser.getId();
 		logger.info("세션아이디 체크" + sessionId);
@@ -367,7 +369,38 @@ public class IssueController {
 		String url = "";
 		issue.setId(num);
 		issue.setSessionId(sessionId);
+		issue.setMentioned(notionchoice.replace("@", ""));
 		int result = issueService.issueUpdate(issue);
+		
+		  //혜원
+
+	      String create_user = userService.getCreateUser(sessionId);
+	      String assign_user = userService.getAssignUser(assignedValue);
+	    
+ if (mentioned_id > 0) {
+	    	    Notify mentionNotify = new Notify();
+	    	    mentionNotify.setNAME(notionchoice.replace("@", ""));
+	    	    mentionNotify.setMENTIONED_BY(create_user);
+	    	    mentionNotify.setPOST_ID(num);
+	    	    mentionNotify.setMENTIONED_ID(mentioned_id);
+	    	    mentionNotify.setCONTENT("언급 하였습니다.");
+	    	    mentionNotify.setNOTIFY_STATUS(0);
+	    	 
+	    	    notifyService.createalarm(mentionNotify);
+	    	}
+
+	    	if (assignedValue > 0) {
+	    	    Notify assignNotify = new Notify();
+	    	    assignNotify.setNAME(assign_user);
+	    	    assignNotify.setMENTIONED_BY(create_user);
+	    	    assignNotify.setPOST_ID(num);
+	    	    assignNotify.setMENTIONED_ID(assignedValue);
+	    	    assignNotify.setCONTENT("담당자로 설정하였습니다.");
+	    	    assignNotify.setNOTIFY_STATUS(0);
+	    	    
+	    	    notifyService.createalarm(assignNotify);
+	    	}
+        //혜원
 
 		if(result==0) {
 			logger.info("게시판 수정 실패");
