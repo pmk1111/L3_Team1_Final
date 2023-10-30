@@ -86,7 +86,7 @@
                   <div class="card mb-4">
                     <h5 class="card-header">프로필</h5>
                     <!-- Account -->
-                    <div class="card-body">
+                    <div class="card-body profile-img">
                       <div class="d-flex align-items-start align-items-sm-center gap-4">
                       <c:choose>
                        <c:when test="${not empty userinfo.pic}">
@@ -129,12 +129,14 @@
                               value = "${userinfo.pic}"
                               class="account-file-input"
                               accept="image/png, image/jpeg"
+                              style= "display: none;"
                             />
                         </div>
                         </div>
                         
                       </div>
                     </div>
+                   </div>
                     <hr class="my-0" />
                     <div class="card-body">
                           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -150,7 +152,7 @@
                               required readOnly
                             />
                           </div>
-                          <div class="mb-3 col-md-6">
+                         <div class="mb-3 col-md-6">
                             <label for="company" class="form-label">회사</label>
                             <input
                               type="text"
@@ -166,9 +168,20 @@
                             <input class="form-control" type="text" name="name" id="name" value="${userinfo.name}" />
                           </div>
                          
-                        <div class="mb-3 col-md-6">
+                          <div class="mb-3 col-md-6">
+                            <label for="company" class="form-label">부서</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="company"
+                              name="company"
+                              value="${userinfo.department}"
+                              required readOnly
+                            />
+                            </div>
+                                 
+                          <div class="mb-3 col-md-6">
                             <label class="form-label" for="tel">휴대폰 번호</label>
-                            <div class="input-group input-group-merge">
                               <input
                                 type="text"
                                 id="phone"
@@ -178,7 +191,19 @@
                                 value="${userinfo.phone}"
                               />
                             </div>
-                          </div>
+                           
+                            <div class="mb-3 col-md-6">
+                            <label for="company" class="form-label">직책</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="company"
+                              name="company"
+                              value="${userinfo.position}"
+                              required readOnly
+                            />
+                            </div>
+                   
                           
                          
                         
@@ -192,9 +217,9 @@
                           <button type="submit" class="btn btn-primary me-2" id="updateProfile" >저장</button>
                           <button type="reset" class="btn btn-outline-secondary" onclick="history.back();">취소</button>
                       </div>
-                 </div>
-                 </div>
                  
+                 </div>
+                </div>
                       </form>
                     </div>
                     <!-- /Account -->

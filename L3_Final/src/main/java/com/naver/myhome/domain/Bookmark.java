@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class Bookmark {
 	private int id;
-	private int userId;
-	private int issueId;
+	private int user_id;
+	private int issue_id;
 	private String regDate;
 	private String type;
 	private String subject;

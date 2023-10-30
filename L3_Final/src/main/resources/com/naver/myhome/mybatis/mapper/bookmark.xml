@@ -25,9 +25,27 @@
 		WHERE b.user_id = #{userId}
     </select>
     
+    <select id="getSearchList" parameterType="map" resultType="bookmark">
+		SELECT i.TYPE, i.SUBJECT, p.TITLE , u.NAME, b.regDate, b.issue_id, b.user_id, b.id 
+		FROM bookmark b INNER JOIN issue i ON i.ID = b.ISSUE_ID 
+		INNER JOIN project p ON i.PROJECT_ID = p.ID 
+		INNER JOIN users u ON i.CREATE_USER = u.ID 
+		WHERE b.user_id = #{userId}
+	<include refid="search_"/>
+	</select>
+
+	<sql id="search_">
+	 <if test="search_word != null and search_word != ''"> 
+		and i.type Like #{search_word} 
+		OR i.subject LIKE #{search_word} 
+		OR p.title LIKE #{search_word} 
+		OR u.name LIKE #{search_word} 
+	 </if>
+	</sql>
+	
  	<insert id="addBookmark">
  		insert into bookmark
- 		values(bookmark_seq.nextval, #{issueId}, #{userId}, sysdate)
+ 		values(bookmark_seq.nextval, #{userId}, #{issueId}, sysdate)
  	</insert>
     
     <delete id="deleteBookmark">

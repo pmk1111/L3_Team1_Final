@@ -15,6 +15,6 @@ public interface BookmarkService {
 
 	int countBookmark(int userId);
 
-	List<Bookmark> getBookmarkList(int userId);
+	public List<Bookmark> getSearchList(int userId, String search_word);
 
 }

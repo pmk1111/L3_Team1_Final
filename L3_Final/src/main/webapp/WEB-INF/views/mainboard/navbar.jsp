@@ -79,10 +79,10 @@
                     <div class="avatar avatar-online">
                         <c:choose>
                             <c:when test="${empty pinfo.pic}">
-                                <img src="${pageContext.request.contextPath}/user/img/profile.png" alt="Default Profile Image" class="w-px-40 h-auto rounded-circle" />
+                                <img src="${pageContext.request.contextPath}/user/img/profile.png" alt="Default Profile Image" class="w-px-40 h-px-40 rounded-circle" />
                             </c:when>
                             <c:otherwise>
-                                <img src="${pageContext.request.contextPath}/upload${pinfo.pic}" alt="User Profile Image" class="w-px-40 h-auto rounded-circle" />
+                                <img src="${pageContext.request.contextPath}/upload${pinfo.pic}" alt="User Profile Image" class="w-px-40 h-px-40 rounded-circle" />
                             </c:otherwise>
                         </c:choose>
                     </div>
