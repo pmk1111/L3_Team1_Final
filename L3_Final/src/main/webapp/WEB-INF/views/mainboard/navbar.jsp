@@ -67,7 +67,9 @@
 </div>
                 <div class="chat-icon-wrapper" style="display: inline-block; position:relative; margin-left: 5px;">
                     <img alt="채팅" src="../resources/mainboard/assets/img/chat.svg" class="chat-icon">
-                    <div class="chat-not-read" style="position:absolute; top:80%; left:50%; background-color: red; width: 8px; height: 8px; border-radius: 50%; display: none"></div>
+                    <div class="chat-not-read">
+                    	<span class="not-read-cnt"></span>
+                    </div>
                 </div>
             </li>
 

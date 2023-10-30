@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html lang="en"class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
@@ -45,7 +46,8 @@
 
   <body>
   	<input type="hidden" name="num" value="${param.num}"  id="issue_id">
-  
+  	<input type="hidden" class="create-user-email" value="${createrEmail}">
+  	<input type="hidden" class="assigned-user-email" value="${assignerEmail}">
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -94,10 +96,17 @@
 
                     <div class="issue-write-info">
                     	<div class="issue-writer-date">
-                      	<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto user-img" />
+                    	<c:choose>
+                    	<c:when test="${issuedata.creater_pic == null || issuedata.creater_pic == ''}">
+                      	<img src="${pageContext.request.contextPath}/user/assets/img/avatars/profile.png" alt class="w-px-40 h-auto user-img" />
+                      </c:when>
+                      <c:otherwise>
+                      	<img src="${pageContext.request.contextPath}/upload${issuedata.creater_pic}" alt class="w-px-40 h-auto user-img" />
+                      </c:otherwise>
+                      </c:choose>
                       	<span class="issue-writer">${issuedata.create_user_name}</span> <sup class="issue-create">${issuedata.created_at}</sup>
                       </div>
-                      
+                      <input type="hidden" class="creater-mail" value="${createrEmail }">
                       
                      <div class="issue-option">
                       <img src="../resources/issue/img/settings.svg" class="issue-setting-icon">
@@ -107,16 +116,21 @@
                       		<img src="../resources/issue/img/copyurl.svg" class="issue-setting-icon link-copy-icon">
                       		<span>링크 복사</span>
                       	</li>
+                      	<sec:authorize access="isAuthenticated()">
+													<sec:authentication property="principal" var="pinfo" />
+													<input type="hidden" class="auth" value="${pinfo.username }">
+													<c:if test="${createrEmail == pinfo.username || pinfo.username == 'admin' }">
+                      			<li class="issue-dropdown-item issue-edit" onclick="getProjectIdAndTeam()">
+                      				<img src="../resources/issue/img/edit.svg" class="issue-setting-icon edit-icon">
+                      				<span>수정</span>
+                      			</li>
                       	
-                      	<li class="issue-dropdown-item issue-edit" onclick="getProjectIdAndTeam()">
-                      		<img src="../resources/issue/img/edit.svg" class="issue-setting-icon edit-icon">
-                      		<span>수정</span>
-                      	</li>
-                      	
-                      	<li class="issue-dropdown-item issue-delete">
-                      		<img src="../resources/issue/img/trash.svg" class="issue-setting-icon delete-icon">
-                      		<span>삭제</span>
-                      	</li>
+                      			<li class="issue-dropdown-item issue-delete">
+                      				<img src="../resources/issue/img/trash.svg" class="issue-setting-icon delete-icon">
+                      				<span>삭제</span>
+                      			</li>
+                      		</c:if>
+                      	</sec:authorize>
                       </ul>
                       </div>
                       
@@ -137,6 +151,9 @@
                         </div>
                       </div>
                       <div class="issue-assigned-area">
+                        <div class="issue-assigned-area">
+                        	<span>언급</span><span class="assigned-user">${issuedata.mentioned}</span>
+                      	</div>   
                         <span>담당자</span><span class="assigned-user">${issuedata.assigned_user_name}</span>
                       </div>
                       <hr class="issue-hr">
