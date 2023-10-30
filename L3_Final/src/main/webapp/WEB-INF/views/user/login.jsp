@@ -39,12 +39,13 @@
         }
 
         #confirmBtn {
-            margin-bottom: 20;
+            margin-bottom: 55px;
         }
         
     /* 진석 css */
    	body {
 		font-family: 'Nanum Gothic', sans-serif;
+		background-color: #F5F5F9;
   	}
   	
 	.password-container {
@@ -86,6 +87,14 @@
 	  border-color: #ff6b6b !important;
 	}	
 	
+	.Action {
+		color: #ff6b6b;	
+	}
+	
+	.bTxt {
+		margin-left:5px;
+	}
+	
 	#password{
 		margin-bottom:15px;
 	}
@@ -93,7 +102,7 @@
 	.guest-or::before {
 		display: inline-block;
 	    content: "";
-	    width: 15%;
+	    width: 30%;
 	    max-width: 230px;
 	    height: 1px;
 	    margin-right: 20px;
@@ -104,7 +113,7 @@
 	.guest-or::after{
 		display: inline-block;
 	    content: "";
-	    width: 15%;
+	    width: 30%;
 	    max-width: 230px;
 	    height: 1px;
 	    margin-left: 20px;
@@ -215,19 +224,43 @@
 	font-size: 16px;
 	font-weight:500;
 }
-		
+
+.row-login {
+	margin-top: 75px;
+	margin-bottom: 200px;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height:750px;
+    width:1100px;
+}
+
+.card {
+    background-clip: padding-box;
+    box-shadow: 0 2px 6px 0 rgba(67, 89, 113, 0.12);
+}		
     </style>
 </head>
 
 <body>
  <jsp:include page="../user/header.jsp"></jsp:include>
+ 
+
+
+<div class="container-xxl flex-grow-1 container-p-y" style="display:flex; justify-content:center; align-items: center;">
+    <div class="row-login">
+        <!-- Total Revenue -->
+        <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4 jj-login" style="height:100%">
+            <div class="card" style="height:100%">
+                <div class="card-body project-list-card-body" style="height:100%">
  <form action="loginProcess" method="post">
      <div class="auth-section after-contents">
          <div class="account-wrap">
              <div class="account">로그인</div>
              <div class="formDiv">
                  <div>
-                     <b class="bTxt">이메일</b><br>
+                     <b class="bTxt mail-text">이메일</b><br>
                      <input type="text" id="email" class="email" name="email" maxLength="30" placeholder="이메일을 입력하세요" required>
                      <p class="errMsg" id="email_message">오류메세지 영역</p>
                  </div>
@@ -262,6 +295,12 @@
  </form>
  <input type="hidden" id="isChkPassword" name="isChkPassword" value="N" />
  <input type="hidden" id="isChkEmail" name="isChkEmail" value="N" />
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
  <div id="signupFooterArea" style="display: block;">
   <jsp:include page="footer.jsp"></jsp:include>
@@ -303,16 +342,23 @@
 		            if ($(this).val() == '') {
 		                $("#email_message").removeClass("errAction");
 		                $("#email").removeClass("errId");
+		                $(".mail-text").removeClass("Action");
+		                
 		                document.getElementById("email_message").style.visibility = "hidden";
 		            } else {
 		                printErrMsg("email_message", "이메일 형식이 올바르지 않습니다.");
+		                
 		                $("#email_message").addClass("errAction");
 		                $("#email").addClass("errId");
+		                $(".mail-text").addClass("Action");
 		            }
 		        } else {
 		            document.getElementById("email_message").style.visibility = "hidden";
+		            
 		            $("#email_message").removeClass("errAction");
 		            $("#email").removeClass("errId");
+		            $(".mail-text").removeClass("Action");
+		            
 		            document.getElementById("isChkEmail").value = "Y";
 		        }
 		    });

@@ -37,6 +37,3 @@
     </div>
     
 </header><!-- End Header -->
-<script>
-
-</script>

@@ -5,11 +5,16 @@
 <%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     
 <style>
   	body {
   		font-family: 'Nanum Gothic', sans-serif;
   	}
+  	
+ 	#layout-menu {
+    	box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.1); /* 오른쪽 그림자 */
+	} 	
 </style>
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
@@ -50,7 +55,7 @@
                     </g>
                 </svg>
             </span>
-            <span class="demo menu-text fw-bolder ms-2" style="font-size: 25px;">WidUs</span>
+            <span class="demo menu-text fw-bolder ms-2" style="font-size: 35px; font-family: 'Jost', sans-serif; height:30px">WidUs</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -319,16 +324,21 @@ $(document).ready(function() {
 		}		
 	);  
 	
-	// 크리에이트 색상 변경
+ 	// 크리에이트 색상 변경
     $(".create-item").hover(
         function() { // 마우스를 올렸을 때
-            $(this).css("background-color", "#75508F");
+            $(this).css({
+                "background-color": "#75508F",
+                "box-shadow": "0px 2px 10px rgba(0, 0, 0, 0.2)" // 그림자 추가
+            });
         },
         function() { // 마우스를 떠났을 때
-            $(this).css("background-color", "#9F7AB0");
+            $(this).css({
+                "background-color": "#9F7AB0",
+                "box-shadow": "none" // 그림자 제거
+            });
         }
     );
-
 
 });
 
