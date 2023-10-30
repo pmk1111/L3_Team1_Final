@@ -130,8 +130,10 @@ function getNotReadCnt(){
 			xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
 		},
 		success: function(result){
-			if(result !== 0  && $('.chat-not-read').css('display')==='none'){
+			if(result !== 0){
 				$('.chat-not-read').css('display', 'block');
+				$('.chat-not-read .not-read-cnt').text(result);
+				console.log("읽지 않은 채팅방 수" + result);
 			} else if(result === 0 & $('.chat-not-read').css('display')==='block'){
 				$('.chat-not-read').css('display', 'none');
 			}
@@ -143,7 +145,7 @@ function pollNotReadCnt() {
     setInterval(function() {
     	getNotReadCnt(); // 위에서 정의한 함수 호출
       /* console.log('안 읽은 메시지 이력 polling'); */
-    }, 5000); // 5초마다 요청을 보내도록 설정 (원하는 시간으로 조정 가능)
+    }, 2000);
 }
 
 pollNotReadCnt();
