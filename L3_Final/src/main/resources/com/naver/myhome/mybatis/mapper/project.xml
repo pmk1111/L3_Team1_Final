@@ -5,7 +5,7 @@
 
 	<insert id="Insert" parameterType="com.naver.myhome.domain.Project">
 	    <selectKey keyProperty="ID" resultType="int" order="BEFORE">
-	        SELECT PROJECT_ID.NEXTVAL FROM DUAL
+	    SELECT PROJECT_ID.NEXTVAL FROM DUAL
 	    </selectKey>
 	    INSERT INTO PROJECT (ID, TITLE, SUBTITLE, COMPANY_ID, CREATOR)
 	    SELECT #{ID}, #{TITLE}, #{SUBTITLE}, EMPLOYEE.COMPANY_ID, EMPLOYEE.USER_ID

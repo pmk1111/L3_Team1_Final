@@ -112,51 +112,62 @@ $('.notify-layer').on('click', '.delete-notification', function (event) {
 });
 
 
-    function getNotifications() {
-        if (isActive) {
-            // 페이지가 활성화된 경우에만 업데이트 요청
-            $.ajax({
-                url: "/myhome/getNotifications", // 알림을 가져올 JSP 페이지의 경로
-                type: 'GET',
-                success: function(data) {
-                    console.log(data);
-                    // 서버에서 받은 알림 데이터를 동적으로 업데이트
-                    var notificationList = notifyListArea.find('ul.notify-list');
-                    notificationList.empty(); // 기존 목록을 비우고 다시 추가
-                       if (data.length === 0) {
-                       
+function getNotifications() {
+    if (isActive) {
+        // 페이지가 활성화된 경우에만 업데이트 요청
+        $.ajax({
+            url: "/myhome/getNotifications", // 알림을 가져올 JSP 페이지의 경로
+            type: 'GET',
+            success: function(data) {
+                console.log(data);
+                // 서버에서 받은 알림 데이터를 동적으로 업데이트
+                var notificationList = notifyListArea.find('ul.notify-list');
+                notificationList.empty(); // 기존 목록을 비우고 다시 추가
+                if (data.length === 0) {
                     notificationList.append('<div class="no-notification"><h6>알림이 없습니다.</h6></div>');
                 } else {
                     for (var i = 0; i < data.length; i++) {
                         var notification = data[i];
-                         var isReadClass = notification.notify_STATUS === 1 ? "read" : "unread"; 
+                        var isReadClass = notification.notify_STATUS === 1 ? "read" : "unread";
                         var notificationItem = `
-                      
-                            
                             <li class="notify-room ${isReadClass}" data-id="${notification.id}" data-post-id="${notification.post_ID}">
                                 <div class="user-latest">
                                     <p class="notify-user-id">${notification.mentioned_BY}님이 ${notification.name}님을</p>
                                     <p class="latest-notify">${notification.content}</p>
                                 </div>
                                 <div class="update-time-area">
-                                    <span class="update-time">${notification.notify_TIME}</span>
+                                    ${getTimeDiffString(notification.currenttime)}
                                 </div>
                             </li>
-                    
                         `;
                         notificationList.append(notificationItem);
                         addDeleteButton(notification.id); // 삭제 버튼 추가
                     }
-                   }
-                },
-                error: function(xhr, status, error) {
-                    console.log("Error: " + error);
                 }
-            });
-        }
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
     }
+}
 
+// 시간 차이에 따른 문자열 반환 함수
+function getTimeDiffString(timeDiff) {
+    if (timeDiff < 1) {
+        return "<span>방금 전</span>";
+    } else if (timeDiff < 60) {
+        return "<span>" + timeDiff + " 분 전</span>";
+    } else if (timeDiff < 1440) {
+        return "<span>" + Math.floor(timeDiff / 60) + " 시간 전</span>";
+    } else if (timeDiff < 7 * 24 * 60) {
+        return "<span>" + Math.floor(timeDiff / (24 * 60)) + " 일 전</span>";
+    } else if (timeDiff < 30 * 24 * 60) {
+        return "<span>" + Math.floor(timeDiff / (7 * 24 * 60)) + " 주</span>";
+    }
+}
 
-    // 페이지 로드 후 초기 알림 목록 업데이트
-    getNotifications();
+// 페이지 로드 후 초기 알림 목록 업데이트
+getNotifications();
+
 });

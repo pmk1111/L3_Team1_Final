@@ -5,6 +5,9 @@ package com.naver.myhome.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,7 @@ public class NotificationController {
 
     private NotifyService notifyService; // 알림 데이터를 처리하는 서비스 클래스
     
+    private static final Logger logger = LoggerFactory.getLogger(NotificationController.class);
 
     
 	@Autowired
@@ -38,6 +42,7 @@ public class NotificationController {
     public List<Notify> NotifyService(ModelAndView mv, HttpServletRequest request,@AuthenticationPrincipal User user) {
          int userId = user.getId();
 		List<Notify> notify = notifyService.getNotificationsForUser(userId);
+		
 		
      
 	
