@@ -41,22 +41,6 @@
 }
 
 
-
-
-
-.custom-file-upload {
-  border: 2px solid #ccc;
-  display: inline-block;
-  padding: 6px 12px;
-  cursor: pointer;
-  text-align: center;
-  background-color: #f2f2f2;
-  border-radius: 4px;
-}
-
-.custom-file-upload input[type="file"] {
-  display: none;
-}
 </style>
 </head>
 <body>
@@ -93,7 +77,7 @@
 										<div class="search-create">
 											<div class="search-area">
 												<input type="text" class="issue-search" id="searchInput" name="searchText"
-													placeholder="제목 또는 작성자를 검색하세요">												
+													placeholder="이슈 제목을 입력하세요">												
 													<input type="button" id="search-btn" onclick="getSearchList()" value="검색">
 													<label for="search-btn" class="search-label">
 														<img class="search-btn-icon" src="../resources/project/img/projectboard/search.svg">
@@ -175,15 +159,29 @@
 																	</c:choose>
 
 
-																	<span class="issuetype">${i.type}</span> <a
+																	<span class="issuetype">${i.type}</span> <a class="issue-title-anchor"
 																		href="issue-detail?num=${i.id}"> <span
 																		class="issue-title">${i.subject}</span>
 																	</a>
 																</div>
 
 																<div class="issuewriter-created">
+																	<c:choose>
+																		<c:when test="${i.priority == 'low'}">
+																			<span class="low">${i.priority}</span>
+																		</c:when>
+																		<c:when test="${i.priority == 'middle'}">
+																			<span class="middle">${i.priority}</span>
+																		</c:when>
+																		<c:when test="${i.priority == 'high'}">
+																			<span class="high">${i.priority}</span>
+																		</c:when>
+																		<c:otherwise>
+																			<span class="critical">${i.priority}</span>
+																		</c:otherwise>
+																	</c:choose>
 																	<span class="issue-writer">${i.create_user_name}</span> 
-																	<span class="issue-created">${i.created_at.substring(0, 10)}</span>
+																	<span class="issue-created">${i.created_at.substring(2, 10)}</span>
 																</div>
 															</li>
 														</c:forEach>

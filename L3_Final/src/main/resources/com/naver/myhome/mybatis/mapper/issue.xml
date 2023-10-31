@@ -72,7 +72,7 @@
 		FROM
 		issue i
 		WHERE UPPER(subject) LIKE '%' || UPPER(#{searchText}) || '%'
-		OR UPPER(create_user) LIKE '%' || UPPER(#{searchText}) || '%'
+		OR UPPER((SELECT name FROM users WHERE id = i.create_user)) LIKE '%' || UPPER(#{searchText}) || '%'
 		ORDER BY created_at DESC
 	</select>
 

@@ -71,14 +71,6 @@
 						placeholder="제목을 입력하세요.">
 				</div>
 				
-				<!-- 혜원 -->
-					<div>
-					<label>언급</label>
-				<input list="notionchoice" id="inputnotionchoice" name="notionchoice" />
-				 <datalist id="notionchoice"></datalist>
-				 
-				</div>
-				<!-- 혜원 -->
 				<div class="issue-content-wrap">
 					<textarea class="issue-content" name="content" placeholder="내용을 입력하세요."></textarea>
 					<div id="userList"></div>
@@ -117,6 +109,17 @@
 						</div>
 					</div>
 					</div>
+					
+									<!-- 혜원 -->
+					<div class="issue-mention-wrap">
+						<label for="inputnotionchoice" class="notify-txt">언급</label>
+ 						<div class="issue-mention-area">
+							<input list="notionchoice" id="inputnotionchoice" name="notionchoice" />
+						</div>
+				 <datalist id="notionchoice"></datalist>
+				 
+				</div>
+				<!-- 혜원 -->
 
 
 			<!-- HTML -->

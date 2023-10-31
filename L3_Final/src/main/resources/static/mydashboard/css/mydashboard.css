@@ -1,5 +1,18 @@
 @charset "UTF-8";
 
+.container-xxl{
+	animation: fadein .3s;
+}
+
+@keyframes fadein {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 .welcome-message {
 	width: 100%;
 }
@@ -274,4 +287,21 @@ tbody td a>span {
 .date-select {
 	background-color: #6449fc;
 	color: white !important;
+}
+
+.myowrk .board{
+	position:relative;
+}
+
+.no-work{
+	position: absolute;
+	top:60%;
+	left: 50%;
+	font-size:18px;
+	transform: translate(-50%, -50%);
+}
+
+.no-work:hover{
+	color:#5f61e6; 
+	transition:.3s;
 }

@@ -106,10 +106,11 @@ $(document).ready(function () {
                     .replace('__HREF__', (hasEvent) ? 'href="' + href + ('0' + obj['date']).slice(-2) + '"' : '')
                     .replace('__DATE__', obj['date']));
 
-                //오늘 날짜에 date-select 클래스 추가	
-                $('.today a').addClass('date-select');
+                
             });
             $('#tbl-month').append($tr);
+            //오늘 날짜에 date-select 클래스 추가	
+						$('.today a').addClass('date-select');
         }
     }
 
@@ -395,7 +396,7 @@ $(document).ready(function () {
                     });
                 } else {
                     console.log('작업이 없습니다.');
-                    $('.board').append('<h3>작업이 없습니다.</h3>')
+                    $('.board').append('<h4 class="no-work">작업이 없습니다.</h4>')
                 }
             },
             error: function (error) {

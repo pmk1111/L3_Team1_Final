@@ -136,6 +136,7 @@ $(document).ready(function () {
 
     fileInput.addEventListener('change', handleFileSelection);
 
+
     function handleFileSelection(event) {
         const files = event.target.files;
 
@@ -186,14 +187,36 @@ $(document).ready(function () {
         return true; // 확장자가 허용될 때 true 반환
     }
 
+		   if ($('.uploaded-files .upfile').length === 0) {
+    			$('.uploaded-files').css('display', 'none');
+				}
+
     function createFileElement(file) {
         const originalFileName = file.name;
         const upfile = $('<div class="upfile" data-value="' + originalFileName + '"></div>');
-
+        const lastIndexOfPoint = originalFileName.lastIndexOf('.');
+        const extension = originalFileName.substring(lastIndexOfPoint+1,);
+        
+				let fileExtensionImg;
+				if(extension === 'txt'){
+					fileExtensionImg = $('<img class="file-extension" src="../resources/issue/img/txt-icon.png">');
+				} else if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' || extension === 'gif' || extension === 'svg' || extension === 'bmp'){
+					fileExtensionImg = $('<img class="file-extension" src="../resources/issue/img/img-icon.png">');
+				} else if(extension === 'xlsx' || extension === 'xlsm' || extension === 'xls' || extension === 'xlsb' || extension === 'xltx'){
+						fileExtensionImg = $('<img class="file-extension" src="../resources/issue/img/exel-icon.png">');
+				} else if(extension === 'hwp'){
+						fileExtensionImg = $('<img class="file-extension" src="../resources/issue/img/hwp-icon.png">');
+				} else if(extension === 'pptx' || extension === 'pptm' || extension === 'ppt'){
+						fileExtensionImg = $('<img class="file-extension" src="../resources/issue/img/ppt-icon.png">');
+				} else if(extension === 'pdf'){
+						fileExtensionImg = $('<img class="file-extension" src="../resources/issue/img/pdf-icon.png">');
+				}
         const fileName = $('<span class="file-name">' + truncateFileName(originalFileName, 25) + '</span>');
-
+				
+				upfile.append(fileExtensionImg);
         upfile.append(fileName);
         uploadedFilesContainer.append(upfile);
+        uploadedFilesContainer.css('display', 'block');
 
         if (selectedFiles.length > 0) {
             updateUploadedFilesContainerHeight();
