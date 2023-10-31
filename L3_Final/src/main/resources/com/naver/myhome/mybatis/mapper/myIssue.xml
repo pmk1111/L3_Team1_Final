@@ -8,7 +8,6 @@
     SELECT * FROM ISSUE
         WHERE PROJECT_ID = #{id}
         AND ASSIGNED = #{sessionId}
-
 </select>
 
 </mapper>

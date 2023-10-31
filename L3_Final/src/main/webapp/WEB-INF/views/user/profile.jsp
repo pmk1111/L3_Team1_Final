@@ -80,9 +80,9 @@
                             <div class="col-md-12">
 
                                 <form id="formAccountSettings" method="POST" action="../user/update-process" enctype="multipart/form-data">
-
                                     <div class="card mb-4">
                                         <h5 class="card-header">프로필</h5>
+
                                         <div class="card-body profile-img" style="height: 600px;">
                                             <div class="d-flex align-items-start align-items-sm-center gap-4">
 
@@ -161,6 +161,9 @@
 
                                                             <div class="mt-2">
                                                                 <button type="submit" class="btn btn-primary me-2" id="updateProfile">저장</button>
+                                                                
+                                                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                                 
                                                                 <button type="reset" class="btn btn-outline-secondary" onclick="history.back();">취소</button>
                                                             </div>
                                                         </div>
@@ -204,7 +207,7 @@
 	                                                            <label class="form-check-label" for="accountActivation">동의합니다.</label>
                                                             </div>
                                                             
-                                                            <button type="button" class="btn btn-danger deactivate-account" id="deleteUser">탈퇴</button>
+                                                            <button type="button" class="btn btn-danger deactivate-account" id="deleteUser" herf="../user/delete">탈퇴</button>
                                                         </div>
 
                                                     </div>

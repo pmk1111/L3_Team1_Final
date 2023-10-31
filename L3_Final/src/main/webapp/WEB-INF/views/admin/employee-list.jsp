@@ -189,7 +189,7 @@
                                                 <br>
                                                 <!-- 검색 -->
                                                 <div id="search">
-                                                    <form autocomplete="off">
+                                                    <form>
                                                    
                                                         <select id="filterSelect" name="search_field" style="border: 1px solid #d9dee3;">
                                                             <option>이름</option>
@@ -362,9 +362,7 @@
             <!-- / Layout wrapper -->
         </div>
     </div>
-    	
-    <jsp:include page="employee-info.jsp"/>
-   
+    	<jsp:include page="employee-info.jsp"/>
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="../resources/mainboard/assets/vendor/libs/jquery/jquery.js"></script>
@@ -388,18 +386,6 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     <script>
-  
-    	  $('.nav-link').on('click', function() {
-    	    if($(this).attr('href') === '#userwait') {
-    	      $('.search-bar').hide();
-    	      $('#filterSelect').hide();
-    	    } else {
-    	      $('.search-bar').show();
-    	      $('#filterSelect').show();
-    	    }
-    	  });
-    
-    
         //검색
         function searchTable() {
             var filterText = document.getElementById("searchInput").value
@@ -414,7 +400,7 @@
                 for (var i = 0; i < cells.length; i++) {
                     var cellText = cells[i].textContent.toUpperCase();
 
-                    if ((filterType === "이름" && i === 2 ) ||
+                    if ((filterType === "이름" && i === 2) ||
                         (filterType === "이메일" && i === 5) ||
                         (filterType === "부서" && i === 3) ||
                         (filterType === "직책" && i === 4)) {
@@ -440,8 +426,7 @@
     
 
         //직원정보 상세조회
-        $(function() {
-	$("body").on("click",".empDetail", function() {
+        $('.empDetail').click(function(){
     	   var empId = $(this).data("emp-id");
       console.log(empId);
     	    $.ajax({
@@ -469,416 +454,415 @@
     	          console.error("Error: " + error);
     	        }
     	    }); //ajax end
-    	  });  // 
-        }); 
+    	    });  //  
         	
-    			/*정상탭 */
-    	    $('.employee-tab').click(function(){
-                let token = $("meta[name='_csrf']").attr("content");
-                let header = $("meta[name='_csrf_header']").attr("content");
-                
-                var tbody = $('.employee-body');
-                
-                if(tbody.children().length == 0){ // tbody 내부의 자식 요소 개수 확인
-                    tbody.append('<tr><td colspan="9" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>'); // 만약 자식 요소가 없다면 메시지 출력
-                }
-                
-               
-                
-                $.ajax({
-                    url: "../admin/employee-list",
-                    type: "GET",
-                    data: {
-                        
-                    },
-                    success: function(emp) {
-                        var empList = '';
-                        
-                        if (emp.length == 0) { // 데이터의 길이를 확인하여 0일 경우 메시지 출력
-                        	$('.employee-body').empty(); // 기존에 표시되던 내용 제거
-                            $('.employee-body').append('<tr><td colspan="9" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
-                            return; // 추가적인 처리를 중단하고 함수 종료
-                        }
-                        
-                        console.log(emp);
-                        for (var i = 0; i < emp.length; i++) {                    
-                        	empList += '<tr>';
-                        	empList += '<td>';
-                            var empPic = emp[i].pic;
-                            if (empPic === null) {
-                            	empList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
-                            } else {
-                            	empList += '<img src="../upload' + emp[i].pic + '" alt="프로필 사진" width="25" height="25">';
-                            }
-                            
-                        
-                        	empList += '</td>';
-                        	empList += '<td>' + emp[i].id + '</td>';
-			empList += '<td id="empDetail">';
-                    	empList += '<button type="button" class="empDetail" data-emp-id="' + emp[i].id + '" data-toggle="modal" data-target="#myModal">';
-                    	empList += emp[i].name;
-                    	empList += '</button>';
-                    	empList += '</td>';
-                       
-                        	// 각 필드에 대해 null 체크 후 값 할당
-                        	 if(emp[i].department ==null ||emp[i].position == null || emp[i].phone == null){
-                        		 emp[i].department = '';
-                        		 emp[i].position  = '';
-                        		 emp[i].phone = '';
-                 		   }
-                        	empList += '<td>' + emp[i].department + '</td>';
-                        	empList += '<td>' + emp[i].position + '</td>';
-                        	empList += '<td>' + emp[i].email + '</td>';
-                        	empList += '<td>' + emp[i].phone + '</td>';
-                        	empList += '<td>';
-                        	empList += '<p>정상</p>';
-                        	empList += '<button class="user-stop" data-employeeId="'+ emp[i].id + '">[이용중지]</button>';
-                        	empList += '</td>';
-                        	var color = "blue";
-                        	var adminAuth = "[등록]";
-
-                        	if (emp[i].auth == 'Y') {
-                        	    color = "red";
-                        	    adminAuth = "[삭제]";
-                        	}
-                        	empList += '<td><span class="employee-auth-value">' + emp[i].auth + '</span>';
-                        	empList += '<button class="update-auth '+color+'" data-employeeId="' + emp[i].id +'"> ' + adminAuth + '</button></td>';
-                        	empList += '</td>';
-                        	empList += '</tr>';
-                        }
-                        
-                        $('.employee-body').html(empList);
-                        
-                        $('.user-stop').click(function() {
-                            let token = $("meta[name='_csrf']").attr("content");
-                            let header = $("meta[name='_csrf_header']").attr("content");
-
-                            var empId = $(this).data('employeeid');
-                            
-                            console.log(empId);
-
-                            var $this = $(this);
-
-                            $.ajax({
-                                url: "../admin/emp-stop",
-                                type: "POST",
-                                data: {
-                                	empId: empId,
-                                	
-                                },
-                                beforeSend: function(xhr) {
-                                    xhr.setRequestHeader(header, token);
-                                },
-                                success: function(result) {
-
-                                    $this.closest('tr').remove();
-    								
-                                    var countEmp = result.countEmp;
-                                    $('#count-emp').text(countEmp);
-                                    
-                                    var countStop = result.countStop;
-                                    $('#count-stop').text(countStop);
-                                    
-                                    if ($('.employee-body').children().length === 0) {
-                                        $('.employee-body').append('<tr><td colspan="9" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
-                                    }
-                                    
-                                   
-
-                                }
-                                /* success */
-                            });
-                            /* Ajax */
-                        });
-                        /* click */                    
-                    	
-                        $('.update-auth').click(function() {
-                            let token = $("meta[name='_csrf']").attr("content");
-                            let header = $("meta[name='_csrf_header']").attr("content");
-
-                            var empId = $(this).data('employeeid');
-                            
-                            console.log(empId);
-
-                            var $this = $(this);
-
-                            $.ajax({
-                                url: "../admin/update-auth",
-                                type: "POST",
-                                data: {
-                                	'empId': empId,
-                                },
-                                beforeSend: function(xhr) {
-                                    xhr.setRequestHeader(header, token);
-                                },
-                                success: function(result) {
-
-                                    alert("업데이트에 성공하였습니다.");
-                                    
-                                    if ($this.text().trim() === "[등록]") {
-                                        $this.removeClass('blue').addClass('red');
-                                        $this.text("[삭제]");
-                                        $this.siblings('.employee-auth-value').text('Y');
-                                    } else {
-                                        $this.removeClass('red').addClass('blue');
-                                        $this.text("[등록]");
-                                        $this.siblings('.employee-auth-value').text('N');
-                                    }
-                                }
-                                /* success */
-                            });
-                            /* Ajax */
-                        });
-                        /* click */      
-                        
-                    },
-                    error: function() {
-                        alert("업데이트에 실패했습니다.");
-                    }
-                });            
-                
-            })
+    	/* 모달 */
+    /* 	function empDetail(){
+    		$('.empDetail').load("../admin/employee-info");
+    	} */
+    	
+        /* 정상 탭 */
+        $('.employee-tab').click(function(){
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
+            
+            var tbody = $('.employee-body');
+            
+            if(tbody.children().length == 0){ // tbody 내부의 자식 요소 개수 확인
+                tbody.append('<tr><td colspan="9" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>'); // 만약 자식 요소가 없다면 메시지 출력
+            }
+            
            
             
-            /* 가입대기 탭 */
-            $('.wait-tab').click(function() {
-            	  
-                $.ajax({
-                    url: "../admin/wait-reg",
-                    type: "GET",
-                    data: {
-                       
-                    },
-                    success: function(user) {
-                        var waitList = '';
-                        
-                  
-                        
-                        for (var i = 0; i < user.length; i++) {
-                            console.log(user)
-                        	waitList += '<tr>';
-                            waitList += '<td>';
-    			
-                            var userPic = user[i].pic;
-                            if (userPic === null) {
-                                waitList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
-                            } else {
-                                waitList += '<img src="../upload' + user[i].pic + '" alt="프로필 사진" width="25" height="25">';
-                            }
-
-                            waitList += '</td>';
-                            waitList += '<td>' + user[i].name + '</td>';
-                            waitList += '<td>' + user[i].email + '</td>';
-                            waitList += '<td>' + user[i].created_at + '</td>';
-                            waitList += '<td>';
-                            waitList += '<button class="approveUser" data-userId="' + user[i].id + '">[승인]</button>';
-                            waitList += '<button class="rejectUser" data-userId="' + user[i].id + '">[거절]</button>';
-                            waitList += '</tr>'
-                            console.log(user[i].createdAt);
-                        }
-
-                        $('.wait-user').html(waitList);
-
-                        // 만약 자식 요소가 없다면 메시지 출력
-                        if ($('.wait-user').children().length === 0) {
-                            $('.wait-user').append('<tr><td colspan="5" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
-                        }
-
-                        $('.approveUser').click(function() {
-                            let token = $("meta[name='_csrf']").attr("content");
-                            let header = $("meta[name='_csrf_header']").attr("content");
-
-                            var userId = $(this).attr('data-userId');
-                            console.log(userId);
-
-                            var $this = $(this);
-
-                            $.ajax({
-                                url: "../admin/approve",
-                                type: "POST",
-                                data: {
-                                    userId: userId,
-                                   
-                                },
-                                beforeSend: function(xhr) {
-                                    xhr.setRequestHeader(header, token);
-                                },
-                                success: function(result) {
-
-                                    $this.closest('tr').remove();
-    								
-                                    var countUser = result.countUser;
-                                    $('#count-user').text(countUser);
-
-                                    var countEmp = result.countEmp;
-                                    $('#count-emp').text(countEmp);
-                                    
-                                    if ($('.wait-user').children().length === 0) {
-                                        $('.wait-user').append('<tr><td colspan="5" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
-                                    }
-
-                                }
-                                /* success */
-                            });
-                            /* Ajax */
-                        });
-                        /* click */
-                        
-                        $('.rejectUser').click(function() {
-                            let token = $("meta[name='_csrf']").attr("content");
-                            let header = $("meta[name='_csrf_header']").attr("content");
-
-                            var userId = $(this).attr('data-userId');
-                            console.log(userId);
-
-                            var $this = $(this);
-
-                            $.ajax({
-                                url: "../admin/reject",
-                                type: "POST",
-                                data: {
-                                    userId: userId,
-                                  
-                                },
-                                beforeSend: function(xhr) {
-                                    xhr.setRequestHeader(header, token);
-                                },
-                                success: function(result) {
-
-                                    $this.closest('tr').remove();
-    								
-                                    var countUser = result.countUser;
-                                    $('#count-user').text(countUser);
-                                    
-                                    if ($('.wait-user').children().length === 0) {
-                                        $('.wait-user').append('<tr><td colspan="5" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
-                                    }
-                                    
-                                    alert("업데이트에 성공하였습니다.");
-
-                                }
-                                /* success */
-                            });
-                            /* Ajax */
-                        });
-                        /* click */                    
-                    },
-
-                    error: function() {
-                        alert("업데이트에 실패했습니다.");
+            $.ajax({
+                url: "../admin/employee-list",
+                type: "GET",
+                data: {
+                    
+                },
+                success: function(emp) {
+                    var empList = '';
+                    
+                    if (emp.length == 0) { // 데이터의 길이를 확인하여 0일 경우 메시지 출력
+                    	$('.employee-body').empty(); // 기존에 표시되던 내용 제거
+                        $('.employee-body').append('<tr><td colspan="9" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
+                        return; // 추가적인 처리를 중단하고 함수 종료
                     }
-                });
-            });
+                    
+                    console.log(emp);
+                    for (var i = 0; i < emp.length; i++) {                    
+                    	empList += '<tr>';
+                    	empList += '<td>';
+                        var empPic = emp[i].pic;
+                        if (empPic === null) {
+                        	empList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
+                        } else {
+                        	empList += '<img src="../upload' + emp[i].pic + '" alt="프로필 사진" width="25" height="25">';
+                        }
+                        
+                    
+                    	empList += '</td>';
+                    	empList += '<td>' + emp[i].id + '</td>';
+                    	empList += '<td>' + emp[i].name + '</td>';
+                    	// 각 필드에 대해 null 체크 후 값 할당
+                    	 if(emp[i].department ==null ||emp[i].position == null || emp[i].phone == null){
+                    		 emp[i].department = '';
+                    		 emp[i].position  = '';
+                    		 emp[i].phone = '';
+             		   }
+                    	empList += '<td>' + emp[i].department + '</td>';
+                    	empList += '<td>' + emp[i].position + '</td>';
+                    	empList += '<td>' + emp[i].email + '</td>';
+                    	empList += '<td>' + emp[i].phone + '</td>';
+                    	empList += '<td>';
+                    	empList += '<p>정상</p>';
+                    	empList += '<button class="user-stop" data-employeeId="'+ emp[i].id + '">[이용중지]</button>';
+                    	empList += '</td>';
+                    	var color = "blue";
+                    	var adminAuth = "[등록]";
 
-            /* 중지 */
-            $('.stop-tab').click(function() {
-            	
-                let token = $("meta[name='_csrf']").attr("content");
-                let header = $("meta[name='_csrf_header']").attr("content");
+                    	if (emp[i].auth == 'Y') {
+                    	    color = "red";
+                    	    adminAuth = "[삭제]";
+                    	}
+                    	empList += '<td><span class="employee-auth-value">' + emp[i].auth + '</span>';
+                    	empList += '<button class="update-auth '+color+'" data-employeeId="' + emp[i].id +'"> ' + adminAuth + '</button></td>';
+                    	empList += '</td>';
+                    	empList += '</tr>';
+                    }
+                    
+                    $('.employee-body').html(empList);
+                    
+                    $('.user-stop').click(function() {
+                        let token = $("meta[name='_csrf']").attr("content");
+                        let header = $("meta[name='_csrf_header']").attr("content");
 
-                var tbody = $('.stop-employee');
+                        var empId = $(this).data('employeeid');
+                        
+                        console.log(empId);
 
-                if (tbody.children().length == 0) { // tbody 내부의 자식 요소 개수 확인
-                    tbody.append('<tr><td colspan="8" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>'); // 만약 자식 요소가 없다면 메시지 출력
-                }
+                        var $this = $(this);
 
-             
+                        $.ajax({
+                            url: "../admin/emp-stop",
+                            type: "POST",
+                            data: {
+                            	empId: empId,
+                            	
+                            },
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader(header, token);
+                            },
+                            success: function(result) {
 
-                $.ajax({
-                    url: "../admin/stop-list",
-                    type: "GET",
-                    data: {
-                      
-                    },
-                    success: function(stopEmp) {
-                        var stopList = '';
+                                $this.closest('tr').remove();
+								
+                                var countEmp = result.countEmp;
+                                $('#count-emp').text(countEmp);
+                                
+                                var countStop = result.countStop;
+                                $('#count-stop').text(countStop);
+                                
+                                if ($('.employee-body').children().length === 0) {
+                                    $('.employee-body').append('<tr><td colspan="9" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
+                                }
+                                
+                               
 
-                        console.log(stopEmp);
-
-                        for (var i = 0; i < stopEmp.length; i++) {
-                            stopList += '<tr>';
-                            stopList += '<td>';
-                            var empPic = stopEmp[i].pic;
-                            if (empPic === null) {
-                                stopList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
-                            } else {
-                                stopList += '<img src="../upload' + stopEmp[i].pic + '" alt="프로필 사진" width="25" height="25">';
                             }
+                            /* success */
+                        });
+                        /* Ajax */
+                    });
+                    /* click */                    
+                	
+                    $('.update-auth').click(function() {
+                        let token = $("meta[name='_csrf']").attr("content");
+                        let header = $("meta[name='_csrf_header']").attr("content");
 
-                            // 각 필드에 대해 null 체크 후 값 할당
-                            var department = (stopEmp[i].department !== null) ? stopEmp[i].department : '';
-                            var position = (stopEmp[i].position !== null) ? stopEmp[i].position : '';
-                            var phone = (stopEmp[i].phone !== null) ? stopEmp[i].phone : '';
+                        var empId = $(this).data('employeeid');
+                        
+                        console.log(empId);
 
-                            stopList += '</td>';
-                            stopList += '<td>' + stopEmp[i].id + '</td>';
-                            stopList += '<td>' + stopEmp[i].name + '</td>';
-                            stopList += '<td>' + department + '</td>';
-                            stopList += '<td>' + position + '</td>';
-                            stopList += '<td>' + stopEmp[i].email + '</td>';
-                            stopList += '<td>' + phone + '</div>';
-                            stopList += '<td>';
-                            stopList += '<p>이용중지</p>';
-                            stopList += '<button class="user-stop" data-employeeId="' + stopEmp[i].id + '">[ 정상 ]</button>';
-                            stopList += '</td>';
-                            stopList += '</tr>';
+                        var $this = $(this);
+
+                        $.ajax({
+                            url: "../admin/update-auth",
+                            type: "POST",
+                            data: {
+                            	'empId': empId,
+                            },
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader(header, token);
+                            },
+                            success: function(result) {
+
+                                alert("업데이트에 성공하였습니다.");
+                                
+                                if ($this.text().trim() === "[등록]") {
+                                    $this.removeClass('blue').addClass('red');
+                                    $this.text("[삭제]");
+                                    $this.siblings('.employee-auth-value').text('Y');
+                                } else {
+                                    $this.removeClass('red').addClass('blue');
+                                    $this.text("[등록]");
+                                    $this.siblings('.employee-auth-value').text('N');
+                                }
+                            }
+                            /* success */
+                        });
+                        /* Ajax */
+                    });
+                    /* click */      
+                    
+                },
+                error: function() {
+                    alert("업데이트에 실패했습니다.");
+                }
+            });            
+            
+        })
+       
+        
+        /* 가입대기 탭 */
+        $('.wait-tab').click(function() {
+        	  
+            $.ajax({
+                url: "../admin/wait-reg",
+                type: "GET",
+                data: {
+                   
+                },
+                success: function(user) {
+                    var waitList = '';
+                    
+              
+                    
+                    for (var i = 0; i < user.length; i++) {
+                        console.log(user)
+                    	waitList += '<tr>';
+                        waitList += '<td>';
+			
+                        var userPic = user[i].pic;
+                        if (userPic === null) {
+                            waitList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
+                        } else {
+                            waitList += '<img src="../upload' + user[i].pic + '" alt="프로필 사진" width="25" height="25">';
                         }
 
-                        $('.stop-employee').html(stopList);
-                        
-                        $('.user-stop').click(function() {
-                            let token = $("meta[name='_csrf']").attr("content");
-                            let header = $("meta[name='_csrf_header']").attr("content");
+                        waitList += '</td>';
+                        waitList += '<td>' + user[i].name + '</td>';
+                        waitList += '<td>' + user[i].email + '</td>';
+                        waitList += '<td>' + user[i].created_at + '</td>';
+                        waitList += '<td>';
+                        waitList += '<button class="approveUser" data-userId="' + user[i].id + '">[승인]</button>';
+                        waitList += '<button class="rejectUser" data-userId="' + user[i].id + '">[거절]</button>';
+                        waitList += '</tr>'
+                        console.log(user[i].createdAt);
+                    }
 
-                            var empId = $(this).data('employeeid');
-                            
-                            console.log(empId);
+                    $('.wait-user').html(waitList);
 
-                            var $this = $(this);
+                    // 만약 자식 요소가 없다면 메시지 출력
+                    if ($('.wait-user').children().length === 0) {
+                        $('.wait-user').append('<tr><td colspan="5" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
+                    }
 
-                            $.ajax({
-                                url: "../admin/back-emp",
-                                type: "POST",
-                                data: {
-                                	empId: empId,
-                                	
-                                },
-                                beforeSend: function(xhr) {
-                                    xhr.setRequestHeader(header, token);
-                                },
-                                success: function(result) {
+                    $('.approveUser').click(function() {
+                        let token = $("meta[name='_csrf']").attr("content");
+                        let header = $("meta[name='_csrf_header']").attr("content");
 
-                                    $this.closest('tr').remove();
-    								
-                                    var countEmp = result.countEmp;
-                                    $('#count-emp').text(countEmp);
-                                    
-                                    var countStop = result.countStop;
-                                    $('#count-stop').text(countStop);
-                                    
-                                    if ($('.employee-body').children().length === 0) {
-                                        $('.employee-body').append('<tr><td colspan="9" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
-                                    }
-                                    
-                                    alert("업데이트에 성공하였습니다.");
+                        var userId = $(this).attr('data-userId');
+                        console.log(userId);
 
+                        var $this = $(this);
+
+                        $.ajax({
+                            url: "../admin/approve",
+                            type: "POST",
+                            data: {
+                                userId: userId,
+                               
+                            },
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader(header, token);
+                            },
+                            success: function(result) {
+
+                                $this.closest('tr').remove();
+								
+                                var countUser = result.countUser;
+                                $('#count-user').text(countUser);
+
+                                var countEmp = result.countEmp;
+                                $('#count-emp').text(countEmp);
+                                
+                                if ($('.wait-user').children().length === 0) {
+                                    $('.wait-user').append('<tr><td colspan="5" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
                                 }
-                                /* success */
-                            });
-                            /* Ajax */
+
+                            }
+                            /* success */
                         });
-                        /* click */                    
+                        /* Ajax */
+                    });
+                    /* click */
+                    
+                    $('.rejectUser').click(function() {
+                        let token = $("meta[name='_csrf']").attr("content");
+                        let header = $("meta[name='_csrf_header']").attr("content");
 
-                    } // success function 종료 괄호 추가 필요
+                        var userId = $(this).attr('data-userId');
+                        console.log(userId);
 
-                }); // ajax call 종료 괄호와 세미콜론 추가 필요
+                        var $this = $(this);
 
-            }); // click event handler 종료 괄호와 세미콜론
-            
-        </script>
-     
-     
-       
-    </body>
+                        $.ajax({
+                            url: "../admin/reject",
+                            type: "POST",
+                            data: {
+                                userId: userId,
+                              
+                            },
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader(header, token);
+                            },
+                            success: function(result) {
 
-    </html>
+                                $this.closest('tr').remove();
+								
+                                var countUser = result.countUser;
+                                $('#count-user').text(countUser);
+                                
+                                if ($('.wait-user').children().length === 0) {
+                                    $('.wait-user').append('<tr><td colspan="5" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
+                                }
+                                
+                                alert("업데이트에 성공하였습니다.");
+
+                            }
+                            /* success */
+                        });
+                        /* Ajax */
+                    });
+                    /* click */                    
+                },
+
+                error: function() {
+                    alert("업데이트에 실패했습니다.");
+                }
+            });
+        });
+
+        /* 중지 */
+        $('.stop-tab').click(function() {
+        	
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
+
+            var tbody = $('.stop-employee');
+
+            if (tbody.children().length == 0) { // tbody 내부의 자식 요소 개수 확인
+                tbody.append('<tr><td colspan="8" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>'); // 만약 자식 요소가 없다면 메시지 출력
+            }
+
+         
+
+            $.ajax({
+                url: "../admin/stop-list",
+                type: "GET",
+                data: {
+                  
+                },
+                success: function(stopEmp) {
+                    var stopList = '';
+
+                    console.log(stopEmp);
+
+                    for (var i = 0; i < stopEmp.length; i++) {
+                        stopList += '<tr>';
+                        stopList += '<td>';
+                        var empPic = stopEmp[i].pic;
+                        if (empPic === null) {
+                            stopList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
+                        } else {
+                            stopList += '<img src="../upload' + stopEmp[i].pic + '" alt="프로필 사진" width="25" height="25">';
+                        }
+
+                        // 각 필드에 대해 null 체크 후 값 할당
+                        var department = (stopEmp[i].department !== null) ? stopEmp[i].department : '';
+                        var position = (stopEmp[i].position !== null) ? stopEmp[i].position : '';
+                        var phone = (stopEmp[i].phone !== null) ? stopEmp.phone : '';
+
+                        stopList += '</td>';
+                        stopList += '<td>' + stopEmp[i].id + '</td>';
+                        stopList += '<td>' + stopEmp[i].name + '</td>';
+                        stopList += '<td>' + department + '</td>';
+                        stopList += '<td>' + position + '</td>';
+                        stopList += '<td>' + stopEmp[i].email + '</td>';
+                        stopList += '<td>' + phone + '</div>';
+                        stopList += '<td>';
+                        stopList += '<p>이용중지</p>';
+                        stopList += '<button class="user-stop" data-employeeId="' + stopEmp[i].id + '">[ 정상 ]</button>';
+                        stopList += '</td>';
+                        stopList += '</tr>';
+                    }
+
+                    $('.stop-employee').html(stopList);
+                    
+                    $('.user-stop').click(function() {
+                        let token = $("meta[name='_csrf']").attr("content");
+                        let header = $("meta[name='_csrf_header']").attr("content");
+
+                        var empId = $(this).data('employeeid');
+                        
+                        console.log(empId);
+
+                        var $this = $(this);
+
+                        $.ajax({
+                            url: "../admin/back-emp",
+                            type: "POST",
+                            data: {
+                            	empId: empId,
+                            	
+                            },
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader(header, token);
+                            },
+                            success: function(result) {
+
+                                $this.closest('tr').remove();
+								
+                                var countEmp = result.countEmp;
+                                $('#count-emp').text(countEmp);
+                                
+                                var countStop = result.countStop;
+                                $('#count-stop').text(countStop);
+                                
+                                if ($('.employee-body').children().length === 0) {
+                                    $('.employee-body').append('<tr><td colspan="9" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
+                                }
+                                
+                                alert("업데이트에 성공하였습니다.");
+
+                            }
+                            /* success */
+                        });
+                        /* Ajax */
+                    });
+                    /* click */                    
+
+                } // success function 종료 괄호 추가 필요
+
+            }); // ajax call 종료 괄호와 세미콜론 추가 필요
+
+        }); // click event handler 종료 괄호와 세미콜론
+        
+    </script>
+ 
+ 
+   
+</body>
+
+</html>

@@ -50,7 +50,7 @@ body {
 }
 
 .bookmark-area{
-   width:100%;
+   width:900px;
 }
 
 .search-title{
@@ -336,9 +336,14 @@ $(function() {
                                              </div>
                                                <div class="bookmark-list-date">    
                                                 <div class="recent-modify">
-                                                     
-                                            <c:set var="timeDiff" value="${bookmark.currentTime}" />
-                                                 
+                                                      <p class="bookmark-time">${bookmark.regDate}</p>
+                                             
+                                             <%-- <c:choose>
+                                              <c:when test="${empty bookmark.regDate}">
+                                                     <span>날짜 없음</span>
+                                                 </c:when>
+                                                 <c:otherwise>
+                                                 <c:set var="timeDiff" value="${bookmark.currentTime}" />
                                              <c:if test="${timeDiff lt 1}">
                                                 <span>방금 전</span>
                                              </c:if>
@@ -362,7 +367,8 @@ $(function() {
                                                 <span>${Integer.valueOf(timeDiff div (7*24*60))}
                                                    주</span>
                                              </c:if>
-                                             
+                                             </c:otherwise>
+                                            </c:choose> --%>
                                           </div>
                                          </div>   
                                        </li>

@@ -3,31 +3,15 @@ $(document).ready(function () {
 
     $(".issue-filter").click(function () {
         if ($(".filter-dropdown").css("display") === "none") {
-            $(".filter-dropdown").fadeIn(200);
+            $(".filter-dropdown").css('display', 'block').fadeIn(300);
         } else {
-            $(".filter-dropdown").fadeOut(200);
+            $(".filter-dropdown").css('display', 'none').fadeOut(300);
         }
     });
 
     $(".custom-selected").click(function () {
-        // 클릭한 .custom-selected 요소에 대한 jQuery 객체
-        var $clickedElement = $(this);
-
-        // 다른 .custom-selected 요소를 선택
-        var $otherElements = $(".custom-selected").not($clickedElement);
-
-        // 클릭한 요소가 활성화되어 있으면
-        if ($clickedElement.siblings(".custom-options").css("display") === "block") {
-            $clickedElement.siblings(".custom-options").fadeToggle(300);
-        } else {
-            // 클릭한 요소가 활성화되어 있지 않으면
-            $clickedElement.siblings(".custom-options").fadeIn(300);
-
-            // 다른 요소들은 숨김
-            $otherElements.siblings(".custom-options").fadeOut(300);
-        }
+        $(this).siblings(".custom-options").fadeToggle(300);
     });
-
 
     $(".custom-option").click(function () {
         var value = $(this).attr("data-value");
@@ -70,8 +54,6 @@ $(document).ready(function () {
         issueStatus = $("#issueStatus").text();
         issuePriority = $("#issuePriority").text();
 
-        $('.no-search-list').remove();
-
         console.log(issueStatus);
         console.log(issuePriority);
 
@@ -95,19 +77,17 @@ function getFilteredData(data) {
         type: "GET",
         url: "getFilteredIssue",
         data: data,
-        //        beforeSend: function (xhr) {
-        //            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-        //        },
+//        beforeSend: function (xhr) {
+//            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+//        },
         success: function (data) {
-						let noSearchList = '<img src="../resources/documents/img/search-null.svg" class="no-search-list">';
-        
             $(".all-issue-list").empty();
             $('.all-issue-count').empty();
             if (data.length === 0) {
-                $(".issue-area").append(noSearchList);
+                var str = "<h1>데이터가 없습니다.</h1>"
+                $(".all-issue-list").append(str);
             } else {
                 data.forEach(function (item) {
-                		$('.no-search-list').remove();
                     var str = '<li class="list">';
                     str += '<div class="issuetype-wrap">';
 
@@ -147,9 +127,9 @@ function getSearchList() {
         url: "getSearchedIssue",
         data: $("form[name=search-form]").serialize(),
         dataType: "json",
-        //        beforeSend: function (xhr) {
-        //            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-        //        },
+//        beforeSend: function (xhr) {
+//            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+//        },
         success: function (data) {
             $('.all-issue-list').empty();
             $('.all-issue-count').empty();
@@ -178,8 +158,8 @@ function getSearchList() {
                     $('.all-issue-list').append(str);
                 });
             } else {
-                let noSearchList = '<img src="../resources/documents/img/search-null.svg" class="no-search-list">';
-                $('.all-issue-list').append(noSearchList);
+                var str = '<h1 class="no-search-list">검색 결과가 없습니다.</h1>';
+                $('.all-issue-list').append(str);
                 $('.all-issue-count').append(data.length);
             }
         },

@@ -81,6 +81,14 @@
     
     </style>
     
+    <script>
+    function copy(){
+    	var copyText = document.getElementById("url_box");
+    	copyText.select();
+    	navigator.clipboard.writeText(copyText.value);
+    	swal("복사되었습니다");	
+    }
+    </script>
   </head>
 
   <body>
@@ -115,8 +123,7 @@
                           <p class="mb-4">
                           
                           <!-- content -->
-                          <form id="formInvite" method="GET"    >
-                          <input type="hidden" name="companyUrl" value="${companyinfo.domain}">
+                          <form id="formInvite" method="POST"  action="../admin/sendMail">
                         <div class="row">
                         <div class="mb-3 col-md-12">
                             <label for="companyName" class="form-label">전용 URL</label>
@@ -268,52 +275,5 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-   
-    <script>
-    
-    function copy(){
-    	var copyText = document.getElementById("url_box");
-    	copyText.select();
-    	navigator.clipboard.writeText(copyText.value);
-    	swal("복사되었습니다");	
-    }
-    
-    
-        
-        
-        $("#inviteSubmit").click(function() {
-        	let token = $("meta[name='_csrf']").attr("content");
-            let header = $("meta[name='_csrf_header']").attr("content");
-            
-            var invite_box1 = $('input[name="invite_box1"]').map(function() {
-                return $(this).val();
-            }).get();
-            console.log(invite_box1);
-          
-
-            // Ajax 요청 보내기
-            $.ajax({
-                type: "POST",
-                url: "../admin/sendMail", // 컨트롤러 URL
-                data: {
-                    invite_box1: invite_box1
-                    
-                },
-                async: false,
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function(response) {
-                    // Ajax 요청이 성공했을 때 실행되는 코드
-                    alert("메일이 발송되었습니다.");
-                },
-                error: function(xhr, status, error) {
-                    // Ajax 요청이 실패했을 때 실행되는 코드
-                    alert("메일 발송에 실패했습니다.");
-                }
-            });
-        });
-   
-    </script>
   </body>
 </html>

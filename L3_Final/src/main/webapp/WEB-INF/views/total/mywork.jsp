@@ -8,8 +8,6 @@
 <head> 
     <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
 
-
-
     <style>
         table {
             width: 100%;
