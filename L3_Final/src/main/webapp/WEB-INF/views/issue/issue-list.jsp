@@ -235,18 +235,31 @@
 	          projectId: 1 // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
 	      },
 	      success: function (response) {
-	        if (response.length > 0) {
-	        	console.log(response)
-	        	
-	          $('.user-info').empty();
-	          $('.project-name').val(response[0].projectTitle);
-	          response.forEach(function (item) {
-	            let str = '<div class="issue-create-custom-option" data-value="' + item.userId + '">' + item.userName + '</div>';
-	            $('.user-info').append(str);
-	           }); // forEach end
-	          } else {
-	              console.log("가져온 프로젝트, 사용자 정보 없음");
-	          }
+
+	      		let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+						let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+		        if (response.length > 0) {
+		        	console.log(response)
+		        	
+		          $('.user-info').empty();
+		        	$('.selected-project-color').css('background-color', response[0].projectColor)
+		          $('.project-name').text(response[0].projectTitle);
+		          response.forEach(function (item) {
+		            let str = '';
+		            str += '<div class="issue-create-custom-option mentioned-user" data-value="' + item.userId + '">'
+		            if(item.userPic !== null){
+		            	str += '<img class="assigned-user-img" src="' + contextPath + '/upload' + item.userPic + '">'
+		            } else{
+		            	str += '<img class="assigned-user-img" src="' + contextPath + '/user/img/profile.png">'
+		            }
+		            str += '<span class="assigned-user-name">' + item.userName + '</span>';
+		            str += '<span class="assigned-user-id">#' + item.userId + '</span></div>';
+		            $('.user-info').append(str);
+		           }); // forEach end
+		          } else {
+		              console.log("가져온 프로젝트, 사용자 정보 없음");
+		          }
+
 	        },
 	        error: function (error) {
 	          console.error("Error: " + error);

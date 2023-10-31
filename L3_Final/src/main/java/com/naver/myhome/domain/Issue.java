@@ -25,6 +25,7 @@ public class Issue {
    private String create_user_name;
    private String assigned_user_name;
    private String project_name;
+   private String project_color;
    private String mentioned;
    private String creater_pic;
    

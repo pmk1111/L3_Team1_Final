@@ -104,8 +104,8 @@
 		i.*, (SELECT pic from users where id = i.create_user) As creater_pic,
 		(SELECT name FROM users WHERE id = i.create_user) AS create_user_name,
 		(SELECT NAME FROM users WHERE id = i.assigned) AS assigned_user_name,
-		(SELECT TITLE FROM project WHERE id =
-		(SELECT project_id FROM ISSUE WHERE id = #{num})) as project_name
+		(SELECT TITLE FROM project WHERE id = (SELECT project_id FROM ISSUE WHERE id = #{num})) as project_name,
+		(SELECT COLOR FROM project WHERE id = (SELECT project_id FROM ISSUE WHERE id = #{num})) as project_color
 		FROM issue i
 		WHERE i.id = #{num}
 	</select>

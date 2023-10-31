@@ -8,5 +8,6 @@ import lombok.Setter;
 public class ProjectAndUser {
     private String projectTitle;
     private String userName;
+    private String userPic;
     private int userId;
 }

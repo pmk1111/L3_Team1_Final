@@ -46,6 +46,7 @@
 
   <body>
   	<input type="hidden" name="num" value="${param.num}"  id="issue_id">
+  	<input type="hidden" name="projectId" class="project-id" value="${issuedata.project_id}">
   	<input type="hidden" class="create-user-email" value="${createrEmail}">
   	<input type="hidden" class="assigned-user-email" value="${assignerEmail}">
     <!-- Layout wrapper -->
@@ -65,6 +66,7 @@
          <!-- Content wrapper -->
         <div class="content-wrapper">
           <!-- Content -->
+          <jsp:include page="../chat/chat.jsp"></jsp:include>
 
           <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row">
@@ -76,8 +78,22 @@
                   <div class="card-body issue-card">
                     <div class="issue-header">
     				  <div class="issue-location">
-       					 프로젝트 / ${issuedata.project_name} / ${issuedata.subject}
+       					 <span>프로젝트</span> / <div class="project-color" style="background-color:${issuedata.project_color};"></div>
+       					 <span>${issuedata.project_name}</span>
+       					 /<c:choose>
+       					 		<c:when test="${issuedata.type == '버그'}">
+       					 			<img class="type-img" src="../resources/issue/img/bug.svg">
+       					 		</c:when>
+       					 		<c:when test="${issuedata.type == '에픽'}">
+       					 			<img class="type-img" src="../resources/issue/img/epic.svg">
+       					 		</c:when>
+       					 		<c:otherwise>
+       					 			<img class="type-img" v src="../resources/issue/img/task.svg">
+       					 		</c:otherwise>
+       					 </c:choose> 
+       					 <span>${issuedata.subject}</span>
     				  </div>
+    				  
     				  <div class="bookmark-area">
         				<div class="bookmark-icon">
            				    <c:choose>
@@ -144,10 +160,10 @@
                         <span>상태</span>
                         <div class="status-select">
                         	<input type="hidden" class="this-status" value="${issuedata.status}">
-                          <button type="button" class="status-btn" data-value="To Do">To Do</button>
-                          <button type="button" class="status-btn" data-value="In Progress">In Progress</button>
-                          <button type="button" class="status-btn" data-value="Resolved">Resolved</button>
-                          <button type="button" class="status-btn" data-value="Done">Done</button>
+                          <button type="button" class="status-btn" data-value="To Do" data-mocean-type="bounce">To Do</button>
+                          <button type="button" class="status-btn" data-value="In Progress" data-mocean-type="bounce">In Progress</button>
+                          <button type="button" class="status-btn" data-value="Resolved" data-mocean-type="bounce">Resolved</button>
+                          <button type="button" class="status-btn" data-value="Done" data-mocean-type="bounce">Done</button>
                         </div>
                       </div>
                        <div class="issue-assigned-area">
@@ -227,19 +243,7 @@
 													</c:otherwise>
 												</c:choose>
                       </div>
-                      
-                  <!--     <div class="subtask-wrap">
-                        <span class="subtask-text">관련이슈</span>
-                        <button type="button" class="add-subtask-btn"><img
-                            src="../resources/issue/img/plus.svg">이슈추가</button>
-                      </div>subtask-wrap end
-                      <div class="subtask">
-                        <div class="subtask-item">
-                          <div class="subtask-status">In Progress</div>
-                          <p class="subtask-title">채팅 기능 추가</p>
-                        </div>
-                      </div>  -->
-                      <!-- subtask end-->
+                     
 
                     </div> <!-- issue-info end -->
 
@@ -300,36 +304,7 @@
 </div>
 
 
-<div class="status-update-modal">
-	<div class="status-update-modal-overlay"></div>
-	<div class="status-update-modal-content">
-		<h4>상태를 변경하시겠습니까?</h4>
-		<p class=status-change-text>상태를 변경하시려면 확인을 눌러주세요</p>
-		<div class="status-update-modal-btn-wrap">
-			<button type="button" class="status-update-modal-btn">확인</button>
-			<button type="button" class="update-cancel-btn">취소</button>
-		</div>
-	</div>
-</div>
-
-<div class="status-update-modal-resolved">
-	<div class="status-update-modal-overlay"></div>
-	<div class="status-update-modal-content">
-		<h4>상태를 변경하시겠습니까?</h4>
-		<p class=status-change-text>상태를 변경하시려면 담당자 선택 후 확인을 눌러주세요</p>
-		<input type="text" class="choose-assigner">
-		<input type="hidden" class="choose-assignerrr" name="issue_assigned_name">
-		<input type="hidden" class="selected-assigner-id" name="issue_assigned_id">
-		<ul class="select-assign-dropdown">
-			<!-- 나중에 해당 프로젝트에 참여 중인 사용자를 불러온다. -->
-		</ul>
-		<div class="status-update-modal-btn-wrap">
-			<button type="button" class="status-update-modal-btn">확인</button>
-			<button type="button" class="update-cancel-btn">취소</button>
-		</div>
-	</div>
-</div>
-
+<jsp:include page="status-change-modal.jsp"></jsp:include>
 
   	<!-- js template -->
 	<jsp:include page="../template/jsTemplate.jsp"></jsp:include>
@@ -342,6 +317,7 @@
 
 <script type="text/javascript">
 const existingFileNames = [];
+const projectId = $('.project-id').val();
 $('.file-item').each(function() {
     existingFileNames.push($(this).val());
 });
@@ -383,7 +359,7 @@ function getProjectIdAndTeam() {
       type: "GET",
       url: "getProjectAndTeamInfo",
       data: {
-          projectId: 1 // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
+          projectId: projectId // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
       },
       success: function (response) {
         if (response.length > 0) {

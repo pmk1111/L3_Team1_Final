@@ -3,7 +3,10 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.ProjectAndUserMapper">
 	<select id="getProjectAndUserInfo" resultType="com.naver.myhome.domain.ProjectAndUser">
-		SELECT DISTINCT users.name as userName, users.id as userId, p.title as projectTitle
+
+		SELECT DISTINCT users.name as userName, users.pic as userPic,
+		users.id as userId, p.title as projectTitle, p.color as projectColor
+
 		FROM users
 		JOIN employee ON users.id = employee.user_id
 		JOIN team ON employee.id = team.employee_id

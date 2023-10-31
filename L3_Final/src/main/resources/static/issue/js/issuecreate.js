@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
     const issue_modal_btn = $('.create-issue');
     const issue_modal = $('.issue-modal');
@@ -73,14 +71,14 @@ $(document).ready(function () {
         const issue_assigned = $('.issue-assigned').val();
         const issue_priority = $('.issue-priority').val();
      
-      	var issue_tag = ''; 
+ //     	var issue_tag = ''; 
       	
-     const selectedOptionValue = $('#inputnotionchoice').val().trim();
+     //const selectedOptionValue = $('#inputnotionchoice').val().trim();
 
-    if (selectedOptionValue != '' && $('#notionchoice option[value="' + selectedOptionValue + '"]').length === 0) {
-        alert('항목에 있는 값만 고르세요');
-        return false;
-    }
+//    if (selectedOptionValue != '' && $('#notionchoice option[value="' + selectedOptionValue + '"]').length === 0) {
+  //      alert('항목에 있는 값만 고르세요');
+    //    return false;
+    //}
 
 
 
@@ -115,17 +113,11 @@ $(document).ready(function () {
        
         $('.hidden-issue-content').val(issue_content_html);
         
-          user_id = $("#notionchoice option").data("id");
+          user_id = $("#inputnotionchoice").data("id");
           if(user_id == undefined)
           user_id = 0;
-           
-       
-
-          
-          
-         
+                    
         $('form[name="createIssue"]').append('<input type="hidden" name="user_id" value="' + user_id + '">');
-
 
         $('form[name="createIssue"]').submit();
     });
@@ -227,23 +219,69 @@ $(document).ready(function () {
             issue_modal.fadeOut(200);
         }
     });
+    
+$(".notionchoice").focus(function(){
+		$.ajax({
+            type: "GET",
+            url: "getProjectAndTeamInfo",
+            success: function (response) {
+            		let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+								let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+            		$('.notionchoice').siblings('.issue-create-custom-options').empty();
+                if (response.length > 0) {
+                	let str = '';
+                	console.log(response)
+                	response.forEach(function(item){
+                		if(item.userPic !== null){
+											str += '<div class="issue-create-custom-option mentioned-user" value=@' + item.userName + ' data-id="' + item.userId+ '">'
+											str += '<img class="notify-user-img" src="' + contextPath + '/upload' + item.userPic + '"><span class="notify-user-name">' + item.userName + '</span>'
+										} else{
+											str += '<div class="issue-create-custom-option mentioned-user" value=@' + item.userName + ' data-id="' + item.userId+ '">'
+											str += '<img class="notify-user-img" src="' + contextPath + '/user/img/profile.png"><span class="notify-user-name">' + item.userName + '</span>'
+										}
+										str += '<span class="mentioned-user-id">#' + item.userId + '</span></div>'
+                  }); // forEach end
+                $('.notionchoice').siblings('.issue-create-custom-options').append(str);
+                $('.notionchoice').siblings('.issue-create-custom-options').fadeIn(300);
+                } else {
+                    console.log("가져온 사용자 정보 없음");
+                }
+            },
+            error: function (error) {
+                console.error("Error: " + error);
+            }
+        }); //ajax end
+
+        $('.select-assign-dropdown').fadeIn(100);
+    }); // focus end
+    
+    
+    
+$(document).on('click', '.mentioned-user', function(){
+	mentionedUserName = $(this).find('.notify-user-name').text();
+	mentionedUserId = $(this).data('id');
+	
+	$('.notionchoice').val(mentionedUserName);
+	$('#inputnotionchoice').val(mentionedUserId);
+	
+	$(this).parent('.issue-create-custom-options').fadeOut(300);
+}); //mentioned-user click end 
+    
+    
+    
  //혜원
-$("#inputnotionchoice").on("input", function() {
-    var textarea = $(this);
-    var text = textarea.val();
-
+//$("#inputnotionchoice").on("keyup", function() {
+  //  var textarea = $(this);
+  //  var text = textarea.val();
   
-    var mentionPattern = /@([\w가-힣]+)/g;
-    var matches = text.match(mentionPattern);
+  //  var mentionPattern = /@([\w가-힣]+)/g;
+  //  var matches = text.match(mentionPattern);
 
-    if (matches && matches.length > 0) {
-       
-        var mention = matches[0];
-
-        
-        sendDataToServer(mention);
-    }
-});
+  //  if (matches && matches.length > 0) {
+  //      var mention = matches[0];
+        //sendDataToServer(mention);
+  //  }
+//});
 
 
 function sendDataToServer(mention) {
@@ -267,24 +305,23 @@ function sendDataToServer(mention) {
             console.log(response);
            
             output='';
+            let str = '';
            	if (response.length > 0) {
            	$(response).each(function(index,item){
            	
            	
-           	 output += "<option value=@"+item.name + " data-id="+item.id+"></option>"
-           	 
-           	
-           	
+           	 //output += "<option value=@"+item.name + " data-id="+item.id+"></option>"
+           	 str += '<div class="issue-create-custom-option mentioned-user" value=@' + item.name + ' data-id=" ' + item.id+ '">'
            	})
-           	$("#notionchoice").html(output)
-           	console.log(output);
-           	inputdata = $("#inputnotionchoice").val()
-           	console.log(inputdata);
-          
+           	//$("#notionchoice").html(output)
+           	//console.log(output);
+           	//inputdata = $("#inputnotionchoice").val()
+           	//console.log(inputdata);
+          	//$('.mention-list').append(str);
            	
            	}
            	else{
-           	$("#notionchoice").html(output)
+           		$("#notionchoice").html(output)
               
         }},
         error: function(jqXHR, textStatus, errorThrown) {
@@ -294,6 +331,48 @@ function sendDataToServer(mention) {
     });
     
 }
+
+
+$(document).on('click', '.assigned-info', function(){
+		let assignedCustomInput = $('.issue-assigned');
+		let assignedUsrName = $(this).find('.assigned-user-name').text();
+		assignedCustomInput.val(assignedUsrName);
+		console.log('선택한 담당자 이름 = ' + assignedUsrName);
+}) // mentioned-user click end
+
+$(document).on('click', '.mentioned-user', function(){
+	$('.inputnotionchoice').val($(this).val());
+}) // mentioned-user click end
+
+
+//언급할 유저 검색
+$(document).on('keyup', '.notionchoice', function() {
+    var searchText = $(this).val().toLowerCase(); // 입력된 검색어를 소문자로 변환
+
+    // .mention-list 내의 .mentioned-user 엘리먼트를 순회하면서 필터링
+    $('.mention-list .mentioned-user').each(function() {
+        var userText = $(this).attr('value'); // .mentioned-user 엘리먼트의 value 값을 가져옴
+
+        if (userText.toLowerCase().includes(searchText)) {
+            // 검색어가 포함된 경우 해당 항목을 표시
+            $(this).show();
+        } else {
+            // 검색어가 포함되지 않은 경우 해당 항목을 숨김
+            $(this).hide();
+        }
+    });
+});
+
+
+$(document).on('click', function(event) {
+    if (!$(event.target).closest('.mention-list').length && $('.mention-list').css('display') === 'block'
+    		&& !$(event.target).hasClass('notionchoice')) {
+        // .mention-list 영역 외부를 클릭한 경우
+        $('.mention-list').fadeOut(300);
+    }
+});
+
+
 
 
 //혜원끝

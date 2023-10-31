@@ -7,30 +7,10 @@
 
 <head>
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    
+    <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
 
-    <link rel="stylesheet" href="/css/search-bar.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../resources/mainboard/assets/img/favicon/favicon.ico" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
-
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/fonts/boxicons.css" />
-
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../resources/mainboard/assets/css/demo.css" />
-
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="../resources/mainboard/assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <style>
         table {
@@ -62,6 +42,10 @@
         table th {
             font-weight: 600;
             background-color: #eeecfd !important;
+            
+        }
+        th,td{
+        width:50%;
         }
 
         .fa-arrow-up {
@@ -195,12 +179,17 @@
         /* 추가된 스타일: 상위 행 클릭 가능한 커서 스타일 */
         .main-row {
             cursor: pointer;
+            
         }
 
         h6 {
             margin: auto;
             padding: auto;
         }
+      
+       
+
+
     </style>
     <script>
         $(function() {
@@ -239,46 +228,43 @@
                                                     </span> <input type="text" name="search_word" id="searchInput" class="form-control bg-white border-0 px-1" placeholder="검색어를 입력하세요"> <span class="input-group-text border-0 py-1 pe-2">
                                                         <button type="submit" class="btn btn-primary text-uppercase-bold-sm" id="searchButton">검색</button>
                                                     </span>
-
+                                                    
+                                                   
 
 <c:if test="${!empty myTotalWorks}">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>프로젝트 이름</th>
-                <th>시작일</th>
-                <th>종료일</th>
-                <th>상태</th>
-            </tr>
-        </thead>
+    <table class="table" id="tableClass">
         <tbody>
-            <c:forEach items="${myTotalWorks}" var="project">
+            <c:forEach items="${myTotalWorks}" var="project" varStatus="projectStatus">
 
                 <!-- 프로젝트 -->
                 <tr class="main-row">
-                    <td class="main-cell">${project.TITLE}</td>
-                    <td>2013-01-01</td>
-                    <td>2013-01-01</td>
-                    <td>${project.STATUS}</td>
+                    <c:if test="${projectStatus.first}">
+                        <th class="main-row-th" colspan="2">프로젝트 정보</th>
+                    </c:if>
+                </tr>
+                <tr class="main-row">
+                    <td class="main-cell" colspan="2">${project.TITLE}</td>
                 </tr>
                 
-                <c:forEach items="${project.issues}" var="issue">
-
+                <c:forEach items="${project.issues}" var="issue" varStatus="issueStatus">
                     <!-- 이슈 -->
                     <tr class="sub-row" style="display: none;">
-                        <td class="sub-cell">${issue.SUBJECT}</td>
-                        <td>2013-01-01</td>
-                        <td>2013-01-01</td>
-                        <td>${issue.STATUS}</td>
-
+                        <c:if test="${issueStatus.first}">
+                            <th class="sub-row-th" colspan="2">이슈 정보</th>
+                        </c:if>
                     </tr>
-
+                    <tr class="sub-row" style="display: none;">
+                        <td class="sub-cell">${issue.SUBJECT}</td>
+                        <td class="sub-cell">${issue.STATUS}</td>
+                    </tr>
                 </c:forEach>
 
-            </c:forEach>  
+            </c:forEach>
        </tbody>
     </table>
 </c:if>
+
+
 
                                                 </div>
                                             </form>
@@ -333,24 +319,9 @@
     <!-- / Layout page -->
 
 
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
 
-    <!-- / Layout wrapper -->
-
-    <!-- Core JS -->
-    <script src="../resources/mainboard/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../resources/mainboard/assets/vendor/libs/popper/popper.js"></script>
-    <script src="../resources/mainboard/assets/vendor/js/bootstrap.js"></script>
-    <script src="../resources/mainboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="../resources/mainboard/assets/vendor/js/menu.js"></script>
-    <!-- Vendors JS -->
-    <script src="../resources/mainboard/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-    <!-- Main JS -->
-    <script src="../resources/mainboard/assets/js/main.js"></script>
-    <!-- Page JS -->
-    <script src="../resources/mainboard/assets/js/dashboards-analytics.js"></script>
-
+	<jsp:include page="../template/jsTemplate.jsp"></jsp:include>
+	<script src="../resources/mydashboard/js/mydashboard.js"></script>
     <script>
         document.getElementById("searchButton").addEventListener("click", function() {
             var searchInput = document.getElementById("searchInput");
@@ -379,9 +350,11 @@ document.addEventListener("click", function(e) {
             if ($(item).css('display') == "none") {
                 $(item).css('display', 'table-row');
                 $(mainRow).addClass('open');
+                $(mainRow).find('thead').show(); // 이 부분 추가
             } else {
                 $(item).css('display', 'none');
                 $(mainRow).removeClass('open');
+                $(mainRow).find('thead').hide(); // 이 부분 추가
             }
         });
     }
