@@ -56,6 +56,11 @@
 <script>
 	$(document).ready(function() {
 	    	$('.card').addClass('card-animate');
+	    	
+	    	$(".create-close").click(function(event) {
+	    	    event.preventDefault();
+	    	    history.back();
+	    	});	    	
 	});
 </script>
 </body>
