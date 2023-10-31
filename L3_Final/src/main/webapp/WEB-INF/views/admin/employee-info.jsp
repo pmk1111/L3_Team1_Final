@@ -6,13 +6,7 @@
       
       
 
-<script>
-    $(document).ready(function() {
-        $("#cancelButton").click(function() {
-            window.history.back(); // 브라우저의 이전 이력으로 돌아감
-        });
-    });
-</script>
+
 </head>
 
 <body>
@@ -80,7 +74,7 @@
                 
 					<div class="btnArea">
 					   <button type="submit" class="btn btn-secondary" id="saveButton">저장</button>
-					<button type="button" class="btn btn-secondary"id="cancelButton">취소</button>
+					<button type="button" class="btn btn-secondary"id="cancelButton" data-dismiss="modal">취소</button>
 					</div> 
 				</form>
             </div>

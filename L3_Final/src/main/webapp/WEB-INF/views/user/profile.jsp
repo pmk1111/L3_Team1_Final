@@ -43,12 +43,11 @@
         #fileName {
             font-size: 13px;
         }
-        
-        .pb-JJ{
-        	padding-bottom:0px !important;
-        	padding-top:25px !important;
+
+        .pb-JJ {
+            padding-bottom: 0px !important;
+            padding-top: 25px !important;
         }
-        
     </style>
     <script>
         const result = "${result}";
@@ -81,7 +80,7 @@
                     <!-- Content -->
 
                     <div class="container-xxl flex-grow-1 container-p-y">
-                    
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card mb-4" style=" display: flex; align-items: center;">
@@ -92,9 +91,7 @@
 
                         <div class="row">
                             <div class="col-md-12">
-
                                 <form id="formAccountSettings" method="POST" action="../user/update-process" enctype="multipart/form-data">
-                                
                                     <div class="card mb-4">
                                         <h5 class="card-header">프로필</h5>
                                         <!-- Account -->
@@ -179,8 +176,9 @@
                                     </div>
                                 </form>
                             </div>
-                            <!-- /Account -->
                         </div>
+                        
+                        
                         <div class="card">
                             <h5 class="card-header">회원 탈퇴</h5>
                             <div class="card-body">
@@ -200,10 +198,10 @@
                                 </form>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
-            </div>
-
+			<div></div>
             <div class="content-backdrop fade"></div>
         </div>
     </div>

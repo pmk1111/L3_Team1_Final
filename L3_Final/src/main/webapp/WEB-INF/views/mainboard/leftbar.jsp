@@ -163,7 +163,7 @@
             </li> -->
 
             <li class="menu-item">
-                <a href="../admin/admin-dashboard" target="_blank" class="menu-link ad-link">
+                <a href="../admin/admin-dashboard" class="menu-link ad-link">
                     <i class="menu-icon tf-icons bx bx-file"></i>
                     <div data-i18n="Documentation" id="adminLink">관리자</div>
                 </a>

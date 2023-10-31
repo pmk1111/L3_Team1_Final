@@ -35,16 +35,6 @@
 
 .col-md-8 {width: 55%; min-width: 55%}
 .col-md-4{position:relative; width: 45%}
-.go-calendar{color:#566a7f}
-.go-calendar:hover{color:#5f61e6; text-decoration:none; transition:.3s;}
-.schedules{max-height:300px; overflow: auto; list-style: none; margin-top:50px; padding:0;}
-.schedules li{display: flex; align-items: center; margin:12px 0; padding-left: 32px}
-.schedules img{width: 35px; height: 35px}
-.schedule-title-date{display: flex; flex-direction: column; padding-left: 15px; font-size: 14px}
-.schedule-title{font-weight: 700; color:#333333;}
-.no-schdule-today{position:absolute; top:50%; left:50%; width:250px; text-align:center; transform:translate(-50%, -50%); font-size:18px}
-.no-schdule-today:hover{color:#5f61e6; transition:.3s;}
-.selected-schedule-modal{display:none;}
 </style>
 </head>
 
@@ -209,9 +199,9 @@
 							<div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
 								<div class="card">
 
-
-									<h5 class="card-header m-0 me-2 my-work-txt">내 담당 업무</h5>
-
+									<a class="go-mywork" href="${pageContext.request.contextPath}/total/mywork">
+										<h5 class="card-header m-0 me-2 my-work-txt">내 담당 업무</h5>
+									</a>
 									<div class="card-body my-work">
 										<ul class="work-type">
 											<li data-value="To Do">예정된 업무</li>
@@ -249,7 +239,24 @@
 																<a href="../issue/issue-detail?num=${i.id}">
 																	<span class="post-title">${i.subject}</span>
 																</a>
-															</div> <span class="post-date">${i.created_at}</span>
+															</div> 
+															<div class="priority-date">
+																<c:choose>
+																	<c:when test="${i.priority == 'low'}">
+																		<span class="mywork-priority low">${i.priority}</span>
+																	</c:when>
+																	<c:when test="${i.priority == 'middle'}">
+																		<span class="mywork-priority middle">${i.priority}</span>
+																	</c:when>
+																	<c:when test="${i.priority == 'high'}">
+																		<span class="mywork-priority high">${i.priority}</span>
+																	</c:when>
+																	<c:otherwise>
+																		<span class="mywork-priority critical">${i.priority}</span>
+																	</c:otherwise>
+																</c:choose>
+																<span class="post-date">${i.created_at.substring(0,10)}</span>
+															</div>
 															</li>
 														</c:forEach>
 													</c:otherwise>
