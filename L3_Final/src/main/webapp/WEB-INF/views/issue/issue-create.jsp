@@ -98,9 +98,13 @@
 					<div class="issue-mention-wrap">
 						<label for="inputnotionchoice" class="notify-txt">언급</label>
  						<div class="issue-mention-area">
-							<input list="notionchoice" id="inputnotionchoice" name="notionchoice" />
+ 							<input type="text" class="notionchoice" name="notionchoice"/>
+							<input type="hidden" id="inputnotionchoice" name="user_id" />
+							<div class="issue-create-custom-options mention-list">
+							</div>
 						</div>
-				 <datalist id="notionchoice"></datalist>
+
+				 <!-- <datalist id="notionchoice"></datalist> -->
 				 
 				</div>
 				<!-- 혜원 -->

@@ -306,7 +306,7 @@
 	color: #697B8D;
 }
 
-#inputnotionchoice {
+#inputnotionchoice, .notionchoice {
 	width: 100%;
 	height: 46.47px;
 	padding:10px;
@@ -359,4 +359,17 @@
 
 .selected-project-color{
 	margin-left: 4%;
+}
+
+.notify-user-img, .assigned-user-img{
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	margin-right: 5px
+}
+
+.mentioned-user-id, .assigned-user-id{
+	display:inline-block;
+	float: right;
+	margin-right: 10px;
 }

@@ -1,9 +1,29 @@
 @charset "UTF-8";
 
+// Bounce
+.bounce .mocean-content {
+  opacity: 0;
+}
+
+.mocean-show.bounce .mocean-content {
+  opacity: 1;
+  animation-name: bounce;
+  animation-timing-function: ease;
+}
+
+@keyframes bounce {
+  0%, 40%, 80%, 100% { transform: translateY(0); }
+  20% { transform: translateY(-80px); }
+  60% { transform: translateY(-15px); }
+}
+
+
+
 .status-update-modal, .status-update-modal-resolved {
 	width: 100%;
 	display: none;
 	position: fixed;
+	animation: bounce .45s forwards;
 	top: 0;
 	left: 0;
 	z-index: 1100;
@@ -12,51 +32,37 @@
 .status-update-modal-overlay {
 	position: relative;
 	width: 100%;
-	height: 100vh;
+	height: 120vh;
 	background-color: black;
 	opacity: 0.6;
 }
 
-/* .status-update-modal-resolved .status-update-modal-content {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	text-align: center;
-	padding: 30px 15px;
-	width: 450px;
-	height: 250px;
-	overflow: auto;
-	background-color: white;
-	border-radius: 3px;
-} */
-
 .status-update-modal-content {
 	position: absolute;
-	top: 50%;
+	top: 40%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	text-align: center;
 	padding: 40px 25px;
 	width: 650px;
-	height: 310px;
+	height: 447px;
 	overflow: auto;
 	background-color: white;
-	border-radius: 3px;
+	border-radius: 5px;
 }
 
 .status-update-modal-resolved .status-update-modal-content {
 	position: absolute;
-	top: 50%;
+	top: 40%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	text-align: center;
 	padding: 40px 25px;
 	width: 650px;
-	height: 350px;
+	height: 492px;
 	overflow: auto;
 	background-color: white;
-	border-radius: 3px;
+	border-radius: 5px;
 }
 
 .status-update-modal-resolved .status-update-modal-btn-wrap {
@@ -67,8 +73,12 @@
 	margin-top: 50.5px;
 }
 
+.status-update-modal-btn-wrap button+button{
+	margin-left: 10px
+}
+
 .status-update-modal-btn{
-	width: 100%;
+	width: 45%;
 	height: 50px;
 	background-color: #9F7AB0;
 	color: white;
@@ -78,7 +88,7 @@
 }
 
 .update-cancel-btn, .redirect-list {
-	width: 100%;
+	width: 45%;
 	height: 50px;
 	border: 1.4px solid #9F7AB0;
 	color: #9F7AB0;
@@ -105,7 +115,7 @@
 	height:40px;
 	outline:none;
 	border-style:none;
-	border-bottom:1px solid black;
+	border-bottom:1px solid lightgrey;
 	margin:0 5%;
 	font-size:16px;
 	font-weight: bold;
@@ -136,4 +146,8 @@
 .select-assign-dropdown li img{
 	width: 40px;
 	height: 40px;
+}
+
+.change-stat-img{
+	width: 300px
 }
