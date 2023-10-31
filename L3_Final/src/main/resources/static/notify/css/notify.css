@@ -171,6 +171,10 @@
     color: #cfcfcf;
     
 }
+.updattime{
+	font-size:13px;
+	
+}
 
 .notify-user-img {
     display: inline-block;
@@ -179,7 +183,8 @@
 }
 
 .update-time-area {
-    width: 40px;
+   width:100px;
+   margin-right:20px;
 }
 
 .notify-contact-area {

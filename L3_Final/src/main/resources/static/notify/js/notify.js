@@ -136,7 +136,7 @@ function getNotifications() {
                                     <p class="latest-notify">${notification.content}</p>
                                 </div>
                                 <div class="update-time-area">
-                                    ${getTimeDiffString(notification.currenttime)}
+                                   <span class="updattime"> ${getTimeDiffString(notification.currenttime)}</span>
                                 </div>
                             </li>
                         `;
