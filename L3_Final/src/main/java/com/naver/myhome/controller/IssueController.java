@@ -132,7 +132,7 @@ public class IssueController {
 	@PostMapping("createIssue")
 	public String createIssue(Issue issue, Notify notify, HttpServletRequest request, 
 			HttpSession session, Principal principal,@RequestParam(value="user_id",defaultValue="0",required=false) int mentioned_id,
-				@RequestParam(value = "assigned") int assignedValue,
+			@RequestParam(value = "assigned") int assignedValue,
 			String notionchoice,MultipartFile[] uploadfiles) throws Exception {
 
 		String userEmail = principal.getName();
@@ -150,40 +150,40 @@ public class IssueController {
 
 		issueService.createIssue(issue);
 
-		  //혜원
+		//혜원
 
-	      String create_user = userService.getCreateUser(userId);
-	      String assign_user = userService.getAssignUser(assignedValue);
-	    
-   if (mentioned_id > 0) {
-	    	    Notify mentionNotify = new Notify();
-	    	    mentionNotify.setNAME(notionchoice.replace("@", ""));
-	    	    mentionNotify.setMENTIONED_BY(create_user);
-	    	    mentionNotify.setPOST_ID(issueId);
-	    	    mentionNotify.setMENTIONED_ID(mentioned_id);
-	    	    mentionNotify.setCONTENT("언급 하였습니다.");
-	    	    mentionNotify.setNOTIFY_STATUS(0);
-	    	 
-	    	    notifyService.createalarm(mentionNotify);
-	    	}
+		String create_user = userService.getCreateUser(userId);
+		String assign_user = userService.getAssignUser(assignedValue);
 
-	    	if (assignedValue > 0) {
-	    	    Notify assignNotify = new Notify();
-	    	    assignNotify.setNAME(assign_user);
-	    	    assignNotify.setMENTIONED_BY(create_user);
-	    	    assignNotify.setPOST_ID(issueId);
-	    	    assignNotify.setMENTIONED_ID(assignedValue);
-	    	    assignNotify.setCONTENT("담당자로 설정하였습니다.");
-	    	    assignNotify.setNOTIFY_STATUS(0);
-	    	    
-	    	    notifyService.createalarm(assignNotify);
-	    	}
+		if (mentioned_id > 0) {
+			Notify mentionNotify = new Notify();
+			mentionNotify.setNAME(notionchoice.replace("@", ""));
+			mentionNotify.setMENTIONED_BY(create_user);
+			mentionNotify.setPOST_ID(issueId);
+			mentionNotify.setMENTIONED_ID(mentioned_id);
+			mentionNotify.setCONTENT("언급 하였습니다.");
+			mentionNotify.setNOTIFY_STATUS(0);
+
+			notifyService.createalarm(mentionNotify);
+		}
+
+		if (assignedValue > 0) {
+			Notify assignNotify = new Notify();
+			assignNotify.setNAME(assign_user);
+			assignNotify.setMENTIONED_BY(create_user);
+			assignNotify.setPOST_ID(issueId);
+			assignNotify.setMENTIONED_ID(assignedValue);
+			assignNotify.setCONTENT("담당자로 설정하였습니다.");
+			assignNotify.setNOTIFY_STATUS(0);
+
+			notifyService.createalarm(assignNotify);
+		}
 
 
-		   
-		    logger.info(issue.toString());
-		    logger.info("이슈 태그: " + notify.getNAME());
-		    logger.info("user_id: " + mentioned_id);
+
+		logger.info(issue.toString());
+		logger.info("이슈 태그: " + notify.getNAME());
+		logger.info("user_id: " + mentioned_id);
 
 
 
@@ -301,11 +301,11 @@ public class IssueController {
 	public ModelAndView issueDetail(int num, ModelAndView mv, HttpServletRequest request, @AuthenticationPrincipal User user,
 			@RequestHeader(value = "referer", required = false) String beforeURL) {
 		logger.info("referer: " + beforeURL);
-		
+
 		Issue issue = issueService.getIssueDetail(num);
-		
+
 		List<Files> filelist = fileService.getFileList(num);
-		
+
 		int bookmarkCk = bookmarkService.checkBookmark(user.getId(), num);
 
 		if (issue == null) {
@@ -316,12 +316,12 @@ public class IssueController {
 		} else {
 			int issueCreater = issue.getCreate_user();
 			int issueAssigner = issue.getAssigned();
-			
+
 			String createrEmail = userService.getEmail(issueCreater);
 			String assignerEmail = userService.getEmail(issueAssigner);
 			logger.info("작성자 이메일 = " + createrEmail);
 			logger.info("담당자 email = " + assignerEmail);
-			
+
 			logger.info("상세보기 성공");
 			mv.setViewName("issue/issue-detail");
 			mv.addObject("issuedata", issue);
@@ -341,10 +341,10 @@ public class IssueController {
 			@RequestParam String status, 
 			@RequestParam String selectedUserId,
 			@AuthenticationPrincipal User customUser) {
-		
+
 		int sessionId = customUser.getId();
 		logger.info("세션아이디 체크" + sessionId);
-		
+
 		Map<String, Object> response = new HashMap<>();
 		try {
 			issueService.updateStatus(issueId, status, selectedUserId, sessionId);
@@ -365,45 +365,45 @@ public class IssueController {
 			@AuthenticationPrincipal User customUser,
 			Notify notify,@RequestParam(value="user_id",defaultValue="0",required=false) int mentioned_id,
 			@RequestParam(value = "assigned") int assignedValue,String notionchoice) throws Exception{
-		
+
 		int sessionId = customUser.getId();
 		logger.info("세션아이디 체크" + sessionId);
-		
+
 		String url = "";
 		issue.setId(num);
 		issue.setSessionId(sessionId);
 		issue.setMentioned(notionchoice.replace("@", ""));
 		int result = issueService.issueUpdate(issue);
-		
-		  //혜원
 
-	      String create_user = userService.getCreateUser(sessionId);
-	      String assign_user = userService.getAssignUser(assignedValue);
-	    
- if (mentioned_id > 0) {
-	    	    Notify mentionNotify = new Notify();
-	    	    mentionNotify.setNAME(notionchoice.replace("@", ""));
-	    	    mentionNotify.setMENTIONED_BY(create_user);
-	    	    mentionNotify.setPOST_ID(num);
-	    	    mentionNotify.setMENTIONED_ID(mentioned_id);
-	    	    mentionNotify.setCONTENT("언급 하였습니다.");
-	    	    mentionNotify.setNOTIFY_STATUS(0);
-	    	 
-	    	    notifyService.createalarm(mentionNotify);
-	    	}
+		//혜원
 
-	    	if (assignedValue > 0) {
-	    	    Notify assignNotify = new Notify();
-	    	    assignNotify.setNAME(assign_user);
-	    	    assignNotify.setMENTIONED_BY(create_user);
-	    	    assignNotify.setPOST_ID(num);
-	    	    assignNotify.setMENTIONED_ID(assignedValue);
-	    	    assignNotify.setCONTENT("담당자로 설정하였습니다.");
-	    	    assignNotify.setNOTIFY_STATUS(0);
-	    	    
-	    	    notifyService.createalarm(assignNotify);
-	    	}
-        //혜원
+		String create_user = userService.getCreateUser(sessionId);
+		String assign_user = userService.getAssignUser(assignedValue);
+
+		if (mentioned_id > 0) {
+			Notify mentionNotify = new Notify();
+			mentionNotify.setNAME(notionchoice.replace("@", ""));
+			mentionNotify.setMENTIONED_BY(create_user);
+			mentionNotify.setPOST_ID(num);
+			mentionNotify.setMENTIONED_ID(mentioned_id);
+			mentionNotify.setCONTENT("언급 하였습니다.");
+			mentionNotify.setNOTIFY_STATUS(0);
+
+			notifyService.createalarm(mentionNotify);
+		}
+
+		if (assignedValue > 0) {
+			Notify assignNotify = new Notify();
+			assignNotify.setNAME(assign_user);
+			assignNotify.setMENTIONED_BY(create_user);
+			assignNotify.setPOST_ID(num);
+			assignNotify.setMENTIONED_ID(assignedValue);
+			assignNotify.setCONTENT("담당자로 설정하였습니다.");
+			assignNotify.setNOTIFY_STATUS(0);
+
+			notifyService.createalarm(assignNotify);
+		}
+		//혜원
 
 		if(result==0) {
 			logger.info("게시판 수정 실패");

@@ -147,7 +147,7 @@ $(document).ready(function () {
             type: "GET",
             url: "getProjectAndTeamInfo",
             data: {
-                projectId: 1 // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
+                projectId: projectId // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
             },
             success: function (response) {
                 if (response.length > 0) {

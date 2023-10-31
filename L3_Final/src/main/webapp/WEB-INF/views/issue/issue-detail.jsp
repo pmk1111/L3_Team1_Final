@@ -46,6 +46,7 @@
 
   <body>
   	<input type="hidden" name="num" value="${param.num}"  id="issue_id">
+  	<input type="hidden" name="projectId" class="project-id" value="${issuedata.project_id}">
   	<input type="hidden" class="create-user-email" value="${createrEmail}">
   	<input type="hidden" class="assigned-user-email" value="${assignerEmail}">
     <!-- Layout wrapper -->
@@ -342,6 +343,7 @@
 
 <script type="text/javascript">
 const existingFileNames = [];
+const projectId = $('.project-id').val();
 $('.file-item').each(function() {
     existingFileNames.push($(this).val());
 });
@@ -383,7 +385,7 @@ function getProjectIdAndTeam() {
       type: "GET",
       url: "getProjectAndTeamInfo",
       data: {
-          projectId: 1 // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
+          projectId: projectId // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
       },
       success: function (response) {
         if (response.length > 0) {
