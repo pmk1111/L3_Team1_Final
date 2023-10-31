@@ -72,7 +72,7 @@
 		<img class="back-to-chatting-layer" src="../resources/chat/img/leftArrow.svg">
 	</button>
 	<img class="chat-user-img" src="../resources/mainboard/assets/img/avatars/1.png" >
-		<strong class="chat-user-txt">JJok</strong>
+		<strong class="chat-user-txt"></strong>
 		<button class="chat-menu-close-btn">
 			<img src="../resources/chat/img/close.svg" alt="닫기">
 		</button>
@@ -283,22 +283,20 @@ $(document).on('click', '.chat-room', function () {
     });
 
     $('.alarm-icon').click(function () {
-        if ($('.chatting-room').css('display') === 'block') {
-            $('.chatting-room').css('display', 'none');
-            ws.close();
-        }
+				ws.close();
         ws.onclose = function (event) {
-            console.log("Connection closed!!");
-
+        	console.log("Connection closed!!");
         };
     }) //alarm-icon click end
 
-    $('.alarm-icon').click(function () {
-        if ($('.chatting-layer').css('display') === 'block') {
-            $('.chatting-layer').css('display', 'none');
-        }
-    });
 });//chatroom click end
+
+$('.alarm-icon').click(function () {
+    if ($('.chatting-layer').css('display') === 'block' || $('.chatting-room').css('display') === 'block') {
+    	$('.chatting-layer').css('display', 'none');
+    	$('.chatting-room').css('display', 'none');
+    }
+}) //alarm-icon click end
 
 //getChatList
 function getChatListById(chatRoomId, otherParticipant, participantImg) {
@@ -388,13 +386,13 @@ $('.chat-icon').click(function () {
         $('.chat-contact-area').hide();
         $('.chat-list-area').show();
 				
+        $('.notify-layer').css('display', 'none');
         getChatRoomList();
     } else {
         chattingLayer.fadeOut(100);
         chattingRoom.fadeOut(100);
     }
 }); // chat-icon click end
-
 
 $('.chat-menu-close-btn').click(function () {
     chattingLayer.fadeOut(100);
