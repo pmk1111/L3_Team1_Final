@@ -43,12 +43,11 @@
         #fileName {
             font-size: 13px;
         }
-        
-        .pb-JJ{
-        	padding-bottom:0px !important;
-        	padding-top:25px !important;
+
+        .pb-JJ {
+            padding-bottom: 0px !important;
+            padding-top: 25px !important;
         }
-        
     </style>
     <script>
         const result = "${result}";
@@ -72,6 +71,7 @@
 
             <!-- Layout container -->
             <div class="layout-page">
+
                 <!-- Navbar -->
                 <jsp:include page="../mainboard/navbar.jsp"></jsp:include>
                 <!-- / Navbar -->
@@ -81,7 +81,7 @@
                     <!-- Content -->
 
                     <div class="container-xxl flex-grow-1 container-p-y">
-                    
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card mb-4" style=" display: flex; align-items: center;">
@@ -94,124 +94,167 @@
                             <div class="col-md-12">
 
                                 <form id="formAccountSettings" method="POST" action="../user/update-process" enctype="multipart/form-data">
-                                
+
                                     <div class="card mb-4">
                                         <h5 class="card-header">프로필</h5>
-                                        <!-- Account -->
-                                        <div class="card-body profile-img">
+                                        <div class="card-body profile-img" style="height: 600px;">
+
                                             <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                                <c:choose>
-                                                    <c:when test="${not empty userinfo.pic}">
-                                                        <img src="${pageContext.request.contextPath}/upload${userinfo.pic}" alt="프로필 사진" class="d-block rounded" height="150" width="150" id="uploadedAvatar" />
 
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <img src="${pageContext.request.contextPath}/user/assets/img/avatars/profile.png" alt="기본 프로필 사진" class="d-block rounded" height="150" width="150" id="uploadedAvatar" />
+                                                <div style="width:40%; height:300px; border-right:1px solid #ccc; display: flex; flex-direction: column; align-content: center; justify-content: space-between; align-items: center;">
+													<div>
+	                                                    <c:choose>
+	
+	                                                        <c:when test="${not empty userinfo.pic}">
+	                                                            <img src="${pageContext.request.contextPath}/upload${userinfo.pic}" alt="프로필 사진" class="d-block rounded" height="150" width="150" id="uploadedAvatar" />
+	                                                        </c:when>
+	
+	                                                        <c:otherwise>
+	                                                            <img src="${pageContext.request.contextPath}/user/assets/img/avatars/profile.png" alt="기본 프로필 사진" class="d-block rounded" height="150" width="150" id="uploadedAvatar" />
+	                                                        </c:otherwise>
+	
+	                                                    </c:choose>
+													</div>
+                                                    <div class="button-wrapper">
 
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                        <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                            <span class="d-none d-sm-block">이미지 변경</span>
+                                                            <i class="bx bx-upload d-block d-sm-none"></i>
+                                                        </label>
 
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="name" class="form-label">이름</label>
-                                                    <input class="form-control" type="text" name="name" id="name" value="${userinfo.name}" />
-                                                </div>
+                                                        <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                                            <i class="bx bx-reset d-block d-sm-none"></i>
+                                                            <span class="d-none d-sm-block">취소</span>
+                                                        </button>
 
-                                                <div class="mb-3 col-md-6">
-                                                    <label class="form-label" for="tel">휴대폰 번호</label>
-                                                    <input type="text" id="phone" name="phone" class="form-control" placeholder="010 000 0000" value="${userinfo.phone}" />
-                                                </div>
+                                                        <div id="filename">
+                                                            <input type="file" id="upload" name="uploadfile" value="${userinfo.pic}" class="account-file-input" accept="image/png, image/jpeg" style="display: none;" />
+                                                        </div>
 
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="email" class="form-label">이메일</label>
-                                                    <input class="form-control" type="text" id="email" name="email" value="${userinfo.email}" required readOnly />
-                                                </div>
-
-                                                <div class="changepassword">
-                                                    <button type="button" class="changepwd"><a href="${pageContext.request.contextPath}/user/change-pwd"> 비밀번호 변경</a></button>
-                                                </div>
-
-                                                <div class="button-wrapper">
-                                                    <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                                                        <span class="d-none d-sm-block">프로필 수정</span>
-                                                        <i class="bx bx-upload d-block d-sm-none"></i>
-
-                                                    </label>
-                                                    <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
-                                                        <i class="bx bx-reset d-block d-sm-none"></i>
-                                                        <span class="d-none d-sm-block">취소</span>
-                                                    </button>
-
-                                                    <div id="filename">
-                                                        <input type="file" id="upload" name="uploadfile" value="${userinfo.pic}" class="account-file-input" accept="image/png, image/jpeg" style="display: none;" />
                                                     </div>
+
                                                 </div>
 
+                                                <div style="width:60%">
+                                                    <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link team-tab active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">내 정보</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link invite-tab" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">회사 정보</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link invite-tab" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">회원 탈퇴</button>
+                                                        </li>
+                                                    </ul>
+                                                    <div style="display:flex; flex-direction: column; justify-content: center; width:50%;">
+
+                                                        <div class="mb-3 col-md-6">
+                                                            <label for="name" class="form-label">이름</label>
+                                                            <input class="form-control" type="text" name="name" id="name" value="${userinfo.name}" />
+                                                        </div>
+
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label" for="tel">휴대폰 번호</label>
+                                                            <input type="text" id="phone" name="phone" class="form-control" placeholder="010 000 0000" value="${userinfo.phone}" />
+                                                        </div>
+
+                                                        <div class="mb-3 col-md-6">
+                                                            <label for="email" class="form-label">이메일</label>
+                                                            <input class="form-control" type="text" id="email" name="email" value="${userinfo.email}" required readOnly />
+                                                        </div>
+
+                                                        <div class="changepassword">
+                                                            <button type="button" class="changepwd"><a href="${pageContext.request.contextPath}/user/change-pwd"> 비밀번호 변경</a></button>
+                                                        </div>
+
+                                                        <div class="card-footer" style="display:flex">
+
+                                                            <div class="mt-2">
+                                                                <button type="submit" class="btn btn-primary me-2" id="updateProfile">저장</button>
+                                                                <button type="reset" class="btn btn-outline-secondary" onclick="history.back();">취소</button>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
                                             </div>
+
                                         </div>
+                                        <!-- cardbody -->
+
                                     </div>
-                                    <div class="card-body">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                        <div class="row">
-                                            <div class="mb-3 col-md-6">
-                                                <label for="company" class="form-label">회사</label>
-                                                <input type="text" class="form-control" id="company" name="company" value="${userinfo.companyName}" required readOnly />
-                                            </div>
-
-                                            <div class="mb-3 col-md-6">
-                                                <label for="company" class="form-label">부서</label>
-                                                <input type="text" class="form-control" id="company" name="company" value="${userinfo.department}" required readOnly />
-                                            </div>
-
-                                            <div class="mb-3 col-md-6">
-                                                <label for="company" class="form-label">직책</label>
-                                                <input type="text" class="form-control" id="company" name="company" value="${userinfo.position}" required readOnly />
-                                            </div>
-
-
-
-
-                                            <div class="mt-2">
-                                                <button type="submit" class="btn btn-primary me-2" id="updateProfile">저장</button>
-                                                <button type="reset" class="btn btn-outline-secondary" onclick="history.back();">취소</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
+                                    <!-- card-mb-4 -->
                                 </form>
+
                             </div>
-                            <!-- /Account -->
+                            <!-- col-md-12 -->
                         </div>
-                        <div class="card">
-                            <h5 class="card-header">회원 탈퇴</h5>
-                            <div class="card-body">
-                                <div class="mb-3 col-12 mb-0">
-                                    <div class="alert alert-warning">
-                                        <h6 class="alert-heading fw-bold mb-1">정말로 탈퇴하시겠습니까?</h6>
-                                        <p class="mb-0">탈퇴시 모든 정보를 더 이상 확인할 수 없습니다.</p>
+                        <!-- row -->
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card mb-4" style=" display: flex; align-items: center;">
+
+                                    <div>
+                                        <label for="company" class="form-label">회사</label>
+                                        <input type="text" class="form-control" id="company" name="company" value="${userinfo.companyName}" required readOnly />
                                     </div>
+
+                                    <div>
+                                        <label for="company" class="form-label">부서</label>
+                                        <input type="text" class="form-control" id="company" name="company" value="${userinfo.department}" required readOnly />
+                                    </div>
+
+                                    <div>
+                                        <label for="company" class="form-label">직책</label>
+                                        <input type="text" class="form-control" id="company" name="company" value="${userinfo.position}" required readOnly />
+                                    </div>
+
+
                                 </div>
-                                <form id="formAccountDeactivation" action="../user/delete" method="GET">
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="checkbox" name="agreeDelete" id="agreeDelete" />
-                                        <label class="form-check-label" for="accountActivation">동의합니다.</label>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-danger deactivate-account" id="deleteUser">탈퇴</button>
-                                </form>
                             </div>
+
+
+                            <div class="card">
+                                <h5 class="card-header">회원 탈퇴</h5>
+                                <div class="card-body">
+                                    <div class="mb-3 col-12 mb-0">
+                                        <div class="alert alert-warning">
+                                            <h6 class="alert-heading fw-bold mb-1">정말로 탈퇴하시겠습니까?</h6>
+                                            <p class="mb-0">탈퇴시 모든 정보를 더 이상 확인할 수 없습니다.</p>
+                                        </div>
+                                    </div>
+                                    <form id="formAccountDeactivation" action="../user/delete" method="GET">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" name="agreeDelete" id="agreeDelete" />
+                                            <label class="form-check-label" for="accountActivation">동의합니다.</label>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-danger deactivate-account" id="deleteUser">탈퇴</button>
+                                    </form>
+                                </div>
+                            </div>
+
                         </div>
+                        <!-- py  -->
                     </div>
+                    <!-- content-wrapper -->
+                    <div class="content-backdrop fade"></div>
                 </div>
+                <!-- layout-page  -->
             </div>
-
-            <div class="content-backdrop fade"></div>
+            <!-- layout-container  -->
         </div>
-    </div>
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
+        <!-- layout-wrapper -->
 
-    <jsp:include page="../template/jsTemplate.jsp"></jsp:include>
-    <script src="../resources/user/js/profile.js"></script>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+
+        <jsp:include page="../template/jsTemplate.jsp"></jsp:include>
+        <script src="../resources/user/js/profile.js"></script>
 
 
 </body>
