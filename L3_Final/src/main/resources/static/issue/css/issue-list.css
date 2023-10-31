@@ -110,7 +110,7 @@
 	border: 1px solid lightgrey;
 	border-radius: 3px;
 	display: none;
-	z-index: 9999;
+	z-index: 1000;
 }
 
 .dropdown-items {
@@ -281,11 +281,19 @@
 	cursor: pointer
 }
 
-.no-search-list {
+.no-search-list, .no-issue-content {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+}
+
+.no-issue-text{
+	position: absolute;
+	top: 68%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-weight: 600
 }
 
 .low, .middle, .high, .critical {

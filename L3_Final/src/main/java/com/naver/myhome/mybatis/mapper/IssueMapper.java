@@ -21,11 +21,9 @@ public interface IssueMapper {
 	
 	public List<Issue> getMyWork(String status, int userId);
 	
-	public List<Issue> getFilteredIssueList(Map<String, String> map);
+	public List<Issue> getFilteredIssueList(Map<String, Object> map);
 	
-	public List<Issue> searchIssues(String searchText);
-
-//	public List<Project> getMyProjectList(String userId);
+	public List<Issue> searchIssues(String searchText, int projectId);
 	
 	public void createIssue(Issue issue);
 

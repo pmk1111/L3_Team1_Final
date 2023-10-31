@@ -19,7 +19,7 @@ $(document).ready(function () {
     });
 
     var issueModalContent = $('.issue-modal-content');
-    var createIssueText = $('.create-issue-text');
+    var selectedProject = $('.selected-project');
     var submitResetBtnWrap = $('.submit-reset-btn-wrap');
 
     issueModalContent.on('scroll', function () {
@@ -27,7 +27,7 @@ $(document).ready(function () {
         var scrollHeight = issueModalContent[0].scrollHeight;
         var containerHeight = issueModalContent.innerHeight();
 
-        createIssueText.css('border-bottom', scrollTop > 0 ? '1px solid #ddd' : 'none');
+        selectedProject.css('border-bottom', scrollTop > 0 ? '1px solid #ddd' : 'none');
         submitResetBtnWrap.css('border-top', scrollTop + containerHeight >= scrollHeight - 1 ? 'none' : '1px solid #ddd');
     });
 		
@@ -64,7 +64,7 @@ $(document).ready(function () {
 
 
  $('.submit-btn').click(function () {
-        const project_name = $('.project-name').val();
+        const project_name = $('.project-name').text();
         const issue_type = $('.issue-type').val();
         const issue_status = $('.issue-status').val();
         const issue_title_area = $('.issue-title-area').val();

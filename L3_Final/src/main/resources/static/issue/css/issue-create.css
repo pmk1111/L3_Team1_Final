@@ -233,18 +233,13 @@
 	background-color: #e7e8ff;
 }
 
-.create-issue-text {
+.selected-project {
 	position: sticky;
 	top: 0;
 	background-color: white;
 	z-index: 1;
 	padding: 10px;
 	border-bottom: 1px solid #ddd;
-}
-
-.create-issue-text h3 {
-	margin-left: 4%;
-	margin-top: 12px;
 }
 
 .submit-reset-btn-wrap {
@@ -342,4 +337,26 @@
 .file-extension{
 	width: 20px;
 	margin:0px 5px;
+}
+
+.selected-project-color{
+	display:inline-block;
+	width: 40px; 
+	height: 40px;
+	border-radius: 3px;
+}
+
+.project-name{
+	display: inline-block;
+	margin-left: 15px;
+	margin-top: 12px;
+}
+
+.selected-project{
+	display: flex;
+	align-items: center
+}
+
+.selected-project-color{
+	margin-left: 4%;
 }

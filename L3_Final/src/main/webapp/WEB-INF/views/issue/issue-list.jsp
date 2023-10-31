@@ -138,7 +138,8 @@
 
 												<c:choose>
 													<c:when test="${empty issuelist}">
-														<h1>데이터가 없습니다.</h1>
+														<img class="no-issue-content" src="../resources/issue/img/no-issue-content.png">
+														<p class="no-issue-text">작성된 이슈가 없습니다.</p>
 													</c:when>
 													<c:otherwise>
 														<c:forEach var="i" items="${issuelist}">
@@ -239,7 +240,8 @@
 	        	console.log(response)
 	        	
 	          $('.user-info').empty();
-	          $('.project-name').val(response[0].projectTitle);
+	        	$('.selected-project-color').css('background-color', response[0].projectColor)
+	          $('.project-name').text(response[0].projectTitle);
 	          response.forEach(function (item) {
 	            let str = '<div class="issue-create-custom-option" data-value="' + item.userId + '">' + item.userName + '</div>';
 	            $('.user-info').append(str);
