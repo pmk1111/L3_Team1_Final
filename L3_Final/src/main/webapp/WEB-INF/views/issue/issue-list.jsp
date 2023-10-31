@@ -40,7 +40,9 @@
 	border-radius: 50%;
 }
 
-
+/* .scroll::-webkit-scrollbar {
+  display: none !important;
+} */
 </style>
 </head>
 <body>

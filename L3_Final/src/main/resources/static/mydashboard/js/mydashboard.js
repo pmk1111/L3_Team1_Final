@@ -380,6 +380,7 @@ $(document).ready(function () {
                 $('.board').empty();
                 if (mywork.length > 0) {
                     mywork.forEach(function (item) {
+                    		let formattedCreateAt = item.created_at.substring(0, 10);
                         let str = '<li><div class="type-title">'
                         if (item.type === '버그') {
                             str += '<img src="../resources/issue/img/bug.svg"> <span>버그</span>'
@@ -390,7 +391,18 @@ $(document).ready(function () {
                         }
                         str += '<a href="../issue/issue-detail?num=' + item.id + '">'
                         str += '<span class="post-title">' + item.subject + '</span></div></a>'
-                        str += '<span class="post-date">' + item.created_at + '</span></li>'
+                        str += '<div class="priority-date">'
+                        if(item.priority === 'low'){
+                        	str += '<span class="mywork-priority low">' + item.priority + '</span>'
+                        } else if(item.priority === 'middle'){
+                        	str += '<span class="mywork-priority middle">' + item.priority + '</span>'
+                        } else if(item.priority === 'high'){
+                        	str += '<span class="mywork-priority high">' + item.priority + '</span>'
+                        } else if(item.priority === 'critical'){
+                        	str += '<span class="mywork-priority critical">' + item.priority + '</span>'
+                        } 
+                        
+                        str += '<span class="post-date">' + formattedCreateAt + '</span></li>'
 
                         $('.board').append(str);
                     });
