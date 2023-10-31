@@ -88,10 +88,10 @@ $(document).ready(function () {
                 return;
             } else if ($(this).data('value') === 'Resolved') {
                 // 클릭한 버튼의 data-value가 'Resolved'일 때 status-update-modal-resolved 모달을 열기
-                $('.status-update-modal-resolved').fadeIn(200);
+                $('.status-update-modal-resolved').css('display', 'block');
             } else {
                 // 다른 경우에는 status-update-modal 모달을 열기
-                $('.status-update-modal').fadeIn(200);
+                $('.status-update-modal').css('display', 'block');
             }
         } else {
             alert("작성자 또는 담당자만 변경 가능합니다.");
@@ -147,16 +147,22 @@ $(document).ready(function () {
             type: "GET",
             url: "getProjectAndTeamInfo",
             data: {
-                projectId: projectId // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
+                projectId: projectId
             },
             success: function (response) {
+								let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+								let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
                 if (response.length > 0) {
                     console.log(response)
 
                     $('.select-assign-dropdown').empty();
                     response.forEach(function (item) {
                         let str = '<li class="assign-dropdown-item"><div>';
-                        str += '<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="h-auto user-img" />'
+                        if(item.userPic !== null){
+                        	str += '<img src="' + contextPath + '/upload' + item.userPic + '" alt class="h-auto user-img" />'
+                        } else{
+                        	str += '<img src="' + contextPath + '/user/img/profile.png"/>'
+                        }
                         str += '<span class="user-name">' + item.userName + '</span></div>'
                         str += '<span class="user-id">#' + item.userId + '</span></li>'
                         $('.select-assign-dropdown').append(str);
@@ -172,11 +178,29 @@ $(document).ready(function () {
 
         $('.select-assign-dropdown').fadeIn(100);
     }); // focus end
+    
+    $(document).on('click', function(event) {
+    if (!$(event.target).closest('.select-assign-dropdown, .choose-assigner').length) {
+        // .select-assign-dropdown 또는 .choose-assigner 이외의 항목을 클릭한 경우
+        $('.select-assign-dropdown').fadeOut(100);
+    	}
+		});
 
-
-    $('.choose-assigner').keyup(function () {
-
-    })
+		//담당자 검색
+    $(document).on('keyup', '.choose-assigner', function(){
+    	var searchText = $(this).val().toLowerCase();
+    	
+    	$('.select-assign-dropdown .assign-dropdown-item').each(function(){
+    		var userText = $(this).find('.user-name').text();
+    		
+    		if (userText.toLowerCase().includes(searchText)) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    	})
+    }) // choose-assigner keyup end
+    
     var selectedUserName;
     // li 클릭 시 input에 해당 username 저장
     $(document).on('click', '.select-assign-dropdown li', function () {

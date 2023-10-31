@@ -247,9 +247,6 @@ $(".notionchoice").focus(function(){
 		$.ajax({
             type: "GET",
             url: "getProjectAndTeamInfo",
-            data: {
-                projectId: 1 // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
-            },
             success: function (response) {
             		let hostIndex = location.href.indexOf( location.host ) + location.host.length;
 								let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
@@ -371,7 +368,7 @@ $(document).on('click', '.mentioned-user', function(){
 }) // mentioned-user click end
 
 
-// .notionchoice input 요소의 keyup 이벤트 핸들러
+//언급할 유저 검색
 $(document).on('keyup', '.notionchoice', function() {
     var searchText = $(this).val().toLowerCase(); // 입력된 검색어를 소문자로 변환
 
@@ -390,7 +387,13 @@ $(document).on('keyup', '.notionchoice', function() {
 });
 
 
-
+$(document).on('click', function(event) {
+    if (!$(event.target).closest('.mention-list').length && $('.mention-list').css('display') === 'block'
+    		&& !$(event.target).hasClass('notionchoice')) {
+        // .mention-list 영역 외부를 클릭한 경우
+        $('.mention-list').fadeOut(300);
+    }
+});
 
 
 

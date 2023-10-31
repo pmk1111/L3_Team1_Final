@@ -116,7 +116,7 @@
 	width:200px !important;
 }
 
-.issue-assigned-area>span+span {
+.issue-assigned-area>span+span, .issue-mention-area>span+span {
 	margin-left: 25px;
 }
 
@@ -442,4 +442,28 @@
 
 .assign-dropdown-item{
 	height: 60px
+}
+
+.issue-location{
+	display:flex;
+	align-items: center
+}
+
+.issue-location span{
+	margin-right: 8px
+}
+
+.project-color{
+	position:relative;
+	display:inline-block;
+	width: 19px;
+	height: 19px;
+	border-radius: 5px;
+	margin: 0px 5px 0px 9px
+}
+
+.type-img{
+	width: 20px;
+	height: 20px;
+	margin: 0px 5px 0px 9px
 }
