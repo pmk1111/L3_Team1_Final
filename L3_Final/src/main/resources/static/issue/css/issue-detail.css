@@ -111,7 +111,7 @@
 	transition:.3s;
 }
 
-.assigned-user{
+.assigned-user, .mention-user{
 	display:inline-block;
 	width:200px !important;
 }

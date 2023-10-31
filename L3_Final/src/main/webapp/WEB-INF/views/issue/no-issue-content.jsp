@@ -1,15 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 <script type="text/javascript">
 if (${showAlert}==true) {
-    alert('존재하지 않는 게시글입니다.');
+    alert('존재하지 않는 이슈입니다.');
     window.location.href = '../issue/issue-list';
 }
 </script>

@@ -5,9 +5,12 @@
 <mapper namespace="com.naver.myhome.mybatis.mapper.MytotalworkMapper">
 
 <select id="getSearchList" resultType="Mytotalwork">
-	SELECT * 
-	FROM PROJECT 
-	WHERE ID IN (SELECT DISTINCT PROJECT_ID FROM ISSUE WHERE ASSIGNED = #{sessionId})
+   SELECT * 
+    FROM PROJECT P
+    WHERE P.ID IN (SELECT DISTINCT PROJECT_ID FROM ISSUE I WHERE I.ASSIGNED = #{sessionId})
+    <if test="search_word != null">
+        AND (P.TITLE LIKE '%' || #{search_word} || '%')
+    </if>
 </select>
 
 

@@ -4,8 +4,11 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.MyIssueMapper">
 	
-	<select id="getAllIssuesByProjectId" resultType="MyIssue" >
- 		SELECT * FROM ISSUE WHERE PROJECT_ID = #{id} AND ASSIGNED = #{sessionId}
- 	</select>	
+<select id="getAllIssuesByProjectId" resultType="MyIssue">
+    SELECT * FROM ISSUE
+        WHERE PROJECT_ID = #{id}
+        AND ASSIGNED = #{sessionId}
+
+</select>
 
 </mapper>
