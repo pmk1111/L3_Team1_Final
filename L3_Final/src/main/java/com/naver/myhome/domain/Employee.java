@@ -16,6 +16,7 @@ public class Employee {
 	private String email;
 	private String pic;
 	private String phone;
+	private String company_name;
 	
 //	mk for chat
 	private String user_name;

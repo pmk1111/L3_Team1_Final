@@ -135,7 +135,6 @@
                         </div>
                         
                       </div>
-                    </div>
                    </div>
                     <hr class="my-0" />
                     <div class="card-body">
@@ -222,6 +221,7 @@
                 </div>
                       </form>
                     </div>
+                   </div>
                     <!-- /Account -->
                   </div>
                   <div class="card">
