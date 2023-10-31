@@ -299,19 +299,23 @@ public class AdminController {
         return mv;
     }
 
-    @ResponseBody
+
+
+
+ 
+
+
+    //
     @PostMapping(value = "/sendMail")
-    public void sendMail(@RequestParam(name="invite_box1[]") String[] invite_box1, @ModelAttribute("companyId") int companyId) {
-        
-    	
-    	String companyName = adminService.companyName(companyId);
-        String companyDomain = adminService.companyDomain(companyId);
+    public String sendMail(String[] invite_box1) {
+        String companyName = "widUs";
+        String companyDomain = "example@widus.com";
 
         for (String box: invite_box1) {
             if (!box.equals(""))
                 sendMail.sendInviteEmail(box, companyName, companyDomain);
         }
-       
+        return "admin/invite-employee";
 
     }
     
@@ -320,7 +324,6 @@ public class AdminController {
        return "admin/AdminDashboard";
     }
     //지니 끝
-
 
 
     /* 혜원 */

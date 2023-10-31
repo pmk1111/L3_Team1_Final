@@ -103,22 +103,19 @@ public class IssueController {
 
 	@ResponseBody
 	@GetMapping("/getFilteredIssue")
-	public List<Issue> getFilteredIssueList(HttpSession session,
+	public List<Issue> getFilteredIssueList(
 			@RequestParam(name = "issueStatus", required = false) String issueStatus,
 			@RequestParam(name = "issuePriority", required = false) String issuePriority) {
 
-		logger.info("가져온 status = " + issueStatus);
-		logger.info("가져온 priority = " + issuePriority);
-		int projectId = (int) session.getAttribute("projectId");
-		List<Issue> filteredIssues = issueService.getFilteredIssueList(issueStatus, issuePriority, projectId);
+
+		List<Issue> filteredIssues = issueService.getFilteredIssueList(issueStatus, issuePriority);
 		return filteredIssues;
 	}
 
 	@ResponseBody
 	@GetMapping("/getSearchedIssue")
-	public List<Issue> getSearchedIssue(@RequestParam String searchText, HttpSession session) {
-		int projectId = (int) session.getAttribute("projectId");
-		return issueService.searchIssues(searchText, projectId);
+	public List<Issue> getSearchedIssue(@RequestParam String searchText) {
+		return issueService.searchIssues(searchText);
 	}
 
 	@ResponseBody

@@ -47,11 +47,10 @@ public class IssueServiceImpl implements IssueService{
 	}
 	
 	@Override
-	public List<Issue> getFilteredIssueList(String issueStatus, String issuePriority, int projectId) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	public List<Issue> getFilteredIssueList(String issueStatus, String issuePriority) {
+		Map<String, String> map = new HashMap<String, String>();
 		map.put("issueStatus", issueStatus);
 		map.put("issuePriority", issuePriority);
-		map.put("projectId", projectId);
 		
 		return mapper.getFilteredIssueList(map);
 	}
@@ -62,8 +61,8 @@ public class IssueServiceImpl implements IssueService{
 //	}
 	
 	@Override
-	public List<Issue> searchIssues(String searchText, int projectId) {
-		return mapper.searchIssues(searchText, projectId);
+	public List<Issue> searchIssues(String searchText) {
+		return mapper.searchIssues(searchText);
 	}
 
 	@Override
