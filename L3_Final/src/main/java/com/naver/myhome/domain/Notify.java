@@ -15,8 +15,16 @@ public class Notify {
 	    private Date NOTIFY_TIME;
 	    private String MENTIONED_BY;
 	    private String ASSIGNED_NAME;
+	    private String CURRENTTIME;
 	    private int ASSIGNED_ID;
 	    private int NOTIFY_STATUS;
+	    
+		public String getCURRENTTIME() {
+			return CURRENTTIME;
+		}
+		public void setCURRENTTIME(String cURRENTTIME) {
+			CURRENTTIME = cURRENTTIME;
+		}
 		public int getID() {
 			return ID;
 		}
