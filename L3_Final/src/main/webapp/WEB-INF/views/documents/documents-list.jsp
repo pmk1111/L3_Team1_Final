@@ -18,6 +18,7 @@
     <meta name="description" content="" />
 
     <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap">
 
     <!-- Helpers -->
     <script src="../resources/mainboard/assets/vendor/js/helpers.js"></script>
@@ -26,8 +27,12 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../resources/mainboard/assets/js/config.js"></script>
 
-
     <style>
+		body {
+	          font-family: 'Nanum Gothic', sans-serif;
+	          font-size:16px;
+	          font-weight: bold;
+	       }
         #documentarea1 {
             width: 1414px;
         }
@@ -85,10 +90,94 @@
         	width:70px;
         	height:35px;
 		    color: #fff;
-		    background-color: #696cff;
-		    border-color: #696cff;
+		    background-color: #9F7AB0;
+		    border-color: #9F7AB0;
 		    box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
 		}
+		.documents-area{
+		 	overflow: auto; height: 500px; 
+		 }
+		.issue-link{
+			color:#697a8d;
+		}
+		.table th {
+	    	font-size: 17px;
+	    	text-align: center;
+		}
+		
+		.table td {
+		    justify-content: space-between;
+		    align-items: center;
+		    font-size: 16px;
+		    height: 60px;
+		    border-radius: 3px;
+		    white-space: nowrap; 
+		    text-overflow: ellipsis; 
+		    overflow: hidden; 
+		    max-width: 150px; 
+		}
+		
+		.tablearea {
+		    display: table-row;
+		}
+		
+		#printDocumentBody{
+			text-align: center;
+		}
+		#search-btn {
+			display:none;	
+		    margin-right: 15px; 
+		    width: 70px;
+		    height: 50px;
+		    box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+		}
+		.search-label {
+			position:relative;
+			top:-2px;
+			left:-1px;
+		    padding: 10px;
+		    display: inline-block;
+		    width: 50px;
+		    height: 50px;
+		    border: 1px solid lightgrey;
+		    border-radius: 0px 3px 3px 0px;
+		}
+		.search-btn-icon {
+		    width: 26px;
+		    opacity: 0.4;
+		}
+
+		.search-label:hover{
+			cursor:pointer
+		}
+		
+		.file-search::placeholder{
+			color: #bababa;
+		}
+		.issue-search:focus{
+			outline:none;
+		}	
+		.file-search{
+			border:1px solid lightgrey;
+			border-radius:3px 0px 0px 3px;
+			width:400px;
+			height:50px;
+			padding-left: 15px;
+			color:#6a6192;
+			font-weight: 700;
+		}
+		.table td:hover {
+		    text-overflow: initial;
+		    white-space: normal;
+		    overflow: visible;
+		    cursor:pointer
+		}
+		.left-align {
+		    text-align: left !important;
+		}
+		.flex-column {
+    flex-direction: initial !important;
+}
     </style>
 </head>
 
@@ -128,12 +217,26 @@
 
                                         <div class="container-xxl flex-grow-1 container-p-y">
                                             <div class="container">
-                                                <h3 style="margin-bottom: 30px; font-weight: 700;">파일함</h3>
-                                                <input type="text" class="file-search" placeholder="검색어를 입력하세요." id = "keyword"><button id="searchBtn" onclick="searchDocument()">검색</button>
+                                                <div><h3 style="margin-bottom: 30px; font-weight: 700;">파일함</h3></div>
+                                           <div class="tabelcreate">     
+                                            <div class="tablearea">
+                                                <!-- <div><input type="text" class="file-search" placeholder="파일명을 입력하세요." id = "keyword">
+                                                <button id="searchBtn" onclick="searchDocument()"></button></div>
+                                               -->
+													<input type="text" class="file-search" id="keyword" name="searchText" placeholder="파일명을 입력하세요.">												
+													<input type="button" id="search-btn" onclick="searchDocument()" value="검색">
+													<label for="search-btn" class="search-label">
+														<img class="search-btn-icon" src="../resources/project/img/projectboard/search.svg">
+													</label>	
+													</div>	
+                                               </div>
+                                               <hr>
+                                               <div class="documents-area">
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col">바로가기</th>
+                                                            <th scope="col">No</th>
+                                                            <th scope="col">이슈명</th>
                                                             <th scope="col">다운로드</th>
                                                             <th scope="col">파일명</th>
                                                             <th scope="col">용량</th>
@@ -145,8 +248,8 @@
                                                    <tbody id = "printDocumentBody">
 													</tbody>
                                                 </table>
-
-                                            </div>
+                                               </div>
+                                              </div>
                                         </div>
                                     </div>
                                 </div>
@@ -157,25 +260,23 @@
 
 
                     <!-- Footer -->
-                    <footer class="content-footer footer bg-footer-theme">
-                        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                            <div class="mb-2 mb-md-0">
-                                ©
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script>
-                                (주)WidUs
-                            </div>
-                            <div>
-                                <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-                                <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
-
-                                <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
-
-                                <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
-                            </div>
-                        </div>
-                    </footer>
+                   <footer class="content-footer footer bg-footer-theme" style="magin-top:50px;">
+					    <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column" style="margin-top: 60px;">
+					        <div class="mb-2 mb-md-0">
+					            ©
+					            <script>
+					                document.write(new Date().getFullYear());
+					            </script>
+					            (주)WidUs
+					        </div>
+					        <div>
+					            <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+					            <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+					            <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
+					            <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
+					        </div>
+					    </div>
+					</footer>
                     <!-- Footer -->
 
                     <div class="content-backdrop fade"></div>
@@ -233,13 +334,14 @@
             },
             success: function (response) {
                 if (response.length == 0) {
-                    $("#printDocumentBody").html('<tr><td colspan="6" style="text-align:center;"><img src="../resources/documents/img/search-null.svg" alt="문서를 찾을 수 없습니다"></td></tr>');
+                    $("#printDocumentBody").html('<tr><td colspan="7" style="text-align:center;"><img src="../resources/documents/img/search-null.svg" alt="문서를 찾을 수 없습니다"></td></tr>');
                 } else {
                     var printTxt = '';
                     for (var i = 0; i < response.length; i++) {
                         printTxt += '<tr>';
-                        printTxt += '<th scope="row" onclick="issueDetail(\'' + response[i].issueId + '\')">' + response[i].issueId + '</th>';
-                        printTxt += '<td><a href="/myhome/documents/down?saveName=' + encodeURIComponent(response[i].saveName) + '&originalName=' + encodeURIComponent(response[i].originalName) + '">';
+                        printTxt += '<th scope="row">' + (i+1) +'</th>';
+                        printTxt += '<td class="left-align"><a href="#" class="issue-link" onclick="issueDetail(\'' + response[i].issueId + '\')">' + response[i].subject + '</a></td>';
+                        printTxt += '<td><a href="/myhome/documents/down?saveName=' + encodeURIComponent(response[i].saveName) + '&originalName=' + encodeURIComponent(response[i].originalName) + '" style="display: block; text-align: center;">';
 
                         let split = response[i].originalName.split('.'); 
                         let extension = split[split.length - 1].toLowerCase(); 
@@ -261,7 +363,7 @@
                         } 
 
                         printTxt += '</a></td>';
-                        printTxt += '<td>' + response[i].originalName + '</td>';
+                        printTxt += '<td class="left-align">' + response[i].originalName + '</td>';
                         printTxt += '<td>' + response[i].fileSize + ' KB</td>';
                         printTxt += '<td>' + response[i].name + '</td>';
                         printTxt += '<td>' + response[i].createdAt + '</td>';
