@@ -55,8 +55,9 @@
 		(SELECT name FROM users WHERE id = i.create_user) AS create_user_name
 		FROM issue i
 		<where>
+			project_id = #{projectId}
 			<if test='issueStatus != "-"'>
-				status = #{issueStatus}
+				AND status = #{issueStatus}
 			</if>
 			<if test='issuePriority != "-"'>
 				AND priority = #{issuePriority}
@@ -71,8 +72,11 @@
 		(SELECT name FROM users WHERE id = i.create_user) AS create_user_name
 		FROM
 		issue i
-		WHERE UPPER(subject) LIKE '%' || UPPER(#{searchText}) || '%'
-		OR UPPER(create_user) LIKE '%' || UPPER(#{searchText}) || '%'
+		WHERE 
+		project_id = #{projectId}
+		AND
+		(UPPER(subject) LIKE '%' || UPPER(#{searchText}) || '%'
+		OR UPPER((SELECT name FROM users WHERE id = i.create_user)) LIKE '%' || UPPER(#{searchText}) || '%')
 		ORDER BY created_at DESC
 	</select>
 

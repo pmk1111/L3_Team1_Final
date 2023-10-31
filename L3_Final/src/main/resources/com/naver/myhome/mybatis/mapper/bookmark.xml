@@ -17,7 +17,7 @@
     </select>
     
     <select id = "getBookmarkList" resultType="bookmark">
-    	SELECT i.TYPE, i.SUBJECT,p.TITLE , u.NAME, b.regDate
+    	 SELECT i.TYPE, i.SUBJECT,p.TITLE , u.NAME, ROUND((SYSDATE - regDate)*24*60) AS currentTime
 		FROM bookmark b
    		INNER JOIN issue i ON i.ID =  b.ISSUE_ID
     	INNER JOIN project p ON i.PROJECT_ID = p.ID
@@ -26,12 +26,13 @@
     </select>
     
     <select id="getSearchList" parameterType="map" resultType="bookmark">
-		SELECT i.TYPE, i.SUBJECT, p.TITLE , u.NAME, b.regDate, b.issue_id, b.user_id, b.id 
+		SELECT i.TYPE, i.SUBJECT, p.TITLE , u.NAME, ROUND((SYSDATE - regDate)*24*60) AS currentTime, b.issue_id, b.user_id, b.id 
 		FROM bookmark b INNER JOIN issue i ON i.ID = b.ISSUE_ID 
 		INNER JOIN project p ON i.PROJECT_ID = p.ID 
 		INNER JOIN users u ON i.CREATE_USER = u.ID 
 		WHERE b.user_id = #{userId}
-	<include refid="search_"/>
+		<include refid="search_"/>
+		order by b.regDate desc
 	</select>
 
 	<sql id="search_">
