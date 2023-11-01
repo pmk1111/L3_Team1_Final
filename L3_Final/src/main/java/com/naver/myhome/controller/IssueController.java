@@ -131,7 +131,7 @@ public class IssueController {
 
 	@PostMapping("createIssue")
 	public String createIssue(Issue issue, Notify notify, HttpServletRequest request, 
-			HttpSession session, Principal principal,@RequestParam(value="user_id",defaultValue="0",required=false) int mentioned_id,
+			HttpSession session, Principal principal,@RequestParam(value="mention_user_id",defaultValue="0",required=false) int mentioned_id,
 			@RequestParam(value = "assigned") int assignedValue,
 			String notionchoice,MultipartFile[] uploadfiles) throws Exception {
 
