@@ -8,8 +8,12 @@ import lombok.Data;
 public class Mytotalwork {
     private int ID; // 프로젝트 pk
     private String TITLE; // 프로젝트 title
+    
+    private String COLOR;
  
 	private String SUBJECT;
+	
+	private String CREATED_AT;
 
 	private int ASSIGNED;
     private String STATUS;
