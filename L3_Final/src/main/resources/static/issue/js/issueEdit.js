@@ -1,72 +1,72 @@
   $(document).ready(function () {
   
       
-$("#inputnotionchoice").on("input", function() {
-    var textarea = $(this);
-    var text = textarea.val();
+$(".notionchoice").focus(function(){
+		$.ajax({
+            type: "GET",
+            url: "getProjectAndTeamInfo",
+            success: function (response) {
+            		let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+								let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+            		$('.notionchoice').siblings('.issue-create-custom-options').empty();
+                if (response.length > 0) {
+                	let str = '';
+                	console.log(response)
+                	response.forEach(function(item){
+                		if(item.userPic !== null){
+											str += '<div class="issue-create-custom-option mentioned-user" value=@' + item.userName + ' data-id="' + item.userId+ '">'
+											str += '<img class="notify-user-img" src="' + contextPath + '/upload' + item.userPic + '"><span class="notify-user-name">' + item.userName + '</span>'
+										} else{
+											str += '<div class="issue-create-custom-option mentioned-user" value=@' + item.userName + ' data-id="' + item.userId+ '">'
+											str += '<img class="notify-user-img" src="' + contextPath + '/user/img/profile.png"><span class="notify-user-name">' + item.userName + '</span>'
+										}
+										str += '<span class="mentioned-user-id">#' + item.userId + '</span></div>'
+                  }); // forEach end
+                $('.notionchoice').siblings('.issue-create-custom-options').append(str);
+                $('.notionchoice').siblings('.issue-create-custom-options').fadeIn(300);
+                } else {
+                    console.log("가져온 사용자 정보 없음");
+                }
+            },
+            error: function (error) {
+                console.error("Error: " + error);
+            }
+        }); //ajax end
 
-  
-    var mentionPattern = /@([\w가-힣]+)/g;
-    var matches = text.match(mentionPattern);
-
-    if (matches && matches.length > 0) {
-       
-        var mention = matches[0];
-
-        
-        sendDataToServer(mention);
-    }
-});
+        $('.select-assign-dropdown').fadeIn(100);
+    }); // focus end
 
 
-function sendDataToServer(mention) {
-    
-   
-    var token = $("meta[name='_csrf']").attr("content");
-      var header = $("meta[name='_csrf_header']").attr("content");
-    $.ajax({
-        type: "POST",
-        url: "../user/issue-mention",
-        data: mention,
-        contentType: "application/json; charset=UTF-8",
-        dataType: "JSON",
-        beforeSend : function(xhr)
-                 {   //데이터를 전송하기 전에 헤더에 csrf값을 설정합니다.
-                    xhr.setRequestHeader(header, token);         
-                 },
-        success: function(response) {
-           
-            console.log('데이터가 서버로 전송되었습니다.');
-            console.log(response);
-           
-            output='';
-           	if (response.length > 0) {
-           	$(response).each(function(index,item){
-           	
-           	
-           	 output += "<option value=@"+item.name + " data-id="+item.id+"></option>"
-           	 
-           	
-           	
-           	})
-           	$("#notionchoice").html(output)
-           	console.log(output);
-           	inputdata = $("#inputnotionchoice").val()
-           	console.log(inputdata);
-          
-           	
-           	}
-           	else{
-           	$("#notionchoice").html(output)
-              
-        }},
-        error: function(jqXHR, textStatus, errorThrown) {
-            
-            console.error('데이터 전송 중 오류가 발생했습니다:', errorThrown);
+//언급할 유저 검색
+$(document).on('keyup', '.notionchoice', function() {
+    var searchText = $(this).val().toLowerCase(); // 입력된 검색어를 소문자로 변환
+
+    // .mention-list 내의 .mentioned-user 엘리먼트를 순회하면서 필터링
+    $('.mention-list .mentioned-user').each(function() {
+        var userText = $(this).attr('value'); // .mentioned-user 엘리먼트의 value 값을 가져옴
+
+        if (userText.toLowerCase().includes(searchText)) {
+            // 검색어가 포함된 경우 해당 항목을 표시
+            $(this).show();
+        } else {
+            // 검색어가 포함되지 않은 경우 해당 항목을 숨김
+            $(this).hide();
         }
     });
+});    
     
-}
+    
+$(document).on('click', '.mentioned-user', function(){
+	mentionedUserName = $(this).find('.notify-user-name').text();
+	mentionedUserId = $(this).data('id');
+	
+	$('.notionchoice').val(mentionedUserName);
+	$('#inputnotionchoice').val(mentionedUserId);
+	
+	$(this).parent('.issue-create-custom-options').fadeOut(300);
+}); //mentioned-user click end 
+
+
 	$('.issue-edit').click(function(){
 	
 		if($('.issue-setting-dropdown').css('display') === 'block'){
@@ -143,16 +143,10 @@ $('modal-overlay').click(function () {
      
       var issue_tag = ''; 
      const selectedOptionValue = $('#inputnotionchoice').val().trim();
-    if (selectedOptionValue != '' && $('#notionchoice option[value="' + selectedOptionValue + '"]').length === 0) {
-        alert('항목에 있는 값만 고르세요');
-        return false;
-    }
+
     //혜원
 
-    if (project_name === "") {
-      alert("프로젝트를 선택해주세요.");
-      return false;
-    } else if (issue_type === "") {
+   	if (issue_type === "") {
       alert("이슈 유형을 선택해주세요.");
       return false;
     } else if (issue_status === "") {

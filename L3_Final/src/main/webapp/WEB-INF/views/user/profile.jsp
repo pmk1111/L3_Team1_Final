@@ -45,6 +45,13 @@
             padding-bottom: 0px !important;
             padding-top: 25px !important;
         }
+        
+        .chatting-layer{
+        	left:71%
+        }
+        .notify-layer{
+        	left:65%;
+        }
     </style>
     <script>
         const result = "${result}";
@@ -60,14 +67,14 @@
         <div class="layout-container">
 
             <jsp:include page="../mainboard/leftbar.jsp"></jsp:include>
-
+			
 
             <div class="layout-page">
 
                 <jsp:include page="../mainboard/navbar.jsp"></jsp:include>
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
-
+                    <jsp:include page="../chat/chat.jsp"></jsp:include>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card mb-4" style="display: flex; align-items: center;">

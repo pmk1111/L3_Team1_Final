@@ -26,12 +26,12 @@
         .card {
             width: 100%;
             height: 800px;
-            min-height: 800px;
+            min-height: 720px;
 
         }
 
         .bookmark-list {
-            width: 100%
+            width: 100%;
         }
 
         .bookmark-list-card-body {
@@ -47,14 +47,19 @@
             position: relative;
         }
 
-        .bookmark-search {
+        #search_word {
             border: 1px solid lightgrey;
             border-radius: 3px 0px 0px 3px;
             width: 400px;
             height: 50px;
             padding-left: 15px;
+            font-weight: 700;
             color: #6a6192;
-            font-weight: 700
+            outline:none;
+        }
+        
+        #search_word::placeholder{
+        	color:lightgrey
         }
 
         ul {
@@ -85,7 +90,9 @@
         }
 
         .search-result-title {
-            font-size: 20px;
+            font-size: 16px;
+    		font-weight: 700;
+    		margin-right: 10px;
         }
 
         .all-bookmark-count {
@@ -113,7 +120,9 @@
             width: 600px;
         }
 
-        .issuetype {}
+        .issuetype {
+        	margin-left:10px
+        }
 
         /* 여기 바꾸면 레프트바 다 바껴서 한번 확인하기
 a {
@@ -228,7 +237,7 @@ a {
         }
 
         .bookmark-wrap {
-            width: 80%
+            width: 80%; 
         }
 
         .icon-circle {
@@ -375,6 +384,38 @@ a {
             margin: auto;
             padding: auto;
         }
+        
+        .bookmark-list:hover{
+        	cursor: pointer;
+  			background-color: #e7e8ff;
+   			transition: .3s;
+        }
+        .all-bookmark-list{
+        	margin-top:20px;
+        	margin-bottom:0px;
+        	padding:0px
+        }
+        
+        .issuetype-icon{
+        	position:relative;
+        	margin-left:7px;
+        	width: 20px;
+        	top:-2px
+        }
+        
+        #bookmark{
+        	margin-left: 5px
+        }
+        
+        .bookmark-list a{
+        	color: #697A8D;
+    		text-decoration: none;
+        }
+        
+        .bookmark-area{
+        	height: 520px;
+        	overflow: auto
+        }
     </style>
     <script>
         $(function() {
@@ -382,7 +423,7 @@ a {
             const $input = $("input[name=search_word]")
 
             //검색 버튼 클릭한 경우
-            $("button").click(function() {
+            $(".search-btn-icon").click(function() {
                 //검색어  공백 유효성 검사합니다.
                 if ($input.val() == '') {
                     alert("검색어를 입력하세요.");
@@ -410,14 +451,15 @@ a {
                 <!-- / Navbar -->
                 <div class="content-wrapper">
                     <!-- Content -->
+                    <jsp:include page="../chat/chat.jsp"></jsp:include>
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <div class="row">
                             <div class="col-lg-12 mb-4 order-0 welcome-message">
                                 <div class="card">
                                     <div class="card-body bookmark-list-card-body">
-                                        <h3 style="font-size: 27px; font-weight: 800; color: #555">북마크</h3>
+                                        <h3 style="font-size: 27px; font-weight: 800; color: #555; padding-bottom:14px;">북마크</h3>
 
-                                        <form name="bookmark-search-form" class="bookmark-search" autocomplete="off" method="GET" action="bookmark-list">
+                                        <!-- <form name="bookmark-search-form" class="bookmark-search" autocomplete="off" method="GET" action="bookmark-list"> -->
                                             <div class="search-bookmark">
                                                 <div class="search-area">
                                                     <input type="text" class="bookmark-search" id="search_word" name="search_word" placeholder="검색어를 입력하세요" value="${search_word}">
@@ -428,7 +470,7 @@ a {
                                                 </div>
                                             </div>
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                        </form>
+                                        <!-- </form> -->
                                         <hr>
 
                                         <div class="search-title">
@@ -448,6 +490,7 @@ a {
                                                         <c:forEach var="bookmark" items="${bookmarkList}">
                                                             <li class="bookmark-list">
                                                                 <div class="bookmark-wrap">
+                                                                	<img src="../resources/bookmark/img/bookmark_purple.png" id="bookmark" alt="북마크" width=25px>
                                                                     <c:choose>
                                                                         <c:when test="${bookmark.type eq '버그'}">
                                                                             <img src="../resources/issue/img/bug.svg" class="issuetype-icon">
@@ -464,8 +507,8 @@ a {
                                                                     <span class="contentTitle">
                                                                         <a href="../issue/issue-detail?num=${bookmark.issue_id}">
                                                                             ${bookmark.subject}</a>
-                                                                        <p class="content-project">
-                                                                            <em class="project-name">${bookmark.title}</em></p>
+                                                <%--                         <p class="content-project">
+                                                                            <em class="project-name">${bookmark.title}</em></p> --%>
                                                                     </span>
                                                                 </div>
                                                                 <div class="bookmark-list-right">
@@ -578,6 +621,86 @@ a {
 
     <!-- Core JS -->
     <jsp:include page="../template/jsTemplate.jsp"></jsp:include>
+    
+    <script type="text/javascript">
+    $(document).ready(function () {
+    
+    
+    //북마크 애니메이션 
+    var img = $("#bookmark");
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    img.click(function () { //마우스 클릭시 
+
+        $this = $(this);
+    
+        const href = $(this).siblings('.contentTitle').find('a').attr("href");
+        console.log("선택한 이슈 url = " + href);
+        
+        const LastEqIdx = href.lastIndexOf("=");
+        const issueId = href.substring(LastEqIdx+1,);
+        
+        console.log("추출한 이슈 번호 = " + issueId);
+
+        $.ajax({
+            url: '../bookmark/bookmark',
+            data: {
+                issueId: issueId
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            async: false,
+            type: "POST",
+            success: function (result) {
+                if (result === 1) {
+                    console.log("성공인가요?")
+                    $this.attr('src', '../resources/bookmark/img/bookmark_purple.png');
+                } else {
+                    console.log("지워졌나요?")
+                    $this.attr('src', '../resources/bookmark/img/bookmark.png');
+                }
+
+            }//success end
+        }); //ajax end
+    });
+    
+    $(document).ready(function() {
+        $('.search-label').click(function() {
+            filterResults();
+        });
+
+        $('.bookmark-search').on('input', function() {
+            filterResults();
+        });
+
+        function filterResults() {
+            var searchTerm = $('.bookmark-search').val().toLowerCase();
+            var visibleItemCounter = 0; // 표시된 항목의 갯수를 추적하는 변수
+
+            $('.contentTitle a').each(function() {
+                var resultText = $(this).text().toLowerCase();
+                var $parent = $(this).closest('.bookmark-list');
+                $('.all-bookmark-count').empty();
+                if (resultText.includes(searchTerm)) {
+                    $parent.show();
+                    visibleItemCounter++; // 표시된 항목의 갯수 증가
+                } else {
+                    $parent.hide();
+                }
+                $('.all-bookmark-count').text(visibleItemCounter);
+            });
+
+            // 표시된 항목의 갯수를 출력 또는 다른 용도로 사용
+            console.log("표시된 항목의 갯수: " + visibleItemCounter);
+        }
+    });
+
+    });
+
+
+    </script>
 
 </body>
 

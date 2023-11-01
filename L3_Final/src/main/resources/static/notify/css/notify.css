@@ -10,6 +10,10 @@
     margin:auto;
 }
 
+.notify-layer{
+	display: none;
+}
+
 .read{
 	
 	background:#f5f5f5;
