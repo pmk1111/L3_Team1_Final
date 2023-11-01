@@ -95,6 +95,37 @@ public class AdminController {
         return map;
     }
    
+    @ResponseBody
+    @PostMapping(value = "/updateAddress")
+    public HashMap<String, String> updateAddress(ModelAndView mv,
+    												@RequestParam("companyId") int companyId,
+    												@RequestParam("companyZipcode") String companyZipcode,
+    												@RequestParam("companyAddress") String companyAddress,
+    												@RequestParam("companyDetailAddress") String companyDetailAddress) {
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        int updateZipcode = adminService.updateZipcode(companyId, companyZipcode);
+        int updateAddress = adminService.updateAddress(companyId, companyAddress);
+        int updateDetailAddress = adminService.updateDetailAddress(companyId, companyDetailAddress);
+
+        if (updateZipcode > 0 || updateAddress > 0 || updateDetailAddress > 0) {
+            // 업데이트 성공
+        	String afterZipcode = adminService.companyZipcode(companyId);
+        	String afterAddress = adminService.companyAddress(companyId);
+        	String afterDetailAdress = adminService.companyDetailAddress(companyId);
+        	
+        	map.put("afterZipcode", afterZipcode);
+        	map.put("afterAddress", afterAddress);
+        	map.put("afterDetailAdress", afterDetailAdress);
+            map.put("updateResult", "success");
+        } else {
+            // 업데이트 실패
+        	map.put("error", "전용 url 업데이트 중 오류가 발생했습니다.");
+        }
+
+        return map;
+    }
+   
 
     @GetMapping(value = "/list")
     public ModelAndView employeeList(ModelAndView mv,@ModelAttribute("companyId") int companyId) {
@@ -206,6 +237,7 @@ public class AdminController {
     @PostMapping(value = "/update-auth")
     public void empAuth(@RequestParam("empId") int employeeId) {
         adminService.updateAuth(employeeId);
+        adminService.updateSecurity(employeeId);
     }
 
     // 이용중지리스트

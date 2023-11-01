@@ -12,6 +12,7 @@ public class Bookmark {
 	private String subject;
 	private String title;
 	private String name;
+	private String priority;
 	private String currentTime;
 	
 	
