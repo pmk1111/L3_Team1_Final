@@ -102,7 +102,7 @@
     </style>    
 </head>
 
-<body>
+<body data-context-path="${pageContext.request.contextPath}">
 
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -307,7 +307,7 @@
                                                                                 	<img class="modal-memeber-img team-img-empty" src="../resources/user/img/profile.png" style="border-radius:50%">
                                                                                 </c:when>
                                                                              	<c:otherwise>
-                                                                             		<img class="modal-memeber-img" src="../resources/project/img/projectboard/team/${TEAM.PIC}">
+                                                                             		<img class="modal-memeber-img" src="${pageContext.request.contextPath}/upload${TEAM.PIC}">
                                                                               	</c:otherwise>
                                                                              </c:choose>                                                                        
                                                                         </div>
