@@ -12,4 +12,7 @@ public class Company {
 	private String domain;
 	private String RegistrationNo;		//추가되었음
 	private Date created_at;
+	private String zipcode;
+	private String address;
+	private String detail_address;
 }

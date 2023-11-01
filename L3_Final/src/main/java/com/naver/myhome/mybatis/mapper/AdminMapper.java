@@ -24,10 +24,22 @@ public interface AdminMapper {
 		public int updateName(int companyId,String companyName);
 
 		public int updateDomain(int companyId,String companyDomain);
+		
+		public int updateZipcode(int companyId, String companyZipcode);
+
+		public int updateAddress(int companyId, String companyAddress);
+		
+		public int updateDetailAddress(int companyId, String companyDetailAddress);
 
 		public String companyName(int companyId);
 
 		public String companyDomain(int companyId);
+		
+		public String companyZipcode(int companyId);
+		
+		public String companyAddress(int companyId);
+		
+		public String companyDetailAddress(int companyId);
 
 		public List<User> waitUser(int companyId);
 
@@ -40,6 +52,8 @@ public interface AdminMapper {
 		public int stopEmpStatus(int employeeId);
 
 		public void updateAuth(int employeeId);
+		
+		public void updateSecurity(int employeeId);
 		
 		public int countUser(int companyId);
 

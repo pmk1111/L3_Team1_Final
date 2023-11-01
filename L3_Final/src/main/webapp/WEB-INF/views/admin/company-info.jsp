@@ -29,8 +29,7 @@
 	<script src="../resources/admin/js/companyinfo.js"></script>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon"
-			href="${pageContext.request.contextPath}/mainboard/assets/img/favicon/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="../resources/mainboard/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -71,6 +70,16 @@
  	  						   background-color: white;
  	  						   color: #697a8d;
  	  						   }
+ 	  #addresspdate {margin-top: 80px;
+ 	  				 border: 1px solid #d9dee3;
+ 	  				 background-color: white;
+ 	  				 color: #697a8d;
+ 	  				}
+ 	  				
+ 	  #zip_code, #addr, #addr_dtl, #openZip {margin-bottom: 10px;
+ 	  							   color: #697a8d;
+ 	  							   border: 1px solid #d9dee3;}
+ 	  
  	  .form-control {border:1px solid transparent;
  	    			 border-bottom: 1px solid #d9dee3;
  	    			 background-color:white;
@@ -80,12 +89,15 @@
    					 background-color: transparent;
 					}
 	 .card {
-   			 height: 85vh; /* 화면 높이에 85% 맞춤 */
+            width: 100%;
+            height: 800px;
+            min-height: 800px;
 	}
 	
 	.card-body { padding:50px;}
 	
 	.form-label, .col-md-12  {padding-top: 20px}
+	
 	
 	.changepassword { margin: 20px 0px 40px 0px}
 	.changepwd { background-color: white;
@@ -108,10 +120,18 @@
  	  						    box-shadow:none;
 	 }
 	 
-	 #saveButton, #saveNameButton {color:white;
+	 #saveAddressButton, #cancelAdressButton{margin-top: 80px;
+	 							border: 1px solid #d9dee3;
+ 	  						    background-color: white;
+ 	  						    color: #697a8d;
+ 	  						    box-shadow:none
+	 }
+	 
+	 #saveButton, #saveNameButton, #saveAddressButton {color:white;
 	 							   background-color:#696cff;}
  
  	.modal .modal-header .btn-close {transform: translate(23px,-25px)};
+ 	
  	/* swal */
  	
     </style>
@@ -173,7 +193,7 @@
       					     <button type="submit" class="btn btn-secondary d-none" id="saveNameButton">저장</button>
        						 <button type="button" class="btn btn-secondary d-none" id="cancelNameButton">취소</button>
   					   </div>
-  					   <input type="hidden" name="updateType" id="updateType" value="updateName">
+  					   		 <input type="hidden" name="updateType" id="updateType" value="updateName">
   					   
                       
                          <div class="mb-3 col-md-6">
@@ -194,33 +214,27 @@
       					     <button type="submit" class="btn btn-secondary d-none" id="saveButton">저장</button>
        						 <button type="button" class="btn btn-secondary d-none" id="cancelButton">취소</button>
   					   </div>
-  					   <input type="hidden" name="updateType" id="updateDomain" value="updateDomain">
-  					   
-  					   <!-- 		이걸 넣을까 말까...
-                         <div class="col-md-12">
-                         	<div class="employeeParticipation">직원 참여 옵션</div>
-                         	<br>
-    						<label for="participation1" style="padding-bottom: 15px;">
-   						    <input type="radio" id="participation1" name="employeeParticipation" value="1" checked>
-     							관리자의 가입 승인 완료 후, 참여하도록 설정합니다.</label><br>
-    						<label for="participation2">
-   							<input type="radio" id="participation2" name="employeeParticipation" value="2">
-   								특정 도메인의 이메일로 가입시, 관리자 승인 없이도 바로 참여할 수 있도록 설정합니다.</label><br><br>
-    			 		
-    					
-    						<div class="row">
-    						 <div class="col-md-6">  <!-- 왼쪽 컨텐츠 비워놓기 
-    						</div>
-    						
-   							<div class="col-md-6">
-       						 <div class="d-flex justify-content-end mt-2" style="width: 450px;">
-            					<button type="submit" class="btn btn-primary me-2">저장</button>
-           					    <button type="reset" class="btn btn-outline-secondary">취소</button>
-        					 </div>
-    						</div>
-                       </div>
-                	 -->
-                
+  					    	 <input type="hidden" name="updateType" id="updateDomain" value="updateDomain">
+  					   		
+  					     <div class="mb-3 col-md-6 " >
+						 	 <label for="address" class="form-label">주소</label>
+						  	 
+						    <div>
+							 <input type="text"  id="zip_code" name="zip_code" value= "${companyinfo.zipcode}"readonly="readonly" placeholder="우편번호" style="width:255px;">
+							 <input type="button" id="openZip" onclick="openZipSearch()" value="우편번호 찾기" style="width:140px;">
+							 <input type="text"   id="addr" name="addr" value= "${companyinfo.address}" readonly="readonly" placeholder="기본주소"  style="width:400px;">
+							 <input type="text"   id="addr_dtl" name="addr_dtl" value= "${companyinfo.detail_address}" disabled="disabled" placeholder="상세주소"  style="width:400px;">
+							</div>
+							 
+						</div>				
+                	
+                		<div class="mb-3 col-md-6">
+      					     <button type="button" class="btn" id="addresspdate">수정</button>
+      					     <button type="submit" class="btn btn-secondary d-none" id="saveAddressButton">저장</button>
+       						 <button type="button" class="btn btn-secondary d-none" id="cancelAdressButton">취소</button>
+  					   </div>
+  					   		 <input type="hidden" name="updateType" id="updateAddress" value="updateAddress">
+  					   		 
                       </div>
                        
                     </form>
@@ -299,5 +313,55 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+    function openZipSearch() {
+    	new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("addr_dtl").value = extraAddr;
+                
+                } else {
+                    document.getElementById("addr_dtl").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('zip_code').value = data.zonecode;
+                document.getElementById("addr").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("addr_dtl").focus();
+            }
+        }).open();
+    }
+    </script>
   </body>
 </html>

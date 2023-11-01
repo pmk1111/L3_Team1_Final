@@ -13,8 +13,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon"
-			href="${pageContext.request.contextPath}/mainboard/assets/img/favicon/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="../resources/mainboard/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -76,7 +75,11 @@
     flex: 0 0 auto;
     width: 100%;
     }
-    
+    .card {
+    width: 100%;
+    height: 800px;
+    min-height: 800px;
+    }
     .card-body {
     padding-left: 50px;}
     

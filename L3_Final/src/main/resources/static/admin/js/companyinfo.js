@@ -56,7 +56,33 @@ $(document).ready(function() {
         $("#urlupdate").removeClass("d-none");
     });
 
+//주소 수정
+    // 수정 버튼 클릭 시
+    $("#addresspdate").click(function() {
+        // 입력 필드 활성화
+        $("#addr_dtl").prop("disabled", false);
+        // 버튼 변경
+        $("#addresspdate").addClass("d-none");
+        $("#saveAddressButton, #cancelAdressButton").removeClass("d-none");
+    });
 
+    // 저장 버튼 클릭 시
+    $("#saveAddressButton").click(function() {
+        // 입력 필드 비활성화
+        $("#addr_dtl").prop("disabled", true);
+        // 버튼 변경
+        $("#saveAddressButton, #cancelAdressButton").addClass("d-none");
+        $("#addresspdate").removeClass("d-none");
+    });
+
+    // 취소 버튼 클릭 시
+    $("#cancelAdressButton").click(function() {
+        // 입력 필드 비활성화
+        $("#addr_dtl").prop("disabled", true);
+        // 버튼 변경
+        $("#saveAddressButton, #cancelAdressButton").addClass("d-none");
+        $("#addresspdate").removeClass("d-none");
+    });
 // 전용 URL 수정
 
 $("#saveButton").click(function(){
@@ -132,4 +158,52 @@ $("#saveButton").click(function(){
          }//else end
    
 });
+
+//주소수정
+		
+	$("#saveAddressButton").click(function(){
+	var companyId = $("#companyId").val();
+	var companyZipcode = $("#zip_code").val() ;
+	var companyAddress = $("#addr").val() ;
+	var companyDetailAddress = $("#addr_dtl").val() ;
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content"); 
+
+	if(!addr_dtl){
+    		alert('상세주소를 입력하세요');
+    		return false;
+    		$("#addr_dtl").focus();
+		}	else{
+    // 서버로 업데이트 요청 보내기
+    console.log("여기는 ajax update")
+    $.ajax({
+        url: "../admin/updateAddress",
+        type: "POST",
+        data: {
+            companyId: companyId,
+            companyZipcode: companyZipcode,
+            companyAddress: companyAddress,
+            companyDetailAddress: companyDetailAddress,
+            
+           
+        },
+ 		beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token);
+             },        
+        async: false,
+        success: function(response) {
+         if(updateName == 1){
+         
+         	alert ("업데이트 완료");
+        	} 
+        	
+        }//success end
+    }); //ajax end
+         }//else end
+   
+});
+
+
+  
+
 });

@@ -42,6 +42,21 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
+	public String companyZipcode(int companyId) {
+		return dao.companyZipcode(companyId);
+	}
+	
+	@Override
+	public String companyAddress(int companyId) {
+		return dao.companyAddress(companyId);
+	}
+
+	@Override
+	public String companyDetailAddress(int companyId) {
+		return dao.companyDetailAddress(companyId);
+	}
+	
+	@Override
 	public Employee employeeInfo(int empId) {
 		return dao.employeeInfo(empId);
 	}
@@ -67,11 +82,20 @@ public class AdminServiceImpl implements AdminService {
 		return dao.updateDomain(companyId, companyDomain);
 	}
 	
-//	@Override
-//	public int changePwd(Map<String, Object> paramMap) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
+	@Override
+	public int updateZipcode(int companyId, String companyZipcode) {
+		return dao.updateZipcode(companyId,companyZipcode);
+	}
+	
+	@Override
+	public int updateAddress(int companyId, String companyAddress) {
+		return dao.updateAddress(companyId,companyAddress);
+	}
+	
+	@Override
+	public int updateDetailAddress(int companyId, String companyDetailAddress) {
+		return dao.updateDetailAddress(companyId,companyDetailAddress);
+	}
 
 	@Override
 	public List<User> waitUser(int companyId) {
@@ -108,6 +132,11 @@ public class AdminServiceImpl implements AdminService {
 		dao.updateAuth(employeeId);
 	}
 
+	@Override 
+	 public void updateSecurity(int employeeId) {
+	 dao.updateSecurity(employeeId); 
+	 }
+	
 	@Override
 	public int countUser(int companyId) {
 		return dao.countUser(companyId);
