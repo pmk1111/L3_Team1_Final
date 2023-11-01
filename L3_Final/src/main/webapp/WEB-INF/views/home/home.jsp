@@ -227,7 +227,7 @@
 
           <div class="col-lg-6 mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="200">
             <div class="member d-flex align-items-start">
-              <div class="pic"><img src="resources/project/img/projectboard/team/user2.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="resources/project/img/projectboard/team/user4.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
                 <h4>박민기</h4>
                 <span style="font-weight:600">조 장</span>
@@ -261,7 +261,7 @@
 
           <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="400">
             <div class="member d-flex align-items-start">
-              <div class="pic"><img src="resources/project/img/projectboard/team/user4.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="resources/project/img/projectboard/team/user2.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
                 <h4>김혜원</h4>
                 <span style="font-weight:600">조 원</span>
@@ -278,7 +278,7 @@
           
           <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="400">
             <div class="member d-flex align-items-start">
-              <div class="pic"><img src="resources/project/img/projectboard/team/user5.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="resources/project/img/projectboard/team/user6.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
                 <h4>옥진석</h4>
                 <span style="font-weight:600">조 원</span>
@@ -295,7 +295,7 @@
 
           <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="400">
             <div class="member d-flex align-items-start">
-              <div class="pic"><img src="resources/project/img/projectboard/team/user6.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="resources/project/img/projectboard/team/user5.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
                 <h4>한혜진</h4>
                 <span style="font-weight:600">조 원</span>
