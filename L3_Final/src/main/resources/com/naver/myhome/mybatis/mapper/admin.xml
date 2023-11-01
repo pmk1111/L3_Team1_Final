@@ -59,11 +59,11 @@
     
     <update id="updateSecurity" parameterType="int"> 
     	UPDATE users u 
-    	SET u.security = CASE 
+    	SET u.security = (CASE 
     		WHEN u.security = 'ROLE_MEMBER' THEN 'ROLE_ADMIN' 
     		WHEN u.security = 'ROLE_ADMIN' THEN 'ROLE_MEMBER' 
     		ELSE u.security 
-    	END 
+    	END) 
     	WHERE u.id = (SELECT e.user_id FROM employee e WHERE e.id = #{employeeId}) 
     </update>
 
