@@ -72,7 +72,7 @@
         }
 
         .card {
-            height: auto;
+            height: 800px;
             /* 화면 높이에 80% 맞춤 */
             width: 100%;
         }
@@ -142,6 +142,9 @@
             color: red;
         }
         
+        .row {
+        	margin-top:30px;
+        }
     </style>
 
 </head>
@@ -165,7 +168,7 @@
                             <div class="col-lg-8 mb-4 order-0 welcome-message">
                                 <div class="container-fluid">
                                     <div class="card">
-                                        <div class="card-body">
+                                        <div class="card-body" style="padding: 0 50px; margin-top:50px;">
                                             <h2 class="card-title text-primary">구성원 관리</h2>
                                             <hr>
                                             <p class="mb-4">

@@ -19,6 +19,12 @@
 	.app-brand demo{margin-bottom:10%}
 	
 	
+	.menu-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 </style>
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
@@ -68,10 +74,7 @@
     </div>
 
     <div class="menu-inner-shadow"></div>
-	<div class="menu-bar">
     <ul class="menu-inner py-1">
-
-        
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">회사</span>
         </li>   
@@ -106,10 +109,8 @@
               </a>
           </div>
         </li>
-        </div>
   
-        <div class="return bar">
-        <li class="menu-item">
+        <li class="menu-item" style="margin-top:200%;">
           <div class="menu-link" style="width: 100%; margin-left: -14px; height: 42.5px;" >
               <a href="${pageContext.request.contextPath}/mainboard/my-dashboard" class="menu-link return-link">
                   <i class="menu-icon tf-icons bx bx-log-out"></i>
@@ -117,7 +118,6 @@
               </a>
           </div>
         </li>
-       </div> 
     </ul>
 </aside>
 

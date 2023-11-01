@@ -83,6 +83,9 @@
     .card-body {
     padding-left: 50px;}
     
+       	.row {
+      		margin-top:30px;
+        }
     </style>
     
   </head>
@@ -114,7 +117,7 @@
                   <div class="container-fluid" >
                     <div class="card">
                         <div class="card-body">
-                          <h2 class="card-title text-primary">구성원 초대</h2>
+                          <h2 class="card-title text-primary" style="margin-top: 28px;">구성원 초대</h2>
                           <hr>
                           <p class="mb-4">
                           
