@@ -17,7 +17,7 @@ public interface IssueMapper {
 	
 	public List<Issue> getIssueList(int projectId);
 	
-	public List<Issue> getStatusCount(int employeeId);
+	public List<Issue> getStatusCount(int employeeId, int userId);
 	
 	public List<Issue> getMyWork(String status, int userId);
 	
