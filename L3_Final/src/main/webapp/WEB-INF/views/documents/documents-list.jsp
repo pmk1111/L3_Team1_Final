@@ -198,6 +198,14 @@
 		.flex-column {
     flex-direction: initial !important;
 }
+
+.menu-inner {
+	    font-weight: 500;
+}
+
+table {
+	min-height:500px;
+}
     </style>
 </head>
 

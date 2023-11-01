@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<article class="notify-layer">
+<article class="notify-layer" style="top: 70px;">
     <div class="notify-menu-top">
         <strong class="notify-menu-txt">알림</strong>
         <button class="notify-menu-close-btn">

@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-
+<style>
+	.chatting-layer {
+		top:70px;
+	}
+</style>
 <article class="chatting-layer">
 	<input type="hidden" class="selected-room-num" name="selectedRoomNum" value="">
 	<div class="chat-menu-top">
