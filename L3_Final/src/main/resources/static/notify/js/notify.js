@@ -16,6 +16,7 @@ $(document).ready(function() {
 
     // 알림 아이콘 클릭 시, 알림 레이어 열기
     $('.alarm-icon').click(function() {
+    	if($('.notify-layer').css('display') === 'none'){
         notifyLayer.fadeIn(100);
         $('.on').removeClass('on');
         $('.notify-on').addClass('on');
@@ -23,7 +24,19 @@ $(document).ready(function() {
         notreadNotifyArea.hide();
         // 알림 레이어가 열릴 때 업데이트
         getNotifications();
+        }
     });
+    
+$('.alarm-icon').click(function (e) {
+    if ($('.notify-layer').css('display') === 'block') {
+        $('.notify-layer').css('display', 'none');
+        // notifyListArea를 정의하고 hide() 메서드를 사용하여 숨깁니다.
+        var notifyListArea = $('.notify-list-area');
+        notifyListArea.hide();
+        e.preventDefault(); // 클릭 이벤트의 기본 동작을 막습니다.
+    }
+});
+
 
     // 알림 레이어 닫기
     $('.notify-menu-close-btn').click(function() {

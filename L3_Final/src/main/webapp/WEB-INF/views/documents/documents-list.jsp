@@ -33,11 +33,22 @@
     <script src="../resources/mainboard/assets/js/config.js"></script>
 
     <style>
+    	*{
+    		font-family: 'Nanum Gothic', sans-serif;
+    	}
+    
 		body {
-	          font-family: 'Nanum Gothic', sans-serif;
 	          font-size:16px;
 	          font-weight: bold;
-	       }
+	    }
+	          
+	    .card{
+	    	min-height: 720px
+	    }
+	    
+	    table{
+	    	font-weight: 500
+	    }
         #documentarea1 {
             width: 1414px;
         }
@@ -186,6 +197,14 @@
 		}
 		.flex-column {
     flex-direction: initial !important;
+}
+
+.menu-inner {
+	    font-weight: 500;
+}
+
+table {
+	min-height:500px;
 }
     </style>
 </head>

@@ -13,7 +13,8 @@
         })
         
         var projectId = parseInt($("#detailSettingProjectSrno").text());
-
+		var contextPath = $("body").data("context-path");
+		 
         // AJAX 요청 시작
         $.ajax({
             url: '../team/team-list',
@@ -35,7 +36,7 @@
                     if (data.team[i].pic == null) {
                         teamList += '<img class="modal-memeber-img" src="../resources/user/img/profile.png">';
 	                } else {
-    	                teamList += '<img class="modal-memeber-img" src="../resources/project/img/projectboard/team/' + data.team[i].pic + '">';
+    	                teamList += '<img class="modal-memeber-img" src="' + contextPath + '/upload' + data.team[i].pic + '">';
         	        }
 
                     teamList += '</div>';
@@ -126,6 +127,8 @@
         $('.modal-search-list').hide(); // 목록 div 숨기기
         $('.modal-body-invite').show(); // 초대 div 보이기
         $('.modal-content-invite').animate({ width: '600px' }, 250); // 너비 변경 애니메이션
+        
+        var contextPath = $("body").data("context-path");
 
         // AJAX 요청 시작
         $.ajax({
@@ -152,7 +155,7 @@
                     if (data.invitedUser[i].pic == null) {
                     	userList += '<img class="modal-memeber-img" src="../resources/user/img/profile.png">';
                     } else {
-                    	userList += '<img class="modal-memeber-img" src="../resources/project/img/projectboard/team/' + data.invitedUser[i].pic + '">';
+                    	userList += '<img class="modal-memeber-img" src="' + contextPath + '/upload' + data.invitedUser[i].pic + '">';
                     }	
                     userList += '</div>';
                     userList += '<div class="modal-member-name name-flex">';

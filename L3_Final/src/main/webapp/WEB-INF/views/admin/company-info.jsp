@@ -13,7 +13,7 @@
     <title>회사 정보</title>
     <meta name="description" content="" />
 
-
+	<link rel="icon" type="image/x-icon" href="../resources/mainboard/assets/img/favicon/favicon.png" />
 	<!-- CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
@@ -159,7 +159,7 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <div class="row">
+              <div class="row" style="margin-top:30px;">
                 <div class="col-lg-8 mb-4 order-0 welcome-message">
                   <div class="container-fluid" >
                     <div class="card">

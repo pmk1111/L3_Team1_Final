@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-
+<style>
+	.chatting-layer {
+		top:70px;
+	}
+</style>
 <article class="chatting-layer">
 	<input type="hidden" class="selected-room-num" name="selectedRoomNum" value="">
 	<div class="chat-menu-top">
@@ -181,8 +185,8 @@ function getChatRoomList() {
                     } else{
                     	str += '<p class="latest-chat">' + item.resent_content + '</p></div>'
                     }
-                    str += '<div class="update-time-area">'
-                    str += '<span class="update-time">' + chatRoomUpdateDate(item.updated_at) + '</span></div></li>'
+                    str += '<div class="chat-update-time-area">'
+                    str += '<span class="chat-update-time">' + chatRoomUpdateDate(item.updated_at) + '</span></div></li>'
 
                     $('.chat-list').append(str);
                 });//forEach end
@@ -283,9 +287,9 @@ $(document).on('click', '.chat-room', function () {
     });
 
     $('.alarm-icon').click(function () {
-				ws.close();
+		ws.close();
         ws.onclose = function (event) {
-        	console.log("Connection closed!!");
+        console.log("Connection closed!!");
         };
     }) //alarm-icon click end
 
@@ -393,6 +397,7 @@ $('.chat-icon').click(function () {
         chattingRoom.fadeOut(100);
     }
 }); // chat-icon click end
+
 
 $('.chat-menu-close-btn').click(function () {
     chattingLayer.fadeOut(100);
@@ -957,6 +962,47 @@ function writeResponse(rtext) {
     str += '<span class="send-time">' + formattedTime + '</span></div></div>'
     $('.wrap').append(str);
 };
+
+
+//채팅 검색
+$('.search-chat').on('keypress', function(event) {
+    if (event.which === 13) { // Enter 키 누름 감지
+        var searchTerm = $(this).val().trim().toLowerCase(); // 입력된 검색어 (공백 제거 및 소문자로 변경)
+
+        // 검색어가 비어 있으면 모든 항목을 보여줌
+        if (searchTerm === "") {
+            $('.contact-list .contact-user, .chat-list .chat-room').show();
+            return; // 빈 검색어일 경우 검색 과정 종료
+        }
+
+        // 표시되는 항목에서 검색 수행
+        if ($('.chat-contact-area').css('display') === 'block') {
+            $('.contact-list .contact-user:visible').each(function() {
+                var contactUserId = $(this).find('.chat-user-id').text().toLowerCase();
+
+                if (contactUserId.includes(searchTerm)) {
+                    $(this).show(); // 검색어와 일치하는 결과 표시
+                } else {
+                    $(this).hide(); // 일치하지 않는 결과 숨김
+                }
+            });
+        } else {
+            $('.chat-list .chat-room:visible .chat-user-id').each(function() {
+                var chatUserId = $(this).text().toLowerCase();
+
+                if (chatUserId.includes(searchTerm)) {
+                    $(this).closest('.chat-room').show(); // 검색어와 일치하는 결과 표시
+                } else {
+                    $(this).closest('.chat-room').hide(); // 일치하지 않는 결과 숨김
+                }
+            });
+        }
+    }
+});
+
+
+
+
 
 
 	 

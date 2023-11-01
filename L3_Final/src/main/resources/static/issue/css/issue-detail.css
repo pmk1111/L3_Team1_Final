@@ -7,6 +7,12 @@
 	.card{min-width: 935px}
 }
 
+@keyframes bounce {
+  0%, 40%, 80%, 100% { transform: translateY(0); }
+  20% { transform: translateY(-80px); }
+  60% { transform: translateY(-15px); }
+}
+
 .leftbar-close {
 	background-color: #9F7AB0;
 	border-radius: 50%;
@@ -114,6 +120,10 @@
 .assigned-user{
 	display:inline-block;
 	width:200px !important;
+}
+
+.issue-mention-area span{
+	font-weight: 600
 }
 
 .issue-assigned-area>span+span, .issue-mention-area>span+span {
@@ -383,28 +393,29 @@
 	top: 0;
 	left: 0;
 	z-index: 9999;
+	animation: bounce .45s forwards;
 }
 
 .issue-delete-modal-overlay {
 	position: relative;
 	width: 100%;
-	height: 100vh;
+	height: 110vh;
 	background-color: black;
 	opacity: 0.6;
 }
 
 .issue-delete-modal-content {
 	position: absolute;
-	top: 50%;
+	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	text-align: center;
 	padding: 30px 15px;
-	width: 350px;
-	height: 180px;
+	width: 680px;
+	height: 390px;
 	overflow: auto;
 	background-color: white;
-	border-radius: 3px;
+	border-radius: 5px;
 }
 
 .issue-delete-btn-wrap {
@@ -412,19 +423,33 @@
 }
 
 .issue-delete-btn+.delete-cancel-btn {
-	margin-left: 15px
+	margin-left: 10px
 }
 
-.issue-delete-btn, .delete-cancel-btn, .redirect-list {
-	width: 100px;
-	height: 35px;
+.issue-delete-btn, .delete-cancel-btn {
+	width: 45%;
+	height: 50px;
 	border: 1.4px solid #9F7AB0;
 	color: #9F7AB0;
 	background-color: white;
 	border-radius: 3px;
 }
 
-.issue-delete-btn:hover, .delete-cancel-btn:hover, .redirect-list {
+.redirect-list{
+	width: 45%;
+	height: 50px;
+	border: 1.4px solid #9F7AB0;
+	color: white;
+	background-color: #9F7AB0;
+	border-radius: 3px;	
+}
+
+.redirect-list:hover{
+	opacity: .8;
+	transition:.3s
+}
+
+.issue-delete-btn:hover, .delete-cancel-btn:hover {
 	background-color: #9F7AB0;
 	color: white;
 	transition: .3s;
@@ -466,4 +491,8 @@
 	width: 20px;
 	height: 20px;
 	margin: 0px 5px 0px 9px
+}
+
+.bookmark-area:hover{
+	cursor:pointer;
 }

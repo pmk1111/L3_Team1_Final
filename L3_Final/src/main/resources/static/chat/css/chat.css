@@ -164,7 +164,7 @@
 	font-weight: 530;
 }
 
-.update-time {
+.chat-update-time {
 	position: relative;
 	top: -11px;
 	right: 19px;
@@ -178,7 +178,7 @@
 	border-radius: 50%
 }
 
-.update-time-area {
+.chat-update-time-area {
 	width: 40px;
 }
 

@@ -65,26 +65,11 @@
 				<div class="issue-title-wrap">
 					<input type="text" class="issue-title-area" name="subject" value="${issuedata.subject}" placeholder="제목을 입력하세요.">
 				</div>
-					<!-- 혜원 -->
-					<div>
-					<label>언급</label>
-				<input list="notionchoice" id="inputnotionchoice" name="notionchoice"  value="${issuedata.mentioned}"/>
-				 <datalist id="notionchoice"></datalist>
-				 
-				</div>
-				<!-- 혜원 -->
 
 				<div class="issue-content-wrap">
 					<textarea class="issue-content-txtarea" name="content" placeholder="내용을 입력하세요.">${issuedata.content}</textarea>
 				</div>
 
-				<div class="issue-reporter-wrap">
-					<div class="text">
-						<span>보고자</span><sup>*</sup>
-					</div>
-					<input class="issue-reporter-selected" type="text" value="${issuedata.create_user_name}" readonly>
-					<input type="hidden" name="reporter" value="${issuedata.create_user}">
-				</div>
 
 				<div class="issue-assigned-wrap">
 					<div class="text">
@@ -111,6 +96,17 @@
 						</div>
 					</div>
 					</div>
+					
+				<div class="issue-mention-wrap">
+					<label for="inputnotionchoice" class="notify-txt">언급</label>
+ 						<div class="issue-mention-area">
+ 							<input type="text" class="notionchoice" name="notionchoice"/>
+							<input type="hidden" id="inputnotionchoice" name="mention_user_id" />
+							<div class="issue-create-custom-options mention-list">
+						</div>
+					</div>
+				</div>
+					
 
 
 		<!-- HTML -->

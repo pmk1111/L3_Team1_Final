@@ -87,7 +87,7 @@
 	margin-bottom:10px;
 }
 
-.update-cancel-btn, .redirect-list {
+.update-cancel-btn {
 	width: 45%;
 	height: 50px;
 	border: 1.4px solid #9F7AB0;
@@ -97,7 +97,7 @@
 }
 
 
-.status-update-modal-btn:hover, .update-cancel-btn:hover, .redirect-list {
+.status-update-modal-btn:hover, .update-cancel-btn:hover {
 	opacity:.7;
 	transition: .3s;
 }

@@ -7,13 +7,18 @@
 
 <head>
 
-    
+    <title>WidUs - AssignIssue</title>
+    <link href="../resources/project/css/projectboard/projectboard_Header.css" rel="stylesheet">
+    <link rel="stylesheet" href="../resources/issue/css/issue-list.css">
+
     <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
+
 
 
 
     <style>
         table {
+            table-layout: fixed;
             width: 100%;
             margin: 0 auto;
         }
@@ -42,10 +47,8 @@
         table th {
             font-weight: 600;
             background-color: #eeecfd !important;
-            
-        }
-        th,td{
-        width:50%;
+            width: 25%;
+
         }
 
         .fa-arrow-up {
@@ -179,28 +182,28 @@
         /* 추가된 스타일: 상위 행 클릭 가능한 커서 스타일 */
         .main-row {
             cursor: pointer;
-            
+
         }
 
         h6 {
             margin: auto;
             padding: auto;
         }
-      
-       
-
-
+        
+        .issuewriter-created {
+        	margin-right: -10px;
+        	font-size:13px;
+        }
+        
+        ul {
+        	padding-left:0;
+        }
+        
+        .project-div:hover {
+        	background-color:#f6f6f6;
+        }
+        
     </style>
-    <script>
-        $(function() {
-            $("button").click(function() {
-                if ($input.val() == '') {
-                    alert("검색어를 입력하세요");
-                    return false;
-                }
-            })
-        })
-    </script>
 </head>
 
 <body>
@@ -219,69 +222,116 @@
                         <div class="row">
                             <div class="col-lg-12 mb-4 order-0 welcome-message">
                                 <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h1>내 작업보드</h1>
-                                            <form class="mt-4">
-                                                <div class="input-group input-group-lg shadow-sm">
-                                                    <span class="input-group-text border-0"> <i class="fas fa-search fa-xs text-secondary mb-1"></i>
-                                                    </span> <input type="text" name="search_word" id="searchInput" class="form-control bg-white border-0 px-1" placeholder="검색어를 입력하세요"> <span class="input-group-text border-0 py-1 pe-2">
-                                                        <button type="submit" class="btn btn-primary text-uppercase-bold-sm" id="searchButton">검색</button>
+                                    <div class="card" style="align-items: center;">
+                                        <div class="card-body" style="height:780px; padding: 50px; width:100%">
+                                            <div class="card-header-0" style="display:flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                                                <h3 style="font-size: 27px; font-weight: 800; color: #555; margin-bottom:0;">내 작업보드</h3>
+
+                                                <div style="display:flex; align-items: center;">
+                                                    <input type="text" name="search_word" id="searchInput" class="form-control bg-white border-0 px-1" placeholder="검색어를 입력하세요" style="height: 45px; width: 300px; border:1px solid #555 !important;">
+                                                    <span class="input-group-text border-0 py-1 pe-2">
+                                                        <button type="submit" class="btn btn-primary text-uppercase-bold-sm" id="searchButton" style="height: 45px;">검색</button>
                                                     </span>
-                                                    
-                                                   
-
-<c:if test="${!empty myTotalWorks}">
-    <table class="table" id="tableClass">
-        <tbody>
-            <c:forEach items="${myTotalWorks}" var="project" varStatus="projectStatus">
-
-                <!-- 프로젝트 -->
-                <tr class="main-row">
-                    <c:if test="${projectStatus.first}">
-                        <th class="main-row-th" colspan="2">프로젝트 정보</th>
-                    </c:if>
-                </tr>
-                <tr class="main-row">
-                    <td class="main-cell" colspan="2">${project.TITLE}</td>
-                </tr>
-                
-                <c:forEach items="${project.issues}" var="issue" varStatus="issueStatus">
-                    <!-- 이슈 -->
-                    <tr class="sub-row" style="display: none;">
-                        <c:if test="${issueStatus.first}">
-                            <th class="sub-row-th" colspan="2">이슈 정보</th>
-                        </c:if>
-                    </tr>
-                    <tr class="sub-row" style="display: none;">
-                        <td class="sub-cell">${issue.SUBJECT}</td>
-                        <td class="sub-cell">${issue.STATUS}</td>
-                    </tr>
-                </c:forEach>
-
-            </c:forEach>
-       </tbody>
-    </table>
-</c:if>
-
-
-
                                                 </div>
-                                            </form>
+                                            </div>
 
+                                            <div style="margin-top:50px; width:100%; border-bottom:1px solid #888;">
+                                                <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link team-tab my-tab active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">참여중인 프로젝트</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <c:choose>
+                                                <c:when test="${empty myTotalWorks && empty search_word }">
+                                                    <h6 style="text-align: center; margin-top: 100px;">내 업무가 없습니다.</h6>
+                                                </c:when>
+                                                <c:when test="${empty myTotalWorks && !empty search_word }">
+                                                    <h6 style="text-align: center; margin-top: 100px;">검색 결과가 없습니다.</h6>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div style="margin-top:30px; overflow-x:hidden; overflow-y:scroll; max-height: 530px">
+                                                        <c:forEach items="${myTotalWorks}" var="project" varStatus="projectStatus">
+                                                        <div class="project">
+                                                            <div class="project-div" style="display:flex; align-items: center; justify-content: space-between; padding: 15px 0;">
+                                                                <div class="project-left">
+                                                                    <a class="select-color" style="background-color: ${project.COLOR};"></a>
+                                                                    <div class="project-information">
+                                                                        <div class="project-up">
+                                                                            <div class="project-name" style="margin-left:15px;">
+                                                                                <a href="../project/project?projectId=${project.ID}"><span class="project-name-span" style=" font-size: 16px;">${project.TITLE}</span></a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div style="margin-right: 35px;">
+                                                                    <span>${project.CREATED_AT.substring(2, 10)}</span>
+                                                                </div>
+                                                            </div>
+ 															<ul class="issue-list" style="display:none; max-width: 1222px; ">
+ 															<div class="issue-list-div" style="width:100%; display:flex; justify-content: center;">
+                                                                <hr style="width:98%; ">
+                                                            </div>
+                                                            <c:forEach items="${project.issues}" var="issue" varStatus="issueStatus">
+                                                            
+                                                                <li class="list">
+                                                                <div style="margin-left:30px;">
+                                                                <i class="menu-icon tf-icons bx bx-subdirectory-right"></i>
+                                                                </div>
+                                                                    <div class="issuetype-wrap" style="font-size: 15px;">
+			
+                                                                        <c:choose>
+                                                                            <c:when test="${issue.TYPE eq '버그'}">
+                                                                                <img src="../resources/issue/img/bug.svg" class="issuetype-icon">
+                                                                            </c:when>
+                                                                            <c:when test="${issue.TYPE eq '에픽'}">
+                                                                                <img src="../resources/issue/img/epic.svg" class="issuetype-icon">
+                                                                            </c:when>
+                                                                            <c:when test="${issue.TYPE eq '작업'}">
+                                                                                <img src="../resources/issue/img/task.svg" class="issuetype-icon">
+                                                                            </c:when>
+                                                                        </c:choose>
+
+
+                                                                        <span class="issuetype">${issue.STATUS}</span> 
+                                                                        <a class="issue-title-anchor" href="../issue/issue-detail?num=${issue.id}" style="margin-left:20px"> 
+                                                                        	<span class="issue-title" style="width:700px; ">${issue.subject}</span>
+                                                                        </a>
+                                                                    </div>
+
+                                                                    <div class="issuewriter-created" style="display:flex; align-items: center; justify-content: center;">
+                                                                        <c:choose>
+                                                                            <c:when test="${issue.priority == 'low'}">
+                                                                                <span class="low" style="height:30px; width:70px; font-size:14px; display:flex; justify-content: center; align-items: center; margin-right:30px">${issue.priority}</span>
+                                                                            </c:when>
+                                                                            <c:when test="${issue.priority == 'middle'}">
+                                                                                <span class="middle" style="height:30px; width:70px; font-size:14px; display:flex; justify-content: center; align-items: center; margin-right:30px">${issue.priority}</span>
+                                                                            </c:when>
+                                                                            <c:when test="${issue.priority == 'high'}">
+                                                                                <span class="high" style="height:30px; width:70px; font-size:14px; display:flex; justify-content: center; align-items: center; margin-right:30px">${issue.priority}</span>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <span class="critical" style="height:30px; width:70px; font-size:14px; display:flex; justify-content: center; align-items: center; margin-right:30px">${issue.priority}</span>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                        <span class="issue-created">${issue.created_at.substring(2, 10)}</span>
+                                                                    </div>
+                                                                </li>
+
+                                                            </c:forEach>
+															</ul>
+															</div>
+                                                            <div style="width:100%; display:flex; justify-content: center;">
+                                                                <hr style="width:98%; ">
+                                                            </div>
+
+                                                        </c:forEach>
+                                                    </div>
+                                                </c:otherwise>
+                                            </c:choose>
 
                                         </div>
-
-                                        <!--   회원이 없는 경우 -->
-                                        <c:if test="${empty myTotalWorks && empty search_word }">
-                                            <h6>내 업무가 없습니다.</h6>
-                                        </c:if>
-
-                                        <!--    회원이 없는 경우 -->
-                                        <c:if test="${empty myTotalWorks && !empty search_word }">
-                                            <h6>검색 결과가 없습니다.</h6>
-                                        </c:if>
-
                                     </div>
                                 </div>
                             </div>
@@ -318,47 +368,17 @@
 
     <!-- / Layout page -->
 
-
-
-	<jsp:include page="../template/jsTemplate.jsp"></jsp:include>
-	<script src="../resources/mydashboard/js/mydashboard.js"></script>
+    <jsp:include page="../template/jsTemplate.jsp"></jsp:include>
+    
     <script>
-        document.getElementById("searchButton").addEventListener("click", function() {
-            var searchInput = document.getElementById("searchInput");
+    $(".project").click(function(){ 
+    	 $(this).find(".issue-list").slideToggle();
+    });
 
-            // 입력 필드의 값 확인
-            if (searchInput.value.trim() === "") {
-                alert("검색어를 입력하세요");
-            }
-            return false;
-
-        });
-
-
-
-        // 클릭 이벤트 핸들러
-document.addEventListener("click", function(e) {
-    // 클릭한 요소가 .main-row 클래스를 가진 <tr> 또는 .main-cell 클래스를 가진 <td>인지 확인
-    if (e.target.classList.contains('main-row') || e.target.classList.contains('main-cell')) {
-        // 클릭한 <tr> 또는 <td>의 부모인 <tr> 요소 (상위 행) 찾기
-        var mainRow = e.target.closest('.main-row');
-
-        // 상위 행의 하위 요소인 .sub-row 요소들 찾기
-        var subRows = $(mainRow).nextUntil('.main-row');
-
-        subRows.each(function(index, item) {
-            if ($(item).css('display') == "none") {
-                $(item).css('display', 'table-row');
-                $(mainRow).addClass('open');
-                $(mainRow).find('thead').show(); // 이 부분 추가
-            } else {
-                $(item).css('display', 'none');
-                $(mainRow).removeClass('open');
-                $(mainRow).find('thead').hide(); // 이 부분 추가
-            }
-        });
-    }
-});
+    $(".issuetype-wrap").click(function(event){
+        event.stopPropagation();
+    });
+    
     </script>
 
 </body>

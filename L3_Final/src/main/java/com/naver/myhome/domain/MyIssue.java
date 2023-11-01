@@ -6,11 +6,14 @@ import lombok.Data;
 
 @Data
 public class MyIssue {
-    private String SUBJECT;
+    private String subject;
     private int ASSIGNED;
     private String STATUS;
-    private String type;
-    private String PRIORITY;
+    private String TYPE;
+    private String priority;
     private int PROJECT_ID;
+    private int id;
+    private String create_user_name;
+    private String created_at;
 
 }
