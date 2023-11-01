@@ -31,8 +31,8 @@ public class IssueServiceImpl implements IssueService{
 	}
 	
 	@Override
-	public List<Issue> getStatusCount(int employeeId) {
-		return mapper.getStatusCount(employeeId);
+	public List<Issue> getStatusCount(int employeeId, int userId) {
+		return mapper.getStatusCount(employeeId, userId);
 	}
 	
 	@Override

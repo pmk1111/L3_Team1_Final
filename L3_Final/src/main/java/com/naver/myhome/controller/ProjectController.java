@@ -237,6 +237,8 @@ public class ProjectController {
 		mv.addObject("progressCount", progressCount);
 		mv.addObject("allDoneCount", allDoneCount);
 		mv.addObject("resolveCount", resolveCount);
+		
+		logger.info("리졸브 어디감" + resolveCount);
 		mv.addObject("allCriticalCount", allCriticalCount);
 		mv.addObject("highCount", highCount);
 		mv.addObject("middleCount", middleCount);

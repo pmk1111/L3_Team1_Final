@@ -103,7 +103,7 @@ public class MyDashboardController {
 		int userId = userService.getUserId(userEmail);
 		int employeeId = employeeService.getEmployeeId(userId);
 		
-		List<Issue> issuecount = issueService.getStatusCount(employeeId);
+		List<Issue> issuecount = issueService.getStatusCount(employeeId, userId);
 
 		for (Issue issue : issuecount) {
 			System.out.println("Total Count: " + issue.getTotalcount());

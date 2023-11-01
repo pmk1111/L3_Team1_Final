@@ -10,7 +10,7 @@ public interface IssueService {
 	
 	public int getListCount(int projectId);
 	
-	public List<Issue> getStatusCount(int employeeId);
+	public List<Issue> getStatusCount(int employeeId, int userId);
 	
 	public List<Issue> getMyWork(String status, int userId);
 
