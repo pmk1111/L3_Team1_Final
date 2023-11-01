@@ -45,7 +45,7 @@
 		SUM(CASE WHEN status = 'Done' THEN 1 ELSE 0 END) AS donecount
 		FROM issue
 		WHERE project_id IN 
-		(SELECT project_id FROM team WHERE employee_id = #{employeeId})
+		(SELECT project_id FROM team WHERE employee_id = #{employeeId}) and assigned = #{userId}
 	</select>
 
 

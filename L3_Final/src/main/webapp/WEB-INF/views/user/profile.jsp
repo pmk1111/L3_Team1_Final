@@ -47,10 +47,10 @@
         }
         
         .chatting-layer{
-        	left:71%
+        	left:78%
         }
         .notify-layer{
-        	left:65%;
+        	left:74%;
         }
     </style>
     <script>
