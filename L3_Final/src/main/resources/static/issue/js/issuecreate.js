@@ -110,13 +110,7 @@ $(document).ready(function () {
        
         $('.hidden-issue-content').val(issue_content_html);
         
-          user_id = $("#inputnotionchoice").data("id");
-          if(user_id == undefined)
-          user_id = 0;
-                    
-        $('form[name="createIssue"]').append('<input type="hidden" name="user_id" value="' + user_id + '">');
 
-        $('form[name="createIssue"]').submit();
     });
     const fileInput = document.querySelector('.add-file');
     const uploadedFilesContainer = $('.uploaded-files');

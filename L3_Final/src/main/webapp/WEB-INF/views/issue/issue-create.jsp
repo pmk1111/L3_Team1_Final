@@ -99,7 +99,7 @@
 						<label for="inputnotionchoice" class="notify-txt">언급</label>
  						<div class="issue-mention-area">
  							<input type="text" class="notionchoice" name="notionchoice"/>
-							<input type="hidden" id="inputnotionchoice" name="user_id" />
+							<input type="hidden" id="inputnotionchoice" name="mention_user_id" />
 							<div class="issue-create-custom-options mention-list">
 							</div>
 						</div>
