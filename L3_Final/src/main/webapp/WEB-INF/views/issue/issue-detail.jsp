@@ -295,6 +295,7 @@
 <div class="issue-delete-modal">
 	<div class="issue-delete-modal-overlay"></div>
 	<div class="issue-delete-modal-content">
+	<img class="change-stat-img" src="../resources/issue/img/status-change-img.jpg">
 		<h4>정말 삭제하시겠습니까?</h4>
 		<div class="issue-delete-btn-wrap">
 			<button type="button" class="issue-delete-btn">삭제</button>

@@ -103,9 +103,6 @@
 							<div class="issue-create-custom-options mention-list">
 							</div>
 						</div>
-
-				 <!-- <datalist id="notionchoice"></datalist> -->
-				 
 				</div>
 				<!-- 혜원 -->
 

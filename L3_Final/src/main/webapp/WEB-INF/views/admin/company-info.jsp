@@ -13,7 +13,7 @@
     <title>회사 정보</title>
     <meta name="description" content="" />
 
-
+	<link rel="icon" type="image/x-icon" href="../resources/mainboard/assets/img/favicon/favicon.png" />
 	<!-- CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 

@@ -215,7 +215,7 @@
 										
 										<c:choose>
 												<c:when test="${empty issuelist}">
-													<h3>작업이 없습니다.</h3>
+													<h4 class="no-work">작업이 없습니다.</h4>
 													</c:when>
 													<c:otherwise>
 														<c:forEach var="i" items="${issuelist}">
