@@ -106,10 +106,11 @@ $(document).ready(function () {
                     .replace('__HREF__', (hasEvent) ? 'href="' + href + ('0' + obj['date']).slice(-2) + '"' : '')
                     .replace('__DATE__', obj['date']));
 
-                //오늘 날짜에 date-select 클래스 추가	
-                $('.today a').addClass('date-select');
+                
             });
             $('#tbl-month').append($tr);
+            //오늘 날짜에 date-select 클래스 추가	
+						$('.today a').addClass('date-select');
         }
     }
 
@@ -379,6 +380,7 @@ $(document).ready(function () {
                 $('.board').empty();
                 if (mywork.length > 0) {
                     mywork.forEach(function (item) {
+                    		let formattedCreateAt = item.created_at.substring(0, 10);
                         let str = '<li><div class="type-title">'
                         if (item.type === '버그') {
                             str += '<img src="../resources/issue/img/bug.svg"> <span>버그</span>'
@@ -389,13 +391,24 @@ $(document).ready(function () {
                         }
                         str += '<a href="../issue/issue-detail?num=' + item.id + '">'
                         str += '<span class="post-title">' + item.subject + '</span></div></a>'
-                        str += '<span class="post-date">' + item.created_at + '</span></li>'
+                        str += '<div class="priority-date">'
+                        if(item.priority === 'low'){
+                        	str += '<span class="mywork-priority low">' + item.priority + '</span>'
+                        } else if(item.priority === 'middle'){
+                        	str += '<span class="mywork-priority middle">' + item.priority + '</span>'
+                        } else if(item.priority === 'high'){
+                        	str += '<span class="mywork-priority high">' + item.priority + '</span>'
+                        } else if(item.priority === 'critical'){
+                        	str += '<span class="mywork-priority critical">' + item.priority + '</span>'
+                        } 
+                        
+                        str += '<span class="post-date">' + formattedCreateAt + '</span></li>'
 
                         $('.board').append(str);
                     });
                 } else {
                     console.log('작업이 없습니다.');
-                    $('.board').append('<h3>작업이 없습니다.</h3>')
+                    $('.board').append('<h4 class="no-work">작업이 없습니다.</h4>')
                 }
             },
             error: function (error) {

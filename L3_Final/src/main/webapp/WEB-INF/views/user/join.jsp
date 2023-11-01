@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="../resources/user/css/join.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Favicons -->
-    <link href="../resources/home/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link rel="icon" type="image/x-icon"
+			href="${pageContext.request.contextPath}/mainboard/assets/img/favicon/favicon.png" />
 
     <!-- Vendor CSS Files -->
     <link href="../resources/home/assets/vendor/aos/aos.css" rel="stylesheet">
@@ -33,6 +34,21 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     <style>
+    
+    .container-xxl {
+			animation: fadein .8s;
+		}
+
+		@keyframes fadein {
+			from { 
+				opacity:0;
+				transform: translate3d(0, -5%, 0);
+			}
+			to {
+				opacity: 1;
+				transform: translateZ(0);
+			}
+		}
         .modalarea {
             position: fixed;
             z-index: 9999;

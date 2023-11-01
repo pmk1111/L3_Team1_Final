@@ -232,59 +232,73 @@ $(document).ready(function () {
         addStatusUpdateHandler(clickedButton, newStatus);
 
     });
+    
+function addStatusUpdateHandler(clickedButton, newStatus) {
 
-    function addStatusUpdateHandler(clickedButton, newStatus) {
+    // .status-update-modal-btn 클릭 이벤트 처리
+    $('.status-update-modal-btn').off('click'); // 이전에 추가된 클릭 이벤트 핸들러 제거
 
-        // .status-update-modal-btn 클릭 이벤트 처리
-        $('.status-update-modal-btn').off('click'); // 이전에 추가된 클릭 이벤트 핸들러 제거
+    $('.status-update-modal-btn').click(function () {
+        if ($(this).closest('.status-update-modal-resolved').length > 0) {
+            const selectedAssignedUser = $('.selected-assigner-id').val();
+            if (selectedAssignedUser === null || selectedAssignedUser === '') {
+                alert("결제 받을 담당자를 선택하여 주세요.")
+                return false;
+            }
+            else {
+            	updateStatus(clickedButton, newStatus);
+            }
 
-        $('.status-update-modal-btn').click(function () {
-            $.ajax({
-                url: "../issue/statusUpdate",
-                method: "POST",
-                data: {
-                    issueId: $("#issue_id").val(),
-                    status: newStatus,
-                    selectedUserId: $('.selected-assigner-id').val()
-                },
-                context: clickedButton,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-                },
-                success: function (response) {
-                    if (response.status === 'success') {
-                        $('.status-btn').removeClass('current-status'); // 모든 버튼에서 current-status 클래스 제거
-                        clickedButton.addClass('current-status'); // 선택된 버튼에 current-status 클래스 추가
+        } else{
+        	updateStatus(clickedButton, newStatus);
+        }
+    })
+};
 
-                        $('.assigned-user').text(selectedUserName);
-                        console.log($('.assigned-user').text());
+function updateStatus(clickedButton, newStatus){
+    $.ajax({
+        url: "../issue/statusUpdate",
+        method: "POST",
+        data: {
+            issueId: $("#issue_id").val(),
+            status: newStatus,
+            selectedUserId: $('.selected-assigner-id').val()
+        },
+        context: clickedButton,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        },
+        success: function (response) {
+            if (response.status === 'success') {
+                $('.status-btn').removeClass('current-status'); // 모든 버튼에서 current-status 클래스 제거
+                clickedButton.addClass('current-status'); // 선택된 버튼에 current-status 클래스 추가
 
-                        $('.status-update-modal').fadeOut(200);
-                        $('.status-update-modal-resolved').fadeOut(200);
-                        if ($('.choose-assignerrr').val() !== '' && $('.choose-assignerrr').val() === null) {
-                            $('.issue-assigned').text($('.choose-assignerrr').val());
-                        }
-                        console.log("성공");
-                        location.reload();
+                $('.assigned-user').text(selectedUserName);
+                console.log($('.assigned-user').text());
 
-                    } else {
-                        console.error("상태 변경 실패");
-                        console.log(response.message); // 오류 메시지 출력
-
-                        $('.status-update-modal').fadeOut(200);
-                        $('.status-update-modal-resolved').fadeOut(200);
-
-                    }
-                },
-                error: function (error) {
-                    console.error("서버 요청 중 오류가 발생했습니다.");
-                    console.log(error);
+                $('.status-update-modal').fadeOut(200);
+                $('.status-update-modal-resolved').fadeOut(200);
+                if ($('.choose-assignerrr').val() !== '' && $('.choose-assignerrr').val() === null) {
+                    $('.issue-assigned').text($('.choose-assignerrr').val());
                 }
-            });
-        });
-    }
+                console.log("성공");
+                location.reload();
 
+            } else {
+                console.error("상태 변경 실패");
+                console.log(response.message); // 오류 메시지 출력
 
+                $('.status-update-modal').fadeOut(200);
+                $('.status-update-modal-resolved').fadeOut(200);
+
+            }
+        },
+        error: function (error) {
+            console.error("서버 요청 중 오류가 발생했습니다.");
+            console.log(error);
+        }
+    });
+};
 
 
 

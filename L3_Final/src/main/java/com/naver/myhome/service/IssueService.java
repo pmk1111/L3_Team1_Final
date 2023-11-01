@@ -16,11 +16,9 @@ public interface IssueService {
 
 	public List<Issue> getIssueList(int projectId);
 	
-	public List<Issue> getFilteredIssueList(String issueStatus, String issuePriority);
-
-//	public List<Project> getMyProjectList(String userId);
+	public List<Issue> getFilteredIssueList(String issueStatus, String issuePriority, int projectId);
 	
-	public List<Issue> searchIssues(String searchText);
+	public List<Issue> searchIssues(String searchText, int projectId);
 	
 	public void createIssue(Issue issue);
 

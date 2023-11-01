@@ -18,6 +18,8 @@
     <meta name="description" content="" />
 
     <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
+    <link rel="icon" type="image/x-icon"
+			href="${pageContext.request.contextPath}/mainboard/assets/img/favicon/favicon.png" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap">
 
     <!-- Helpers -->
@@ -79,6 +81,10 @@
             margin-top: 0;
         }
 
+				.container{
+					padding:0px;
+				}
+				
         #documentarea2 {
             margin-top: 100px;
         }

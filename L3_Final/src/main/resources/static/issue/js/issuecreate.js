@@ -17,7 +17,7 @@ $(document).ready(function () {
     });
 
     var issueModalContent = $('.issue-modal-content');
-    var createIssueText = $('.create-issue-text');
+    var selectedProject = $('.selected-project');
     var submitResetBtnWrap = $('.submit-reset-btn-wrap');
 
     issueModalContent.on('scroll', function () {
@@ -25,7 +25,7 @@ $(document).ready(function () {
         var scrollHeight = issueModalContent[0].scrollHeight;
         var containerHeight = issueModalContent.innerHeight();
 
-        createIssueText.css('border-bottom', scrollTop > 0 ? '1px solid #ddd' : 'none');
+        selectedProject.css('border-bottom', scrollTop > 0 ? '1px solid #ddd' : 'none');
         submitResetBtnWrap.css('border-top', scrollTop + containerHeight >= scrollHeight - 1 ? 'none' : '1px solid #ddd');
     });
 		
@@ -62,7 +62,7 @@ $(document).ready(function () {
 
 
  $('.submit-btn').click(function () {
-        const project_name = $('.project-name').val();
+        const project_name = $('.project-name').text();
         const issue_type = $('.issue-type').val();
         const issue_status = $('.issue-status').val();
         const issue_title_area = $('.issue-title-area').val();
@@ -83,10 +83,7 @@ $(document).ready(function () {
 
 
 
-        if (project_name === '') {
-            alert('프로젝트를 선택해주세요.');
-            return false;
-        } else if (issue_type === '') {
+		if (issue_type === '') {
             alert('이슈 유형을 선택해주세요.');
             return false;
         } else if (issue_status === '') {
@@ -127,6 +124,7 @@ $(document).ready(function () {
     const maxTotalSizeInBytes = 50 * 1024 * 1024; // 50MB in bytes
 
     fileInput.addEventListener('change', handleFileSelection);
+
 
     function handleFileSelection(event) {
         const files = event.target.files;
@@ -178,14 +176,36 @@ $(document).ready(function () {
         return true; // 확장자가 허용될 때 true 반환
     }
 
+		   if ($('.uploaded-files .upfile').length === 0) {
+    			$('.uploaded-files').css('display', 'none');
+				}
+
     function createFileElement(file) {
         const originalFileName = file.name;
         const upfile = $('<div class="upfile" data-value="' + originalFileName + '"></div>');
-
+        const lastIndexOfPoint = originalFileName.lastIndexOf('.');
+        const extension = originalFileName.substring(lastIndexOfPoint+1,);
+        
+				let fileExtensionImg;
+				if(extension === 'txt'){
+					fileExtensionImg = $('<img class="file-extension" src="../resources/issue/img/txt-icon.png">');
+				} else if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' || extension === 'gif' || extension === 'svg' || extension === 'bmp'){
+					fileExtensionImg = $('<img class="file-extension" src="../resources/issue/img/img-icon.png">');
+				} else if(extension === 'xlsx' || extension === 'xlsm' || extension === 'xls' || extension === 'xlsb' || extension === 'xltx'){
+						fileExtensionImg = $('<img class="file-extension" src="../resources/issue/img/exel-icon.png">');
+				} else if(extension === 'hwp'){
+						fileExtensionImg = $('<img class="file-extension" src="../resources/issue/img/hwp-icon.png">');
+				} else if(extension === 'pptx' || extension === 'pptm' || extension === 'ppt'){
+						fileExtensionImg = $('<img class="file-extension" src="../resources/issue/img/ppt-icon.png">');
+				} else if(extension === 'pdf'){
+						fileExtensionImg = $('<img class="file-extension" src="../resources/issue/img/pdf-icon.png">');
+				}
         const fileName = $('<span class="file-name">' + truncateFileName(originalFileName, 25) + '</span>');
-
+				
+				upfile.append(fileExtensionImg);
         upfile.append(fileName);
         uploadedFilesContainer.append(upfile);
+        uploadedFilesContainer.css('display', 'block');
 
         if (selectedFiles.length > 0) {
             updateUploadedFilesContainerHeight();

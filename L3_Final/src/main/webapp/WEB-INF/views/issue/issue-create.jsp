@@ -9,27 +9,11 @@
 	<form action="createIssue" name="createIssue" method="post" enctype="multipart/form-data">
 		<div class="issue-modal-content">
 
-			<div class="create-issue-text">
-				<h3>이슈 작성하기</h3>
+			<div class="selected-project">
+				<div class="selected-project-color"></div>
+				<h3 class="project-name">이슈 작성하기</h3>
 			</div>
 			<div class="modal-content-wrap">
-				<div class="select-project-wrap">
-					<div class="text">
-						<span>프로젝트</span><sup>*</sup>
-						<input type="hidden" name="projectId">
-					</div>
-					<div class="issue-create-custom-select">
-
-    				<input type="text" class="issue-create-custom-selected project-name" readonly>
-    				<div class="issue-create-custom-options">
-        		<div class="issue-create-custom-option">전사관리</div>
-        		<div class="issue-create-custom-option">버그수정</div>
-        		<div class="issue-create-custom-option">일정관리</div>
-        		<div class="issue-create-custom-option">배포준비</div>
-   		 		</div>
-				</div>
-
-				</div>
 
 				<div class="select-type-wrap">
 					<div class="text">
@@ -71,14 +55,6 @@
 						placeholder="제목을 입력하세요.">
 				</div>
 				
-				<!-- 혜원 -->
-					<div>
-					<label>언급</label>
-				<input list="notionchoice" id="inputnotionchoice" name="notionchoice" />
-				 <datalist id="notionchoice"></datalist>
-				 
-				</div>
-				<!-- 혜원 -->
 				<div class="issue-content-wrap">
 					<textarea class="issue-content" name="content" placeholder="내용을 입력하세요."></textarea>
 					<div id="userList"></div>
@@ -117,7 +93,6 @@
 						</div>
 					</div>
 					</div>
-
 					
 									<!-- 혜원 -->
 					<div class="issue-mention-wrap">
@@ -133,7 +108,6 @@
 				 
 				</div>
 				<!-- 혜원 -->
-
 
 
 			<!-- HTML -->

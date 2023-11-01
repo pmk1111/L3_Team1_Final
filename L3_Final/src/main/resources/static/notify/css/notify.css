@@ -179,7 +179,13 @@
 }
 
 .update-time-area {
-    width: 40px;
+      width: 40px;
+   width:100px;
+   margin-right:20px;
+}    
+.updattime{
+   font-size:13px;
+   
 }
 
 .notify-contact-area {

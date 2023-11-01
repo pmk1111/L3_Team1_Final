@@ -3,6 +3,21 @@
 <!DOCTYPE html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
+
+.container-xxl {
+			animation: fadein .8s;
+		}
+
+		@keyframes fadein {
+			from { 
+				opacity:0;
+				transform: translate3d(0, -5%, 0);
+			}
+			to {
+				opacity: 1;
+				transform: translateZ(0);
+			}
+		}
     #header {
         background-color: #9F7AB0;
     }

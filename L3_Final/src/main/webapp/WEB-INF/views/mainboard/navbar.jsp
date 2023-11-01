@@ -4,6 +4,21 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authentication property="principal" var="pinfo" />
 <style>
+		.container-xxl {
+			animation: fadein .5s;
+		}
+
+		@keyframes fadein {
+			from { 
+				opacity:0;
+				transform: translate3d(0, -2%, 0);
+			}
+			to {
+				opacity: 1;
+				transform: translateZ(0);
+			}
+		}
+
     .notification-icon-container {
         position: relative;
         display: inline-block;

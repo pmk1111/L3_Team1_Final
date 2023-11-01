@@ -45,11 +45,9 @@ $(document).ready(function() {
             alert('동의버튼에 체크해주세요.');
             return false;
         } else {
-        	window.location.href = '../user/delete';
         	alert('회원탈퇴 되었습니다. 홈으로 이동합니다');
         }
     }); //$('#deleteUser').click(function() { end
-    
    $('#updateProfile').click(function(){
     	var phone=$("#phone").val();
    	    var regPhone=/^010-?([0-9]{4})-?([0-9]{4})$/;

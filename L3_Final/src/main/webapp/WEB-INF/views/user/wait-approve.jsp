@@ -14,6 +14,9 @@
 <meta name="_csrf_header" content="${_csrf.headerName}">
 <title>가입대기</title>
 <meta name="description" content="" />
+
+<link rel="icon" type="image/x-icon"
+			href="${pageContext.request.contextPath}/mainboard/assets/img/favicon/favicon.png" />
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
@@ -63,6 +66,21 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style>
+.light-style {
+			animation: fadein .8s;
+		}
+
+		@keyframes fadein {
+			from { 
+				opacity:0;
+				transform: translate3d(0, -5%, 0);
+			}
+			to {
+				opacity: 1;
+				transform: translateZ(0);
+			}
+		}
+
 .container {
     margin-top: 65px;
 }
