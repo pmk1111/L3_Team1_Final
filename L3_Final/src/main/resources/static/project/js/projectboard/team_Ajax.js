@@ -60,19 +60,23 @@
 
                     teamList += '<div class="setting member-setting">';
                     teamList += '<div class="dropdown">';
+                    
+                    if (data.team[i].my_AUTH === 1 || data.team[i].my_ID === data.team[i].user_ID){
                     teamList += '<button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
 	                teamList += '<i class="bx bx-dots-vertical-rounded"></i>';
     	            teamList += '</button>';
+    	            }
+    	            
         	        teamList += '<div class="dropdown-menu drop-width" aria-labelledby="cardOpt3">';
             	    teamList += '<div class="setting-menu setting-menu-padding">';
                 	teamList += '<div class="setting-line">';
 
                     if (data.team[i].my_ID === data.team[i].user_ID) {
                         teamList += '<a class="setting-anchor setting-exit">';
-                        teamList += '<span class="setting-span setting-span-02">프로젝트 나가기</span>';
+                        teamList += '<span class="setting-span setting-span-02 exit-span">프로젝트 나가기</span>';
 	                    teamList += '</a>';
     	            } else if (data.team[i].my_AUTH === 1 && data.team[i].my_ID !== data.team[i].user_ID) {
-        	            teamList += '<a class="setting-anchor setting-fire">';
+        	            teamList += '<a class="setting-anchor setting-fire" data-emp-id="' + data.team[i].employee_ID + '">';
             	        teamList += '<span class="setting-span setting-span-02">프로젝트 내보내기</span>';
                 	    teamList += '</a>';
                 	}
@@ -80,12 +84,12 @@
                     teamList += '</div>';
                     teamList += '<div class="setting-line">';
 
-                    if (data.team[i].my_AUTH === 1 && data.team[i].auth === 1) {
-                        teamList += '<a class="setting-anchor setting-manager-fire">';
+                    if (data.team[i].my_AUTH === 1 && data.team[i].auth === 1 && data.team[i].my_ID != data.team[i].user_ID) {
+                        teamList += '<a class="setting-anchor setting-manager-fire" data-emp-id="' + data.team[i].employee_ID + '">';
 	                    teamList += '<span class="setting-span setting-span-02">관리자 해제</span>';
     	                teamList += '</a>';
         	        } else if (data.team[i].my_AUTH === 1 && data.team[i].auth === 0) {
-            	        teamList += '<a class="setting-anchor setting-manager-hire">';
+            	        teamList += '<a class="setting-anchor setting-manager-hire" data-emp-id="' + data.team[i].employee_ID + '">';
                 	    teamList += '<span class="setting-span setting-span-02">관리자 지정하기</span>';
                     	teamList += '</a>';
                 	}
@@ -107,6 +111,7 @@
                         $(this).siblings('.modal-member-name').css('width', '269px');
                     }
                 });
+                
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);
@@ -261,8 +266,11 @@
                 $('.modal-invite-empty').show()
                 
                 var empIds = []; // 배열을 빈 배열로 초기화합니다.
+                
+                getRecentStatus();
             },
     		error:function(request,status,error){
     		}
          });
     });
+    

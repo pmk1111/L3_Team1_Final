@@ -5,10 +5,12 @@
 
 	<insert id="Insert" parameterType="com.naver.myhome.domain.Project">
 	    <selectKey keyProperty="ID" resultType="int" order="BEFORE">
-	        SELECT PROJECT_ID.NEXTVAL FROM DUAL
+	    SELECT PROJECT_ID.NEXTVAL FROM DUAL
 	    </selectKey>
-	    	INSERT INTO PROJECT (ID, TITLE, SUBTITLE, COMPANY_ID)
-	    	VALUES (#{ID}, #{TITLE}, #{SUBTITLE}, (SELECT COMPANY_ID FROM EMPLOYEE WHERE ID = #{employeeId}))
+	    INSERT INTO PROJECT (ID, TITLE, SUBTITLE, COMPANY_ID, CREATOR)
+	    SELECT #{ID}, #{TITLE}, #{SUBTITLE}, EMPLOYEE.COMPANY_ID, EMPLOYEE.USER_ID
+	    FROM EMPLOYEE 
+	    WHERE EMPLOYEE.ID = #{employeeId}
 	</insert>
 	
 	<select id="getEmpId" resultType="int">
@@ -19,12 +21,15 @@
 
     <select id="getAllProjectList" resultType="com.naver.myhome.domain.Project">
         SELECT PROJECT.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = PROJECT.ID ) AS TEAMCOUNT
+        , (SELECT AUTH FROM TEAM WHERE EMPLOYEE_ID = #{employeeId} AND PROJECT_ID = PROJECT.ID) AS MY_AUTH
         FROM PROJECT
+        WHERE COMPANY_ID = (SELECT COMPANY_ID FROM EMPLOYEE WHERE ID = #{employeeId})
         ORDER BY CREATED_AT DESC
     </select>
     
     <select id="getFavoritProjectList" resultType="com.naver.myhome.domain.Project">
         SELECT P.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = P.ID ) AS TEAMCOUNT
+        , (SELECT AUTH FROM TEAM WHERE EMPLOYEE_ID = #{employeeId} AND PROJECT_ID = P.ID) AS MY_AUTH
         FROM PROJECT P
         JOIN FAVORITES F ON P.ID = F.PROJECT_ID
         WHERE F.EMPLOYEE_ID = #{employeeId}
@@ -33,12 +38,14 @@
     
     <select id="getPartProjectList" resultType="com.naver.myhome.domain.Project">
 		SELECT p.*, ROUND((SYSDATE-UPDATED_AT)*24*60) AS CURRENTTIME, ( SELECT COUNT(*) FROM TEAM WHERE PROJECT_ID = P.ID ) AS TEAMCOUNT
+		, (SELECT AUTH FROM TEAM WHERE EMPLOYEE_ID = #{employeeId} AND PROJECT_ID = P.ID) AS MY_AUTH
 		FROM PROJECT P
 		JOIN TEAM T ON P.ID = T.PROJECT_ID
 		WHERE T.EMPLOYEE_ID = #{employeeId}
 		AND P.ID NOT IN (
 		    SELECT F.PROJECT_ID
 		    FROM FAVORITES F
+		    WHERE F.EMPLOYEE_ID = #{empoyeeId}
 		)
 		ORDER BY CREATED_AT DESC
     </select>
@@ -97,7 +104,7 @@
 	SELECT COALESCE(
 	    (SELECT COUNT(*)
 	     FROM ISSUE
-	     WHERE UPDATED_AT >= SYSDATE - INTERVAL '7' DAY AND PRIORITY = 'Critical' AND PROJECT_ID = #{projectId}
+	     WHERE UPDATED_AT >= SYSDATE - INTERVAL '7' DAY AND PRIORITY = 'critical' AND PROJECT_ID = #{projectId}
 	     GROUP BY PRIORITY), 0) FROM dual
     </select>
     
@@ -154,4 +161,65 @@
 		WHERE ID = #{projectId}
 	</delete>
 	
+	<update id="modifyProject">
+		update project
+		set color=#{color}, title = #{title}, subtitle = #{subtitle}, modifier = #{sessionId}
+		where id = #{projectId} 
+	</update>
+	
+	<select id="getRecentStatus" resultType="RecentStatus">
+		SELECT RS.GUIDE, RS.ROW_ID,
+		       U.NAME AS MASTER, 
+		       UPDATE_RS.NEW_DATA AS UPDATE_DATA,
+		       ROUND((SYSDATE-RS.CHANGE_TIME)*24*60) AS CURRENTTIME, 
+		       SELECTED_USER.NAME AS SELECTED_USER,
+		       UPDATE_RS.ISSUE_SUBJECT AS ISSUE_SUBJECT,
+		       CHANGED_USER.NAME AS CHANGED_USER,
+		       UPDATE_RS.TYPE AS ISSUE_TYPE,
+		       
+		       CASE MOD(ABS(DBMS_RANDOM.RANDOM), 5)
+			   	WHEN 0 THEN 'COLOR1'
+			   	WHEN 1 THEN 'COLOR2'
+			   	WHEN 2 THEN 'COLOR3'
+			   	WHEN 3 THEN 'COLOR4'
+			   	WHEN 4 THEN 'COLOR5'
+			   END AS COLOR
+			   
+		FROM RECENT_STATUS RS
+		
+		JOIN USERS U ON RS.ACTED = U.ID
+		
+		LEFT JOIN (
+		    SELECT RS.ID, RS.NEW_DATA, 
+		    I.SUBJECT AS ISSUE_SUBJECT,
+		    I.TYPE AS TYPE
+		    FROM RECENT_STATUS RS
+		    LEFT JOIN ISSUE I ON RS.ROW_ID = I.ID
+		    WHERE RS.GUIDE IN (
+		        '프로젝트 수정', '팀 권한 변경', '이슈 생성', '상태 변경', 
+		        '담당자 변경', '우선순위 변경', '타입 변경'
+		    ) AND RS.PROJECT_ID = #{project_id} 
+		) UPDATE_RS ON RS.ID = UPDATE_RS.ID
+		
+		LEFT JOIN (
+		    SELECT U.NAME, RS.ROW_ID
+		    FROM USERS U
+		    JOIN EMPLOYEE E ON U.ID = E.USER_ID
+		    JOIN TEAM T ON E.ID = T.EMPLOYEE_ID
+		    JOIN RECENT_STATUS RS ON T.ID = RS.ROW_ID
+		    WHERE RS.GUIDE = '팀 초대'
+		) SELECTED_USER ON RS.ROW_ID = SELECTED_USER.ROW_ID		
+				
+		LEFT JOIN (
+		    SELECT U.NAME, RS.ROW_ID
+		    FROM USERS U
+		    JOIN EMPLOYEE E ON U.ID = E.USER_ID
+		    JOIN TEAM T ON E.ID = T.EMPLOYEE_ID
+		    JOIN RECENT_STATUS RS ON T.ID = RS.ROW_ID
+		    WHERE RS.GUIDE = '담당자 변경'
+		) CHANGED_USER ON RS.ROW_ID = CHANGED_USER.ROW_ID
+		
+		WHERE RS.PROJECT_ID = #{project_id}
+		ORDER BY RS.CHANGE_TIME DESC		
+	</select>
 </mapper>

@@ -20,8 +20,6 @@ public interface AdminService {
 
 	public int updateDomain(int companyId, String companyDomain);
 
-//	public int changePwd(Map<String, Object> paramMap);
-	
 	public List<User> waitUser(int companyId);
 
 	public void approveUser(int userId, int companyId);
@@ -47,6 +45,12 @@ public interface AdminService {
 	public void backEmp(int empId);
 	
 	public int companyId(String email);
+	
+	public void updateEmpInfo(Employee employee);
+
+	public void updateUserInfo(Employee employee);
+	
+	public Employee employeeInfo(int empId);
 	
 	// 혜원 
 	public List<Access> getAccesslist();

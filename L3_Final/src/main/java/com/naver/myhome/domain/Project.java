@@ -13,9 +13,10 @@ public class Project {
     private int employeeId;
     private int COMPANYID;
     private int AUTH;
+    private int MY_AUTH;
     private Date CREATE_AT;
     private Date UPDATE_AT;
     private String CURRENTTIME;
     private int TEAMCOUNT;
-	
+    
 }

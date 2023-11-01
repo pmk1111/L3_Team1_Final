@@ -14,6 +14,17 @@ public class Notify {
 	    private int COMMENT_ID; 
 	    private Date NOTIFY_TIME;
 	    private String MENTIONED_BY;
+	    private String ASSIGNED_NAME;
+	    private String CURRENTTIME;
+	    private int ASSIGNED_ID;
+	    private int NOTIFY_STATUS;
+	    
+		public String getCURRENTTIME() {
+			return CURRENTTIME;
+		}
+		public void setCURRENTTIME(String cURRENTTIME) {
+			CURRENTTIME = cURRENTTIME;
+		}
 		public int getID() {
 			return ID;
 		}
@@ -68,5 +79,24 @@ public class Notify {
 		public void setMENTIONED_BY(String mENTIONED_BY) {
 			MENTIONED_BY = mENTIONED_BY;
 		}
+		public String getASSIGNED_NAME() {
+			return ASSIGNED_NAME;
+		}
+		public void setASSIGNED_NAME(String aSSIGNED_NAME) {
+			ASSIGNED_NAME = aSSIGNED_NAME;
+		}
+		public int getASSIGNED_ID() {
+			return ASSIGNED_ID;
+		}
+		public void setASSIGNED_ID(int aSSIGNED_ID) {
+			ASSIGNED_ID = aSSIGNED_ID;
+		}
+		public int getNOTIFY_STATUS() {
+			return NOTIFY_STATUS;
+		}
+		public void setNOTIFY_STATUS(int nOTIFY_STATUS) {
+			NOTIFY_STATUS = nOTIFY_STATUS;
+		}
+		
 	
 }

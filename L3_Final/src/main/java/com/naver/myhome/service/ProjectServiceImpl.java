@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.naver.myhome.domain.Project;
+import com.naver.myhome.domain.RecentStatus;
 import com.naver.myhome.mybatis.mapper.ProjectMapper;
 
 @Service
@@ -24,8 +25,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public List<Project> getAllProjectList() {
-		return mapper.getAllProjectList();
+	public List<Project> getAllProjectList(int employeeId) {
+		return mapper.getAllProjectList(employeeId);
 	}
 	
 	@Override
@@ -132,9 +133,15 @@ public class ProjectServiceImpl implements ProjectService {
 	public int getEmpId(int sessionId) {
 		return mapper.getEmpId(sessionId);
 	}
-	
-	
-	
-	
+
+	@Override
+	public void modifyProject(String color, String title, String subtitle, int projectId, int sessionId) {
+		mapper.modifyProject(color, title, subtitle, projectId, sessionId);
+	}
+
+	@Override
+	public List<RecentStatus> getRecentStatus(int projectId) {
+		return mapper.getRecentStatus(projectId);
+	}
 
 }

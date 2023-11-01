@@ -13,15 +13,38 @@
     <div class="notify-list-area" style="background-color:white;">
         <ul class="notify-list">
             <c:forEach items="${notifications}" var="notification">
-                <li class="notify-room">
+				<li data-post-id="${notification.id}"></li>
+                <li class="notify-room" data-post-id="${notification.post_ID}">
                     <div class="user-latest">
-                        <p class="notify-user-id">${notification.MENTIONED_BY}님이</p>
+                        <p class="notify-user-id">${notification.name}님이</p>
                         <p class="latest-notify">${notification.CONTENT}</p>
                     </div>
                     <div class="update-time-area">
-                        <span class="update-time">${notification.NOTIFY_TIME}</span>
+                        <c:set var="timeDiff" value="${notification.CURRENTTIME}" />
+
+	                    <c:if test="${timeDiff lt 1}">
+	                        <span>방금 전</span>
+	                    </c:if>
+	
+	                    <c:if test="${timeDiff ge 1 and timeDiff lt 60}">
+	                        <span>${timeDiff} 분 전</span>
+	                    </c:if>
+	
+	                    <c:if test="${timeDiff ge 60 and timeDiff lt 1440}">
+	                        <span>${Integer.valueOf(timeDiff div 60)} 시간 전</span>
+	                    </c:if>
+	
+	                    <c:if test="${timeDiff ge (24*60) and timeDiff lt (7*24*60)}">
+	                        <span>${Integer.valueOf(timeDiff div (24*60))} 일 전</span>
+	                    </c:if>
+	
+	                    <c:if test="${timeDiff ge (7 *24 *60) and timeDiff lt (30 *24 *60)}">
+	                        <span>${Integer.valueOf(timeDiff div (7*24*60))} 주</span>
+	                    </c:if>
+
                     </div>
                 </li>
+                
             </c:forEach>
         </ul>
     </div>

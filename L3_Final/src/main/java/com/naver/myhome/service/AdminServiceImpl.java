@@ -41,7 +41,21 @@ public class AdminServiceImpl implements AdminService {
 		return dao.companyDomain(companyId);
 	}
 
+	@Override
+	public Employee employeeInfo(int empId) {
+		return dao.employeeInfo(empId);
+	}
 
+	@Override
+	public void updateEmpInfo(Employee employee) {
+		 dao.updateEmpInfo(employee);
+	}
+	
+	@Override
+	public void updateUserInfo(Employee employee) {
+		 dao.updateUserInfo(employee);
+	}
+	
 	//회사정보 수정
 	@Override
 	public int updateName(int companyId,String companyName) {

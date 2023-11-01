@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+@media(min-width:1200px){
+	.card{min-width: 936px}
+}
+@media(max-width:978px){
+	.card{min-width: 935px}
+}
+
 .leftbar-close {
 	background-color: #9F7AB0;
 	border-radius: 50%;
@@ -109,7 +116,7 @@
 	width:200px !important;
 }
 
-.issue-assigned-area>span+span {
+.issue-assigned-area>span+span, .issue-mention-area>span+span {
 	margin-left: 25px;
 }
 
@@ -281,11 +288,15 @@
 	position: relative;
 	top: 3px;
 	display: inline-block;
-	width: 100%;
+	width: 88%;
 	height: 50px;
 	padding: 10px;
 	font-size: 18px;
 	resize: none;
+	border:1px solid lightgrey;
+	border-radius: 3px 0px 0px 3px;
+	border-right-style: none;
+	outline: none;
 }
 
 .comment-input::placeholder {
@@ -301,15 +312,20 @@
 }
 
 .comment-submit-btn {
-	position: absolute;
-	top: 28%;
-	left: 91%;
+	position:relative;
+	display: inline-block;
 	border-style: none;
+	top:-16px;
+	right:6px;
+	height:50px;
 	color: #848484;
 	font-weight: 600;
 	font-size: 18px;
 	width: 90px;
 	background-color: white;
+	border:1px solid lightgrey;
+	border-left-style: none;
+	border-radius: 0px 3px 3px 0px;
 }
 
 .issue-option {
@@ -333,7 +349,8 @@
 	margin: 0;
 	padding: 5px 0;
 	width: 200px;
-	height: 106px;
+	height:auto;
+	max-height: 106px;
 	border: 1px solid black;
 	border-radius: 5px;
 	list-style: none;
@@ -425,4 +442,28 @@
 
 .assign-dropdown-item{
 	height: 60px
+}
+
+.issue-location{
+	display:flex;
+	align-items: center
+}
+
+.issue-location span{
+	margin-right: 8px
+}
+
+.project-color{
+	position:relative;
+	display:inline-block;
+	width: 19px;
+	height: 19px;
+	border-radius: 5px;
+	margin: 0px 5px 0px 9px
+}
+
+.type-img{
+	width: 20px;
+	height: 20px;
+	margin: 0px 5px 0px 9px
 }

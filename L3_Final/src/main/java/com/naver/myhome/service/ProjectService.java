@@ -3,12 +3,13 @@ package com.naver.myhome.service;
 import java.util.List;
 
 import com.naver.myhome.domain.Project;
+import com.naver.myhome.domain.RecentStatus;
 
 public interface ProjectService {
 	
 	public int insertProject(Project project);
 	
-	public List<Project> getAllProjectList();
+	public List<Project> getAllProjectList(int employeeId);
 	
 	public List<Project> getFavoritProjectList(int employeeId);
 
@@ -51,5 +52,9 @@ public interface ProjectService {
 	public void deleteProject(int projectId);
 
 	public int getEmpId(int sessionId);
+
+	public void modifyProject(String color, String title, String subtitle, int projectId, int sessionId);
+
+	public List<RecentStatus> getRecentStatus(int projectId);
 
 }

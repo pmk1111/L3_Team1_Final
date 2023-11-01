@@ -4,7 +4,9 @@
 
 <mapper namespace="com.naver.myhome.mybatis.mapper.CommentMapper">
 	<select id="getCommentList" resultType="com.naver.myhome.domain.Comment">
-	select c.*,
+	select c.*, 
+	(select email from users where id = c.user_id) as comment_user_email,
+	(select pic from users where id = c.user_id) as comment_user_pic,
 	(select name from users where id = c.user_id) as comment_user_name
 	from comments c
 	where issue_id = #{issue_id}

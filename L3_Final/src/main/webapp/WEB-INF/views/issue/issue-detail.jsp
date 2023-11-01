@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html lang="en"class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
@@ -32,8 +33,10 @@
       .leftbar-close{background-color: #9F7AB0; border-radius: 50%;}
       pre{font-family: var(--bs-body-font-family) !important}
       
-      
-      
+      .issue-header{display: flex;
+    				justify-content: space-between;}
+    				
+	  
       .upload-file-content{display:flex; align-items:center; margin: 15px 0px; width: 100%; height: 60px; border:1.4px solid #d9dee3; border-radius: 5px; padding:0 10px}
       .file-item{margin:10px 0;}
       .file-item{border-style:none; background-color: white}
@@ -43,7 +46,9 @@
 
   <body>
   	<input type="hidden" name="num" value="${param.num}"  id="issue_id">
-  
+  	<input type="hidden" name="projectId" class="project-id" value="${issuedata.project_id}">
+  	<input type="hidden" class="create-user-email" value="${createrEmail}">
+  	<input type="hidden" class="assigned-user-email" value="${assignerEmail}">
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -61,6 +66,7 @@
          <!-- Content wrapper -->
         <div class="content-wrapper">
           <!-- Content -->
+          <jsp:include page="../chat/chat.jsp"></jsp:include>
 
           <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row">
@@ -70,18 +76,53 @@
                 <div class="card">
 
                   <div class="card-body issue-card">
-                    <div class="issue-location">
-                      프로젝트 / ${issuedata.project_name} / ${issuedata.subject}
-
-                    </div>
+                    <div class="issue-header">
+    				  <div class="issue-location">
+       					 <span>프로젝트</span> / <div class="project-color" style="background-color:${issuedata.project_color};"></div>
+       					 <span>${issuedata.project_name}</span>
+       					 /<c:choose>
+       					 		<c:when test="${issuedata.type == '버그'}">
+       					 			<img class="type-img" src="../resources/issue/img/bug.svg">
+       					 		</c:when>
+       					 		<c:when test="${issuedata.type == '에픽'}">
+       					 			<img class="type-img" src="../resources/issue/img/epic.svg">
+       					 		</c:when>
+       					 		<c:otherwise>
+       					 			<img class="type-img" v src="../resources/issue/img/task.svg">
+       					 		</c:otherwise>
+       					 </c:choose> 
+       					 <span>${issuedata.subject}</span>
+    				  </div>
+    				  
+    				  <div class="bookmark-area">
+        				<div class="bookmark-icon">
+           				    <c:choose>
+        				   <c:when test ="${bookmarkCk==0 }">
+           				     <img src="../resources/bookmark/img/bookmark.png" id="bookmark" alt="북마크" width=25px>
+           				   </c:when>
+           				   <c:otherwise>
+           				    <img src="../resources/bookmark/img/bookmark_purple.png" id="bookmark" alt="북마크" width=25px>
+           				   </c:otherwise>
+           				 </c:choose>
+       				    </div>
+   	 				  </div>
+					</div>
+                    
                     <hr class="issue-hr">
 
                     <div class="issue-write-info">
                     	<div class="issue-writer-date">
-                      	<img src="../resources/mainboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto user-img" />
+                    	<c:choose>
+                    	<c:when test="${issuedata.creater_pic == null || issuedata.creater_pic == ''}">
+                      	<img src="${pageContext.request.contextPath}/user/assets/img/avatars/profile.png" alt class="w-px-40 h-auto user-img" />
+                      </c:when>
+                      <c:otherwise>
+                      	<img src="${pageContext.request.contextPath}/upload${issuedata.creater_pic}" alt class="w-px-40 h-auto user-img" />
+                      </c:otherwise>
+                      </c:choose>
                       	<span class="issue-writer">${issuedata.create_user_name}</span> <sup class="issue-create">${issuedata.created_at}</sup>
                       </div>
-                      
+                      <input type="hidden" class="creater-mail" value="${createrEmail }">
                       
                      <div class="issue-option">
                       <img src="../resources/issue/img/settings.svg" class="issue-setting-icon">
@@ -91,16 +132,21 @@
                       		<img src="../resources/issue/img/copyurl.svg" class="issue-setting-icon link-copy-icon">
                       		<span>링크 복사</span>
                       	</li>
+                      	<sec:authorize access="isAuthenticated()">
+													<sec:authentication property="principal" var="pinfo" />
+													<input type="hidden" class="auth" value="${pinfo.username }">
+													<c:if test="${createrEmail == pinfo.username || pinfo.username == 'admin' }">
+                      			<li class="issue-dropdown-item issue-edit" onclick="getProjectIdAndTeam()">
+                      				<img src="../resources/issue/img/edit.svg" class="issue-setting-icon edit-icon">
+                      				<span>수정</span>
+                      			</li>
                       	
-                      	<li class="issue-dropdown-item issue-edit" onclick="getProjectIdAndTeam()">
-                      		<img src="../resources/issue/img/edit.svg" class="issue-setting-icon edit-icon">
-                      		<span>수정</span>
-                      	</li>
-                      	
-                      	<li class="issue-dropdown-item issue-delete">
-                      		<img src="../resources/issue/img/trash.svg" class="issue-setting-icon delete-icon">
-                      		<span>삭제</span>
-                      	</li>
+                      			<li class="issue-dropdown-item issue-delete">
+                      				<img src="../resources/issue/img/trash.svg" class="issue-setting-icon delete-icon">
+                      				<span>삭제</span>
+                      			</li>
+                      		</c:if>
+                      	</sec:authorize>
                       </ul>
                       </div>
                       
@@ -114,13 +160,16 @@
                         <span>상태</span>
                         <div class="status-select">
                         	<input type="hidden" class="this-status" value="${issuedata.status}">
-                          <button type="button" class="status-btn" data-value="To Do">To Do</button>
-                          <button type="button" class="status-btn" data-value="In Progress">In Progress</button>
-                          <button type="button" class="status-btn" data-value="Resolved">Resolved</button>
-                          <button type="button" class="status-btn" data-value="Done">Done</button>
+                          <button type="button" class="status-btn" data-value="To Do" data-mocean-type="bounce">To Do</button>
+                          <button type="button" class="status-btn" data-value="In Progress" data-mocean-type="bounce">In Progress</button>
+                          <button type="button" class="status-btn" data-value="Resolved" data-mocean-type="bounce">Resolved</button>
+                          <button type="button" class="status-btn" data-value="Done" data-mocean-type="bounce">Done</button>
                         </div>
                       </div>
-                      <div class="issue-assigned-area">
+                       <div class="issue-assigned-area">
+                        <div class="issue-mention-area" style="display:none">
+                           <span>언급</span><span class="mention-user">${issuedata.mentioned}</span>
+                         </div>   
                         <span>담당자</span><span class="assigned-user">${issuedata.assigned_user_name}</span>
                       </div>
                       <hr class="issue-hr">
@@ -194,19 +243,7 @@
 													</c:otherwise>
 												</c:choose>
                       </div>
-                      
-                  <!--     <div class="subtask-wrap">
-                        <span class="subtask-text">관련이슈</span>
-                        <button type="button" class="add-subtask-btn"><img
-                            src="../resources/issue/img/plus.svg">이슈추가</button>
-                      </div>subtask-wrap end
-                      <div class="subtask">
-                        <div class="subtask-item">
-                          <div class="subtask-status">In Progress</div>
-                          <p class="subtask-title">채팅 기능 추가</p>
-                        </div>
-                      </div>  -->
-                      <!-- subtask end-->
+                     
 
                     </div> <!-- issue-info end -->
 
@@ -267,36 +304,7 @@
 </div>
 
 
-<div class="status-update-modal">
-	<div class="status-update-modal-overlay"></div>
-	<div class="status-update-modal-content">
-		<h4>상태를 변경하시겠습니까?</h4>
-		<p class=status-change-text>상태를 변경하시려면 확인을 눌러주세요</p>
-		<div class="status-update-modal-btn-wrap">
-			<button type="button" class="status-update-modal-btn">확인</button>
-			<button type="button" class="update-cancel-btn">취소</button>
-		</div>
-	</div>
-</div>
-
-<div class="status-update-modal-resolved">
-	<div class="status-update-modal-overlay"></div>
-	<div class="status-update-modal-content">
-		<h4>상태를 변경하시겠습니까?</h4>
-		<p class=status-change-text>상태를 변경하시려면 담당자 선택 후 확인을 눌러주세요</p>
-		<input type="text" class="choose-assigner">
-		<input type="hidden" class="choose-assignerrr" name="issue_assigned_name">
-		<input type="hidden" class="selected-assigner-id" name="issue_assigned_id">
-		<ul class="select-assign-dropdown">
-			<!-- 나중에 해당 프로젝트에 참여 중인 사용자를 불러온다. -->
-		</ul>
-		<div class="status-update-modal-btn-wrap">
-			<button type="button" class="status-update-modal-btn">확인</button>
-			<button type="button" class="update-cancel-btn">취소</button>
-		</div>
-	</div>
-</div>
-
+<jsp:include page="status-change-modal.jsp"></jsp:include>
 
   	<!-- js template -->
 	<jsp:include page="../template/jsTemplate.jsp"></jsp:include>
@@ -309,6 +317,7 @@
 
 <script type="text/javascript">
 const existingFileNames = [];
+const projectId = $('.project-id').val();
 $('.file-item').each(function() {
     existingFileNames.push($(this).val());
 });
@@ -350,7 +359,7 @@ function getProjectIdAndTeam() {
       type: "GET",
       url: "getProjectAndTeamInfo",
       data: {
-          projectId: 1 // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
+          projectId: projectId // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
       },
       success: function (response) {
         if (response.length > 0) {
@@ -371,6 +380,11 @@ function getProjectIdAndTeam() {
         }
     }); //ajax end
 } // getProjectIdAndTeam end
+const MentionedUserName = $('.mention-user').text();
+
+if(MentionedUserName !== null && MentionedUserName !== ''){
+   $('.issue-mention-area').css('display', 'block');
+}
 </script>
   </body>
 </html>

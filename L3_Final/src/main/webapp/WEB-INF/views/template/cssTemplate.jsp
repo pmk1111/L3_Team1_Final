@@ -1,6 +1,6 @@
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon"
-	href="../resources/mainboard/assets/img/favicon/favicon.ico" />
+	href="../resources/mainboard/assets/img/favicon/favicon.png" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />

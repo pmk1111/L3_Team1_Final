@@ -14,7 +14,7 @@
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	margin-top: 10px;
+    margin-top: 5px;
 }
 
 .errMsg {
@@ -47,8 +47,7 @@
 }
 
 .accont-wrap {
-	width: 35%;
-	margin: 0 32.5%;
+	width: 100%;
 }
 
 .login-text, .login-company, .btn-join {
@@ -64,7 +63,7 @@
 }
 
 .invite-login, .login-company {
-	margin: 0 0 80px 0;
+	margin: 0 0 50px 0;
 	color: #333;
 	font-size: 18px;
 	font-weight: bold;
@@ -93,7 +92,7 @@
 }
 
 .companyDomain {
-	width: 439px;
+	width: 100%;
 	padding: 16px 20px;
 	margin: 0 10px;
 	color: #333;
@@ -106,14 +105,14 @@
 }
 
 .join-company-url {
-	margin-top: 20px;
+	margin-top: 10px;
 	color: #623ad6;
 	font-size: 14px;
 	line-height: 21px;
 }
 
 .login-text {
-	margin-top: 100px;
+	margin-top: 50px;
 }
 
 .auth-section {

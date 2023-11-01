@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class ProjectAndUser {
     private String projectTitle;
+    private String projectColor;
     private String userName;
+    private String userPic;
     private int userId;
 }

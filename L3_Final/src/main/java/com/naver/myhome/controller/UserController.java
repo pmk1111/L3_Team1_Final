@@ -262,8 +262,8 @@ public class UserController {
     //혜원
     @PostMapping("/issue-mention")
     @ResponseBody
-    public List<MentionUser> mentionUsers (@RequestBody String requestData,HttpSession session) {
-
+    public List<MentionUser> mentionUsers (@RequestBody String requestData,HttpSession session,@AuthenticationPrincipal User user) {
+		int userId = user.getId();
         String name = extractName(requestData);
         int projectId = (int) session.getAttribute("projectId");
         System.out.println("project id:"+projectId);
@@ -275,6 +275,7 @@ public class UserController {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("projectId", projectId);
         parameters.put("name", name);
+		parameters.put("userId", userId);
 
         return userService.mentionUser(parameters);
 
@@ -431,9 +432,11 @@ public class UserController {
     
     // 로그인 페이지
     @GetMapping("/login")
-    public String login() {
-       return "user/login";
-    }
+    public String login(Model mv, HttpSession session) {
+    	mv.addAttribute("loginfail", session.getAttribute("loginfail"));//세션에 저장된 값을 한 번만 실행될 수 있도록 mv에 저장합니다
+        session.removeAttribute("loginfail");
+   	return "user/login";
+   }
 
     
    
@@ -454,7 +457,7 @@ public class UserController {
        
        else //emp 테이블에 정보가 있다면      
        
-          return "mainboard/my-dashboard";
+          return "redirect:/mainboard/my-dashboard";
        }
     
 

@@ -8,7 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -252,6 +254,40 @@ public class AdminController {
 
     }
     
+ 
+    //직원 정보 상세보기
+    @ResponseBody
+    @GetMapping(value = "/employee-info")
+    public Employee infoDetail(ModelAndView mv,@RequestParam("empId") int empId) {
+  	 
+  	 
+  	  return adminService.employeeInfo(empId);
+  	
+ }
+  
+  //  //직원정보 업데이트
+
+    @Transactional
+    @PostMapping(value = "/employee-update")
+    public ModelAndView employeeUpdate(@RequestParam(name ="id", required=true) int empId,ModelAndView mv,@AuthenticationPrincipal User user, Employee employee)    { 
+    	System.out.println(empId);
+    	String admin = user.getSecurity();
+    	System.out.println(admin);
+ 	     	
+    		if (admin.equals("ROLE_ADMIN")) {
+		  
+    			adminService.updateEmpInfo(employee);
+    			adminService.updateUserInfo(employee);
+    			mv.setViewName("redirect:/admin/list");
+
+    		}else {
+    			mv.addObject("message", " 권한이 없습니다.");
+    			mv.setViewName("mainboard/my-dashboard");
+    		}
+       return mv;
+       
+  }
+    
     @GetMapping(value = "/invite")
     public ModelAndView invite(ModelAndView mv, Principal principal, Company company ) {
     	String email=principal.getName();
@@ -263,23 +299,19 @@ public class AdminController {
         return mv;
     }
 
-
-
-
- 
-
-
-    //
+    @ResponseBody
     @PostMapping(value = "/sendMail")
-    public String sendMail(String[] invite_box1) {
-        String companyName = "widUs";
-        String companyDomain = "example@widus.com";
+    public void sendMail(@RequestParam(name="invite_box1[]") String[] invite_box1, @ModelAttribute("companyId") int companyId) {
+        
+    	
+    	String companyName = adminService.companyName(companyId);
+        String companyDomain = adminService.companyDomain(companyId);
 
         for (String box: invite_box1) {
             if (!box.equals(""))
                 sendMail.sendInviteEmail(box, companyName, companyDomain);
         }
-        return "admin/invite-employee";
+       
 
     }
     
@@ -288,6 +320,7 @@ public class AdminController {
        return "admin/AdminDashboard";
     }
     //지니 끝
+
 
 
     /* 혜원 */

@@ -1,16 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE html>
-<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../resources/mainboard/assets/" data-template="vertical-menu-template-free">
 
+
+
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../resources/mainboard/assets/" data-template="vertical-menu-template-free">
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+  
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
 
     <title>WidUs-Documents</title>
     <meta name="description" content="" />
 
     <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
+    <link rel="icon" type="image/x-icon"
+			href="${pageContext.request.contextPath}/mainboard/assets/img/favicon/favicon.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap">
 
     <!-- Helpers -->
     <script src="../resources/mainboard/assets/vendor/js/helpers.js"></script>
@@ -19,8 +32,12 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../resources/mainboard/assets/js/config.js"></script>
 
-
     <style>
+		body {
+	          font-family: 'Nanum Gothic', sans-serif;
+	          font-size:16px;
+	          font-weight: bold;
+	       }
         #documentarea1 {
             width: 1414px;
         }
@@ -67,9 +84,109 @@
             margin-top: 0;
         }
 
+				.container{
+					padding:0px;
+				}
+				
         #documentarea2 {
             margin-top: 100px;
         }
+        .extension-icon{
+        	width:30px;
+        }
+        #searchBtn{
+        	margin-left:15px;
+        	width:70px;
+        	height:35px;
+		    color: #fff;
+		    background-color: #9F7AB0;
+		    border-color: #9F7AB0;
+		    box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+		}
+		.documents-area{
+		 	overflow: auto; height: 500px; 
+		 }
+		.issue-link{
+			color:#697a8d;
+		}
+		.table th {
+	    	font-size: 17px;
+	    	text-align: center;
+		}
+		
+		.table td {
+		    justify-content: space-between;
+		    align-items: center;
+		    font-size: 16px;
+		    height: 60px;
+		    border-radius: 3px;
+		    white-space: nowrap; 
+		    text-overflow: ellipsis; 
+		    overflow: hidden; 
+		    max-width: 150px; 
+		}
+		
+		.tablearea {
+		    display: table-row;
+		}
+		
+		#printDocumentBody{
+			text-align: center;
+		}
+		#search-btn {
+			display:none;	
+		    margin-right: 15px; 
+		    width: 70px;
+		    height: 50px;
+		    box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+		}
+		.search-label {
+			position:relative;
+			top:-2px;
+			left:-1px;
+		    padding: 10px;
+		    display: inline-block;
+		    width: 50px;
+		    height: 50px;
+		    border: 1px solid lightgrey;
+		    border-radius: 0px 3px 3px 0px;
+		}
+		.search-btn-icon {
+		    width: 26px;
+		    opacity: 0.4;
+		}
+
+		.search-label:hover{
+			cursor:pointer
+		}
+		
+		.file-search::placeholder{
+			color: #bababa;
+		}
+		.issue-search:focus{
+			outline:none;
+		}	
+		.file-search{
+			border:1px solid lightgrey;
+			border-radius:3px 0px 0px 3px;
+			width:400px;
+			height:50px;
+			padding-left: 15px;
+			color:#6a6192;
+			font-weight: 700;
+		}
+		.table td:hover {
+		    text-overflow: initial;
+		    white-space: normal;
+		    overflow: visible;
+		    cursor:pointer
+		}
+		.left-align {
+		    text-align: left !important;
+		}
+		.flex-column {
+    flex-direction: initial !important;
+}
     </style>
 </head>
 
@@ -79,17 +196,23 @@
         <div class="layout-container">
             <!-- Menu -->
 
-            <jsp:include page="leftbar.jsp"></jsp:include>
+            <jsp:include page="../mainboard/leftbar.jsp"></jsp:include>
             <!-- / Menu -->
 
             <!-- Layout container -->
             <div class="layout-page">
+            
                 <!-- Navbar -->
 
-                <jsp:include page="navbar.jsp"></jsp:include>
+                <jsp:include page="../mainboard/navbar.jsp"></jsp:include>
 
                 <!-- / Navbar -->
+                
                 <div class="container-xxl flex-grow-1 container-p-y" id="documentarea2">
+                
+	               <jsp:include page="../chat/chat.jsp"></jsp:include>
+	               <jsp:include page="../notify/notify.jsp"></jsp:include>
+	               
                     <div class="row">
                         <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4 issue-list" id="documentarea1">
                             <div class="card">
@@ -103,12 +226,27 @@
 
                                         <div class="container-xxl flex-grow-1 container-p-y">
                                             <div class="container">
-                                                <h3 style="margin-bottom: 30px; font-weight: 700;">파일함</h3>
-                                                <input type="text" class="file-search" placeholder="검색어를 입력하세요.">
-                                                <table class="table table-striped">
+                                                <div><h3 style="margin-bottom: 30px; font-weight: 700;">파일함</h3></div>
+                                           <div class="tabelcreate">     
+                                            <div class="tablearea">
+                                                <!-- <div><input type="text" class="file-search" placeholder="파일명을 입력하세요." id = "keyword">
+                                                <button id="searchBtn" onclick="searchDocument()"></button></div>
+                                               -->
+													<input type="text" class="file-search" id="keyword" name="searchText" placeholder="파일명을 입력하세요.">												
+													<input type="button" id="search-btn" onclick="searchDocument()" value="검색">
+													<label for="search-btn" class="search-label">
+														<img class="search-btn-icon" src="../resources/project/img/projectboard/search.svg">
+													</label>	
+													</div>	
+                                               </div>
+                                               <hr>
+                                               <div class="documents-area">
+                                                <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col">선택</th>
+                                                            <th scope="col">No</th>
+                                                            <th scope="col">이슈명</th>
+                                                            <th scope="col">다운로드</th>
                                                             <th scope="col">파일명</th>
                                                             <th scope="col">용량</th>
                                                             <th scope="col">등록자</th>
@@ -116,111 +254,38 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>주간 업무 계획 및 보고서 양식.xlsx</td>
-                                                            <td>8.78kb</td>
-                                                            <td>옥진석</td>
-                                                            <td>2023-09-09 19:21</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">2</th>
-                                                            <td>2023년 00회사 주간 회의</td>
-                                                            <td>-</td>
-                                                            <td>옥진석</td>
-                                                            <td>2023-09-09 19:21</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">3</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">4</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">5</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">6</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">7</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">8</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">9</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">10</th>
-                                                            <td>flow_noname_image.png</td>
-                                                            <td>48.17kb</td>
-                                                            <td>DD</td>
-                                                            <td>2023-08-16 10:03</td>
-                                                        </tr>
-                                                    </tbody>
+                                                   <tbody id = "printDocumentBody">
+													</tbody>
                                                 </table>
-
-                                            </div>
+                                               </div>
+                                              </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
 
 
 
                     <!-- Footer -->
-                    <footer class="content-footer footer bg-footer-theme">
-                        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                            <div class="mb-2 mb-md-0">
-                                ©
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script>
-                                (주)WidUs
-                            </div>
-                            <div>
-                                <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-                                <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
-
-                                <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
-
-                                <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
-                            </div>
-                        </div>
-                    </footer>
+                   <footer class="content-footer footer bg-footer-theme" style="magin-top:50px;">
+					    <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column" style="margin-top: 60px;">
+					        <div class="mb-2 mb-md-0">
+					            ©
+					            <script>
+					                document.write(new Date().getFullYear());
+					            </script>
+					            (주)WidUs
+					        </div>
+					        <div>
+					            <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+					            <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+					            <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
+					            <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
+					        </div>
+					    </div>
+					</footer>
                     <!-- Footer -->
 
                     <div class="content-backdrop fade"></div>
@@ -256,6 +321,74 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+	
 </body>
+<script type="text/javascript">
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
 
+    $(document).ready(function(){
+        searchDocument();
+    });
+
+    function searchDocument() {
+        const keyword = $("#keyword").val();
+
+        $.ajax({
+            url: '../documents/search-documents-list',
+            type: 'POST',
+            data: { keyword: keyword },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (response) {
+                if (response.length == 0) {
+                    $("#printDocumentBody").html('<tr><td colspan="7" style="text-align:center;"><img src="../resources/documents/img/search-null.svg" alt="문서를 찾을 수 없습니다"></td></tr>');
+                } else {
+                    var printTxt = '';
+                    for (var i = 0; i < response.length; i++) {
+                        printTxt += '<tr>';
+                        printTxt += '<th scope="row">' + (i+1) +'</th>';
+                        printTxt += '<td class="left-align"><a href="#" class="issue-link" onclick="issueDetail(\'' + response[i].issueId + '\')">' + response[i].subject + '</a></td>';
+                        printTxt += '<td><a href="/myhome/documents/down?saveName=' + encodeURIComponent(response[i].saveName) + '&originalName=' + encodeURIComponent(response[i].originalName) + '" style="display: block; text-align: center;">';
+
+                        let split = response[i].originalName.split('.'); 
+                        let extension = split[split.length - 1].toLowerCase(); 
+
+                        if(extension === 'txt') { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/txt-icon.png" alt="텍스트 아이콘">';
+                        } else if(['jpg', 'jpeg', 'png', 'gif', 'svg', 'bmp'].includes(extension)) { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/img-icon.png" alt="이미지 아이콘">'; 
+                        } else if(['xlsx', 'xlsm', 'xlsb', 'xltx'].includes(extension)) { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/exel-icon.png" alt="엑셀 아이콘">'; 
+                        } else if(['hwp', 'hwpx'].includes(extension)) { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/hwp-icon.png" alt="한글 아이콘">'; 
+                        } else if(['pptx', 'pptm', 'ppt'].includes(extension)) { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/ppt-icon.png" alt="파워포인트 아이콘">'; 
+                        } else if(extension === 'pdf') { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/pdf-icon.png" alt="PDF 아이콘">'; 
+                        } else { 
+                            printTxt += '<img class="extension-icon" src="../resources/issue/img/default-icon.png" alt="기본 아이콘">'; 
+                        } 
+
+                        printTxt += '</a></td>';
+                        printTxt += '<td class="left-align">' + response[i].originalName + '</td>';
+                        printTxt += '<td>' + response[i].fileSize + ' KB</td>';
+                        printTxt += '<td>' + response[i].name + '</td>';
+                        printTxt += '<td>' + response[i].createdAt + '</td>';
+                        printTxt += '</tr>';
+                    }
+                    $("#printDocumentBody").html(printTxt);
+                }
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function issueDetail(issueId){
+        window.location.href = '/myhome/issue/issue-detail?num=' + issueId;
+    }
+</script>
 </html>

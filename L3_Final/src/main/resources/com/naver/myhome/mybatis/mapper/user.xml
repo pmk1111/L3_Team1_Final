@@ -12,10 +12,10 @@
 	</select>
 
 	<select id="isId" resultType="user">
-		SELECT u.pic, u.password,u.email, u.name, u.phone, c.name AS company_name
-		FROM users u
-		LEFT JOIN company c ON u.id = c.user_id
-		WHERE u.email = #{email}
+		select u.pic, u.name, u.email, u.password, u.phone, e.id, c.name as companyName, e.department, e.position 
+		from users u inner join company c on u.id = c.user_id 
+		inner join employee e on u.id = e.user_id 
+		where u.email = #{email}
 	</select>
 
 	<update id="update" parameterType="user">
@@ -62,12 +62,16 @@
     INNER JOIN PROJECT P ON T.PROJECT_ID = P.ID
     WHERE P.ID = #{projectId}
     AND U.NAME LIKE '%' || #{name} || '%'
+	AND U.ID != #{userId}
 </select>
 
 
  <select id="getCreateUser" resultType="String">
  SELECT name FROM users WHERE id = #{id}
+ </select>
  
+  <select id="getAssignedUser" resultType="String">
+ select name from users where id = #{id}
  </select>
  
 	<!-- 혜원끝 -->
@@ -106,6 +110,11 @@
 		COMPANY_STATUS = #{companyStatus}
 		WHERE ID = #{id}
 	</update>
+	
+	<select id="getEmail" resultType="string">
+		SELECT email FROM USERS
+		WHERE id = #{userId}
+	</select>
 	
 
 	<!-- #########################################주영####################################### 

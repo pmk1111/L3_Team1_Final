@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.naver.myhome.domain.Issue;
 import com.naver.myhome.domain.Memo;
 import com.naver.myhome.domain.Schedule;
+import com.naver.myhome.service.EmployeeService;
 import com.naver.myhome.service.IssueService;
 import com.naver.myhome.service.MemoService;
 import com.naver.myhome.service.ScheduleService;
@@ -36,14 +37,16 @@ public class MyDashboardController {
 	private static final Logger logger = LoggerFactory.getLogger(MyDashboardController.class);
 
 	private UserService userService;
+	private EmployeeService employeeService;
 	private IssueService issueService;
 	private MemoService memoService;
 	private ScheduleService scheduleService;
 
 	@Autowired
-	public MyDashboardController(UserService userService, IssueService issueService, 
-			MemoService memoService, ScheduleService scheduleService) {
+	public MyDashboardController(UserService userService, EmployeeService employeeService,
+			IssueService issueService, MemoService memoService, ScheduleService scheduleService) {
 		this.userService = userService;
+		this.employeeService = employeeService;
 		this.issueService = issueService;
 		this.memoService = memoService;
 		this.scheduleService = scheduleService;
@@ -95,8 +98,12 @@ public class MyDashboardController {
 
 	@GetMapping("/CountPerStatus")
 	@ResponseBody
-	public List<Issue> CountPerStatus(){
-		List<Issue> issuecount = issueService.getStatusCount();
+	public List<Issue> CountPerStatus(Principal principal){
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
+		int employeeId = employeeService.getEmployeeId(userId);
+		
+		List<Issue> issuecount = issueService.getStatusCount(employeeId);
 
 		for (Issue issue : issuecount) {
 			System.out.println("Total Count: " + issue.getTotalcount());
