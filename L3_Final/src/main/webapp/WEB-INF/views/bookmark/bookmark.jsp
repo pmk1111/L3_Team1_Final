@@ -107,7 +107,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 18px;
+            font-size: 17px;
             height: 70px;
             border-radius: 3px
         }

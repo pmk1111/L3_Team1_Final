@@ -8,6 +8,9 @@
     SELECT * FROM ISSUE
         WHERE PROJECT_ID = #{id}
         AND ASSIGNED = #{sessionId}
+            <if test="search_word != null">
+        AND (SUBJECT LIKE '%' || #{search_word} || '%')
+    </if>
       
 </select>
 
