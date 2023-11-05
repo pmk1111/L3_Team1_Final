@@ -240,7 +240,7 @@ $(".notionchoice").focus(function(){
             url: "getProjectAndTeamInfo",
             success: function (response) {
             		let hostIndex = location.href.indexOf( location.host ) + location.host.length;
-								let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+					let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
             		$('.notionchoice').siblings('.issue-create-custom-options').empty();
                 if (response.length > 0) {
                 	let str = '';
@@ -347,8 +347,11 @@ function sendDataToServer(mention) {
 }
 
 
-$(document).on('click', '.assigned-info', function(){
-		let assignedCustomInput = $('.issue-assigned');
+
+
+
+$(document).on('click', '.mentioned-user', function(){
+		let assignedCustomInput = $(this).parent('.user-info').siblings('.issue-assigned');
 		let assignedUsrName = $(this).find('.assigned-user-name').text();
 		assignedCustomInput.val(assignedUsrName);
 		console.log('선택한 담당자 이름 = ' + assignedUsrName);

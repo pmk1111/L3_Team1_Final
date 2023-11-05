@@ -5,9 +5,14 @@
 <mapper namespace="com.naver.myhome.mybatis.mapper.MyIssueMapper">
 	
 <select id="getAllIssuesByProjectId" resultType="MyIssue">
-    SELECT * FROM ISSUE
+    SELECT i.*,
+    (SELECT name FROM users WHERE id = i.create_user) AS create_user_name
+    FROM ISSUE i
         WHERE PROJECT_ID = #{id}
         AND ASSIGNED = #{sessionId}
+            <if test="search_word != null">
+        AND (SUBJECT LIKE '%' || #{search_word} || '%')
+    </if>
       
 </select>
 

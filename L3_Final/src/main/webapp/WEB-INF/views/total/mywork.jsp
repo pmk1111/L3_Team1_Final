@@ -203,6 +203,18 @@
         	background-color:#f6f6f6;
         }
         
+        .issue-writer{
+        	width:80px
+        }
+        
+        .issue-writer+.issue-created{
+        	margin:0
+        }
+        
+        .issuewriter-created{
+        	margin-right:20px
+        }
+        
     </style>
 </head>
 
@@ -226,7 +238,7 @@
                                         <div class="card-body" style="height:780px; padding: 50px; width:100%">
                                             <div class="card-header-0" style="display:flex; flex-direction: row; justify-content: space-between; align-items: center;">
                                                 <h3 style="font-size: 27px; font-weight: 800; color: #555; margin-bottom:0;">내 작업보드</h3>
-
+                                             <form>
                                                 <div style="display:flex; align-items: center;">
                                                     <input type="text" name="search_word" id="searchInput" class="form-control bg-white border-0 px-1" placeholder="검색어를 입력하세요" style="height: 45px; width: 300px; border:1px solid #555 !important;">
                                                     <span class="input-group-text border-0 py-1 pe-2">
@@ -234,6 +246,7 @@
                                                     </span>
                                                 </div>
                                             </div>
+                                            </form>
 
                                             <div style="margin-top:50px; width:100%; border-bottom:1px solid #888;">
                                                 <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
@@ -256,7 +269,7 @@
                                                         <div class="project">
                                                             <div class="project-div" style="display:flex; align-items: center; justify-content: space-between; padding: 15px 0;">
                                                                 <div class="project-left">
-                                                                    <a class="select-color" style="background-color: ${project.COLOR};"></a>
+                                                                    <a class="select-color" style="background-color: ${project.COLOR}"></a>
                                                                     <div class="project-information">
                                                                         <div class="project-up">
                                                                             <div class="project-name" style="margin-left:15px;">
@@ -315,6 +328,7 @@
                                                                                 <span class="critical" style="height:30px; width:70px; font-size:14px; display:flex; justify-content: center; align-items: center; margin-right:30px">${issue.priority}</span>
                                                                             </c:otherwise>
                                                                         </c:choose>
+                                                                        <span class="issue-writer">${issue.create_user_name}</span>
                                                                         <span class="issue-created">${issue.created_at.substring(2, 10)}</span>
                                                                     </div>
                                                                 </li>
@@ -329,15 +343,18 @@
                                                         </c:forEach>
                                                     </div>
                                                 </c:otherwise>
+                                               
                                             </c:choose>
 
                                         </div>
+                                        
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+        
                 </div>
 
 
@@ -378,6 +395,20 @@
     $(".issuetype-wrap").click(function(event){
         event.stopPropagation();
     });
+    
+    
+    
+    document.getElementById("searchButton").addEventListener("click", function() {
+        var searchInput = document.getElementById("searchInput");
+
+        // 입력 필드의 값 확인
+        if (searchInput.value.trim() === "") {
+            alert("검색어를 입력하세요");
+        } 
+        return false;
+        
+    });
+    
     
     </script>
 

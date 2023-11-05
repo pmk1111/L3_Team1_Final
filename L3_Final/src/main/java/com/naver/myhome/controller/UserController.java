@@ -88,12 +88,10 @@ public class UserController {
    public String userUpdate(User user, Model model, HttpServletRequest request,Principal principal,String check,
 	         RedirectAttributes rattr, @AuthenticationPrincipal User user2) throws IllegalStateException, IOException{
    
-   String email = principal.getName();
-   
    //파일업로드
          MultipartFile uploadfile = user.getUploadfile();  
 
-         if(check !=null && check.equals("")) {
+         if(check !=null && !check.equals("")) {
             System.out.println("기존파일");
             user.setPicOriginal(check);
          } else {

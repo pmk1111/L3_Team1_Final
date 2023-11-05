@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../resources/mainboard/assets/" data-template="vertical-menu-template-free">
@@ -570,7 +571,19 @@
 																            </c:choose>
 			                                                            </td>
 			                                                            <td style="vertical-align: middle;">${issue.create_user_name }</td>
-			                                                            <td style="vertical-align: middle;"><a style="color:#392a85 !important;" href="../issue/issue-detail?num=${issue.id}" class="text-primary post-title">${issue.subject }</a></td>
+			                                                            <td style="vertical-align: middle;">
+			                                                            	<c:set var = "subject" value = "${issue.subject }"/>
+			                                                            	<c:set var = "subjectSubString" value = "${fn:substring(subject, 0, 30)}" />			                                                            	
+			                                                            <a style="color:#392a85 !important;" href="../issue/issue-detail?num=${issue.id}" class="text-primary post-title">
+			                                                            	<c:choose>
+			                                                            		<c:when test="${issue.subject.length() > 30 }">
+			                                                            			${subjectSubString }...
+			                                                            		</c:when>
+			                                                            		<c:otherwise>
+			                                                            			${issue.subject}
+			                                                            		</c:otherwise>
+			                                                            	</c:choose>
+			                                                            </a></td>
 			                                                            <td style="vertical-align: middle; text-align: center;">
 																            <c:choose>
 																                <c:when test="${issue.priority eq 'critical'}">
@@ -617,7 +630,7 @@
                                         
 											<c:forEach var="rs" items="${recentStatus}">
 											
-												<c:if test="${rs.GUIDE eq '프로젝트 생성'}">
+												<c:if test="${rs.GUIDE eq 'create-project'}">
 		                                            <div class="activity-item d-flex">
 		                                                <div class="activite-label">
 		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
@@ -663,7 +676,7 @@
 		                                            </div><!-- End activity item-->
 	                                            </c:if>
 												
-												<c:if test="${rs.GUIDE eq '프로젝트 수정'}">
+												<c:if test="${rs.GUIDE eq 'modify-project'}">
 		                                            <div class="activity-item d-flex">
 		                                                <div class="activite-label">
 		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
@@ -709,7 +722,7 @@
 		                                            </div><!-- End activity item-->
 	                                            </c:if>
 	                                            
-	                                            <c:if test="${rs.GUIDE eq '팀 초대'}">
+	                                            <c:if test="${rs.GUIDE eq 'add-invite'}">
 		                                            <div class="activity-item d-flex">
 		                                                <div class="activite-label">
 		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
@@ -755,7 +768,7 @@
 		                                            </div><!-- End activity item-->		                                                	                                            	
 	                                            </c:if>
 	                                            
-	                                            <c:if test="${rs.GUIDE eq '팀 권한 변경' and rs.UPDATE_DATA eq '1' }">
+	                                            <c:if test="${rs.GUIDE eq 'change-auth' and rs.UPDATE_DATA eq '1' }">
 		                                            <div class="activity-item d-flex">
 		                                                <div class="activite-label">
 		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
@@ -801,7 +814,7 @@
 		                                            </div><!-- End activity item-->		                                                	                                            	
 	                                            </c:if>
 	                                            
-	                                            <c:if test="${rs.GUIDE eq '팀 권한 변경' and rs.UPDATE_DATA eq '0' }">
+	                                            <c:if test="${rs.GUIDE eq 'change-auth' and rs.UPDATE_DATA eq '0' }">
 		                                            <div class="activity-item d-flex">
 		                                                <div class="activite-label">
 		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
@@ -847,7 +860,7 @@
 		                                            </div><!-- End activity item-->		                                                	                                            	
 	                                            </c:if>		             
 	                                            
-	                                            <c:if test="${rs.GUIDE eq '이슈 생성'}">
+	                                            <c:if test="${rs.GUIDE eq 'create-issue'}">
 		                                            <div class="activity-item d-flex">
 		                                                <div class="activite-label">
 		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
@@ -905,7 +918,7 @@
 		                                            </div><!-- End activity item-->		                                                	                                            	
 	                                            </c:if>
 	                                            
-	                                            <c:if test="${rs.GUIDE eq '타입 변경'}">
+	                                            <c:if test="${rs.GUIDE eq 'change-type'}">
 		                                            <div class="activity-item d-flex">
 		                                            
 		                                                <div class="activite-label">
@@ -965,7 +978,7 @@
 		                                            </div><!-- End activity item-->		                                                	                                            	
 	                                            </c:if>
 	                                            
-	                                            <c:if test="${rs.GUIDE eq '담당자 변경'}">
+	                                            <c:if test="${rs.GUIDE eq 'change-assigned'}">
 		                                            <div class="activity-item d-flex">
 		                                                <div class="activite-label">
 		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
@@ -1023,7 +1036,7 @@
 		                                            </div><!-- End activity item-->		                                                	                                            	
 	                                            </c:if>		 	                                            		                                            		                                            
 	                                            
-	                                            <c:if test="${rs.GUIDE eq '우선순위 변경'}">
+	                                            <c:if test="${rs.GUIDE eq 'change-priority'}">
 		                                            <div class="activity-item d-flex">
 		                                                <div class="activite-label">
 		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />
@@ -1081,7 +1094,7 @@
 		                                            </div><!-- End activity item-->		                                                	                                            	
 	                                            </c:if>	
 	                                            
-	                                            <c:if test="${rs.GUIDE eq '상태 변경'}">
+	                                            <c:if test="${rs.GUIDE eq 'change-status'}">
 		                                            <div class="activity-item d-flex">
 		                                                <div class="activite-label">
 		            									   <c:set var="timeDiff" value="${rs.CURRENTTIME}" />

@@ -119,12 +119,21 @@ function getFilteredData(data) {
                         str += '<img src="../resources/issue/img/epic.svg" class="issuetype-icon">';
                     }
 
-                    str += '<span class="issuetype" style="margin-left:20px !important">' + item.type + '</span>';
+                    str += '<span class="issuetype" style="margin-left:25px !important">' + item.type + '</span>';
                     str += '<a href="issue-detail?num=' + item.id + '">';
                     str += '<span class="issue-title" style="margin-left:5px !important">' + item.subject + '</span></a></div>';
                     str += '<div class="issuewriter-created">';
+                    if(item.priority == 'low'){
+                    	str += '<span class="low">' + item.priority + '</span>'
+                    } else if(item.priority == 'middle'){
+                    	str += '<span class="middle">' + item.priority + '</span>'
+                    } else if(item.priority == 'high'){
+                    	str += '<span class="high">' + item.priority + '</span>'
+                    } else {
+                    	str += '<span class="critical">' + item.priority + '</span>'
+                    }
                     str += '<span class="issue-writer">' + item.create_user_name + '</span>';
-                    str += '<span class="issue-created" style="margin-left:25px !important">' + item.created_at.substring(0, 10) + '</span>';
+                    str += '<span class="issue-created" style="margin-left:25px !important">' + item.created_at.substring(2, 10) + '</span>';
                     str += '</div></li>';
 
                     $('.all-issue-list').append(str);
@@ -171,8 +180,17 @@ function getSearchList() {
                     str += '<a href="issue-detail?num=' + item.id + '">';
                     str += '<span class="issue-title" style="margin-left:5px !important">' + item.subject + '</span></a></div>';
                     str += '<div class="issuewriter-created">';
+                    if(item.priority == 'low'){
+                    	str += '<span class="low">' + item.priority + '</span>'
+                    } else if(item.priority == 'middle'){
+                    	str += '<span class="middle">' + item.priority + '</span>'
+                    } else if(item.priority == 'high'){
+                    	str += '<span class="high">' + item.priority + '</span>'
+                    } else {
+                    	str += '<span class="critical">' + item.priority + '</span>'
+                    }
                     str += '<span class="issue-writer">' + item.create_user_name + '</span>';
-                    str += '<span class="issue-created" style="margin-left:25px !important">' + item.created_at.substring(0, 10) + '</span>';
+                    str += '<span class="issue-created" style="margin-left:25px !important">' + item.created_at.substring(2, 10) + '</span>';
                     str += '</div></li>';
 
                     $('.all-issue-list').append(str);

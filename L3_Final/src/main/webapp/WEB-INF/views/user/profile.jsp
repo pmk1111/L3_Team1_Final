@@ -87,6 +87,7 @@
                             <div class="col-md-12">
 
                                 <form id="formAccountSettings" method="POST" action="../user/update-process" enctype="multipart/form-data">
+                                   <input type="hidden" name="pic" value="${userinfo.pic}">
                                     <div class="card mb-4">
                                         <h5 class="card-header">프로필</h5>
 
@@ -116,10 +117,11 @@
                                                             <i class="bx bx-upload d-block d-sm-none"></i>
                                                         </label>
 
-                                                        <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                                        <button type="button" class="btn btn-outline-secondary account-image-reset mb-4" id="cancelBtn" >
                                                             <i class="bx bx-reset d-block d-sm-none"></i>
                                                             <span class="d-none d-sm-block">취소</span>
                                                         </button>
+                                                        
 
                                                         <div id="filename">
                                                             <input type="file" id="upload" name="uploadfile" value="${userinfo.pic}" class="account-file-input" accept="image/png, image/jpeg" style="display: none;" />
@@ -275,6 +277,8 @@
                 $(".company-info").hide();
             });
         });
+        
+  
     </script>
 </body>
 

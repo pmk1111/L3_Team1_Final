@@ -81,18 +81,8 @@ public class IssueController {
 	public ModelAndView issuelist(ModelAndView mv, HttpServletRequest request, 
 			Principal principal, HttpSession session) {
 		int projectId = (int) session.getAttribute("projectId");
-		logger.info("선택된 프로젝트 id = " + projectId);
-
 		int listcount = issueService.getListCount(projectId);
 		List<Issue> issuelist = issueService.getIssueList(projectId);
-
-		//		시큐리티 적용 전 세션에서 id 가져오기
-		//		HttpSession session = request.getSession();
-		//		String id = session.getId();
-
-		//		시큐리티 적용 후 세션에서 id 가져오기
-		//		String id = principal.getName();
-		//		List<Project> myProjectList = issueService.getMyProjectList(userId);
 
 		mv.setViewName("issue/issue-list");
 		mv.addObject("listcount", listcount);
@@ -107,8 +97,6 @@ public class IssueController {
 			@RequestParam(name = "issueStatus", required = false) String issueStatus,
 			@RequestParam(name = "issuePriority", required = false) String issuePriority) {
 
-		logger.info("가져온 status = " + issueStatus);
-		logger.info("가져온 priority = " + issuePriority);
 		int projectId = (int) session.getAttribute("projectId");
 		List<Issue> filteredIssues = issueService.getFilteredIssueList(issueStatus, issuePriority, projectId);
 		return filteredIssues;
@@ -131,7 +119,8 @@ public class IssueController {
 
 	@PostMapping("createIssue")
 	public String createIssue(Issue issue, Notify notify, HttpServletRequest request, 
-			HttpSession session, Principal principal,@RequestParam(value="mention_user_id",defaultValue="0",required=false) int mentioned_id,
+			HttpSession session, Principal principal,
+			@RequestParam(value="mention_user_id",defaultValue="0",required=false) int mentioned_id,
 			@RequestParam(value = "assigned") int assignedValue,
 			String notionchoice,MultipartFile[] uploadfiles) throws Exception {
 
@@ -141,7 +130,6 @@ public class IssueController {
 
 		List<Files> fileList = new ArrayList<>();
 		int issueId = issueService.getIssueId();
-		logger.info("가져온 이슈 번호: " + issueId);
 
 		issue.setId(issueId);
 		issue.setProject_id(projectId);
@@ -149,8 +137,6 @@ public class IssueController {
 		issue.setMentioned(notionchoice.replace("@", ""));
 
 		issueService.createIssue(issue);
-
-		//혜원
 
 		String create_user = userService.getCreateUser(userId);
 		String assign_user = userService.getAssignUser(assignedValue);
@@ -179,21 +165,10 @@ public class IssueController {
 			notifyService.createalarm(assignNotify);
 		}
 
-
-
-		logger.info(issue.toString());
-		logger.info("이슈 태그: " + notify.getNAME());
-		logger.info("user_id: " + mentioned_id);
-
-
-
-
-
 		for (MultipartFile file : uploadfiles) {
 			Files files = new Files();
 			if (file.getSize() > 0) {
 				files.setFile_size(file.getSize());
-				logger.info("업로드 파일: " + file.getOriginalFilename());
 
 				files.setIssue_id(issueId);
 				files.setOriginal_name(file.getOriginalFilename());
@@ -201,14 +176,10 @@ public class IssueController {
 				String saveName = fileDBName(file.getOriginalFilename(), saveFolder);
 				files.setSave_name(saveName);
 
-				logger.info("업로드한 파일 사이즈 = " + file.getSize());
-				logger.info("업로드 경로 = " + saveFolder);
-
 				file.transferTo(new File(saveFolder + saveName));
 				fileList.add(files);
 			}
 		}
-		logger.info("파일리스트 크기 = " + fileList.size());
 		if (!fileList.isEmpty()) {
 			fileService.uploadFile(fileList);
 		}
@@ -224,7 +195,6 @@ public class IssueController {
 		int date = c.get(Calendar.DATE);
 
 		String homdir = saveFolder + "/" + year + "-" + month + "-" + date;
-		logger.info(homdir);
 
 		File path1 = new File(homdir);
 		if(!(path1.exists())) {
@@ -236,16 +206,10 @@ public class IssueController {
 
 		int index = fileName.lastIndexOf(".");
 
-		logger.info("index = " + index);
-
 		String fileExtension = fileName.substring(index+1);
-		logger.info("파일확장자 = " + fileExtension);
-
 		String refileName = "bbs" + year + month + date + random + "." + fileExtension;
-		logger.info("refileName = " + refileName);
-
-		String fileDBName = File.separator + year + "-" + month + "-" + date + File.separator + refileName;
-		logger.info("fileDBName = " + fileDBName);
+		String fileDBName = File.separator + year + "-" + month + "-" 
+							+ date + File.separator + refileName;
 
 		return fileDBName;
 	}
@@ -258,58 +222,26 @@ public class IssueController {
 			HttpServletResponse response) throws Exception{
 
 		String sFilePath = saveFolder + saveName;
-
 		File file = new File(sFilePath);
 
 		byte[] bytes = FileCopyUtils.copyToByteArray(file);
-
 		String sEncoding = new String(originalName.getBytes("utf-8"), "ISO-8859-1");
 
 		response.setHeader("Content-Disposition", "attachment;filename=" + sEncoding);
-
 		response.setContentLength(bytes.length);
 		return bytes;
 	}
 
-
-
-	//=====테스트용 코드
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public ModelAndView fileupload(ModelAndView mv, MultipartFile[] uploadfiles) {
-
-		for(MultipartFile file : uploadfiles) {
-
-			logger.info("업로드 파일: " + file.getOriginalFilename());
-		}
-
-
-		return mv;
-	}
-
-	@GetMapping("/test")
-	public String test(MultipartFile[] uploadfiles) {
-
-
-		return "issue/test";
-	}
-	// ======여기까지 테스트
-
-
-
-
 	@GetMapping("/issue-detail")
 	public ModelAndView issueDetail(int num, ModelAndView mv, HttpServletRequest request, @AuthenticationPrincipal User user,
 			@RequestHeader(value = "referer", required = false) String beforeURL) {
-		logger.info("referer: " + beforeURL);
 
 		Issue issue = issueService.getIssueDetail(num);
-
 		List<Files> filelist = fileService.getFileList(num);
 
 		int bookmarkCk = bookmarkService.checkBookmark(user.getId(), num);
 
 		if (issue == null) {
-			logger.info("상세보기 실패");
 			mv.setViewName("issue/no-issue-content");
 			mv.addObject("url", request.getRequestURI());
 			mv.addObject("showAlert", true);
@@ -319,10 +251,7 @@ public class IssueController {
 
 			String createrEmail = userService.getEmail(issueCreater);
 			String assignerEmail = userService.getEmail(issueAssigner);
-			logger.info("작성자 이메일 = " + createrEmail);
-			logger.info("담당자 email = " + assignerEmail);
 
-			logger.info("상세보기 성공");
 			mv.setViewName("issue/issue-detail");
 			mv.addObject("issuedata", issue);
 			mv.addObject("filelist", filelist);
@@ -343,7 +272,6 @@ public class IssueController {
 			@AuthenticationPrincipal User customUser) {
 
 		int sessionId = customUser.getId();
-		logger.info("세션아이디 체크" + sessionId);
 
 		Map<String, Object> response = new HashMap<>();
 		try {
@@ -367,15 +295,12 @@ public class IssueController {
 			@RequestParam(value = "assigned") int assignedValue,String notionchoice) throws Exception{
 
 		int sessionId = customUser.getId();
-		logger.info("세션아이디 체크" + sessionId);
 
 		String url = "";
 		issue.setId(num);
 		issue.setSessionId(sessionId);
 		issue.setMentioned(notionchoice.replace("@", ""));
 		int result = issueService.issueUpdate(issue);
-
-		//혜원
 
 		String create_user = userService.getCreateUser(sessionId);
 		String assign_user = userService.getAssignUser(assignedValue);
@@ -403,7 +328,6 @@ public class IssueController {
 
 			notifyService.createalarm(assignNotify);
 		}
-		//혜원
 
 		if(result==0) {
 			logger.info("게시판 수정 실패");
@@ -416,27 +340,20 @@ public class IssueController {
 					Files files = new Files();
 					if(file.getSize()>0) {
 						files.setFile_size(file.getSize());
-						logger.info("업로드 파일: " + file.getOriginalFilename());
-
 						files.setIssue_id(num);
 						files.setOriginal_name(file.getOriginalFilename());
 
 						String saveName = fileDBName(file.getOriginalFilename(), saveFolder);
 						files.setSave_name(saveName);
 
-						logger.info("업로드한 파일 사이즈 = " + file.getSize());
-						logger.info("업로드 경로 = " + saveFolder);
-
 						file.transferTo(new File(saveFolder + saveName));
 						fileList.add(files);
 					}
 				}
-				logger.info("파일리스트 크기 = " + fileList.size());
 				if(!fileList.isEmpty()) {
 					fileService.uploadFile(fileList);
 				}
 			}
-			logger.info("게시판 수정 완료");
 			url = "redirect:issue-detail";
 			rattr.addAttribute("num", issue.getId());
 		}
@@ -453,8 +370,6 @@ public class IssueController {
 			return 0;
 		}
 	}
-
-
 
 
 }

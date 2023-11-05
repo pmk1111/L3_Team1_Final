@@ -4,19 +4,20 @@
 
 <mapper
 	namespace="com.naver.myhome.mybatis.mapper.ChatRoomMapper">
-	
+
 	<select id="getNotReadCnt" resultType="int">
-		select count(*) from chatroom
-		where 
+		select count(*) from
+		chatroom
+		where
 		(
-			create_by = #{employeeId}
-			OR
-			participant = #{employeeId}
+		create_by = #{employeeId}
+		OR
+		participant = #{employeeId}
 		)
 		and resent_sender != #{employeeId}
 		and not_read = 1
 	</select>
-	
+
 	<select id="getChatRoomInfo"
 		resultType="com.naver.myhome.domain.ChatRoom">
 		SELECT * FROM chatroom
@@ -27,30 +28,32 @@
 		(create_by = #{participant} AND
 		participant = #{employeeId})
 	</select>
-	
-	<select id="getChatRoomInfoById" resultType="com.naver.myhome.domain.ChatRoom">
+
+	<select id="getChatRoomInfoById"
+		resultType="com.naver.myhome.domain.ChatRoom">
 		SELECT * FROM chatroom
 		WHERE
 		id = #{selectedRoomId}
 	</select>
 
-<select id="getChatRoomList" resultType="com.naver.myhome.domain.ChatRoom">
-    SELECT
-    cr.*,
-    CASE
-        WHEN cr.create_by = #{employeeId} THEN cr.participant
-        ELSE cr.create_by
-    END AS other_participant_id,
-    u.name AS participant_name,
-    u.pic AS participant_pic
-    FROM chatroom cr
-    JOIN employee e ON (cr.create_by = e.id OR cr.participant = e.id)
-    JOIN users u ON e.user_id = u.id
-    WHERE (cr.create_by = #{employeeId} OR cr.participant = #{employeeId})
-    AND e.id != #{employeeId}
-    AND cr.resent_content is not null
-    order by updated_at desc
-</select>
+	<select id="getChatRoomList"
+		resultType="com.naver.myhome.domain.ChatRoom">
+		SELECT
+		cr.*,
+		CASE
+		WHEN cr.create_by = #{employeeId} THEN cr.participant
+		ELSE cr.create_by
+		END AS other_participant_id,
+		u.name AS participant_name,
+		u.pic AS participant_pic
+		FROM chatroom cr
+		JOIN employee e ON (cr.create_by = e.id OR cr.participant = e.id)
+		JOIN users u ON e.user_id = u.id
+		WHERE (cr.create_by = #{employeeId} OR cr.participant = #{employeeId})
+		AND e.id != #{employeeId}
+		AND cr.resent_content is not null
+		order by updated_at desc
+	</select>
 
 	<insert id="createChatRoom">
 		<selectKey order="BEFORE" keyProperty="id" resultType="int">
@@ -68,12 +71,14 @@
 		resent_sender = #{employeeId},
 		not_read = 1,
 		updated_at = SYSDATE
-		where id = #{selectedRoomNum}
+		where
+		id = #{selectedRoomNum}
 	</update>
-	
+
 	<update id="updateReadCnt">
 		update chatroom
 		set not_read = 0
-		where id = #{selectedRoomNum}
+		where id =
+		#{selectedRoomNum}
 	</update>
 </mapper>

@@ -277,7 +277,7 @@
                                             <b class="bTxt pass-text">비밀번호</b>
                                             <br>
                                             <input type="password" id="password" placeholder="비밀번호를 입력하세요" onfocusout="checkPassword(this)" class="pw" name="password" required>
-                                            <img src="../resources/jj/img/eye_gray.svg" class="eye">
+                                            <img src="../resources/JJ/img/eye_gray.svg" class="eye">
                                             <p class="errMsg" id="pw_message">오류메세지 영역</p>
                                         </div>
 
@@ -692,11 +692,11 @@
 
 
         $('.eye').hover(function() {
-                $('.eye').attr('src', '../resources/jj/img/eye_black.svg');
+                $('.eye').attr('src', '../resources/JJ/img/eye_black.svg');
                 $('.pw').attr('type', 'text');
             },
             function() {
-                $('.eye').attr('src', '../resources/jj/img/eye_gray.svg');
+                $('.eye').attr('src', '../resources/JJ/img/eye_gray.svg');
                 $('.pw').attr('type', 'password');
             }
         );

@@ -2,20 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.naver.myhome.mybatis.mapper.ScheduleMapper">
+<mapper
+	namespace="com.naver.myhome.mybatis.mapper.ScheduleMapper">
 	<select id="getScheduleList" resultType="Schedule">
-		select * from schedule where user_id = #{userId}
-		<!-- userId는 세션에 저장된 사용자 식별자를 가져온다 -->
+		select * from schedule
+		where user_id = #{userId}
 	</select>
-	
-<select id="getSelectedScheduleList" resultType="Schedule">
-  <![CDATA[
+
+	<select id="getSelectedScheduleList" resultType="Schedule">
+  	<![CDATA[
     SELECT * FROM schedule
 		WHERE user_id = #{userId}
-		AND TO_DATE(TO_CHAR(start_date, 'YYYY-MM-DD'), 'YYYY-MM-DD') <= #{pickedDate}
-		AND TO_DATE(TO_CHAR(end_date, 'YYYY-MM-DD'), 'YYYY-MM-DD') >= #{pickedDate}
-  ]]>
-</select>
+		AND TO_DATE
+		(TO_CHAR(start_date, 'YYYY-MM-DD'), 'YYYY-MM-DD') <= TO_DATE(#{pickedDate}, 'YYYY-MM-DD')
+		AND TO_DATE
+		(TO_CHAR(end_date, 'YYYY-MM-DD'), 'YYYY-MM-DD') >= TO_DATE(#{pickedDate}, 'YYYY-MM-DD')
+  	]]>
+	</select>
 
 
 	<insert id="insertSchedule" parameterType="java.util.Map">
@@ -24,38 +27,44 @@
 		</selectKey>
 		INSERT INTO SCHEDULE
 		VALUES
-		(#{id}, #{user_id}, #{subject}, #{background_color}, #{border_color},
-		to_date(#{start_date}, 'yyyy-MM-dd HH24:MI:SS'),
-		to_date(#{end_date}, 'yyyy-MM-dd HH24:MI:SS'),
+		(#{id}, #{user_id}, #{subject},
+		#{background_color}, #{border_color},
+		to_date(#{start_date},
+		'yyyy-MM-dd HH24:MI:SS'),
+		to_date(#{end_date}, 'yyyy-MM-dd
+		HH24:MI:SS'),
 		#{category}, #{place}, #{content})
 	</insert>
 
 	<select id="getScheduleInfo" resultType="Schedule">
-<!-- 		SELECT s.*, (select name from users where id = #{userId})
-		FROM SCHEDULE s
-		WHERE id = #{scheduleId} -->
-	
-		SELECT s.*, 
-		(select name from users where id = 
-		(select user_id from schedule where id = #{scheduleId})
+		SELECT s.*,
+		(select name
+		from users where id =
+		(select user_id from schedule where id =
+		#{scheduleId})
 		) as name
-		FROM SCHEDULE s
+		FROM SCHEDULE
+		s
 		WHERE id = #{scheduleId}
 	</select>
 
 	<!-- Update -->
 	<update id="updateSchedule" parameterType="Schedule">
-    UPDATE SCHEDULE
-    SET
-    subject = #{subject},
-    background_color = #{background_color}, 
-    border_color = #{border_color},
-    start_date = to_date(#{start_date}, 'yyyy-MM-dd HH24:MI:SS'),
-		end_date = to_date(#{end_date}, 'yyyy-MM-dd HH24:MI:SS'),
-    category = #{category},
-    place = #{place},
-    content = #{content}
-    WHERE id = #{id}
+		UPDATE SCHEDULE
+		SET
+		subject = #{subject},
+		background_color = #{background_color},
+		border_color = #{border_color},
+		start_date = to_date(#{start_date},
+		'yyyy-MM-dd HH24:MI:SS'),
+		end_date =
+		to_date(#{end_date}, 'yyyy-MM-dd
+		HH24:MI:SS'),
+		category = #{category},
+		place = #{place},
+		content =
+		#{content}
+		WHERE id = #{id}
 	</update>
 
 	<!-- Delete -->

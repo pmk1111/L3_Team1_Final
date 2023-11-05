@@ -107,7 +107,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 18px;
+            font-size: 17px;
             height: 70px;
             border-radius: 3px
         }
@@ -490,7 +490,7 @@ a {
                                                         <c:forEach var="bookmark" items="${bookmarkList}">
                                                             <li class="bookmark-list">
                                                                 <div class="bookmark-wrap">
-                                                                	<img src="../resources/bookmark/img/bookmark_purple.png" id="bookmark" alt="북마크" width=25px>
+                                                                	<img src="../resources/bookmark/img/bookmark_purple.png" class="bookmark-icon" id="bookmark" alt="북마크" width=25px>
                                                                     <c:choose>
                                                                         <c:when test="${bookmark.type eq '버그'}">
                                                                             <img src="../resources/issue/img/bug.svg" class="issuetype-icon">
@@ -569,41 +569,36 @@ a {
 
 
 
-
-
-
-
-
                     </div>
+                                                            <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                            <div class="mb-2 mb-md-0">
+                                ©
+                                <script>
+                                    document.write(new Date().getFullYear());
+                                </script>
+                                (주)WidUs
+                            </div>
+                            <div>
+                                <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+                                <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+                                <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
+                                <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- Footer -->
                 </div>
             </div>
         </div>
+        
+    </div>
+    
+
     </div>
 
-    </div>
 
-
-
-
-    <!-- Footer -->
-    <footer class="content-footer footer bg-footer-theme" style="padding-top: 20px;">
-        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-            <div class="mb-2 mb-md-0">
-                ©
-                <script>
-                    document.write(new Date().getFullYear());
-                </script>
-                (주)WidUs
-            </div>
-            <div>
-                <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a> <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a> <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
-
-                <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
-            </div>
-        </div>
-
-    </footer>
-    <!-- Footer -->
 
     <div class="content-backdrop fade"></div>
     
@@ -627,7 +622,7 @@ a {
     
     
     //북마크 애니메이션 
-    var img = $("#bookmark");
+    var img = $(".bookmark-icon");
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 

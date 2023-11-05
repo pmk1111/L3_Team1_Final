@@ -2,11 +2,11 @@ package com.naver.myhome.domain;
 
 import java.time.LocalDateTime;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class Schedule {
 	private int id ;
 	private int user_id;

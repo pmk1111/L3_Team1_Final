@@ -1,4 +1,4 @@
-package com.naver.myhome.socketTest;
+package com.naver.myhome.WebSocket;
 
 import java.util.ArrayList;
 import java.util.HashMap;

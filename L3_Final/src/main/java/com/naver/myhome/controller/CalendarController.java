@@ -50,8 +50,6 @@ public class CalendarController {
 	public ModelAndView getScheduleList(ModelAndView mv, Principal principal) {
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
-
-		logger.info("접속한 유저 id = " + userId);
 		
 		List<Schedule> calendarList = scheduleService.getScheduleList(userId);
 
@@ -76,7 +74,6 @@ public class CalendarController {
 				jsonArr.add(jsonObj);
 			}
 		}
-		logger.info("jsonArrCheck: {}", jsonArr);
 
 		mv.setViewName("calendar/calendar-list");
 		mv.addObject("calendarList", jsonArr);
@@ -93,14 +90,11 @@ public class CalendarController {
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
 		
-		logger.info("접속한 유저 id = " + userId);
-
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String startDateStr = startDate.format(formatter);
 		String endDateStr = endDate.format(formatter);
-
-		logger.info("선택한 색상은 = " + color);
-
+		
+		logger.info("시작일 = " + startDateStr );
 		schedule.setUser_id(userId);
 		schedule.setStart_date(startDateStr);
 		schedule.setEnd_date(endDateStr);
@@ -128,10 +122,6 @@ public class CalendarController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String startDateStr = startDate.format(formatter);
 		String endDateStr = endDate.format(formatter);
-
-		logger.info("변경된 시작일 = " + startDateStr);
-		logger.info("변경된 종료일 = " + endDateStr);
-		logger.info("변경한 색상은 = " + color);
 
 		schedule.setId(scheduleId);
 		schedule.setStart_date(startDateStr);

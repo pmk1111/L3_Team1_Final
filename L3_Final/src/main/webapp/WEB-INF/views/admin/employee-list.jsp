@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
@@ -18,7 +18,7 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="icon" type="image/x-icon"
-			href="${pageContext.request.contextPath}/mainboard/assets/img/favicon/favicon.png" />
+         href="${pageContext.request.contextPath}/mainboard/assets/img/favicon/favicon.png" />
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
@@ -143,7 +143,7 @@
         }
         
         .row {
-        	margin-top:30px;
+           margin-top:30px;
         }
     </style>
 
@@ -193,7 +193,7 @@
 
                                                 <br>
                                                 <!-- 검색 -->
-                                                <div id="search">
+                                                <div id="search" style="overflow-y: scroll; overflow-x:hidden; max-height: 550px;">
                                                     <form autocomplete="off">
                                                    
                                                         <select id="filterSelect" name="search_field" style="border: 1px solid #d9dee3;">
@@ -249,7 +249,7 @@
                                                                                         <c:out value="${emp.id}" />
                                                                                     </td>
                                                                                     <td id="empDetail">
-                                                                                     <button type="button" class="empDetail" data-emp-id="${emp.id}" data-toggle="modal"	data-target="#myModal"  >
+                                                                                     <button type="button" class="empDetail" data-emp-id="${emp.id}" data-toggle="modal"   data-target="#myModal"  >
                                                                                        <c:out value="${emp.name}" /></button>
                                                                                     </td>
                                                                                     
@@ -287,9 +287,9 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
-														
-												
-														
+                                          
+                                    
+                                          
                                                         <div class="tab-pane fade" id="userstop">
                                                             <table class="table">
                                                                 <thead>
@@ -367,7 +367,7 @@
             <!-- / Layout wrapper -->
         </div>
     </div>
-    	
+       
     <jsp:include page="employee-info.jsp"/>
    
     <!-- Core JS -->
@@ -395,15 +395,15 @@
     <script>
     getEmp();
     
-	  $('.nav-link').on('click', function() {
-	    if($(this).attr('href') === '#userwait') {
-	      $('.search-bar').hide();
-	      $('#filterSelect').hide();
-	    } else {
-	      $('.search-bar').show();
-	      $('#filterSelect').show();
-	    }
-	  });
+     $('.nav-link').on('click', function() {
+       if($(this).attr('href') === '#userwait') {
+         $('.search-bar').hide();
+         $('#filterSelect').hide();
+       } else {
+         $('.search-bar').show();
+         $('#filterSelect').show();
+       }
+     });
 
 
   //검색
@@ -448,38 +448,38 @@
   //직원정보 상세조회
   $(function() {
 $("body").on("click",".empDetail", function() {
-	   var empId = $(this).data("emp-id");
+      var empId = $(this).data("emp-id");
 console.log(empId);
-	    $.ajax({
-	      type: "GET",
-	      url: "employee-info",
-	      data: {
-	    	  empId: empId,
-	         
-	      },
-	      
-	      success: function (response) {
-	    	  
-	        console.log("성공");
-	        $('input[name=id]').val(response.id);
-	        $('input[name=name]').val(response.name);
-	        $('input[name=email]').val(response.email);
-	        $('input[name=company_name]').val(response.company_name);
-	        $('input[name=department]').val(response.department);
-	        $('input[name=position]').val(response.position);
-	        $('input[name=phone]').val(response.phone);
-	        
-	        
-	        },
-	        error: function (error) {
-	          console.error("Error: " + error);
-	        }
-	    }); //ajax end
-	  });  // 
+       $.ajax({
+         type: "GET",
+         url: "employee-info",
+         data: {
+            empId: empId,
+            
+         },
+         
+         success: function (response) {
+            
+           console.log("성공");
+           $('input[name=id]').val(response.id);
+           $('input[name=name]').val(response.name);
+           $('input[name=email]').val(response.email);
+           $('input[name=company_name]').val(response.company_name);
+           $('input[name=department]').val(response.department);
+           $('input[name=position]').val(response.position);
+           $('input[name=phone]').val(response.phone);
+           
+           
+           },
+           error: function (error) {
+             console.error("Error: " + error);
+           }
+       }); //ajax end
+     });  // 
   }); 
-  	
-			/*정상탭 */
-	    $('.employee-tab').click(function(){
+     
+         /*정상탭 */
+       $('.employee-tab').click(function(){
           let token = $("meta[name='_csrf']").attr("content");
           let header = $("meta[name='_csrf_header']").attr("content");
           
@@ -495,7 +495,7 @@ console.log(empId);
       
       /* 가입대기 탭 */
       $('.wait-tab').click(function() {
-      	  
+           
           $.ajax({
               url: "../admin/wait-reg",
               type: "GET",
@@ -509,9 +509,9 @@ console.log(empId);
                   
                   for (var i = 0; i < user.length; i++) {
                       console.log(user)
-                  	waitList += '<tr>';
+                     waitList += '<tr>';
                       waitList += '<td>';
-			
+         
                       var userPic = user[i].pic;
                       if (userPic === null) {
                           waitList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
@@ -559,7 +559,7 @@ console.log(empId);
                           success: function(result) {
 
                               $this.closest('tr').remove();
-								
+                        
                               var countUser = result.countUser;
                               $('#count-user').text(countUser);
 
@@ -599,7 +599,7 @@ console.log(empId);
                           success: function(result) {
 
                               $this.closest('tr').remove();
-								
+                        
                               var countUser = result.countUser;
                               $('#count-user').text(countUser);
                               
@@ -625,7 +625,7 @@ console.log(empId);
 
       /* 중지 */
       $('.stop-tab').click(function() {
-      	
+         
           let token = $("meta[name='_csrf']").attr("content");
           let header = $("meta[name='_csrf_header']").attr("content");
 
@@ -693,8 +693,8 @@ console.log(empId);
                           url: "../admin/back-emp",
                           type: "POST",
                           data: {
-                          	empId: empId,
-                          	
+                             empId: empId,
+                             
                           },
                           beforeSend: function(xhr) {
                               xhr.setRequestHeader(header, token);
@@ -702,7 +702,7 @@ console.log(empId);
                           success: function(result) {
 
                               $this.closest('tr').remove();
-								
+                        
                               var countEmp = result.countEmp;
                               $('#count-emp').text(countEmp);
                               
@@ -742,56 +742,62 @@ console.log(empId);
                   var empList = '';
                   
                   if (emp.length == 0) { // 데이터의 길이를 확인하여 0일 경우 메시지 출력
-                  	$('.employee-body').empty(); // 기존에 표시되던 내용 제거
+                     $('.employee-body').empty(); // 기존에 표시되던 내용 제거
                       $('.employee-body').append('<tr><td colspan="9" style="border-bottom: none">조회된 데이터가 없습니다.</td></tr>');
                       return; // 추가적인 처리를 중단하고 함수 종료
                   }
                   
                   console.log(emp);
                   for (var i = 0; i < emp.length; i++) {                    
-                  	empList += '<tr>';
-                  	empList += '<td>';
+                     empList += '<tr>';
+                     empList += '<td>';
                       var empPic = emp[i].pic;
                       if (empPic === null) {
-                      	empList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
+                         empList += '<img src="${pageContext.request.contextPath}/resources/user/img/profile.png" alt="프로필 사진" width="25" height="25">';
                       } else {
-                      	empList += '<img src="../upload' + emp[i].pic + '" alt="프로필 사진" width="25" height="25">';
+                         empList += '<img src="../upload' + emp[i].pic + '" alt="프로필 사진" width="25" height="25">';
                       }
                       
                   
-                  	empList += '</td>';
-                  	empList += '<td>' + emp[i].id + '</td>';
-		empList += '<td id="empDetail">';
-              	empList += '<button type="button" class="empDetail" data-emp-id="' + emp[i].id + '" data-toggle="modal" data-target="#myModal">';
-              	empList += emp[i].name;
-              	empList += '</button>';
-              	empList += '</td>';
+                     empList += '</td>';
+                     empList += '<td>' + emp[i].id + '</td>';
+      empList += '<td id="empDetail">';
+                 empList += '<button type="button" class="empDetail" data-emp-id="' + emp[i].id + '" data-toggle="modal" data-target="#myModal">';
+                 empList += emp[i].name;
+                 empList += '</button>';
+                 empList += '</td>';
                  
-                  	// 각 필드에 대해 null 체크 후 값 할당
-                  	 if(emp[i].department ==null ||emp[i].position == null || emp[i].phone == null){
-                  		 emp[i].department = '';
-                  		 emp[i].position  = '';
-                  		 emp[i].phone = '';
-           		   }
-                  	empList += '<td>' + emp[i].department + '</td>';
-                  	empList += '<td>' + emp[i].position + '</td>';
-                  	empList += '<td>' + emp[i].email + '</td>';
-                  	empList += '<td>' + emp[i].phone + '</td>';
-                  	empList += '<td>';
-                  	empList += '<p>정상</p>';
-                  	empList += '<button class="user-stop" data-employeeId="'+ emp[i].id + '">[이용중지]</button>';
-                  	empList += '</td>';
-                  	var color = "blue";
-                  	var adminAuth = "[등록]";
+                     // 각 필드에 대해 null 체크 후 값 할당
+if (emp[i].department === null) {
+    emp[i].department = '';
+}
 
-                  	if (emp[i].auth == 'Y') {
-                  	    color = "red";
-                  	    adminAuth = "[삭제]";
-                  	}
-                  	empList += '<td><span class="employee-auth-value">' + emp[i].auth + '</span>';
-                  	empList += '<button class="update-auth '+color+'" data-employeeId="' + emp[i].id +'"> ' + adminAuth + '</button></td>';
-                  	empList += '</td>';
-                  	empList += '</tr>';
+if (emp[i].position === null) {
+    emp[i].position = '';
+}
+
+if (emp[i].phone === null) {
+    emp[i].phone = '';
+}
+                     empList += '<td>' + emp[i].department + '</td>';
+                     empList += '<td>' + emp[i].position + '</td>';
+                     empList += '<td>' + emp[i].email + '</td>';
+                     empList += '<td>' + emp[i].phone + '</td>';
+                     empList += '<td>';
+                     empList += '<p>정상</p>';
+                     empList += '<button class="user-stop" data-employeeId="'+ emp[i].id + '">[이용중지]</button>';
+                     empList += '</td>';
+                     var color = "blue";
+                     var adminAuth = "[등록]";
+
+                     if (emp[i].auth == 'Y') {
+                         color = "red";
+                         adminAuth = "[삭제]";
+                     }
+                     empList += '<td><span class="employee-auth-value">' + emp[i].auth + '</span>';
+                     empList += '<button class="update-auth '+color+'" data-employeeId="' + emp[i].id +'"> ' + adminAuth + '</button></td>';
+                     empList += '</td>';
+                     empList += '</tr>';
                   }
                   
                   $('.employee-body').html(empList);
@@ -810,18 +816,18 @@ console.log(empId);
                           url: "../admin/emp-stop",
                           type: "POST",
                           data: {
-                          	empId: empId,
-                          	
+                             empId: empId,
+                             
                           },
                           beforeSend: function(xhr) {
                               xhr.setRequestHeader(header, token);
                           },
                           success: function(result) {
-                        	  
-                        	  alert("선택한 사원이 이용중지 되었습니다.");
+                             
+                             alert("선택한 사원이 이용중지 되었습니다.");
 
                               $this.closest('tr').remove();
-								
+                        
                               var countEmp = result.countEmp;
                               $('#count-emp').text(countEmp);
                               
@@ -840,7 +846,7 @@ console.log(empId);
                       /* Ajax */
                   });
                   /* click */                    
-              	
+                 
                   $('.update-auth').click(function() {
                       let token = $("meta[name='_csrf']").attr("content");
                       let header = $("meta[name='_csrf_header']").attr("content");
@@ -855,7 +861,7 @@ console.log(empId);
                           url: "../admin/update-auth",
                           type: "POST",
                           data: {
-                          	'empId': empId,
+                             'empId': empId,
                           },
                           async:false,
                           beforeSend: function(xhr) {
