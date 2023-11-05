@@ -24,5 +24,5 @@ https://techblog.woowahan.com/2553/ 를 참고한 깃 플로우
 4. MyBatis
 5. Docker
 6. AWS
-ETC..
+7. ETC..
 
