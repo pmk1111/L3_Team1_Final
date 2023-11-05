@@ -203,6 +203,18 @@
         	background-color:#f6f6f6;
         }
         
+        .issue-writer{
+        	width:80px
+        }
+        
+        .issue-writer+.issue-created{
+        	margin:0
+        }
+        
+        .issuewriter-created{
+        	margin-right:20px
+        }
+        
     </style>
 </head>
 
@@ -316,6 +328,7 @@
                                                                                 <span class="critical" style="height:30px; width:70px; font-size:14px; display:flex; justify-content: center; align-items: center; margin-right:30px">${issue.priority}</span>
                                                                             </c:otherwise>
                                                                         </c:choose>
+                                                                        <span class="issue-writer">${issue.create_user_name}</span>
                                                                         <span class="issue-created">${issue.created_at.substring(2, 10)}</span>
                                                                     </div>
                                                                 </li>

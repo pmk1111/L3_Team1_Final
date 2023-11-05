@@ -56,8 +56,6 @@ public class MyDashboardController {
 	public ModelAndView myDashBoard(ModelAndView mv, HttpServletRequest request, Principal principal) {
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
-		
-		logger.info("접속한 유저 id = " + userId);
 
 		LocalDate currentDate = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -82,8 +80,6 @@ public class MyDashboardController {
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
 		
-		logger.info("접속한 유저 id = " + userId);
-		
 		List<Schedule> scheduleList = scheduleService.getSelectedScheduleList(pickedDate, userId);
 
 		return scheduleList;
@@ -105,14 +101,6 @@ public class MyDashboardController {
 		
 		List<Issue> issuecount = issueService.getStatusCount(employeeId, userId);
 
-		for (Issue issue : issuecount) {
-			System.out.println("Total Count: " + issue.getTotalcount());
-			System.out.println("To Do Count: " + issue.getTodocount());
-			System.out.println("Progress Count: " + issue.getProgresscount());
-			System.out.println("Resolved Count: " + issue.getResolvedcount());
-			System.out.println("Done Count: " + issue.getDonecount());
-		}
-
 		return issuecount;
 	}
 
@@ -132,8 +120,6 @@ public class MyDashboardController {
 	public int saveMemoContent(Memo memo, @RequestParam("memoTxt") String memoTxt, Principal principal) {
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
-		
-		logger.info("접속한 유저 id = " + userId);
 		
 		List<Memo> memoList = memoService.getMemoContent(userId);
 		String currentMemo = memo.getContent();

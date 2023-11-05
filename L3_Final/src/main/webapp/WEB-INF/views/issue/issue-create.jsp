@@ -11,7 +11,7 @@
 
 			<div class="selected-project">
 				<div class="selected-project-color"></div>
-				<h3 class="project-name">이슈 작성하기</h3>
+				<h3 class="project-name"></h3>
 			</div>
 			<div class="modal-content-wrap">
 

@@ -322,6 +322,8 @@ function updateStatus(clickedButton, newStatus){
             success: function (response) {
                 if (response === 1) {
                     console.log(response);
+                    let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+					let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
 
                     $('.issue-delete-modal-content h4').text('삭제되었습니다');
                     $('.issue-delete-modal-content .issue-delete-btn-wrap').empty();

@@ -285,29 +285,30 @@
 
 
 
-                    <!-- Footer -->
-                   <footer class="content-footer footer bg-footer-theme" style="magin-top:50px;">
-					    <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column" style="margin-top: 60px;">
-					        <div class="mb-2 mb-md-0">
-					            ©
-					            <script>
-					                document.write(new Date().getFullYear());
-					            </script>
-					            (주)WidUs
-					        </div>
-					        <div>
-					            <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-					            <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
-					            <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
-					            <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
-					        </div>
-					    </div>
-					</footer>
-                    <!-- Footer -->
 
                     <div class="content-backdrop fade"></div>
+                    
                 </div>
                 <!-- Content wrapper -->
+                                                        <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme" style="font-weight: 500">
+                        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                            <div class="mb-2 mb-md-0">
+                                ©
+                                <script>
+                                    document.write(new Date().getFullYear());
+                                </script>
+                                (주)WidUs
+                            </div>
+                            <div>
+                                <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+                                <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+                                <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
+                                <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- Footer -->
             </div>
             <!-- / Layout page -->
         </div>
@@ -367,7 +368,7 @@
                         printTxt += '<tr>';
                         printTxt += '<th scope="row">' + (i+1) +'</th>';
                         printTxt += '<td class="left-align"><a href="#" class="issue-link" onclick="issueDetail(\'' + response[i].issueId + '\')">' + response[i].subject + '</a></td>';
-                        printTxt += '<td><a href="/myhome/documents/down?saveName=' + encodeURIComponent(response[i].saveName) + '&originalName=' + encodeURIComponent(response[i].originalName) + '" style="display: block; text-align: center;">';
+                        printTxt += '<td><a href="/widus/documents/down?saveName=' + encodeURIComponent(response[i].saveName) + '&originalName=' + encodeURIComponent(response[i].originalName) + '" style="display: block; text-align: center;">';
 
                         let split = response[i].originalName.split('.'); 
                         let extension = split[split.length - 1].toLowerCase(); 
@@ -405,7 +406,7 @@
     }
 
     function issueDetail(issueId){
-        window.location.href = '/myhome/issue/issue-detail?num=' + issueId;
+        window.location.href = '/widus/issue/issue-detail?num=' + issueId;
     }
 </script>
 </html>

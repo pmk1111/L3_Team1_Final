@@ -196,8 +196,8 @@
 		    FROM RECENT_STATUS RS
 		    LEFT JOIN ISSUE I ON RS.ROW_ID = I.ID
 		    WHERE RS.GUIDE IN (
-		        '프로젝트 수정', '팀 권한 변경', '이슈 생성', '상태 변경', 
-		        '담당자 변경', '우선순위 변경', '타입 변경'
+		        'modify-project', 'change-auth', 'create-issue', 'change-status', 
+		        'change-assigned', 'change-priority', 'change-type'
 		    ) AND RS.PROJECT_ID = #{project_id} 
 		) UPDATE_RS ON RS.ID = UPDATE_RS.ID
 		
@@ -207,16 +207,14 @@
 		    JOIN EMPLOYEE E ON U.ID = E.USER_ID
 		    JOIN TEAM T ON E.ID = T.EMPLOYEE_ID
 		    JOIN RECENT_STATUS RS ON T.ID = RS.ROW_ID
-		    WHERE RS.GUIDE = '팀 초대'
+		    WHERE RS.GUIDE = 'add-invite'
 		) SELECTED_USER ON RS.ROW_ID = SELECTED_USER.ROW_ID		
 				
 		LEFT JOIN (
-		    SELECT U.NAME, RS.ROW_ID
+			SELECT U.NAME, RS.ROW_ID
 		    FROM USERS U
-		    JOIN EMPLOYEE E ON U.ID = E.USER_ID
-		    JOIN TEAM T ON E.ID = T.EMPLOYEE_ID
-		    JOIN RECENT_STATUS RS ON T.ID = RS.ROW_ID
-		    WHERE RS.GUIDE = '담당자 변경'
+		    JOIN RECENT_STATUS RS ON U.ID = RS.NEW_DATA
+		    WHERE RS.GUIDE = 'change-assigned'
 		) CHANGED_USER ON RS.ROW_ID = CHANGED_USER.ROW_ID
 		
 		WHERE RS.PROJECT_ID = #{project_id}

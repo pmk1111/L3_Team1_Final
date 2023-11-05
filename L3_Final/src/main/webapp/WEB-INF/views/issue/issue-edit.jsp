@@ -11,24 +11,13 @@
 		<div class="issue-modal-content">
 
 			<div class="create-issue-text">
-				<h3>이슈 수정하기</h3>
+				<div class="selected-project">
+				<div class="selected-project-color" style="background-color:${issuedata.project_color};"></div>
+				<h3 class="project-name">${issuedata.project_name}</h3>
+			</div>
 			</div>
 			<div class="modal-content-wrap">
-				<div class="select-project-wrap">
-					<div class="text">
-						<span>프로젝트</span><sup>*</sup>
-					</div>
-					<div class="issue-create-custom-select">
-    				<input type="text" class="issue-create-custom-selected project-name-seleted" name="project_name" value="${issuedata.project_name}">
-    				<div class="issue-create-custom-options">
-        		<div class="issue-create-custom-option">전사관리</div>
-        		<div class="issue-create-custom-option">버그수정</div>
-        		<div class="issue-create-custom-option">일정관리</div>
-        		<div class="issue-create-custom-option">배포준비</div>
-   		 		</div>
-				</div>
 
-				</div>
 
 				<div class="select-type-wrap">
 					<div class="text">

@@ -5,6 +5,7 @@
 	.chatting-layer {
 		top:70px;
 	}
+	.chat-user-img{height:40px;}
 </style>
 <article class="chatting-layer">
 	<input type="hidden" class="selected-room-num" name="selectedRoomNum" value="">

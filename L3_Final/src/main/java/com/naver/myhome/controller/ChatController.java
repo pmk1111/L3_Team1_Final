@@ -49,12 +49,9 @@ public class ChatController {
 
 	@RequestMapping(value = "/chatView", method = RequestMethod.GET)
 	public String login_ok(Model m, Principal principal,HttpServletRequest request) {
-		logger.info("요청한 url2=" + request.getRequestURL());
 		int end = request.getRequestURL().lastIndexOf("/");
 		String url = request.getRequestURL().substring(7, end);
-		//http://와 마지막 / 사의의 url 주소를 가져온다.
 
-		logger.info("url=" + url);
 		m.addAttribute("url",url);
 		m.addAttribute("name", principal.getName());
 		return "chat/chat";
@@ -66,9 +63,7 @@ public class ChatController {
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
 		
-		int employeeId = employeeService.getEmployeeId(userId);
-		logger.info("가져온 내 직원 id = " + employeeId);
-		
+		int employeeId = employeeService.getEmployeeId(userId);		
 		int notReadCnt = chatRoomService.getNotReadCnt(employeeId);
 		
 		return notReadCnt;
@@ -82,9 +77,6 @@ public class ChatController {
 		
 		List<Employee> employeeList = employeeService.getEmployeeListForChat(userId);
 
-		for(Employee list : employeeList) {
-			logger.info("가져온 사용자 정보"+list);
-		}
 		return employeeList;
 	} 
 	
@@ -95,13 +87,9 @@ public class ChatController {
 		int userId = userService.getUserId(userEmail);
 		
 		int employeeId = employeeService.getEmployeeId(userId);
-		logger.info("가져온 내 직원 id = " + employeeId);
 		
 		List<ChatRoom> chatRoomList = chatRoomService.getChatRoomList(employeeId);
-		for(ChatRoom room: chatRoomList) {
-			logger.info("가져온 채팅방 정보 = " + room);
-		}
-		
+
 		return chatRoomList;
 	}
 	
@@ -117,7 +105,6 @@ public class ChatController {
 		int getResult=0;
 		if(chatRoom == null) {
 			getResult = chatRoomService.createChatRoom(employeeId, participant);
-			logger.info("채팅방 생성 성공...!");
 		}
 		
 		boolean result = false;
@@ -135,17 +122,11 @@ public class ChatController {
 	public int getRoomNum(@RequestParam int participant, Principal principal) {
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
-		
-		logger.info("가져온 사용자 정보 = " + userId);
-		
+				
 		int employeeId = employeeService.getEmployeeId(userId);
-		logger.info("가져온 safasfasfsa 직원 id = " + employeeId);
-		logger.info("가져온 참여자 정보 = " + participant);
 		
 		ChatRoom chatRoom = chatRoomService.getChatRoomInfo(employeeId, participant);
 		int selectedRoomNum = chatRoom.getId();
-		logger.info("가져온 채팅방은...?? = " + selectedRoomNum);
-
 		return selectedRoomNum;
 	}
 	
@@ -162,13 +143,10 @@ public class ChatController {
 	public boolean updateReadCnt(@RequestParam int selectedRoomNum, Principal principal) {
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
-		
-		logger.info("가져온 사용자 정보 = " + userId);
-		
+				
 		int employeeId = employeeService.getEmployeeId(userId);
 		
 		ChatRoom chatRoom = chatRoomService.getChatRoomInfoById(selectedRoomNum);
-		logger.info("업데이트할 채팅방 = " + selectedRoomNum);
 		int notRead = chatRoom.getNot_read();
 		int resentSender = chatRoom.getResent_sender();
 		
@@ -187,16 +165,11 @@ public class ChatController {
 	public List<Chat> getChatList(@RequestParam int msgTo, Principal principal){
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
-		
-		logger.info("가져온 사용자 정보 = " + userId);
-		
+				
 		int employeeId = employeeService.getEmployeeId(userId);
-//		logger.info("가져온 safasfasfsa 직원 id = " + employeeId);
-//		logger.info("가져온 참여자 정보 = " + msgTo);
 		
 		ChatRoom chatRoom = chatRoomService.getChatRoomInfo(employeeId, msgTo);
 		int selectedRoomNum = chatRoom.getId();
-//		logger.info("가져온 채팅방은...?? = " + selectedRoomNum);
 		
 		int resentSender = chatRoom.getResent_sender();
 		int notRead = chatRoom.getNot_read();
@@ -206,9 +179,6 @@ public class ChatController {
 		}
 		
 		List<Chat> chatList = chatService.getChatList(selectedRoomNum);
-//		for(Chat chat : chatList) {
-//			logger.info("가져온 채팅 리스트" + chat);
-//		}
 		
 		return chatList;
 		
@@ -231,15 +201,10 @@ public class ChatController {
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
 		 
-		int employeeId = employeeService.getEmployeeId(userId);
-		logger.info("가져온 내 직원 id = " + employeeId);
-		
+		int employeeId = employeeService.getEmployeeId(userId);		
 		ChatRoom chatRoom = chatRoomService.getChatRoomInfo(employeeId, msgTo);
-		int selectedRoomNum = chatRoom.getId();
-		logger.info("선택한 채팅방 번호 = " + selectedRoomNum);
-		
-//		logger.info("보낼 메시지 = " + resultText);
-//		logger.info("메시지 받는 사람 = " + msgTo);
+		int selectedRoomNum = chatRoom.getId();		
+
 		int sqlResult = chatService.insertChat(resultText, selectedRoomNum, employeeId, msgTo);
 		
 		boolean result = false;

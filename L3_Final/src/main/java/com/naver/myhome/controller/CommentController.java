@@ -37,7 +37,6 @@ public class CommentController {
 	@ResponseBody
 	public List<Comment> getCommentList(int issue_id,
 	        @RequestHeader(value = "referer", required = false) String beforeURL) {
-	    logger.info("referer: " + beforeURL);
 	    
 	    List<Comment> commentlist = commentService.getCommentList(issue_id);
 	    System.out.println(commentlist);

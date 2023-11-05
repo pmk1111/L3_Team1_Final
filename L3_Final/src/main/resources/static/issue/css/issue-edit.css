@@ -385,3 +385,8 @@
 	display: flex;
     align-items: center;
 }
+
+.assigned-user-id{
+	float:right; width:70px; padding-left:36.5px; padding-right:10px;
+	border-style:none;
+}

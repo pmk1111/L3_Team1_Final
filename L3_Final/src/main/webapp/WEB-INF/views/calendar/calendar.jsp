@@ -77,8 +77,7 @@
                 // 일정의 시작 및 종료 시간 형식 설정
                 hour: '2-digit',
                 minute: '2-digit',
-                meridiem: false,
-                second: '2-digit',
+                meridiem: false
             },
             
             // ... (기타 설정)
@@ -105,11 +104,12 @@
 								$('.manage-schedule-modal .update-target').val(eventId);
 								$('.manage-schedule-modal .schedule-title').val(response.subject);
 								$('.manage-schedule-modal .select-color').val(response.background_color);
-								$('.manage-schedule-modal .schedule-start').val(response.start_date);
-								$('.manage-schedule-modal .schedule-end').val(response.end_date);
+								$('.manage-schedule-modal .md-schedule-start').val(response.start_date);
+								$('.manage-schedule-modal .md-schedule-end').val(response.end_date);
 								$('.manage-schedule-modal .schedule-place').val(response.place);
 								$('.manage-schedule-modal .schedule-category').val(response.category);
-								$('.manage-schedule-modal .schedule-describe').val(response.content);								
+								$('.manage-schedule-modal .schedule-describe').val(response.content);
+
 				      }, //success
 				      error: function (error) {
 				      	console.error("Error: " + error);

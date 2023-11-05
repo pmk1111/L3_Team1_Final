@@ -111,6 +111,7 @@ $('modal-overlay').click(function () {
       submitResetBtnWrap.css("border-top", "1px solid #ddd");
     }
   });
+  
 
   $(".issue-create-custom-option").click(function () {
     var text = $(this).text();
@@ -127,6 +128,14 @@ $('modal-overlay').click(function () {
     customSelect.find(".issue-create-custom-selected").text(text); // 선택한 값을 선택된 항목에 표시
     customSelect.find(".issue-create-custom-options").hide();
   });
+  
+    $(document).on('click', '.assigned', function(){
+  	const assignedUserName = $(this).find('.assigned-user').text();
+  	console.log('담당자명 = ' + assignedUserName);
+  	$('.issue-create-custom-selected.issue-assigned').val(assignedUserName);
+  	console.log('담당자===' + $('.issue-create-custom-selected.issue-assigned').text());
+  })
+ 
 
   $('.submit-btn').click(function () {
     const project_name = $('.project-name-seleted').val();

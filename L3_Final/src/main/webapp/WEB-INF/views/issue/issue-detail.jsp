@@ -363,13 +363,19 @@ function getProjectIdAndTeam() {
           projectId: projectId // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
       },
       success: function (response) {
+  		let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+		let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
         if (response.length > 0) {
         	console.log(response)
         	
           $('.user-info').empty();
           $('.project-name').val(response[0].projectTitle);
           response.forEach(function (item) {
-            let str = '<div class="issue-create-custom-option" data-value="' + item.userId + '">' + item.userName + '</div>';
+            let str = '<div class="issue-create-custom-option assigned" data-value="' + item.userId + '">'
+            str += '<img class="assigned-user-img" src="' + contextPath + '/upload' + item.userPic + '">'
+            str += '<span class="assigned-user">' + item.userName + '</span>'
+            str += '<input class="assigned-user-id" value="#' + item.userId + '" readonly>'
+            str += '</div>'
             $('.user-info').append(str);
            }); // forEach end
           } else {
@@ -386,6 +392,15 @@ const MentionedUserName = $('.mention-user').text();
 if(MentionedUserName !== null && MentionedUserName !== ''){
    $('.issue-mention-area').css('display', 'block');
 }
+
+$(document).on('mouseenter', '.assigned', function() {
+    $(this).find('.assigned-user-id').css('background-color', '#e7e8ff');
+});
+
+$(document).on('mouseleave', '.assigned', function() {
+	$(this).find('.assigned-user-id').css('background-color', ''); // 배경색을 초기 상태로 돌리려면 빈 문자열을 사용합니다.
+});
+
 </script>
   </body>
 </html>

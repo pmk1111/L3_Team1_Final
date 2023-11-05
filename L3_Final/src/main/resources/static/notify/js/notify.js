@@ -60,7 +60,7 @@ $('.alarm-icon').click(function (e) {
 
   //  $('.notify-layer').on('click','.notify-room',function() {
  //   var postId = $(this).data('post-id'); 
- //   window.location.href = '/myhome/issue/issue-detail?num=' + postId; 
+ //   window.location.href = '/widus/issue/issue-detail?num=' + postId; 
 //});
 $('.notify-layer').on('click', '.notify-room', function (event) {
     // 이벤트 기본 동작을 중단하여 페이지 이동을 막습니다.
@@ -71,7 +71,7 @@ $('.notify-layer').on('click', '.notify-room', function (event) {
 
     // DB를 업데이트하기 위한 Ajax 요청을 보냅니다.
     $.ajax({
-        url: "/myhome/updateNotifications", // DB 업데이트를 처리하는 서버 엔드포인트
+        url: "/widus/updateNotifications", // DB 업데이트를 처리하는 서버 엔드포인트
         type: 'GET', // 또는 'GET'을 사용할 수 있습니다.
         data: {
         
@@ -80,7 +80,7 @@ $('.notify-layer').on('click', '.notify-room', function (event) {
         },
         success: function (response) {
             // DB 업데이트가 성공하면 페이지 이동을 수행합니다.
-            window.location.href = '/myhome/issue/issue-detail?num=' + postId;
+            window.location.href = '/widus/issue/issue-detail?num=' + postId;
         },
         error: function (xhr, status, error) {
             console.log("Error: " + error);
@@ -107,7 +107,7 @@ $('.notify-layer').on('click', '.delete-notification', function (event) {
 
     // DB를 업데이트하고 알림 삭제하기 위한 Ajax 요청을 보냅니다.
     $.ajax({
-        url: "/myhome/deleteNotifications", // DB 업데이트 및 알림 삭제를 처리하는 서버 엔드포인트
+        url: "/widus/deleteNotifications", // DB 업데이트 및 알림 삭제를 처리하는 서버 엔드포인트
         type: 'GET',
         data: {
             notificationId: notificationId
@@ -129,7 +129,7 @@ function getNotifications() {
     if (isActive) {
         // 페이지가 활성화된 경우에만 업데이트 요청
         $.ajax({
-            url: "/myhome/getNotifications", // 알림을 가져올 JSP 페이지의 경로
+            url: "/widus/getNotifications", // 알림을 가져올 JSP 페이지의 경로
             type: 'GET',
             success: function(data) {
                 console.log(data);

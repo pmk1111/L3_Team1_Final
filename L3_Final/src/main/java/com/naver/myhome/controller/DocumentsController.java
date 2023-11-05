@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,8 @@ public class DocumentsController {
     }
     
     @RequestMapping(value = "/documents-list", method = RequestMethod.GET)
-    public ModelAndView documentslist(@AuthenticationPrincipal User user , ModelAndView mv) {
+    public ModelAndView documentslist(@AuthenticationPrincipal User user , ModelAndView mv, HttpSession session) {
+    	int projectId = (int) session.getAttribute("projectId");
         mv.setViewName("documents/documents-list");
         return mv;
     }

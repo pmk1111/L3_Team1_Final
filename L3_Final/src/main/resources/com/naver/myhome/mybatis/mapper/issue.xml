@@ -7,7 +7,6 @@
 	<resultMap id="IssueResultMap"
 		type="com.naver.myhome.domain.Issue">
 		<id property="id" column="id" />
-		<!-- 다른 필드에 대한 매핑 -->
 		<result property="totalcount" column="totalcount" />
 		<result property="todocount" column="todocount" />
 		<result property="progresscount" column="progresscount" />
@@ -33,7 +32,6 @@
 		where project_id = #{projectId}
 		order by
 		created_at desc
-		<!-- 프로젝트 id는 세션 또는 쿠키에서 가져온 값으로 대체 -->
 	</select>
 
 	<select id="getStatusCount" resultType="issue">
@@ -90,8 +88,6 @@
 		</where>
 		and assigned = #{userId}
 		ORDER BY created_at DESC
-		<!-- userId로 가져오는 이유는, 이슈 등록시 사용되는 projectAndUser 쿼리에서 가져오는 userId가 employee, 
-			team, project테이블을 join해서 userId를 추출해온 다음 그 값으로 이슈를 등록하기 때문 -->
 	</select>
 
 	 <insert id="createIssue">
