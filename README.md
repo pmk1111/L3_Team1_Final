@@ -10,6 +10,7 @@ WidUs는 개인은 물론 회사단위 대규모 프로젝트를 위한 업무 �
 
 - - -
 ## 깃허브 전략
+https://techblog.woowahan.com/2553/ 를 참고한 깃 플로우
 1. main
 2. develope
 3. feature branch
