@@ -15,3 +15,14 @@ https://techblog.woowahan.com/2553/ 를 참고한 깃 플로우
 2. develope
 3. feature branch
 4. hoffix branch
+
+- - -
+## 사용 기술
+1. Spring Boot
+2. Html / css / Js(Jquery)
+3. Ajax / Fetch
+4. MyBatis
+5. Docker
+6. AWS
+ETC..
+
