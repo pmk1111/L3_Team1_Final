@@ -60,7 +60,7 @@
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -116,7 +116,7 @@
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-		
+
 		<!-- 웹소캣 관련 의존성 -->
 		<!-- Spring Boot Starter for WebSockets -->
 		<dependency>
@@ -149,7 +149,18 @@
 			<artifactId>spring-web</artifactId>
 		</dependency>
 		<!-- 웹소캣 관련 의존성 -->
-		
+
+		<!-- Eh Cache -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

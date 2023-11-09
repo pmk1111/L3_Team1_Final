@@ -90,7 +90,7 @@
 		ORDER BY created_at DESC
 	</select>
 
-	 <insert id="createIssue">
+	<insert id="createIssue">
      insert into issue 
      values
      (#{id}, #{project_id}, 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.naver.myhome.domain.Issue;
@@ -35,12 +36,14 @@ public class IssueServiceImpl implements IssueService{
 		return mapper.getStatusCount(employeeId, userId);
 	}
 	
+	@Cacheable(value = "myworklistCache", key = "#status + '-' + #userId")
 	@Override
 	public List<Issue> getMyWork(String status, int userId) {
 		return mapper.getMyWork(status, userId);
 	}
 
 
+	@Cacheable(value = "issuelistCache", key = "#projectId")
 	@Override
 	public List<Issue> getIssueList(int projectId) {
 		return mapper.getIssueList(projectId);
@@ -55,11 +58,6 @@ public class IssueServiceImpl implements IssueService{
 		
 		return mapper.getFilteredIssueList(map);
 	}
-
-//	@Override
-//	public List<Project> getMyProjectList(String userId) {
-//		return mapper.getMyProjectList(userId);
-//	}
 	
 	@Override
 	public List<Issue> searchIssues(String searchText, int projectId) {

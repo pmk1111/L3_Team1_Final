@@ -110,7 +110,11 @@ public class MyDashboardController {
 		String userEmail = principal.getName();
 		int userId = userService.getUserId(userEmail);
 		
+		long start = System.currentTimeMillis();
 		List<Issue> mywork = issueService.getMyWork(status, userId);
+		long end = System.currentTimeMillis();
+		
+		logger.info("캐시 적용 - 내 담당업무 조회 수행시간: " + (end - start) + "밀리초");
 
 		return mywork;
 	}

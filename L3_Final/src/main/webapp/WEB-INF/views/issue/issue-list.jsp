@@ -25,8 +25,8 @@
 <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
 
 <!-- issue-list & issue-create CSS -->
-<link rel="stylesheet" href="../resources/issue/css/issue-list.css">
-<link rel="stylesheet" href="../resources/issue/css/issue-create.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/issue/css/issue-list.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/issue/css/issue-create.css">
 
 
 <!-- dropzone -->
@@ -245,10 +245,10 @@
 	
 
 	<!-- issue-list JS -->
-	<script src="../resources/issue/js/issuelist.js"></script>
+	<script src="${pageContext.request.contextPath}/issue/js/issuelist.js"></script>
 
 	<!-- issuecreate.js -->
-	<script src="../resources/issue/js/issuecreate.js"></script>
+	<script src="${pageContext.request.contextPath}/issue/js/issuecreate.js"></script>
 	
 	
 	<script type="text/javascript">

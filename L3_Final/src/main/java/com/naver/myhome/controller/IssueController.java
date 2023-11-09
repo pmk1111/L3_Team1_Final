@@ -78,17 +78,25 @@ public class IssueController {
 	}
 
 	@GetMapping(value = "/issue-list")
-	public ModelAndView issuelist(ModelAndView mv, HttpServletRequest request, 
-			Principal principal, HttpSession session) {
-		int projectId = (int) session.getAttribute("projectId");
-		int listcount = issueService.getListCount(projectId);
-		List<Issue> issuelist = issueService.getIssueList(projectId);
+	public ModelAndView issuelistWithCache(ModelAndView mv, HttpServletRequest request, Principal principal, HttpSession session) {
+	    int projectId = (int) session.getAttribute("projectId");
 
-		mv.setViewName("issue/issue-list");
-		mv.addObject("listcount", listcount);
-		mv.addObject("issuelist" ,issuelist);
-		return mv;
+	    long start = System.currentTimeMillis(); // 수행 시간 측정 시작
+
+	    int listcount = issueService.getListCount(projectId);
+	    List<Issue> issuelist = issueService.getIssueList(projectId);
+
+	    long end = System.currentTimeMillis(); // 수행 시간 측정 종료
+
+	    mv.setViewName("issue/issue-list");
+	    mv.addObject("listcount", listcount);
+	    mv.addObject("issuelist", issuelist);
+
+	    logger.info("캐시 적용 - 이슈 목록 조회 수행시간: " + (end - start) + "밀리초");
+
+	    return mv;
 	}
+
 
 
 	@ResponseBody
@@ -135,9 +143,10 @@ public class IssueController {
 		issue.setProject_id(projectId);
 		issue.setCreate_user(userId);
 		issue.setMentioned(notionchoice.replace("@", ""));
-
-		issueService.createIssue(issue);
-
+		
+		for(int i=0;i<=1000;i++) {
+			issueService.createIssue(issue);
+		}
 		String create_user = userService.getCreateUser(userId);
 		String assign_user = userService.getAssignUser(assignedValue);
 
