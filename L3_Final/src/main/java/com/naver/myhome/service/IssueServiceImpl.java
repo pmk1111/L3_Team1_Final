@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,19 @@ public class IssueServiceImpl implements IssueService{
 	@Autowired
 	public IssueServiceImpl(IssueMapper mapper) {
 		this.mapper = mapper;
+	}
+	
+
+	@Cacheable(value = "issuelistCache", key = "#projectId")
+	@Override
+	public List<Issue> getIssueList(int projectId) {
+		return mapper.getIssueList(projectId);
+	}
+	
+	@CacheEvict(value = "issuelistCache", allEntries = true)
+	@Override
+	public void createIssue(Issue issue) {
+		mapper.createIssue(issue);
 	}
 	
 	@Override
@@ -41,13 +55,6 @@ public class IssueServiceImpl implements IssueService{
 	public List<Issue> getMyWork(String status, int userId) {
 		return mapper.getMyWork(status, userId);
 	}
-
-
-	@Cacheable(value = "issuelistCache", key = "#projectId")
-	@Override
-	public List<Issue> getIssueList(int projectId) {
-		return mapper.getIssueList(projectId);
-	}
 	
 	@Override
 	public List<Issue> getFilteredIssueList(String issueStatus, String issuePriority, int projectId) {
@@ -62,11 +69,6 @@ public class IssueServiceImpl implements IssueService{
 	@Override
 	public List<Issue> searchIssues(String searchText, int projectId) {
 		return mapper.searchIssues(searchText, projectId);
-	}
-
-	@Override
-	public void createIssue(Issue issue) {
-		mapper.createIssue(issue);
 	}
 
 	@Override

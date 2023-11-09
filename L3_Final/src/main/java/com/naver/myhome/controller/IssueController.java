@@ -79,22 +79,22 @@ public class IssueController {
 
 	@GetMapping(value = "/issue-list")
 	public ModelAndView issuelistWithCache(ModelAndView mv, HttpServletRequest request, Principal principal, HttpSession session) {
-	    int projectId = (int) session.getAttribute("projectId");
+		int projectId = (int) session.getAttribute("projectId");
 
-	    long start = System.currentTimeMillis(); // 수행 시간 측정 시작
+		long start = System.currentTimeMillis(); // 수행 시간 측정 시작
 
-	    int listcount = issueService.getListCount(projectId);
-	    List<Issue> issuelist = issueService.getIssueList(projectId);
+		int listcount = issueService.getListCount(projectId);
+		List<Issue> issuelist = issueService.getIssueList(projectId);
 
-	    long end = System.currentTimeMillis(); // 수행 시간 측정 종료
+		long end = System.currentTimeMillis(); // 수행 시간 측정 종료
 
-	    mv.setViewName("issue/issue-list");
-	    mv.addObject("listcount", listcount);
-	    mv.addObject("issuelist", issuelist);
+		mv.setViewName("issue/issue-list");
+		mv.addObject("listcount", listcount);
+		mv.addObject("issuelist", issuelist);
 
-	    logger.info("캐시 적용 - 이슈 목록 조회 수행시간: " + (end - start) + "밀리초");
+		logger.info("캐시 적용 - 이슈 목록 조회 수행시간: " + (end - start) + "밀리초");
 
-	    return mv;
+		return mv;
 	}
 
 
@@ -143,10 +143,8 @@ public class IssueController {
 		issue.setProject_id(projectId);
 		issue.setCreate_user(userId);
 		issue.setMentioned(notionchoice.replace("@", ""));
-		
-		for(int i=0;i<=1000;i++) {
-			issueService.createIssue(issue);
-		}
+
+		issueService.createIssue(issue);
 		String create_user = userService.getCreateUser(userId);
 		String assign_user = userService.getAssignUser(assignedValue);
 
@@ -218,7 +216,7 @@ public class IssueController {
 		String fileExtension = fileName.substring(index+1);
 		String refileName = "bbs" + year + month + date + random + "." + fileExtension;
 		String fileDBName = File.separator + year + "-" + month + "-" 
-							+ date + File.separator + refileName;
+				+ date + File.separator + refileName;
 
 		return fileDBName;
 	}

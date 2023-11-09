@@ -91,6 +91,9 @@
 	</select>
 
 	<insert id="createIssue">
+<!-- 		<selectKey order="BEFORE" keyProperty="id" resultType="int">
+			select issue_id.nextval from dual
+		</selectKey> -->
      insert into issue 
      values
      (#{id}, #{project_id}, 
