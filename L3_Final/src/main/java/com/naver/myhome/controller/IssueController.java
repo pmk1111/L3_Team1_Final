@@ -78,24 +78,36 @@ public class IssueController {
 	}
 
 	@GetMapping(value = "/issue-list")
-	public ModelAndView issuelistWithCache(ModelAndView mv, HttpServletRequest request, Principal principal, HttpSession session) {
-		int projectId = (int) session.getAttribute("projectId");
+	public ModelAndView issuelist(ModelAndView mv,HttpServletRequest request,
+						Principal principal,HttpSession session,
+						@RequestParam(defaultValue = "1") int page) {
+		
+	    int projectId = (int) session.getAttribute("projectId");
+	    int pageSize = 7; 
 
-		long start = System.currentTimeMillis(); // 수행 시간 측정 시작
+	    // 전체 이슈 수 및 목록 조회
+	    int listcount = issueService.getListCount(projectId);
 
-		int listcount = issueService.getListCount(projectId);
-		List<Issue> issuelist = issueService.getIssueList(projectId);
+	    // 페이징 관련 정보 계산
+	    int totalPage = (listcount + pageSize -1)/pageSize;
+	    int startPage = ((page - 1)/ 7)* 7 + 1;
+	    int endPage = startPage + 3 - 1;
+	    
+	    if(endPage > totalPage) endPage = totalPage;
+	    
+	    List<Issue> issuelist = issueService.getIssueListWithPaging(projectId, page, pageSize);
 
-		long end = System.currentTimeMillis(); // 수행 시간 측정 종료
+	    mv.setViewName("issue/issue-list");
+	    mv.addObject("listcount", listcount);
+	    mv.addObject("issuelist", issuelist);
+	    mv.addObject("page", page);
+	    mv.addObject("totalPage", totalPage);
+	    mv.addObject("startPage", startPage);
+	    mv.addObject("endPage", endPage);
 
-		mv.setViewName("issue/issue-list");
-		mv.addObject("listcount", listcount);
-		mv.addObject("issuelist", issuelist);
-
-		logger.info("캐시 적용 - 이슈 목록 조회 수행시간: " + (end - start) + "밀리초");
-
-		return mv;
+	    return mv;
 	}
+
 
 
 
@@ -103,10 +115,14 @@ public class IssueController {
 	@GetMapping("/getFilteredIssue")
 	public List<Issue> getFilteredIssueList(HttpSession session,
 			@RequestParam(name = "issueStatus", required = false) String issueStatus,
-			@RequestParam(name = "issuePriority", required = false) String issuePriority) {
+			@RequestParam(name = "issuePriority", required = false) String issuePriority,
+			@RequestParam(defaultValue = "1") int page) {
 
 		int projectId = (int) session.getAttribute("projectId");
-		List<Issue> filteredIssues = issueService.getFilteredIssueList(issueStatus, issuePriority, projectId);
+		
+		int pageSize = 7; 
+		List<Issue> filteredIssues 
+			= issueService.getFilteredIssueList(issueStatus, issuePriority, projectId, page, pageSize);
 		return filteredIssues;
 	}
 
