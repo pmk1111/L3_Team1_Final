@@ -65,7 +65,7 @@
 					<form name="search-form" autocomplete="off" method="post">
 						<div class="search-create">
 							<div class="search-area">
-								<input type="text" class="issue-search" id="searchInput" name="searchText" placeholder="이슈 제목을 입력하세요">
+								<input type="text" class="issue-search" id="searchInput" name="searchText" placeholder="제목 또는 작성자를 입력하세요">
 								<input type="button" id="search-btn" onclick="getSearchList()" value="검색">
 								<label for="search-btn" class="search-label">
 									<img class="search-btn-icon" src="../resources/project/img/projectboard/search.svg">
@@ -73,44 +73,50 @@
 							</div>
 
 							<div class="paging-create-btn">
-								<div class="center-block">
-									<ul class="pagination justify-content-center">
-										<c:if test="${page <= 1}">
-											<li class="page-item">
-												<a class="page-link gray">이전&nbsp;</a>
-											</li>
-										</c:if>
-										<c:if test="${page > 1}">
-											<li class="page-item">
-												<a class="page-link" href="${pageContext.request.contextPath}/issue/issue-list?page=${page-1}">이전&nbsp;</a>
-											</li>
-										</c:if>
-										<c:forEach var="a" begin="${startPage}" end="${endPage}">
-											<c:if test="${a == page}">
-												<li class="page-item active">
-													<a class="page-link">${a}</a>
-												</li>
-											</c:if>
-											<c:if test="${a != page}">
-												<li class="page-item">
-													<a class="page-link" href="${pageContext.request.contextPath}/issue/issue-list?page=${a}">${a}</a>
-												</li>
-											</c:if>
-										</c:forEach>
-										<c:if test="${page >= totalPage}">
-											<li class="page-item">
-												<a class="page-link gray">&nbsp;다음</a>
-											</li>
-										</c:if>
-										<c:if test="${page < totalPage}">
-											<li class="page-item">
-												<a class="page-link" href="${pageContext.request.contextPath}/issue/issue-list?page=${page+1}">&nbsp;다음</a>
-											</li>
-										</c:if>
-									</ul>
-								</div>
-								<button type="button" class="create-issue" onclick="getProjectIdAndTeam()">글쓰기</button>
-							</div>
+    							<div class="center-block">
+        							<ul class="pagination justify-content-center">
+            						<c:set var="startPage" value="${(page - 1) - ((page - 1) % 3) + 1}" />
+           	 						<c:set var="endPage" value="${startPage + 2}" />
+            						<c:if test="${endPage > totalPage}">
+                						<c:set var="endPage" value="${totalPage}" />
+            						</c:if>
+
+            						<c:if test="${page <= 1}">
+                						<li class="page-item">
+                    						<a class="page-link gray">이전&nbsp;</a>
+                						</li>
+            						</c:if>
+            						<c:if test="${page > 1}">
+                						<li class="page-item">
+                    						<a class="page-link" href="${pageContext.request.contextPath}/issue/issue-list?page=${page-1}">이전&nbsp;</a>
+               						 	</li>
+            						</c:if>
+            						<c:forEach var="a" begin="${startPage}" end="${endPage}">
+               	 						<c:if test="${a == page}">
+                    						<li class="page-item active">
+                        						<a class="page-link">${a}</a>
+                    						</li>
+                						</c:if>
+                						<c:if test="${a != page}">
+                    						<li class="page-item">
+                        						<a class="page-link" href="${pageContext.request.contextPath}/issue/issue-list?page=${a}">${a}</a>
+                    						</li>
+                						</c:if>
+            						</c:forEach>
+            						<c:if test="${page >= totalPage}">
+               					 		<li class="page-item">
+                    						<a class="page-link gray">&nbsp;다음</a>
+                						</li>
+            						</c:if>
+            						<c:if test="${page < totalPage}">
+            	    					<li class="page-item">
+                    						<a class="page-link" href="${pageContext.request.contextPath}/issue/issue-list?page=${page+1}">&nbsp;다음</a>
+               					 		</li>
+            						</c:if>
+        							</ul>
+    							</div>
+    							<button type="button" class="create-issue" onclick="getProjectIdAndTeam()">글쓰기</button>
+							</div>	
 						</div>
 					</form>
 					<hr>
