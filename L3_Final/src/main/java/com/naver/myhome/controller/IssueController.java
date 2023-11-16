@@ -292,14 +292,36 @@ public class IssueController {
 	public Map<String, Object> statusUpdate(@RequestParam int issueId, 
 			@RequestParam String status, 
 			@RequestParam String selectedUserId,
-			@AuthenticationPrincipal User customUser) {
+			@AuthenticationPrincipal User customUser, Principal principal) {
+		
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
 
 		int sessionId = customUser.getId();
+		
+		String updateUser = userService.getAssignUser(userId);
+
 
 		Map<String, Object> response = new HashMap<>();
 		try {
 			issueService.updateStatus(issueId, status, selectedUserId, sessionId);
 			response.put("status", "success");
+			
+			if (selectedUserId != null && selectedUserId != "") {
+				int assignerId = Integer.parseInt(selectedUserId);
+				String assign_user = userService.getAssignUser(assignerId);
+				Notify assignNotify = new Notify();
+				assignNotify.setNAME(assign_user);
+				assignNotify.setMENTIONED_BY(updateUser);
+				assignNotify.setPOST_ID(issueId);
+				assignNotify.setMENTIONED_ID(assignerId);
+				assignNotify.setCONTENT("담당자로 설정하였습니다.");
+				assignNotify.setNOTIFY_STATUS(0);
+
+				notifyService.createalarm(assignNotify);
+			}
+			
+			
 		} catch (Exception e) {
 			response.put("status", "error");
 			response.put("message", e.getMessage());
@@ -393,6 +415,5 @@ public class IssueController {
 			return 0;
 		}
 	}
-
 
 }
