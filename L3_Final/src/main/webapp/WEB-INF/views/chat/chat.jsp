@@ -34,36 +34,12 @@
 		
 		<div class="chat-list-area">
 			<ul class="chat-list">
-				<!-- 
-				
-				<li class="chat-room" data-room-id="3">
-					<div class="chat-img-user-latest">
-						<img class="chat-user-img"
-							src="../resources/mainboard/assets/img/avatars/1.png" alt="">
-					</div>
-
-					<div class="user-latest">
-						<p class="chat-user-id">JJok</p>
-						<p class="latest-chat">오늘만 지나면 추석입니다.</p>
-					</div>
-
-					<div class="update-time-area">
-						<span class="update-time">13:52</span>
-					</div>
-				</li>
-				 -->
-				
 			</ul>
-
 		</div>
-		
-		
 		
 		<div class="chat-contact-area">
 			<ul class="contact-list">
-
 			</ul>
-			
 		</div>
 	</div>
 	
@@ -146,14 +122,20 @@ function getNotReadCnt(){
 	});
 }
 
-function pollNotReadCnt() {
-    setInterval(function() {
-    	getNotReadCnt(); // 위에서 정의한 함수 호출
-      /* console.log('안 읽은 메시지 이력 polling'); */
-    }, 2000);
-}
+window.onload = function() {
+    getNotReadCnt();
+};
 
-pollNotReadCnt();
+const eventSource = new EventSource(location.protocol + '//' + location.host + '${pageContext.request.contextPath}/subscribe');
+eventSource.onmessage = function (event) {
+	console.log("sse 이벤트 체크: "+event)
+    getChatRoomList();
+	getNotReadCnt();  
+};
+
+eventSource.onerror = function (error) {
+    // 에러 처리
+};
 
 function getChatRoomList() {
     $.ajax({
@@ -167,31 +149,31 @@ function getChatRoomList() {
             if (response.length > 0) {
                 response.forEach(function (item) {
 										
-                		if(item.not_read === 1 && item.resent_sender == item.other_participant_id){
-                    	str = '<li class="chat-room" value="' + item.id + '" style="background-color:#e6e7ff;">'
-                		} else{
-                			str = '<li class="chat-room" value=" ' + item.id + '">'
-                		}
-                    str += '<input type="hidden" class="other-participant" value="' + item.other_participant_id + '">'
-                    str += '<div class="chat-img-user-latest">'
-                    if(item.participant_pic !== null){
-                    	str += '<img class="chat-user-img" src="${pageContext.request.contextPath}/upload' + item.participant_pic + '" alt=""></div>'
-                    } else{
-                    	str += '<img class="chat-user-img" src="${pageContext.request.contextPath}/user/img/profile.png" alt=""></div>'
-                    }
-                    str += '<div class="user-latest">'
-                    str += '<p class="chat-user-id">' + item.participant_name + '</p>'
-                    if(item.resent_content.length > 20){
-                    	str += '<p class="latest-chat">' + item.resent_content.substring(0, 20) + '...</p></div>'
-                    } else{
-                    	str += '<p class="latest-chat">' + item.resent_content + '</p></div>'
-                    }
-                    str += '<div class="chat-update-time-area">'
-                    str += '<span class="chat-update-time">' + chatRoomUpdateDate(item.updated_at) + '</span></div></li>'
+                if(item.not_read === 1 && item.resent_sender == item.other_participant_id){
+                    str = '<li class="chat-room" value="' + item.id + '" style="background-color:#e6e7ff;">'
+                } else{
+                	str = '<li class="chat-room" value=" ' + item.id + '">'
+                }
+                str += '<input type="hidden" class="other-participant" value="' + item.other_participant_id + '">'
+                str += '<div class="chat-img-user-latest">'
+                if(item.participant_pic !== null){
+                    str += '<img class="chat-user-img" src="${pageContext.request.contextPath}/upload' + item.participant_pic + '" alt=""></div>'
+				} else{
+                    str += '<img class="chat-user-img" src="${pageContext.request.contextPath}/user/img/profile.png" alt=""></div>'
+                }
+				str += '<div class="user-latest">'
+				str += '<p class="chat-user-id">' + item.participant_name + '</p>'
+                if(item.resent_content.length > 20){
+                	str += '<p class="latest-chat">' + item.resent_content.substring(0, 20) + '...</p></div>'
+                } else{
+                    str += '<p class="latest-chat">' + item.resent_content + '</p></div>'
+                }
+                str += '<div class="chat-update-time-area">'
+                str += '<span class="chat-update-time">' + chatRoomUpdateDate(item.updated_at) + '</span></div></li>'
 
-                    $('.chat-list').append(str);
-                });//forEach end
-                //수정 필요
+                $('.chat-list').append(str);
+            });//forEach end
+
             } else {
                 str = '<h4 class="no-chat-room">채팅방이 없습니다.</h4>'
                 $('.chat-list').append(str);
@@ -203,25 +185,12 @@ function getChatRoomList() {
     }) // ajax end
 };//getChatRoomList end
 
-// 내가 속한 채팅 리스트를 호출해오는 polling 함수
-function pollChatRoomList() {
-    setInterval(function() {
-        if ($('.chat-list-area').css('display') !== 'none') {
-            getChatRoomList(); // 위에서 정의한 함수 호출
-           /*  console.log('채팅방 목록 polling'); */
-        }
-    }, 5000); 
-}
-
-// 폴링 시작
-pollChatRoomList();
-
-
 $('.chat-room-list').click(function () {
     
 }) //.chat-room click end
 
 $(document).on('click', '.chat-room', function () {
+
     let chatRoomId = $(this).val();
     let otherParticipant = $(this).find('.other-participant').val();
     console.log('선택한 채팅방 = ' + chatRoomId);
@@ -241,7 +210,6 @@ $(document).on('click', '.chat-room', function () {
     $('.chatting-room').css('display', 'block');
 
     try {
-
         if (ws !== undefined && ws.readyState !== WebSocket.CLOSED) {
             console.log("WebSocket is already opened.");
             return;
@@ -249,9 +217,9 @@ $(document).on('click', '.chat-room', function () {
 
         var url = "ws://" + location.host + "${pageContext.request.contextPath}/echo.do?roomNum=" + chatRoomId;
         // 여기 url에 roomnumber 붙여서 보낸 다음, handler에서 쿼리스트링으로 추출한다.
+        console.log(url);
         ws = new WebSocket(url);
         console.log(url);
-
 
     } catch (error) {
         console.error("방 번호 가져오기 실패: " + error);
@@ -293,7 +261,6 @@ $(document).on('click', '.chat-room', function () {
         console.log("Connection closed!!");
         };
     }) //alarm-icon click end
-
 });//chatroom click end
 
 $('.alarm-icon').click(function () {
@@ -463,11 +430,12 @@ function updateReadCnt(selectedRoomId){
 }
 
 $(document).on('click', '.chat-room', function(){
-	   const selectedRoomId = $(this).val();
-	    console.log("선택한 채팅방 = " + selectedRoomId);
+	const selectedRoomId = $(this).val();
+	console.log("선택한 채팅방 = " + selectedRoomId);
 	    
-	    $('.selected-room-num').val(selectedRoomId);
-	  	updateReadCnt(selectedRoomId);
+	$('.selected-room-num').val(selectedRoomId);
+	updateReadCnt(selectedRoomId);
+	getNotReadCnt();
 });
 
 // 상대방이 메시지를 보냈는데 내가 해당 채팅방에 잇는 경우에 실행
@@ -475,8 +443,6 @@ setInterval(function() {
 if($('.chatting-room').css('display') === 'block'){
 	const num = $('.selected-room-num').val();
 	const otherParticipant = $('.chatting-room').find('.msg-to').val();
-/* 	console.log("현재 접속 중인 채팅방 : " + num);
-	console.log("나와 대화 중인 상대 : " + otherParticipant); */
 	$.ajax({
 		type: "GET",
 		url: "${pageContext.request.contextPath}/get-room-info",
@@ -487,6 +453,7 @@ if($('.chatting-room').css('display') === 'block'){
 		success: function(response){
 			if(response.resent_sender == otherParticipant){
 				updateReadCnt(num);
+				getNotReadCnt();
 			}
 		}
 	});//ajax end
@@ -509,8 +476,6 @@ chatWriteInput.on('focus', function () {
     }
 });
 
-
-
 chatWriteInput.on('keydown', function (e) {
     if (e.keyCode === 13 && !e.shiftKey) {
         e.preventDefault();
@@ -524,7 +489,6 @@ backBtn.click(function () {
     chattingRoom.css('display', 'none');
     chattingLayer.css('display', 'block');
 }); //backbtn click end
-
 
 
 //contact click
@@ -845,8 +809,6 @@ function send() {
             $('.wrap').append(dateDisplay);
         }
 
-
-
         var text = $("#chat-write-input").text() + "," + '${name}';
         var lastIndexComma = text.lastIndexOf(',');
         var resultText = text.substring(0, lastIndexComma);
@@ -882,9 +844,6 @@ function send() {
 
         console.log('전송한 메시지' + text);
         ws.send(text);//웹 소켓으로 text를 보냅니다.보내는 형식(내용,보낸사람)
-
-
-
 
         var currentTime = new Date();
         var hours = currentTime.getHours();
@@ -1000,13 +959,6 @@ $('.search-chat').on('keypress', function(event) {
         }
     }
 });
-
-
-
-
-
-
-	 
 
 </script>
 
