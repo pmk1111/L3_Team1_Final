@@ -2,6 +2,9 @@
 <br>
 <p align="center"><img src="https://github.com/pmk1111/Widus_JHTA-Final-Project/assets/138411170/3267ab27-c2e6-4db8-b9ca-9e1d93a4939b"></p>
 
+## 시연 영상
+https://www.youtube.com/watch?v=CoyuZi8ECxI
+
 ## 개요
 > 주제 회사 단위 대규모 프로젝트를 위한 협업툴 프로그램 구현  
 > 회사별 프로젝트 및 이슈관리 및 진척도 관리가 가능한 홈페이지 구현
@@ -20,5 +23,9 @@
 <img src="https://img.shields.io/badge/socket.io-010101?style=for-the-badge&logo=socket.io&logoColor=white"> <img src="https://img.shields.io/badge/apachemaven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white"> <img src="https://img.shields.io/badge/apachetomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white"> <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">  
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white"> <img src="https://img.shields.io/badge/fullcalendar-4285F4?style=for-the-badge&logo=googlecalendar&logoColor=white"> <img src="https://img.shields.io/badge/sqldeveloper-C925D1?style=for-the-badge&logo=amazondocumentdb&logoColor=white">
 
-## 시연 영상
-https://www.youtube.com/watch?v=CoyuZi8ECxI
+## ERD
+<p align="center"><img src="https://github.com/pmk1111/Widus_JHTA-Final-Project/assets/138411170/1d4ad83d-767c-443f-b9d0-ab813f8a09bc"></p>
+
+## UseCase
+<p align="center"><img src="https://github.com/pmk1111/Widus_JHTA-Final-Project/assets/138411170/af092e79-099c-4f57-aa01-9a6b3505850b"></p>  
+<p align="center"><img src="https://github.com/pmk1111/Widus_JHTA-Final-Project/assets/138411170/212ec879-4bd0-4094-921d-7811fbf6f484"></p>
