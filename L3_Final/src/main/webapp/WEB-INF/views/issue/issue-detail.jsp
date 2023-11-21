@@ -125,32 +125,31 @@
                       <input type="hidden" class="creater-mail" value="${createrEmail }">
                       
                      <div class="issue-option">
-                      <img src="../resources/issue/img/settings.svg" class="issue-setting-icon">
+                     	<img src="../resources/issue/img/settings.svg" class="issue-setting-icon">
                       
-                      <ul class="issue-setting-dropdown">
-                      	<li class="issue-dropdown-item copy-url" onclick="clip()">
-                      		<img src="../resources/issue/img/copyurl.svg" class="issue-setting-icon link-copy-icon">
-                      		<span>링크 복사</span>
-                      	</li>
-                      	<sec:authorize access="isAuthenticated()">
-													<sec:authentication property="principal" var="pinfo" />
-													<input type="hidden" class="auth" value="${pinfo.username }">
-													<c:if test="${createrEmail == pinfo.username || pinfo.username == 'admin' }">
-                      			<li class="issue-dropdown-item issue-edit" onclick="getProjectIdAndTeam()">
-                      				<img src="../resources/issue/img/edit.svg" class="issue-setting-icon edit-icon">
-                      				<span>수정</span>
-                      			</li>
+                      	<ul class="issue-setting-dropdown">
+                      		<li class="issue-dropdown-item copy-url" onclick="clip()">
+                      			<img src="../resources/issue/img/copyurl.svg" class="issue-setting-icon link-copy-icon">
+                      			<span>링크 복사</span>
+                      		</li>
+                      		<sec:authorize access="isAuthenticated()">
+								<sec:authentication property="principal" var="pinfo" />
+								<input type="hidden" class="auth" value="${pinfo.username }">
+								<c:if test="${createrEmail == pinfo.username}">
+                      				<li class="issue-dropdown-item issue-edit" onclick="getProjectIdAndTeam()">
+                      					<img src="../resources/issue/img/edit.svg" class="issue-setting-icon edit-icon">
+                      					<span>수정</span>
+                      				</li>
                       	
-                      			<li class="issue-dropdown-item issue-delete">
-                      				<img src="../resources/issue/img/trash.svg" class="issue-setting-icon delete-icon">
-                      				<span>삭제</span>
-                      			</li>
-                      		</c:if>
-                      	</sec:authorize>
-                      </ul>
+                      				<li class="issue-dropdown-item issue-delete">
+                      					<img src="../resources/issue/img/trash.svg" class="issue-setting-icon delete-icon">
+                      					<span>삭제</span>
+                      				</li>
+                      			</c:if>
+                      		</sec:authorize>
+                      	</ul>
                       </div>
-                      
-                      
+                          
                     </div>
                     <h3 class="issue-title">${issuedata.subject }</h3>
                     <hr class="issue-hr">
@@ -175,73 +174,57 @@
                       <hr class="issue-hr">
 
                       <div class="issue-content" >
-                   <!--      프로젝트란,<br>
-                        부서 또는 업무 주제별 공간을 만들어 구성원을 초대하여 소통하는 '업무 소통 방' 입니다.<br>
-                        <br>
-                        혹시.. 프로젝트를 어떻게 세팅을 해야 할지 몰라서 프로젝트 만들기를 미루고 있으신가요?<br>
-                        플로우를 만들고 있는 마드라스체크 직원들은 5단계 프로세스가 정착되어 있어,<br>
-                        신입 직원이더라도 누구나 쉽게, 그리고 일관된 규칙으로 프로젝트를 만들고 세팅하고 있답니다.<br>
-                        <br>
-                        아래의 포인트를 생각하며 프로젝트를 만들고, 주기적으로 점검해 주세요!<br>
-                        <br>
-                        ✅ 프로젝트 제목은 직관적으로 만들었나요?<br>
-                        ✅ 프로젝트 옵션 설정은 잘 되어있나요?<br>
-                        ✅ 이 프로젝트는 어떤 프로젝트인지, 어떤 규칙이 있는지 운영방법이 공유되어 있나요?<br>
-                        ✅ 업무와 관련된 참여자를 모두 초대했나요?<br>
-                        ✅ 프로젝트 관리자로 추가 지정할 사람은 없나요?<br>
-                        <br>
-                        프로젝트 규칙 만드는 Tip 영상으로 확인하기 ▶ https://youtu.be/DwgWSLsLgpU -->
                         <pre>${issuedata.content}</pre>
                       </div>
                      <!--  <hr class="issue-hr"> -->
 											
 											<p>첨부파일</p>
                       <div class="issue-file-area">
-                        	<c:choose>
-													<c:when test="${empty filelist}">
-														<h3></h3>
-													</c:when>
-													<c:otherwise>
-														<c:forEach var="f" items="${filelist}">
-														<div class="upload-file-content">
-															<form method="get" action="down">
-																<input type="hidden" value="${f.save_name}" name="saveName">
-																<input type="hidden" value="${f.original_name}" name="originalName">
+                        <c:choose>
+							<c:when test="${empty filelist}">
+								<h3></h3>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="f" items="${filelist}">
+									<div class="upload-file-content">
+										<form method="get" action="down">
+											<input type="hidden" value="${f.save_name}" name="saveName">
+											<input type="hidden" value="${f.original_name}" name="originalName">
 																
-																<c:set var="split" value="${fn:split(f.original_name, '.')}"/>
-																<c:set var="extension" value="${fn:toLowerCase(split[fn:length(split) - 1])}"/>
+											<c:set var="split" value="${fn:split(f.original_name, '.')}"/>
+											<c:set var="extension" value="${fn:toLowerCase(split[fn:length(split) - 1])}"/>
 																																
-																<c:choose>
-    															<c:when test="${extension eq 'txt'}">
-        														<img class="extension-icon" src="../resources/issue/img/txt-icon.png" alt="Text Icon">
-    															</c:when>
-    															<c:when test="${extension eq 'jpg' || extension eq 'jpeg' || extension eq 'png' || extension eq 'gif' || extension eq 'svg' || extension eq 'bmp'}">
-        														<img class="extension-icon" src="../resources/issue/img/img-icon.png" alt="IMG Icon">
-    															</c:when>
-   																<c:when test="${extension eq 'xlsx' || extension eq 'xlsm' || extension eq 'xls' || extension eq 'xlsb' || extension eq 'xltx'}">
-   																	<img class="extension-icon" src="../resources/issue/img/exel-icon.png" alt="exel Icon">
-   																</c:when>
-   																<c:when test="${extension eq 'hwp'}">
-   																	<img class="extension-icon" src="../resources/issue/img/hwp-icon.png" alt="hwp Icon">
-   																</c:when>
-   																<c:when test="${extension eq 'pptx' || extension eq 'pptm' || extension eq 'ppt'}">
-   																	<img class="extension-icon" src="../resources/issue/img/ppt-icon.png" alt="ppt Icon">
-   																</c:when>
-   																<c:when test="${extension eq 'pdf'}">
-   																	<img class="extension-icon" src="../resources/issue/img/pdf-icon.png" alt="pdf Icon">
-   																</c:when>
+											<c:choose>
+    											<c:when test="${extension eq 'txt'}">
+        											<img class="extension-icon" src="../resources/issue/img/txt-icon.png" alt="Text Icon">
+    											</c:when>
+    											<c:when test="${extension eq 'jpg' || extension eq 'jpeg' || extension eq 'png' || extension eq 'gif' || extension eq 'svg' || extension eq 'bmp'}">
+        											<img class="extension-icon" src="../resources/issue/img/img-icon.png" alt="IMG Icon">
+    											</c:when>
+   												<c:when test="${extension eq 'xlsx' || extension eq 'xlsm' || extension eq 'xls' || extension eq 'xlsb' || extension eq 'xltx'}">
+   													<img class="extension-icon" src="../resources/issue/img/exel-icon.png" alt="exel Icon">
+   												</c:when>
+   												<c:when test="${extension eq 'hwp'}">
+   													<img class="extension-icon" src="../resources/issue/img/hwp-icon.png" alt="hwp Icon">
+   												</c:when>
+   												<c:when test="${extension eq 'pptx' || extension eq 'pptm' || extension eq 'ppt'}">
+   													<img class="extension-icon" src="../resources/issue/img/ppt-icon.png" alt="ppt Icon">
+   												</c:when>
+   												<c:when test="${extension eq 'pdf'}">
+   													<img class="extension-icon" src="../resources/issue/img/pdf-icon.png" alt="pdf Icon">
+   												</c:when>
    																
-    															<c:otherwise>
-        														<img class="extension-icon" src="../resources/issue/img/default-icon.png" alt="Default Icon">
-    															</c:otherwise>
-																</c:choose>	
+    											<c:otherwise>
+        											<img class="extension-icon" src="../resources/issue/img/default-icon.png" alt="Default Icon">
+    											</c:otherwise>
+											</c:choose>	
 																
-																<input type="submit" class="file-item" data-value="${f.id}" value="${f.original_name}"> 
-															</form>
-															</div>
-														</c:forEach>
-													</c:otherwise>
-												</c:choose>
+											<input type="submit" class="file-item" data-value="${f.id}" value="${f.original_name}"> 
+										</form>
+									</div>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
                       </div>
                      
 
@@ -290,22 +273,22 @@
     </div>
 	</div> <!-- Layout-Wrapper end -->
 	
-<jsp:include page="issue-edit.jsp"></jsp:include>
+	<jsp:include page="issue-edit.jsp"></jsp:include>
 
-<div class="issue-delete-modal">
-	<div class="issue-delete-modal-overlay"></div>
-	<div class="issue-delete-modal-content">
-	<img class="change-stat-img" src="../resources/issue/img/status-change-img.jpg">
-		<h4>정말 삭제하시겠습니까?</h4>
-		<div class="issue-delete-btn-wrap">
-			<button type="button" class="issue-delete-btn">삭제</button>
-			<button type="button" class="delete-cancel-btn">취소</button>
+	<div class="issue-delete-modal">
+		<div class="issue-delete-modal-overlay"></div>
+		<div class="issue-delete-modal-content">
+			<img class="change-stat-img" src="../resources/issue/img/status-change-img.jpg">
+			<h4>정말 삭제하시겠습니까?</h4>
+			<div class="issue-delete-btn-wrap">
+				<button type="button" class="issue-delete-btn">삭제</button>
+				<button type="button" class="delete-cancel-btn">취소</button>
+			</div>
 		</div>
 	</div>
-</div>
 
 
-<jsp:include page="status-change-modal.jsp"></jsp:include>
+	<jsp:include page="status-change-modal.jsp"></jsp:include>
 
   	<!-- js template -->
 	<jsp:include page="../template/jsTemplate.jsp"></jsp:include>
@@ -360,7 +343,7 @@ function getProjectIdAndTeam() {
       type: "GET",
       url: "getProjectAndTeamInfo",
       data: {
-          projectId: projectId // 추후 세션, 또는 쿠키에 저장된 프로젝트 번호를 가져와 할당
+          projectId: projectId
       },
       success: function (response) {
   		let hostIndex = location.href.indexOf( location.host ) + location.host.length;
@@ -398,7 +381,7 @@ $(document).on('mouseenter', '.assigned', function() {
 });
 
 $(document).on('mouseleave', '.assigned', function() {
-	$(this).find('.assigned-user-id').css('background-color', ''); // 배경색을 초기 상태로 돌리려면 빈 문자열을 사용합니다.
+	$(this).find('.assigned-user-id').css('background-color', ''); // 배경색을 초기 상태로 돌리려면 빈 문자열을 사용
 });
 
 </script>

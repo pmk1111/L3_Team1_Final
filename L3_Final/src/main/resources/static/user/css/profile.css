@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+body {
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+.changepwd {
+	background-color: white;
+	border: 1px solid #d9dee3;
+	color: #697a8d;
+	border-radius: 5px;
+}
+
+.pwdsubmit {
+	border: 1px solid #d9dee3;
+	background-color: white;
+	color: #697a8d;
+	box-shadow: none;
+	border-radius: 5px;
+}
+
+#fileName {
+	font-size: 13px;
+}
+
+.pb-JJ {
+	padding-bottom: 0px !important;
+	padding-top: 25px !important;
+}

@@ -1,18 +1,22 @@
 @charset "UTF-8";
-#logins{
+
+#logins {
 	color: #000;
 }
+
 .formDiv {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
+
 .mt10 {
-   width: 100%;
-   text-align: left;
+	width: 100%;
+	text-align: left;
 }
-.accont-wrap{
-	height:900px;
+
+.accont-wrap {
+	height: 900px;
 }
 
 .account {
@@ -33,21 +37,19 @@
 	line-height: 21px;
 }
 
-
-
 #emailAuthBtn {
-margin: 20px 0 0 0;
-    color: #9f7ab0;
-    text-align: center;
-    background: #fcfcfc;
-    line-height: 52px;
-    height: 45px;
-    width: 90px;
-    border-radius: 8px;
-    font-size: 16xp;
-    font-wdight: 500;
-    border: 1px solid #9f7ab0;
-    outline: none;
+	margin: 20px 0 0 0;
+	color: #9f7ab0;
+	text-align: center;
+	background: #fcfcfc;
+	line-height: 52px;
+	height: 45px;
+	width: 90px;
+	border-radius: 8px;
+	font-size: 16xp;
+	font-wdight: 500;
+	border: 1px solid #9f7ab0;
+	outline: none;
 }
 
 #verify_check {
@@ -64,62 +66,66 @@ margin: 20px 0 0 0;
 	border: none;
 	outline: none;
 }
+
 .auth-section {
-    display: column;
-    align-items: center;
-    min-height: 75vh; /* 이 부분은 전체 높이에 맞추기 위함입니다. 필요에 따라 조절하세요. */
+	display: column;
+	align-items: center;
+	min-height: 75vh;
 }
+
 #confirmBtn {
-    margin: 20px 0 0 0;
-    color: #fff;
-    text-align: center;
-    background: #9F7AB0;
-    line-height: 52px;
-    height: 52px;
-    width: 640px;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 500;
-    border: none;
-    outline: none;
-    display: block;
-    margin: auto;
-    margin-top: 40px;
+	margin: 20px 0 0 0;
+	color: #fff;
+	text-align: center;
+	background: #9F7AB0;
+	line-height: 52px;
+	height: 52px;
+	width: 640px;
+	border-radius: 8px;
+	font-size: 15px;
+	font-weight: 500;
+	border: none;
+	outline: none;
+	display: block;
+	margin: auto;
+	margin-top: 40px;
 }
 
+.errMsg {
+	margin-top: 7px;
+	margin-bottom: 10px;
+	visibility: hidden;
+	margin-left: 6px;
+}
 
-.errMsg{
-margin-top:7px;
-margin-bottom:10px;
-visibility: hidden;
-margin-left : 6px;
-}	
-
-#confirmBtn{
-	margin-top:30px;
+#confirmBtn {
+	margin-top: 30px;
 	margin-bottom: 20px;
 	font-size: 21px;
 	font-weight: 700;
 }
-.guest-or{
+
+.guest-or {
 	margin-bottom: 5px;
 }
+
 #login, #googlelogin {
-    border: 1px solid #000; 
-    margin: 16px 0 0 0;
-    color: #333;
-    text-align: center;
-    background: #FFF;
-    line-height: 52px;
-    height: 52px;
-    width: 640px;
-    border-radius: 8px;
-    font-size: 16xp; 
-    font-weight:500; 
-     outline:none; 
-     display:block; 
-     margin:auto; 
+	border: 1px solid #000;
+	margin: 16px 0 0 0;
+	color: #333;
+	text-align: center;
+	background: #FFF;
+	line-height: 52px;
+	height: 52px;
+	width: 640px;
+	border-radius: 8px;
+	font-size: 16xp;
+	font-weight: 500;
+	outline: none;
+	display: block;
+	margin: auto;
 }
+
 .email, .pw, .pw_check, .name, .verify {
 	color: #333;
 	font-size: 16px;
@@ -134,9 +140,10 @@ margin-left : 6px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	margin-top:10px;
-	}
+	margin-top: 10px;
+}
+
 .guest-or {
-  position: relative;
-  text-align: center;
+	position: relative;
+	text-align: center;
 }

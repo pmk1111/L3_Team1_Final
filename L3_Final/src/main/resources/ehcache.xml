@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+	<!-- 임시 저장경로 설정 -->
+    <diskStore path="java.io.tmpdir"/>
+	
+	<!-- default Cache 설정
+		 캐시매니저를 통해 캐시를 직접 생성할 때 기본 설정이 되므로 필수 -->
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"
+            />
+    
+    <cache name="issuelistCache"
+            maxElementsInMemory="10"
+            eternal="false"
+            overflowToDisk="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            memoryStoreEvictionPolicy="LRU" />
+            
+    <!-- 사용할 캐시에 대한 설정 -->
+    <cache name="myworklistCache"
+            maxElementsInMemory="10"
+            eternal="false"
+            overflowToDisk="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            memoryStoreEvictionPolicy="LRU" />
+
+</ehcache>

@@ -372,9 +372,9 @@ $(document).ready(function () {
             data: {
                 status: selectedWorkType
             },
-            //beforeSend: function (xhr) {
-            //          xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-            //},
+            beforeSend: function (xhr) {
+                      xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+            },
             success: function (mywork) {
                 4
                 $('.board').empty();
@@ -417,7 +417,6 @@ $(document).ready(function () {
         });
 
     });
-
 
 
     // 일정 상세정보 표시

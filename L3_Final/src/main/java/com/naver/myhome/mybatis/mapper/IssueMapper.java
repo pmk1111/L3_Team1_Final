@@ -1,5 +1,6 @@
 package com.naver.myhome.mybatis.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,8 @@ public interface IssueMapper {
 	public int getListCount(int projectId); 
 	
 	public List<Issue> getIssueList(int projectId);
+	
+	public List<Issue> getIssueListWithPaging(HashMap<String, Integer> map);
 	
 	public List<Issue> getStatusCount(int employeeId, int userId);
 	

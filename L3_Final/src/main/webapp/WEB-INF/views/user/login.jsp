@@ -365,17 +365,6 @@
 		        }
 		    });
 		});
-    	
-	/* $("#password").keyup(function(){
-	        $("#password").on('focusout', function() {
-	            if (this.value.length < 6) {
-	                printErrMsg("pw_message", "6글자 이상 입력해 주세요.");
-	            } else {
-	                document.getElementById("pw_message").style.visibility = "hidden";
-	                document.getElementById("isChkPassword").value = "Y";
-	            }
-        	});
-    	});	*/
         
         // 진석 js
 		$('#password').keyup(function(){
