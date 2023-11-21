@@ -13,10 +13,13 @@ public interface IssueService {
 	public List<Issue> getStatusCount(int employeeId, int userId);
 	
 	public List<Issue> getMyWork(String status, int userId);
-
+	
 	public List<Issue> getIssueList(int projectId);
 	
-	public List<Issue> getFilteredIssueList(String issueStatus, String issuePriority, int projectId);
+	public List<Issue> getIssueListWithPaging(int projectId, int page, int pageSize);
+	
+	public List<Issue> getFilteredIssueList(String issueStatus, String issuePriority, 
+											int projectId, int page, int pageSize);
 	
 	public List<Issue> searchIssues(String searchText, int projectId);
 	

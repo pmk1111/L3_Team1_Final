@@ -13,46 +13,8 @@
     <meta name="description" content="" />
 
     <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
-    <link href="../resources/project/css/projectboard/projectboard_Header.css" rel="stylesheet">
-
-
-    <style>
-        body {
-            font-family: 'Nanum Gothic', sans-serif;
-        }
-
-
-        .changepwd {
-            background-color: white;
-            border: 1px solid #d9dee3;
-            color: #697a8d;
-            border-radius: 5px;
-        }
-
-        .pwdsubmit {
-            border: 1px solid #d9dee3;
-            background-color: white;
-            color: #697a8d;
-            box-shadow: none;
-            border-radius: 5px;
-        }
-
-        #fileName {
-            font-size: 13px;
-        }
-
-        .pb-JJ {
-            padding-bottom: 0px !important;
-            padding-top: 25px !important;
-        }
-        
-        .chatting-layer{
-        	left:78%
-        }
-        .notify-layer{
-        	left:74%;
-        }
-    </style>
+    <link href="${pageContext.request.contextPath}/project/css/projectboard/projectboard_Header.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/user/css/profile.css">
     <script>
         const result = "${result}";
         if (result == 'success') {
@@ -70,7 +32,7 @@
 			
 
             <div class="layout-page">
-
+				
                 <jsp:include page="../mainboard/navbar.jsp"></jsp:include>
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
@@ -245,7 +207,10 @@
                 (주)WidUs
             </div>
             <div>
-                <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a> <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a> <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a> <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
+                <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a> 
+                <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a> 
+                <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a> 
+                <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
             </div>
         </div>
     </footer>

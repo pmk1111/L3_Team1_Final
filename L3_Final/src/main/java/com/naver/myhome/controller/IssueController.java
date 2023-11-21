@@ -78,27 +78,51 @@ public class IssueController {
 	}
 
 	@GetMapping(value = "/issue-list")
-	public ModelAndView issuelist(ModelAndView mv, HttpServletRequest request, 
-			Principal principal, HttpSession session) {
-		int projectId = (int) session.getAttribute("projectId");
-		int listcount = issueService.getListCount(projectId);
-		List<Issue> issuelist = issueService.getIssueList(projectId);
+	public ModelAndView issuelist(ModelAndView mv,HttpServletRequest request,
+						Principal principal,HttpSession session,
+						@RequestParam(defaultValue = "1") int page) {
+		
+	    int projectId = (int) session.getAttribute("projectId");
+	    int pageSize = 7; 
 
-		mv.setViewName("issue/issue-list");
-		mv.addObject("listcount", listcount);
-		mv.addObject("issuelist" ,issuelist);
-		return mv;
+	    // 전체 이슈 수 및 목록 조회
+	    int listcount = issueService.getListCount(projectId);
+
+	    // 페이징 관련 정보 계산
+	    int totalPage = (listcount + pageSize -1)/pageSize;
+	    int startPage = ((page - 1)/ 7)* 7 + 1;
+	    int endPage = startPage + 3 - 1;
+	    
+	    if(endPage > totalPage) endPage = totalPage;
+	    
+	    List<Issue> issuelist = issueService.getIssueListWithPaging(projectId, page, pageSize);
+
+	    mv.setViewName("issue/issue-list");
+	    mv.addObject("listcount", listcount);
+	    mv.addObject("issuelist", issuelist);
+	    mv.addObject("page", page);
+	    mv.addObject("totalPage", totalPage);
+	    mv.addObject("startPage", startPage);
+	    mv.addObject("endPage", endPage);
+
+	    return mv;
 	}
+
+
 
 
 	@ResponseBody
 	@GetMapping("/getFilteredIssue")
 	public List<Issue> getFilteredIssueList(HttpSession session,
 			@RequestParam(name = "issueStatus", required = false) String issueStatus,
-			@RequestParam(name = "issuePriority", required = false) String issuePriority) {
+			@RequestParam(name = "issuePriority", required = false) String issuePriority,
+			@RequestParam(defaultValue = "1") int page) {
 
 		int projectId = (int) session.getAttribute("projectId");
-		List<Issue> filteredIssues = issueService.getFilteredIssueList(issueStatus, issuePriority, projectId);
+		
+		int pageSize = 7; 
+		List<Issue> filteredIssues 
+			= issueService.getFilteredIssueList(issueStatus, issuePriority, projectId, page, pageSize);
 		return filteredIssues;
 	}
 
@@ -137,7 +161,6 @@ public class IssueController {
 		issue.setMentioned(notionchoice.replace("@", ""));
 
 		issueService.createIssue(issue);
-
 		String create_user = userService.getCreateUser(userId);
 		String assign_user = userService.getAssignUser(assignedValue);
 
@@ -209,7 +232,7 @@ public class IssueController {
 		String fileExtension = fileName.substring(index+1);
 		String refileName = "bbs" + year + month + date + random + "." + fileExtension;
 		String fileDBName = File.separator + year + "-" + month + "-" 
-							+ date + File.separator + refileName;
+				+ date + File.separator + refileName;
 
 		return fileDBName;
 	}
@@ -269,14 +292,36 @@ public class IssueController {
 	public Map<String, Object> statusUpdate(@RequestParam int issueId, 
 			@RequestParam String status, 
 			@RequestParam String selectedUserId,
-			@AuthenticationPrincipal User customUser) {
+			@AuthenticationPrincipal User customUser, Principal principal) {
+		
+		String userEmail = principal.getName();
+		int userId = userService.getUserId(userEmail);
 
 		int sessionId = customUser.getId();
+		
+		String updateUser = userService.getAssignUser(userId);
+
 
 		Map<String, Object> response = new HashMap<>();
 		try {
 			issueService.updateStatus(issueId, status, selectedUserId, sessionId);
 			response.put("status", "success");
+			
+			if (selectedUserId != null && selectedUserId != "") {
+				int assignerId = Integer.parseInt(selectedUserId);
+				String assign_user = userService.getAssignUser(assignerId);
+				Notify assignNotify = new Notify();
+				assignNotify.setNAME(assign_user);
+				assignNotify.setMENTIONED_BY(updateUser);
+				assignNotify.setPOST_ID(issueId);
+				assignNotify.setMENTIONED_ID(assignerId);
+				assignNotify.setCONTENT("담당자로 설정하였습니다.");
+				assignNotify.setNOTIFY_STATUS(0);
+
+				notifyService.createalarm(assignNotify);
+			}
+			
+			
 		} catch (Exception e) {
 			response.put("status", "error");
 			response.put("message", e.getMessage());
@@ -370,6 +415,5 @@ public class IssueController {
 			return 0;
 		}
 	}
-
 
 }

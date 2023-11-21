@@ -9,212 +9,13 @@
 
     <title>WidUs - AssignIssue</title>
     <link href="../resources/project/css/projectboard/projectboard_Header.css" rel="stylesheet">
-    <link rel="stylesheet" href="../resources/issue/css/issue-list.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/issue/css/issue-list.css">
 
     <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
-
-
-
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/issue/css/mywork.css">
 
     <style>
-        table {
-            table-layout: fixed;
-            width: 100%;
-            margin: 0 auto;
-        }
 
-        .card {
-            box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
-            padding-bottom: 20px;
-        }
-
-        .avatar.sm {
-            width: 2.25rem;
-            height: 2.25rem;
-            font-size: .818125rem;
-        }
-
-        .table-nowrap .table td,
-        .table-nowrap .table th {
-            white-space: nowrap;
-        }
-
-        .table>:not(caption)>*>* {
-            padding: 0.75rem 1.25rem;
-            border-bottom-width: 1px;
-        }
-
-        table th {
-            font-weight: 600;
-            background-color: #eeecfd !important;
-            width: 25%;
-
-        }
-
-        .fa-arrow-up {
-            color: #00CED1;
-        }
-
-        .fa-arrow-down {
-            color: #FF00FF;
-        }
-
-        .hover-lift-light {
-            transition: box-shadow .25s ease, transform .25s ease, color .25s ease,
-                background-color .15s ease-in;
-        }
-
-        .text-decoration-none {
-            text-decoration: none !important;
-        }
-
-        .py-4 {
-            padding-top: 1.5rem !important;
-            padding-bottom: 1.5rem !important;
-        }
-
-        .align-items-center {
-            align-items: center !important;
-        }
-
-        .border-0 {
-            border: 0 !important;
-        }
-
-        .card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 1px solid rgba(30, 46, 80, .09);
-            border-radius: 0.25rem;
-        }
-
-        .icon-circle {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 3.2rem;
-            height: 3.2rem;
-            border-radius: 50%;
-        }
-
-        .bg-pastel-primary {
-            background-color: #e9f3ff !important;
-        }
-
-        .mt-6 {
-            margin-top: 4rem !important;
-        }
-
-        .mb-4 {
-            margin-bottom: 1.5rem !important;
-        }
-
-        .badge {
-            padding: 0.4rem 0.65rem 0.25rem;
-        }
-
-        .text-uppercase-bold-sm {
-            text-transform: uppercase !important;
-            font-weight: 500 !important;
-            letter-spacing: 2px !important;
-            font-size: .85rem !important;
-        }
-
-        .icon-circle[class*=text-] [fill]:not([fill=none]),
-        .icon-circle[class*=text-] svg:not([fill=none]),
-        .svg-icon[class*=text-] [fill]:not([fill=none]),
-        .svg-icon[class*=text-] svg:not([fill=none]) {
-            fill: currentColor !important;
-        }
-
-        .shadow-sm {
-            box-shadow: 0 .125rem .25rem rgba(35, 38, 45, .09) !important;
-        }
-
-        .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3),
-        .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        .input-group-lg>.btn,
-        .input-group-lg>.form-control,
-        .input-group-lg>.form-select,
-        .input-group-lg>.input-group-text {
-            padding: 0.5rem 1rem;
-            font-size: 1.25rem;
-            border-radius: 0.3rem;
-        }
-
-        .input-group-text {
-            display: flex;
-            align-items: center;
-            padding: 0.375rem 0.75rem;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #1f2c73;
-            text-align: center;
-            white-space: nowrap;
-            background-color: #fff;
-            border: 1px solid #dee2e6;
-            border-radius: 0.25rem;
-        }
-
-        /* 추가된 스타일: 드롭다운 초기 숨김 */
-        .sub-row {
-            display: none;
-        }
-
-        /* 추가된 스타일: 드롭다운 표시 스타일링 */
-        .main-row.open .sub-row {
-            display: table-row;
-            margin-left: 20px;
-            /* 들여쓰기를 조절하기 위한 스타일 추가 */
-        }
-
-        /* 추가된 스타일: 상위 행 클릭 가능한 커서 스타일 */
-        .main-row {
-            cursor: pointer;
-
-        }
-
-        h6 {
-            margin: auto;
-            padding: auto;
-        }
-        
-        .issuewriter-created {
-        	margin-right: -10px;
-        	font-size:13px;
-        }
-        
-        ul {
-        	padding-left:0;
-        }
-        
-        .project-div:hover {
-        	background-color:#f6f6f6;
-        }
-        
-        .issue-writer{
-        	width:80px
-        }
-        
-        .issue-writer+.issue-created{
-        	margin:0
-        }
-        
-        .issuewriter-created{
-        	margin-right:20px
-        }
-        
     </style>
 </head>
 
@@ -231,6 +32,7 @@
                 <div class="content-wrapper">
                     <!-- Content -->
                     <div class="container-xxl flex-grow-1 container-p-y">
+                    <jsp:include page="../chat/chat.jsp"></jsp:include>
                         <div class="row">
                             <div class="col-lg-12 mb-4 order-0 welcome-message">
                                 <div class="container-fluid">
@@ -387,30 +189,7 @@
 
     <jsp:include page="../template/jsTemplate.jsp"></jsp:include>
     
-    <script>
-    $(".project").click(function(){ 
-    	 $(this).find(".issue-list").slideToggle();
-    });
-
-    $(".issuetype-wrap").click(function(event){
-        event.stopPropagation();
-    });
-    
-    
-    
-    document.getElementById("searchButton").addEventListener("click", function() {
-        var searchInput = document.getElementById("searchInput");
-
-        // 입력 필드의 값 확인
-        if (searchInput.value.trim() === "") {
-            alert("검색어를 입력하세요");
-        } 
-        return false;
-        
-    });
-    
-    
-    </script>
+ 	<script src="${pageContext.request.contextPath}/resources/issue/js/mywork.js"></script>
 
 </body>
 
