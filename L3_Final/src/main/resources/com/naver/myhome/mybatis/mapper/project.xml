@@ -190,7 +190,7 @@
 		JOIN USERS U ON RS.ACTED = U.ID
 		
 		LEFT JOIN (
-		    SELECT RS.ID, RS.NEW_DATA, 
+		    SELECT RS.ID, RS.NEW_DATA, RS.CHANGE_TIME,
 		    I.SUBJECT AS ISSUE_SUBJECT,
 		    I.TYPE AS TYPE
 		    FROM RECENT_STATUS RS
@@ -198,8 +198,8 @@
 		    WHERE RS.GUIDE IN (
 		        'modify-project', 'change-auth', 'create-issue', 'change-status', 
 		        'change-assigned', 'change-priority', 'change-type'
-		    ) AND RS.PROJECT_ID = #{project_id} 
-		) UPDATE_RS ON RS.ID = UPDATE_RS.ID
+		    ) AND RS.PROJECT_ID = 21
+		) UPDATE_RS ON RS.ID = UPDATE_RS.ID AND RS.CHANGE_TIME = UPDATE_RS.CHANGE_TIME
 		
 		LEFT JOIN (
 		    SELECT U.NAME, RS.ROW_ID
@@ -210,14 +210,14 @@
 		    WHERE RS.GUIDE = 'add-invite'
 		) SELECTED_USER ON RS.ROW_ID = SELECTED_USER.ROW_ID		
 				
-		LEFT JOIN (
-			SELECT U.NAME, RS.ROW_ID
-		    FROM USERS U
-		    JOIN RECENT_STATUS RS ON U.ID = RS.NEW_DATA
-		    WHERE RS.GUIDE = 'change-assigned'
-		) CHANGED_USER ON RS.ROW_ID = CHANGED_USER.ROW_ID
-		
+        LEFT JOIN (
+            SELECT U.NAME, RS.ROW_ID, RS.CHANGE_TIME
+            FROM USERS U
+            JOIN RECENT_STATUS RS ON U.ID = RS.NEW_DATA
+            WHERE RS.GUIDE = 'change-assigned'
+        ) CHANGED_USER ON RS.ROW_ID = CHANGED_USER.ROW_ID AND RS.CHANGE_TIME = CHANGED_USER.CHANGE_TIME
+        
 		WHERE RS.PROJECT_ID = #{project_id}
-		ORDER BY RS.CHANGE_TIME DESC		
+		ORDER BY RS.CHANGE_TIME DESC			
 	</select>
 </mapper>
