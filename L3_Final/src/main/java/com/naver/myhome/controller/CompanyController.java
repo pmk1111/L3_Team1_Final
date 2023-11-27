@@ -1,10 +1,22 @@
 package com.naver.myhome.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -14,6 +26,8 @@ import com.naver.myhome.domain.User;
 import com.naver.myhome.service.CompanyService;
 import com.naver.myhome.service.EmployeeService;
 import com.naver.myhome.service.UserService;
+
+import oracle.jdbc.proxy.annotation.Post;
 
 
 @Controller
@@ -58,8 +72,9 @@ public class CompanyController {
 	
 	@ResponseBody	 
 	@PostMapping("/create-company")
-	public String createComapny(Company company,@AuthenticationPrincipal User user) {
-		String errCode = "";
+	public Map<String, Object> createComapny(Company company,@AuthenticationPrincipal User user, HttpSession session) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String errCode = "0";
 		
 		company.setUserId(user.getId());
 		
@@ -76,8 +91,13 @@ public class CompanyController {
         	tempUser.setCompanyInvited(companyResult.getId());
         	tempUser.setCompanyStatus("1");
         	
+            UsernamePasswordAuthenticationToken newAuthentication = new UsernamePasswordAuthenticationToken(tempUser, user.getPassword(), user.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+            session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+        	
         	userService.updateUserInfo(user);
         	
+        	System.out.println("변경된 사용자 정보 : " + user.toString());
         	
         	System.out.println(companyResult.toString());
         	Employee insertEmployee = new Employee();
@@ -91,7 +111,9 @@ public class CompanyController {
         }else {
         	errCode = "1";
         }
-        return errCode;
+        map.put("user", user);
+        map.put("errCode", errCode);
+        return map;
     }
 	
 	@GetMapping("/join-company")
