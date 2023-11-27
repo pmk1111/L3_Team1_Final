@@ -151,17 +151,6 @@
         <!-- Misc -->
         <se:authorize access="hasRole('ROLE_ADMIN')">
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
-            <!--             <li class="menu-item">
-              <a
-                href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-                target="_blank"
-                class="menu-link"
-              >
-                <i class="menu-icon tf-icons bx bx-support"></i>
-                <div data-i18n="Support">회사 직원 초대</div>
-              </a>
-            </li> -->
-
             <li class="menu-item">
                 <a href="../admin/companyinfo" class="menu-link ad-link">
                     <i class="menu-icon tf-icons bx bx-file"></i>

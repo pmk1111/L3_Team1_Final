@@ -258,9 +258,11 @@
                 xhr.setRequestHeader(header, token);
             },
             success: function(response) {
-                if (response == 0) {
+                if (response.errCode === "0") {
                     alert("회사정보가 등록되었습니다.");
-                    location.href = "../mainboard/my-dashboard"
+                    // 업데이트된 사용자 정보 출력
+                    console.log(response.user);
+                    location.href = "../mainboard/my-dashboard";
                 } else {
                     $("#helpMsg").html("회사정보 등록에 실패하였습니다.");
                     return;
@@ -270,9 +272,8 @@
                 console.error(error);
             }
         });
-
-
     }
+
 </script>
 
 </html>
