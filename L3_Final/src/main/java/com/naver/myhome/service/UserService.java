@@ -34,7 +34,7 @@ public interface UserService {
 
 	public int update(User user);
 
-	public void delete(String email);
+	public int delete(String email);
 	
 	public int backInvited(int id);
 	//지니 끝

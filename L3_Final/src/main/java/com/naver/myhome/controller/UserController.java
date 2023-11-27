@@ -32,6 +32,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -209,19 +210,20 @@ public class UserController {
 	}
 
 
-
-	@GetMapping(value= "/delete")
-	public String userDelete(User user, HttpSession session,Principal principal) {
+	@ResponseBody
+	@DeleteMapping(value= "/delete-user")
+	public int userDelete(User user, HttpSession session,Principal principal) {
 
 		String email = principal.getName();           
-		userService.delete(email);
-
-		session.invalidate();
-
-
-		return "redirect:../../myhome/";
+		int result = userService.delete(email);
+		
+		if(result == 1) {
+			session.invalidate();
+			return result;
+		}
+		return 0;
 	}
-
+	
 	//가입대기 회원 로그인시 보여지는 페이지
 	@GetMapping(value = "/wait-approve")
 	public String waitApprove() {
