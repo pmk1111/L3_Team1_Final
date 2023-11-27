@@ -24,15 +24,13 @@ import com.naver.security.CustomUserDetailsService;
 import com.naver.security.LoginFailHandler;
 import com.naver.security.LoginSuccessHandler;
 
-@EnableWebSecurity // 스프링과 시큐리티의 결합
+@EnableWebSecurity 
 @Configuration
-//public class SecurityConfig extends WebSecurityConfigurerAdapter {
 public class SecurityConfig {
 
 	@Autowired
 	private DataSource datasource;
 
-	//SecurityFilterChain를 빈으로 등록하는 방식을 권장
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -77,8 +75,7 @@ public class SecurityConfig {
 			throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
-
-	// 로그인 성공시 실행할 객체 생성
+	
 	@Bean
 	public AuthenticationSuccessHandler loginSuccessHandler() {
 		return new LoginSuccessHandler();
@@ -86,7 +83,7 @@ public class SecurityConfig {
 
 	@Bean
 	public UserDetailsService customUserService() {
-		return new CustomUserDetailsService(); // 패키지 com.naver.security에 존재하는 모든 클래스파일에 @Service 제거해줍니다.
+		return new CustomUserDetailsService();
 	}
 
 	@Bean
