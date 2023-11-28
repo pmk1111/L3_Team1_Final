@@ -9,7 +9,7 @@
     <meta name="viewport" 
     	  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
 	
-    <title>이용중지</title>
+    <title>WidUs · 이용중지</title>
     <meta name="description" content="" />
  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
  	
@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="../resources/mainboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
     <link rel="stylesheet" href="../resources/mainboard/assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/user/css/forbidden.css">
 
     <!-- Page CSS -->
 
@@ -47,40 +48,7 @@
     <script src="../resources/mainboard/assets/js/config.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <style>
-    .container{
-    	margin-top:25px;
-    	}
-    	
-  	.card {
-  		width:100%;
-  		height:100%;
-  		}
-  
-  		
-  	.btn_move{
-  		font-size:20px;
-  		border:none;
-  		border-radius:5px;
-  		color:white;
-  		background-color: #9F7AB0;
-  		width:300px;
-  		height:60px;
-  		margin-left:550px;
-  		}
-  		
-  	.cancel-link {
-   		cursor: pointer;
-   	    text-decoration: underline;
-   	    
-	  }
-	 .cancelwait{
-	 	margin:30px 0px 30px 650px;
-	 }
-	 .btn_move{
-	 	margin-bottom:60px
-	 }
-    </style>
+
   </head>
 
   <body>
@@ -95,7 +63,7 @@
  	   
  	   
  	   <div class="moveToLogin">
- 	    <button class="btn_move" type="button" onclick="location.href='${pageContext.request.contextPath}/home/home' ">
+ 	    <button class="btn_move" type="button" onclick="location.href='${pageContext.request.contextPath}/' ">
 		 홈으로 이동
 		 </button>
  	   </div>

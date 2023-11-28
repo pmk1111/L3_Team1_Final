@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
 
-    <title>WidUs-Documents</title>
+    <title>WidUs · 파일함</title>
     <meta name="description" content="" />
 
     <jsp:include page="../template/cssTemplate.jsp"></jsp:include>
