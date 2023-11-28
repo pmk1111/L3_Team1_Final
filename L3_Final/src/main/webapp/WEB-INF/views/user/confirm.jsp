@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>회원가입 선택페이지</title>
+    <title>Widus · 회원 유형 선택</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <link rel="stylesheet" href="../resources/user/css/confirm.css" /> <!-- Favicons -->
