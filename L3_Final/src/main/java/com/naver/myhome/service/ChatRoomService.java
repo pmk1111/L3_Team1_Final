@@ -20,5 +20,6 @@ public interface ChatRoomService {
 
 	public void updateReadCnt(int selectedRoomNum);
 
+	public void deleteChatRoom(int employeeId);
 
 }

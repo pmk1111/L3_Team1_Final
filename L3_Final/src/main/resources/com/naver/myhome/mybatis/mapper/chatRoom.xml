@@ -81,4 +81,10 @@
 		where id =
 		#{selectedRoomNum}
 	</update>
+	
+	<delete id="deleteChatRoom">
+		delete from chatroom
+		where create_by = #{employeeId}
+		or participant = #{employeeId}
+	</delete>
 </mapper>

@@ -32,6 +32,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,6 +46,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.naver.myhome.domain.Employee;
 import com.naver.myhome.domain.MentionUser;
 import com.naver.myhome.domain.User;
+import com.naver.myhome.service.ChatRoomService;
+import com.naver.myhome.service.ChatService;
 import com.naver.myhome.service.EmployeeService;
 import com.naver.myhome.service.UserService;
 
@@ -58,14 +61,17 @@ public class UserController {
 	private PasswordEncoder passwordEncoder;
 	private EmployeeService employeeService;
 	private UserService userService;
+	private ChatRoomService chatRoomService;
 	//지니
 	@Value("${my.savefolder}")
 	private String savefolder;
 	@Autowired
-	public UserController(UserService userservice,EmployeeService employeeService, PasswordEncoder passwordEncoder) {
+	public UserController(UserService userservice,EmployeeService employeeService, 
+			PasswordEncoder passwordEncoder, ChatRoomService chatRoomService) {
 		this.userService = userservice;
 		this.employeeService = employeeService;
 		this.passwordEncoder= passwordEncoder;
+		this.chatRoomService = chatRoomService;
 	}
 
 	//지니
@@ -209,19 +215,24 @@ public class UserController {
 	}
 
 
+	@ResponseBody
+	@DeleteMapping(value= "/delete-user")
+	public int userDelete(User user, HttpSession session,Principal principal) {
 
-	@GetMapping(value= "/delete")
-	public String userDelete(User user, HttpSession session,Principal principal) {
-
-		String email = principal.getName();           
-		userService.delete(email);
-
-		session.invalidate();
-
-
-		return "redirect:../../myhome/";
+		String email = principal.getName();
+		int userId = userService.getUserId(email);
+		int employeeId = employeeService.getEmployeeId(userId);
+		
+		chatRoomService.deleteChatRoom(employeeId);
+		int result = userService.delete(email);
+		
+		if(result == 1) {
+			session.invalidate();
+			return result;
+		}
+		return 0;
 	}
-
+	
 	//가입대기 회원 로그인시 보여지는 페이지
 	@GetMapping(value = "/wait-approve")
 	public String waitApprove() {

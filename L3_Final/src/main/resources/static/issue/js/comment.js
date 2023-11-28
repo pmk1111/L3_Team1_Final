@@ -62,9 +62,13 @@ $(document).ready(function () {
                         } else{
                         	str += '<img src="' + contextPath + '/user/img/profile.png" alt class="w-px-40 h-auto" />'
                         }
-                        // 나중에 해당 유저의 사진 가져옴
-                        str += '<span class="comment-writer">' + this.comment_user_name + '</span> <sup class="comment-created">' + this.created_at + '</sup>';
-												if($('.auth').val() !== null && $('.auth').val() === this.comment_user_email){
+                        if(this.comment_user_name === null){
+                        	str += '<span class="comment-writer">(알 수 없음)</span>';
+                        } else{
+                        	str += '<span class="comment-writer">' + this.comment_user_name + '</span>';
+                        }
+                        str += '<sup class="comment-created">' + this.created_at + '</sup>';
+						if($('.auth').val() !== null && $('.auth').val() === this.comment_user_email){
                         	str += '<sup class="comment-edit">수정</sup><sup class="comment-delete">삭제</sup>'
                         }
                         str += '<br><div class="comment-content">';
