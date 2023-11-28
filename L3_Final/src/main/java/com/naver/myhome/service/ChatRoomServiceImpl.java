@@ -54,4 +54,9 @@ public class ChatRoomServiceImpl implements ChatRoomService{
 		mapper.updateReadCnt(selectedRoomNum);
 	}
 
+	@Override
+	public void deleteChatRoom(int employeeId) {
+		mapper.deleteChatRoom(employeeId);
+	}
+
 }

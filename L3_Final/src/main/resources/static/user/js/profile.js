@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    
+    var csrfToken = $("meta[name='_csrf']").attr("content");
 	let check = 0;
 	$("#formAccountSettings").submit(function(){
 	
@@ -30,7 +30,7 @@ $(document).ready(function() {
          $('.profile-img  img').attr('src', this.result);  
         };
       } else {
-         alert('이미지 파일(gif,jpg,jpeg,png)이 아닌 경우는 무시됩니다.');
+         alert('이미지 파일(gif,jpg,jpeg,png)만 업로드 가능합니다.');
          $(this).val('')
       }
       
@@ -45,9 +45,26 @@ $(document).ready(function() {
             alert('동의버튼에 체크해주세요.');
             return false;
         } else {
-        	alert('회원탈퇴 되었습니다. 홈으로 이동합니다');
+        	$.ajax({
+        		url: "delete-user",
+        		type: "DELETE",
+        		beforeSend: function(xhr) {
+        			xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+    			},
+        		success: function(response){
+        			if(response === 1){
+        				alert('회원탈퇴 되었습니다. 홈으로 이동합니다');
+        				location.href = "../../widus/"	
+        			} else if(response === 0){
+        				console.log('탈퇴 실패');
+        			}
+        		},
+        		error: function(error) {
+                	console.error(error);
+            	}
+        	}); // ajax end
         }
-    }); //$('#deleteUser').click(function() { end
+    }); //deleteUser click end
    $('#updateProfile').click(function(){
     	var phone=$("#phone").val();
    	    var regPhone=/^010-?([0-9]{4})-?([0-9]{4})$/;
@@ -58,3 +75,22 @@ $(document).ready(function() {
    		}
 	}); // $('#updateProfile').click(function(){ end
 })//document end
+
+$(".my-tab").click(function(){
+	$(".my-info").show();
+	$(".company-info").hide();
+	$(".exit-user").hide();
+	});
+
+$(".com-tab").first().click(function(){
+	$(".company-info").show();
+	$(".my-info").hide();
+	$(".exit-user").hide();
+});
+
+$(".exit-tab").last().click(function(){
+	$(".exit-user").show();
+	$(".my-info").hide();
+	$(".company-info").hide();
+});
+            

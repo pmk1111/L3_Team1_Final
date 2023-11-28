@@ -37,7 +37,7 @@ public interface UserMapper {
 
 		public int checkPwd(String usedPwd, String email);
 
-		public void delete(String email);
+		public int delete(String email);
 		
 		public int backInvited (int id);
 		//지니끝

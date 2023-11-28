@@ -24,4 +24,6 @@ public interface ChatRoomMapper {
 	public void updateResentContent(String resultText, int selectedRoomNum, int employeeId);
 	
 	public void updateReadCnt(int selectedRoomNum);
+	
+	public void deleteChatRoom(int employeeId);
 }

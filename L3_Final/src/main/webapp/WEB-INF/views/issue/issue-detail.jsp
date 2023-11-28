@@ -120,7 +120,13 @@
                       	<img src="${pageContext.request.contextPath}/upload${issuedata.creater_pic}" alt class="w-px-40 h-auto user-img" />
                       </c:otherwise>
                       </c:choose>
-                      	<span class="issue-writer">${issuedata.create_user_name}</span> <sup class="issue-create">${issuedata.created_at}</sup>
+                      <c:if test="${issuedata.create_user_name == null}">
+                      	<span class="issue-writer">(알 수 없음)</span> 
+                      </c:if>
+                      <c:if test="${issuedata.create_user_name == null}">
+                      	<span class="issue-writer">${issuedata.create_user_name}</span> 
+                      </c:if>
+                      	<sup class="issue-create">${issuedata.created_at}</sup>
                       </div>
                       <input type="hidden" class="creater-mail" value="${createrEmail }">
                       
@@ -169,7 +175,13 @@
                         <div class="issue-mention-area" style="display:none">
                            <span>언급</span><span class="mention-user">${issuedata.mentioned}</span>
                          </div>   
-                        <span>담당자</span><span class="assigned-user">${issuedata.assigned_user_name}</span>
+                        <span>담당자</span>
+                        <c:if test="${issuedata.assigned_user_name == null}">
+    						<span class="assigned-user">(알 수 없음)</span>
+						</c:if>
+						<c:if test="${issuedata.assigned_user_name != null}">
+    						<span class="assigned-user">${issuedata.assigned_user_name}</span>
+						</c:if>
                       </div>
                       <hr class="issue-hr">
 
