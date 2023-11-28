@@ -1,6 +1,7 @@
 package com.naver.myhome;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -8,10 +9,11 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.naver.myhome.interceptor.AuthenticationInterceptor;
+import com.naver.myhome.interceptor.EmployeeCheckInterceptor;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer{
-
+	
 	@Value("${my.savepath}")
 	private String saveFolder;
 
@@ -37,19 +39,44 @@ public class WebMvcConfig implements WebMvcConfigurer{
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-	    String[] excludePatterns = {
-	    	"/widus/",
-	        "/user/login",
-	        "/user/join",
-	        "/user/check-email",
-	        "/user/send-mail-auth-code",
-	        "/user/check-auth-code",
-	        "/resources/**"
-	    };
 
-	    registry.addInterceptor(new AuthenticationInterceptor())
-	            .addPathPatterns("/**")
-	            .excludePathPatterns(excludePatterns);
+		String[] excludePatterns = {
+				"/widus/",
+				"/user/login",
+				"/user/join",
+				"/user/check-email",
+				"/user/send-mail-auth-code",
+				"/user/check-auth-code",
+				"/resources/**"
+		};
+
+		String[] confirmExcludePatterns = {
+				"/widus/",
+				"/user/login",
+				"/user/join",
+				"/user/check-email",
+				"/user/send-mail-auth-code",
+				"/user/check-auth-code",
+				"/user/loginSuccess",
+				"/user/confirm",
+				"/user/stop-employee",
+				"/user/wait-approve",
+				"/company/**",
+				"/resources/**"
+		};
+
+		registry.addInterceptor(new AuthenticationInterceptor())
+		.addPathPatterns("/**")
+		.excludePathPatterns(excludePatterns);
+
+		registry.addInterceptor(employeeCheckInterceptor())
+		.addPathPatterns("/**")
+		.excludePathPatterns(confirmExcludePatterns);
+	}
+
+	@Bean
+	public EmployeeCheckInterceptor employeeCheckInterceptor() {
+		return new EmployeeCheckInterceptor();
 	}
 
 
