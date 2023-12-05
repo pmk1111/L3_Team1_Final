@@ -12,7 +12,7 @@
          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
 
 
-    <title>WidUs - 대시보드</title>
+    <title>WidUs · 관리자 대시보드</title>
     <meta name="description" content="" />
 
     <!-- Favicon -->

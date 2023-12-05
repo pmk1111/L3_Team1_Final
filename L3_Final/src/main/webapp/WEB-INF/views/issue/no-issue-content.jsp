@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>WidUs · 이슈 검색 실패</title>
 </head>
 <body>
 <script type="text/javascript">

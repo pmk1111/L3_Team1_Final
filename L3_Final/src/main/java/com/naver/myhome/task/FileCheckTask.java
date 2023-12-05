@@ -27,7 +27,7 @@ public class FileCheckTask {
 		this.fileService = fileService;
 	}
 	
-	//@Scheduled(cron = "30 * * * * *")
+	@Scheduled(cron = "* 30 * * * *")
 	public void checkFiles() throws Exception {
 	    logger.info("checkFiles");
 
@@ -39,7 +39,6 @@ public class FileCheckTask {
 	        if (file.exists()) {
 	            if (file.delete()) {
 	                logger.info(file.getPath() + " 삭제");
-	                // 파일이 삭제되면 데이터베이스에서도 해당 파일 정보를 삭제해야 합니다.
 	                fileService.deleteFile(filename);
 	            } else {
 	                logger.info(file.getPath() + " 삭제 실패");

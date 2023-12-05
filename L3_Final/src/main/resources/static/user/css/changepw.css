@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+.leftbar-close {
+	background-color: #9F7AB0;
+	border-radius: 50%;
+}
+
+.welcome-message {
+	width: 100%;
+}
+
+.form-control {
+	border: 1px solid transparent;
+	border-bottom: 1px solid #d9dee3;
+	background-color: white;
+}
+
+.container-fluid {
+	padding-left:350px;
+}
+
+#formCompanySetting input:disabled {
+	background-color: transparent;
+}
+
+.card {
+	height: 85vh; /* 화면 높이에 85% 맞춤 */
+	width:500px;
+}
+
+.card-body {
+	padding: 50px;
+}
+
+.form-label, .col-md-12 {
+	padding-top: 20px
+}
+
+.changepassword {
+	margin: 20px 0px 40px 0px
+}
+
+.changepwd {
+	background-color: white;
+	border: 1px solid #d9dee3;
+	color: #697a8d;
+	border-radius: 5px;
+}
+
+em {
+	color: red;
+	font-size:13px;
+}
+
+#saveButton, #cancelButton
+	 {margin-top:30px;
+	  border: 1px solid #d9dee3;
+ 	  background-color: white;
+ 	  color: #697a8d;
+ 	  box-shadow:none;
+}
+
+.new, .btnArea {display: none;
+}

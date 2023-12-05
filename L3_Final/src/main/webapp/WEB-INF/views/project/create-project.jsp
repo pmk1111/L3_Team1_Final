@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/mainboard/assets/img/favicon/favicon.png" />
-<title>프로젝트 생성</title>
+<title>WidUs · 프로젝트 생성</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap">
     <link href="../resources/project/css/createProject.css" rel="stylesheet">
         <style>
