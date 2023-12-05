@@ -7,7 +7,7 @@
 
 <head>
 
-    <title>WidUs - AssignIssue</title>
+    <title>WidUs ·  내 담당업무</title>
     <link href="../resources/project/css/projectboard/projectboard_Header.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/issue/css/issue-list.css">
 

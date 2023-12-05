@@ -4,58 +4,54 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authentication property="principal" var="pinfo" />
 <style>
-		.container-xxl {
-			animation: fadein .5s;
-		}
+.container-xxl {
+	animation: fadein .5s;
+}
 
-		@keyframes fadein {
-			from { 
-				opacity:0;
-				transform: translate3d(0, -2%, 0);
-			}
-			to {
-				opacity: 1;
-				transform: translateZ(0);
-			}
-		}
+@keyframes fadein {
+	from { 
+		opacity:0;
+		transform: translate3d(0, -2%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translateZ(0);
+	}
+}
 
-    .notification-icon-container {
-        position: relative;
-        display: inline-block;
-    }
+.notification-icon-container {
+	position: relative;
+	display: inline-block;
+}
 
 
-    .notification-count-badge {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background-color: red;
-        color: white;
-        border-radius: 50%;
-        width: 14px;
-        /* 원하는 크기로 조정 */
-        height: 14px;
-        /* 원하는 크기로 조정 */
-        text-align: center;
-        font-size: 8px;
-        /* 작은 폰트 크기로 조정 */
-        line-height: 14px;
-        /* 아이콘과 텍스트 중앙 정렬을 위한 높이 설정 */
-        display: none;
-    }
+.notification-count-badge {
+	position: absolute;
+    top: 0;
+	right: 0;
+	background-color: red;
+	color: white;
+	border-radius: 50%;
+	width: 14px;
+	height: 14px;
+	text-align: center;
+	font-size: 8px;
+    line-height: 14px;
+	display: none;
+}
 
-    .alarm-icon+.chat-icon {
-        margin-left: 10px
-    }
+.alarm-icon+.chat-icon {
+	margin-left: 10px
+}
 
-    .chat-icon {
-        margin-right: 10px
-    }
+.chat-icon {
+	margin-right: 10px
+}
 
-    .alarm-icon:hover,
-    .chat-icon:hover {
-        cursor: pointer;
-    }
+.alarm-icon:hover,
+.chat-icon:hover {
+	cursor: pointer;
+}
 </style>
 <script src="${pageContext.request.contextPath}/notify/js/notify.js"></script>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>

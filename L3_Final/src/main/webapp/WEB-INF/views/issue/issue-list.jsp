@@ -12,7 +12,7 @@
 	<meta name="_csrf" content="${_csrf.token}">
 	<meta name="_csrf_header" content="${_csrf.headerName}">
 
-	<title>WidUs - 이슈 상세보기</title>
+	<title>WidUs · 이슈 상세보기</title>
 	<meta name="description" content="" />
 
 	<!-- JQuery cdn -->
@@ -202,7 +202,12 @@
 										<span class="critical">${i.priority}</span>
 									</c:otherwise>
 							 	</c:choose>
-							 	<span class="issue-writer">${i.create_user_name}</span>
+							 	<c:if test="${i.create_user_name == null}">
+							 		<span class="issue-writer">&lpar;알 수 없음&rpar;</span>
+							 	</c:if>
+							 	<c:if test="${i.create_user_name != null}">
+							 		<span class="issue-writer">${i.create_user_name}</span>
+							 	</c:if>
 							 	<span class="issue-created">${i.created_at.substring(2,10)}</span>
 								</div>
 							</li>

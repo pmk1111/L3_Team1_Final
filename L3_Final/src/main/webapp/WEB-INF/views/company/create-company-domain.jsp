@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>WidUs-join</title>
+    <title>WidUs · 회사 생성하기</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <link rel="stylesheet" href="../resources/user/css/create-company-domain.css" />

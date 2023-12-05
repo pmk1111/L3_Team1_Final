@@ -2,16 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
-     <title>직원정보 상세조회</title>
-      <link rel="icon" type="image/x-icon"
-			href="${pageContext.request.contextPath}/mainboard/assets/img/favicon/favicon.png" />
-      
-
-
+<title>WidUs · 직원정보 상세조회</title>
+<link rel="icon" type="image/x-icon"
+		href="${pageContext.request.contextPath}/mainboard/assets/img/favicon/favicon.png" />
 </head>
 
 <body>
-
   	
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="empModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -68,11 +64,6 @@
      
               </div>
             
-              <!-- <div class="modal-footer">
-                <div class="btnArea">
-                    <button type="button" class="btn btn-secondary" id="cancelButton">확인</button>
-                </div> -->
-                
 					<div class="btnArea">
 					   <button type="submit" class="btn btn-secondary" id="saveButton">저장</button>
 					<button type="button" class="btn btn-secondary"id="cancelButton" data-dismiss="modal">취소</button>

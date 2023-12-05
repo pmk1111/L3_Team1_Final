@@ -12,14 +12,20 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-<title>회사 정보</title>
+<title>WidUs · 비밀번호 변경</title>
 <meta name="description" content="" />
 
 
 <!-- CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	
+<jsp:include page="../template/cssTemplate.jsp"></jsp:include>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/user/css/changepw.css">
+
+<script src="../resources/mainboard/assets/js/config.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- jQuery library (necessary for Bootstrap's JavaScript plugins) -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -31,112 +37,7 @@
 <!-- Latest compiled and minified Bootstrap JavaScript -->
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-
-<!-- Favicon -->
-<link rel="icon" type="image/x-icon"
-	href="../resources/mainboard/assets/img/favicon/favicon.ico" />
 <script src="../resources/user/js/change-pwd.js"></script>
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-	href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-	rel="stylesheet" />
-
-<!-- Icons. Uncomment required icon fonts -->
-<link rel="stylesheet"
-	href="../resources/mainboard/assets/vendor/fonts/boxicons.css" />
-
-<!-- Core CSS -->
-<link rel="stylesheet"
-	href="../resources/mainboard/assets/vendor/css/core.css"
-	class="template-customizer-core-css" />
-<link rel="stylesheet"
-	href="../resources/mainboard/assets/vendor/css/theme-default.css"
-	class="template-customizer-theme-css" />
-<link rel="stylesheet" href="../resources/mainboard/assets/css/demo.css" />
-
-<!-- Vendors CSS -->
-<link rel="stylesheet"
-	href="../resources/mainboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
-<link rel="stylesheet"
-	href="../resources/mainboard/assets/vendor/libs/apex-charts/apex-charts.css" />
-
-<!-- Page CSS -->
-
-<!-- Helpers -->
-<script src="../resources/mainboard/assets/vendor/js/helpers.js"></script>
-
-<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-<script src="../resources/mainboard/assets/js/config.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<style>
-.leftbar-close {
-	background-color: #9F7AB0;
-	border-radius: 50%;
-}
-
-.welcome-message {
-	width: 100%;
-}
-
-.form-control {
-	border: 1px solid transparent;
-	border-bottom: 1px solid #d9dee3;
-	background-color: white;
-}
-
-.container-fluid {
-	padding-left:350px;
-}
-
-#formCompanySetting input:disabled {
-	background-color: transparent;
-}
-
-.card {
-	height: 85vh; /* 화면 높이에 85% 맞춤 */
-	width:500px;
-}
-
-.card-body {
-	padding: 50px;
-}
-
-.form-label, .col-md-12 {
-	padding-top: 20px
-}
-
-.changepassword {
-	margin: 20px 0px 40px 0px
-}
-
-.changepwd {
-	background-color: white;
-	border: 1px solid #d9dee3;
-	color: #697a8d;
-	border-radius: 5px;
-}
-
-em {
-	color: red;
-	font-size:13px;
-}
-
-#saveButton, #cancelButton
-	 {margin-top:30px;
-	  border: 1px solid #d9dee3;
- 	  background-color: white;
- 	  color: #697a8d;
- 	  box-shadow:none;
-}
-
-.new, .btnArea {display: none;
-}
-</style>
 
 </head>
 
@@ -151,11 +52,6 @@ em {
 
 			<!-- Layout container -->
 			<div class="layout-page">
-				<!-- Navbar -->
-
-				<%--         <jsp:include page="navbar.jsp"></jsp:include>
- --%>
-				<!-- / Navbar -->
 
 				<!-- Content wrapper -->
 				<div class="content-wrapper">
@@ -163,7 +59,7 @@ em {
 
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<div class="row">
-						  <div class="row justify-content-center"> <!-- 중앙 정렬을 위한 추가 -->
+						  <div class="row justify-content-center">
 							<div class="col-lg-8 mb-4 order-0 welcome-message">
 								<div class="container-fluid">
 									<div class="card">
@@ -262,39 +158,18 @@ em {
 	<!-- Footer -->
 
 	<div class="content-backdrop fade"></div>
-	</div>
+	
 	<!-- Content wrapper -->
-	</div>
+	
 	<!-- / Layout page -->
-	</div>
+	
 
 	<!-- Overlay -->
 	<div class="layout-overlay layout-menu-toggle"></div>
-	</div>
+	
 	<!-- / Layout wrapper -->
-
-	<!-- Core JS -->
-	<!-- build:js assets/vendor/js/core.js -->
-	<script
-		src="../resources/mainboard/assets/vendor/libs/jquery/jquery.js"></script>
-	<script
-		src="../resources/mainboard/assets/vendor/libs/popper/popper.js"></script>
-	<script src="../resources/mainboard/assets/vendor/js/bootstrap.js"></script>
-	<script
-		src="../resources/mainboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
-	<script src="../resources/mainboard/assets/vendor/js/menu.js"></script>
-	<!-- endbuild -->
-
-	<!-- Vendors JS -->
-	<script
-		src="../resources/mainboard/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-
-	<!-- Main JS -->
-	<script src="../resources/mainboard/assets/js/main.js"></script>
-
-	<!-- Page JS -->
-	<script src="../resources/mainboard/assets/js/dashboards-analytics.js"></script>
+	
+	<jsp:include page="../template/jsTemplate.jsp"></jsp:include>
 
 	<!-- Place this tag in your head or just before your close body tag. -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>

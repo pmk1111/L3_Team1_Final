@@ -1,21 +1,226 @@
 @charset "UTF-8";
-.formDiv {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.mt10 {
-    width: 100% ;
-    text-align: left;
-}
-.accont-wrap {
-        height: 900px;
-    }
 
-    .account {
-        padding: 6px 0 16px;
-        font-size: 36px;
-        color: #333;
+.container-xxl {
+	animation: fadein .8s;
+}
+
+@
+keyframes fadein {from { opacity:0;
+	transform: translate3d(0, -5%, 0);
+}
+
+to {
+	opacity: 1;
+	transform: translateZ(0);
+}
+
+}
+.modalarea {
+	position: fixed;
+	z-index: 9999;
+	left: 0;
+	top: 0;
+	background-color: rgba(0, 0, 0, .6);
+	width: 100%;
+	height: 100%;
+	display: none
+}
+
+.modal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-content {
+	background-color: #fff;
+	padding: 25px 30px 30px 30px;
+	border-radius: 7px;
+	width: 500px;
+	height: 370px;
+}
+
+.close {
+	color: #aaa;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.authDescription {
+	width: 100%;
+	font-size: 13px;
+	margin-left: 5px;
+	margin-bottom: 10px;
+	margin-top: 25px;
+}
+
+/* 진석 css */
+body {
+	font-family: 'Nanum Gothic', sans-serif;
+	background-color: #F5F5F9;
+}
+
+.bTxt {
+	margin-left: 5px;
+}
+
+.account {
+	margin-top: 25px;
+	margin-bottom: 13px;
+}
+
+input {
+	transition: box-shadow 0.6s ease;
+}
+
+input:focus {
+	border: 2px solid #555;
+	box-shadow: 0px 1px 9px 2px rgba(0, 0, 0, 0.3);
+}
+
+.errMsg {
+	opacity: 0;
+	transition: opacity 0.4s ease-in-out;
+}
+
+.errAction {
+	opacity: 1;
+}
+
+.errId {
+	border-color: #ff6b6b;
+	color: #ff6b6b;
+}
+
+.errId:focus {
+	border-color: #ff6b6b !important;
+}
+
+.errMsg {
+	margin-top: 7px;
+	margin-bottom: 10px;
+	visibility: hidden;
+	margin-left: 6px;
+	text-align: left;
+	margin-top: 10px;
+	color: #ff6b6b;
+	font-size: 14px;
+	line-height: 21px;
+}
+
+.Action {
+	color: #ff6b6b;
+}
+
+#pw_message {
+	margin-bottom: 10px;
+}
+
+.policyLabel, .benefitsLabel {
+	font-size: 13px;
+}
+
+.password-container {
+	position: relative;
+}
+
+.eye {
+	display: none;
+	position: absolute;
+	right: 25px;
+	top: 47%;
+	transform: translateY(-50%);
+}
+
+#confirmBtn {
+	transition: background-color 0.3s ease;
+}
+
+#confirmBtn:hover {
+	background-color: #75508F;
+}
+
+.close {
+	margin-right: -13px;
+}
+
+.modal-header {
+	display: flex;
+	align-items: center;
+	align-content: center;
+	flex-direction: row;
+	justify-content: space-between;
+	height: 18px;
+	border-bottom: none;
+}
+
+.modal-body {
+	position: none;
+	padding: 0;
+	top: 20px;
+	bottom: 25px;
+}
+
+.save {
+	transition: background-color 0.3s ease;
+}
+
+.save:hover {
+	background-color: #75508F;
+}
+
+.check-num {
+	position: relative;
+}
+
+#timer {
+	font-size: 12px;
+	position: absolute;
+	right: 23px;
+	top: 47%;
+	transform: translateY(-50%);
+	color: #aaa;
+}
+
+.row-login {
+	margin-top: 75px;
+	margin-bottom: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	height: 750px;
+	width: 1100px;
+}
+
+.card {
+	background-clip: padding-box;
+	box-shadow: 0 2px 6px 0 rgba(67, 89, 113, 0.12);
+}
+
+.formDiv {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.mt10 {
+	width: 100%;
+	text-align: left;
+}
+
+.accont-wrap {
+	height: 900px;
+}
+
+.account {
+	padding: 6px 0 16px;
+	font-size: 36px;
+	color: #333;
 	font-weight: 700;
 	text-align: center;
 	margin-bottom: 15px;
@@ -26,47 +231,47 @@
 	text-align: left;
 	margin-top: 10px;
 	color: #ff6b6b;
-        font-size: 14 px;
-        line-height: 21 px;
-    }
+	font-size: 14 px;
+	line-height: 21 px;
+}
 
-    .email, .pw, .pw_check, .name, .verify {
-        color: #333;
+.email, .pw, .pw_check, .name, .verify {
+	color: #333;
 	font-size: 16px;
 	padding: 0 0 0 20px;
 	background: #FFFFFF;
-        width: 640px;
-        padding: 16px 20px;
-        color: #333;
-	border: 1px solid #ddd; 
-        webkit-border-radius: 8px;
-        border-radius: 8px; 
-        webkit-box-sizing: border-box; 
-        moz-box-sizing: border-box;
-        box-sizing: border-box;
-        margin-top: 10px;
-    }
+	width: 640px;
+	padding: 16px 20px;
+	color: #333;
+	border: 1px solid #ddd;
+	webkit-border-radius: 8px;
+	border-radius: 8px;
+	webkit-box-sizing: border-box;
+	moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin-top: 10px;
+}
 
 #emailAuthBtn {
-    margin: 20px 0 0 0;
-    color: #9f7ab0;
-    text-align: center;
-    background: #fcfcfc;
-    line-height: 52px;
-    height: 45px;
-    width: 90px;
-    border-radius: 8px;
-    font-size: 16xp;
-    font-wdight: 500;
-    border: 1px solid #9f7ab0;
-    outline: none;
+	margin: 20px 0 0 0;
+	color: #9f7ab0;
+	text-align: center;
+	background: #fcfcfc;
+	line-height: 52px;
+	height: 45px;
+	width: 90px;
+	border-radius: 8px;
+	font-size: 16xp;
+	font-wdight: 500;
+	border: 1px solid #9f7ab0;
+	outline: none;
 }
 
 #verify_check {
-            margin: 20px 0 0 0;
-            color: #fff;
-            text-align: center;
-            background: #9F7AB0;
+	margin: 20px 0 0 0;
+	color: #fff;
+	text-align: center;
+	background: #9F7AB0;
 	line-height: 52px;
 	height: 52px;
 	width: 130px;
@@ -76,80 +281,82 @@
 	border: none;
 	outline: none;
 }
+
 .auth-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* 이 부분은 전체 높이에 맞추기 위함입니다. 필요에 따라 조절하세요. */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh; /* 이 부분은 전체 높이에 맞추기 위함입니다. 필요에 따라 조절하세요. */
 }
+
 #confirmBtn {
-                    margin: 20px 0 0 0;
-                    color: #fff;
-                    text-align: center;
-                    background: #9F7AB0;
-    line-height: 52px;
-    height: 52px;
-    width: 640px;
-    border-radius: 8px;
-    font-size: 16xp;
-    font-wdight: 500;
-    border: none;
-    outline: none;
-    display: block;
-    margin: auto;
-    margin-top: 40px;
+	margin: 20px 0 0 0;
+	color: #fff;
+	text-align: center;
+	background: #9F7AB0;
+	line-height: 52px;
+	height: 52px;
+	width: 640px;
+	border-radius: 8px;
+	font-size: 16xp;
+	font-wdight: 500;
+	border: none;
+	outline: none;
+	display: block;
+	margin: auto;
+	margin-top: 40px;
 }
 
-.save{
-	 margin: 20px 0 0 0;
-    color: #fff;
-                    text-align: center;
-                    background: #9F7AB0;
-    line-height: 52px;
-    height: 52px;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 16xp;
-    font-wdight: 500;
-    border: none;
-    outline: none;
-    display: block;
-    margin: auto;
-/*     margin-top: 40px; */
+.save {
+	margin: 20px 0 0 0;
+	color: #fff;
+	text-align: center;
+	background: #9F7AB0;
+	line-height: 52px;
+	height: 52px;
+	width: 100%;
+	border-radius: 8px;
+	font-size: 16xp;
+	font-wdight: 500;
+	border: none;
+	outline: none;
+	display: block;
+	margin: auto;
+	/*     margin-top: 40px; */
 }
+
 .authNum {
-    color: #333;
-                    font-size: 16px;
-                    padding: 0 0 0 20px;
-                    background: #FFFFFF;
-                    width: 100%;
-                    padding: 16px 20px;
-                    color: #333;
-    border: 1px solid #ddd; 
-                    webkit-border-radius: 8px;
-                    border-radius: 8px; 
-                    webkit-box-sizing: border-box;
-                    moz-box-sizing: border-box;
-                    box-sizing: border-box;
-                    margin-top: 10px;
+	color: #333;
+	font-size: 16px;
+	padding: 0 0 0 20px;
+	background: #FFFFFF;
+	width: 100%;
+	padding: 16px 20px;
+	color: #333;
+	border: 1px solid #ddd;
+	webkit-border-radius: 8px;
+	border-radius: 8px;
+	webkit-box-sizing: border-box;
+	moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin-top: 10px;
+	display: block; /* 블록 요소로 설정 */
+	margin: auto; /* 좌우 마진을 자동으로 설정하여 중앙 정렬 */
+}
 
-                    display: block; /* 블록 요소로 설정 */
-                    margin: auto; /* 좌우 마진을 자동으로 설정하여 중앙 정렬 */
-                }
+.errMsg {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	visibility: hidden;
+}
 
-                .errMsg {
-                    margin-top: 5px;
-                    margin-bottom: 5px;
-                    visibility: hidden;
-                }
-            #confirmBtn {
-                margin-top: 20px;
-                margin-bottom: 100px;
-            }
+#confirmBtn {
+	margin-top: 20px;
+	margin-bottom: 100px;
+}
 
-            .close:hover,
-            .close:focus {
-                    color: #000;
-    text-decoration: none;
-    cursor:pointer ;
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
 }
