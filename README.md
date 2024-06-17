@@ -1,7 +1,7 @@
 ## 📺 Preview
 
 ### [![Youtube Preview](https://img.shields.io/badge/Youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/crBx-FLHPOk)
-
+<br>
 
 ## 목차
 
@@ -33,6 +33,7 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 - **이슈 트래킹**: 프로젝트 이슈 생성 및 트래킹 기능.
 - **대시보드**: 프로젝트와 이슈 현황을 한눈에 볼 수 있는 대시보드 제공.
 - **실시간 협업**: 실시간 업데이트, 알림, 채팅 기능 제공.
+<br>
 
 ### 비즈니스 로직
 
@@ -48,7 +49,7 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 - **웹 화면**: <img src="https://img.shields.io/badge/jsp-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white"> <img src="https://img.shields.io/badge/ajax-2E77BC?style=for-the-badge&logo=ajax&logoColor=white">
 - **데이터베이스**: <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> <img src="https://img.shields.io/badge/mybatis-000000?style=for-the-badge&logo=mybatis&logoColor=white">
 - **보안**: <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=jwt&logoColor=white">
-
+<br>
 ### 기타 도구
 
 - **CI/CD**: <img src="https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white">
@@ -60,9 +61,9 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 
 ### 백엔드
 
-#### 서버 사이드 로직 구현
+#### 1. 서버 사이드 로직 구현
 
-Spring Framework와 JSP를 활용하여 전통적인 MVC 아키텍처로 복잡한 비즈니스 로직을 효율적으로 구현
+    Spring Framework와 JSP를 활용하여 전통적인 MVC 아키텍처로 복잡한 비즈니스 로직을 효율적으로 구현
 
 1. **복잡한 로직 처리**: 대규모 프로젝트와 이슈 관리에서 발생하는 복잡한 로직을 처리하기 위해, Spring Framework의 **트랜잭션 기능을 활용하여 데이터 일관성을 유지**
 
@@ -72,16 +73,16 @@ Spring Framework와 JSP를 활용하여 전통적인 MVC 아키텍처로 복잡�
 
     - **개발 방법**: SQL 매퍼 파일을 활용하여 복잡한 쿼리를 분리하고, **MyBatis의 캐싱 기능을 사용**하여 반복적인 데이터베이스 호출을 최소화
 
-#### 구체적인 성과
+**구체적인 성과**
 
 - **성능 향상**: JMeter를 사용하여 성능 최적화 전후의 쿼리 실행 시간을 측정하고 비교한 결과, 쿼리 최적화와 캐싱작업을 통해 **데이터베이스 응답을 30% 이상 단축**
 - **안정성 확보**: 트랜잭션 관리를 통해 데이터베이스의 무결성을 유지하며, **다중 사용자 환경에서도 안정적인 성능을 보장**
 
 <br>
 
-#### 데이터베이스 관리
+#### 2. 데이터베이스 관리
 
-Oracle DB와 MyBatis를 사용하여 대용량 데이터의 효율적인 처리와 보안을 보장
+    Oracle DB와 MyBatis를 사용하여 대용량 데이터의 효율적인 처리와 보안을 보장
 
 1. **데이터 모델링**: 프로젝트의 전반적인 데이터베이스 스키마 설계와 ERD 작성
 
@@ -91,36 +92,36 @@ Oracle DB와 MyBatis를 사용하여 대용량 데이터의 효율적인 처리�
 
     - **개발 방법**: **AWR 리포트를 활용**하여 쿼리 성능을 분석하고, 필요한 곳에 복합 인덱스를 추가하여 인덱스 추가 전후의 쿼리 응답 시간을 비교함으로써 데이터 검색 속도를 높임
 
-#### 구체적인 성과
+**구체적인 성과**
 
 - **데이터 정합성 유지**: 정규화된 데이터베이스 구조를 통해 **데이터의 정합성을 유지**
 - **응답 시간 단축**: 쿼리 성능 테스트를 통해 인덱스 최적화를 적용한 전후의 응답 시간을 측정하여, **쿼리 응답 시간을 20% 이상 단축**
 
 <br>
 
-#### 보안 구현
+#### 3. 보안 구현
 
-Spring Security와 JWT를 사용하여 사용자 인증 및 권한 부여를 구현
+    Spring Security와 JWT를 사용하여 사용자 인증 및 권한 부여를 구현
 
 1. **인증 및 권한 관리**: 애플리케이션의 **보안을 강화하기 위해 Spring Security를 사용**하여 인증 및 권한 관리를 구현
 
     - **개발 방법**: Widus의 보안 수준을 높이기 위해 JWT를 사용하여 사용자 세션을 관리하고, Spring Security와 통합하여 인증 및 권한 부여를 처리
 
-#### 구체적인 성과
+**구체적인 성과**
 
 - **보안 강화**: 인증 관련 보안 사고를 예방하기 위해 JWT 기반의 인증 시스템을 도입하여 세션 관리를 효율화하고, **사용자 데이터를 안전하게 보호**
 
 <br>
 
-#### 롬복 사용
+#### 4. 롬복 사용
 
 Lombok을 활용하여 Getter, Setter, ToString 등의 메서드를 자동 생성함으로써 **코드의 가독성을 높이고 유지보수를 용이하게 개발**
 
 <br>
 
-#### CI/CD 설정
+#### 5. CI/CD 설정
 
-1. **CI**: 개발 주기의 효율성을 극대화하고 코드 품질을 보장하기 위해 **Jenkins**를 사용하여 코드 변경 시 자동으로 빌드 및 테스트가 이루어지도록 CI 파이프라인을 구축
+1. **CI**: 개발 주기의 효율성을 극대화하고 코드 품질을 보장하기 위해 **Jenkins**를 사용하여 코드 변경 시 자동으로 빌드 및 테스트가 이루어지도록 CI 파이프라인을 구축  
 2. **CD**: **Docker**와 **AWS**를 활용하여 애플리케이션을 컨테이너화하고 자동 배포 환경을 설정
 
 <br>
