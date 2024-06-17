@@ -1,5 +1,7 @@
 ## 📺 Preview
 
+*이미지를 클릭하면 유튜브로 이동합니다.*
+
 [![Youtube Preview](https://github.com/pmk1111/Widus/assets/133585698/6aad0d26-1c2b-4bfd-b7d5-b0bcdf596f5c)](https://youtu.be/crBx-FLHPOk)
 <br>
 
