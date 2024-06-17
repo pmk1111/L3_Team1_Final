@@ -1,19 +1,20 @@
 ## 📺 Preview
 
-### [![Youtube Preview](https://img.shields.io/badge/Youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/crBx-FLHPOk)
+[![Youtube Preview](https://github.com/pmk1111/Widus/assets/133585698/6aad0d26-1c2b-4bfd-b7d5-b0bcdf596f5c)](https://youtu.be/crBx-FLHPOk)
 <br>
 
-## 목차
 
-1. [개발 목적](#개발-목적)
-2. [WidUs 주요 기능](#widus-주요-기능)
-3. [주요 기술 스택](#주요-기술-스택)
-4. [주요 작업](#주요-작업)
+### 목차
+
+#### 1. [개발 목적](#개발-목적)
+#### 2. [WidUs 주요 기능](#widus-주요-기능)
+#### 3. [주요 기술 스택](#주요-기술-스택)
+#### 4. [주요 작업](#주요-작업)
     - [백엔드](#백엔드)
     - [프론트엔드](#프론트엔드)
-5. [테스트](#테스트)
-6. [리팩토링](#리팩토링)
-7. [기타 사항](#기타-사항)
+#### 5. [테스트](#테스트)
+#### 6. [리팩토링](#리팩토링)
+#### 7. [기타 사항](#기타-사항)
 <br>
 
 ## 📖 개발 목적
