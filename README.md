@@ -1,12 +1,12 @@
+# WidUs Project
+
 ## 📺 Preview
+
+### [![Youtube Preview](https://your-image-link.com/your-image.png)](https://youtu.be/crBx-FLHPOk)
 
 ###### *이미지를 클릭하면 유튜브로 이동합니다.*
 
-[![Youtube Preview](https://github.com/pmk1111/Widus/assets/133585698/6aad0d26-1c2b-4bfd-b7d5-b0bcdf596f5c)](https://youtu.be/crBx-FLHPOk)
-<br>
-
-
-### 목차
+## 목차
 
 ##### 1. [개발 목적](#개발-목적)
 ##### 2. [WidUs 주요 기능](#widus-주요-기능)
@@ -17,7 +17,6 @@
 ##### 5. [테스트](#테스트)
 ##### 6. [리팩토링](#리팩토링)
 ##### 7. [기타 사항](#기타-사항)
-
 <br>
 
 ## 📖 개발 목적
@@ -30,7 +29,7 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 
 ## 🚀 WidUs 주요 기능
 
-### 핵심 기능
+### WidUs 주요 기능
 
 - **프로젝트 관리**: 프로젝트 생성, 수정, 삭제 및 조회 기능.
 - **직원 관리**: 직원 정보 관리 및 역할 배정 기능.
@@ -54,6 +53,7 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 - **데이터베이스**: <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> <img src="https://img.shields.io/badge/mybatis-000000?style=for-the-badge&logo=mybatis&logoColor=white">
 - **보안**: <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=jwt&logoColor=white">
 <br>
+
 ### 기타 도구
 
 - **CI/CD**: <img src="https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white">
@@ -65,7 +65,7 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 
 ### 백엔드
 
-#### 1. 서버 사이드 로직 구현
+#### 백엔드
 
 > Spring Framework와 JSP를 활용하여 전통적인 MVC 아키텍처로 복잡한 비즈니스 로직을 효율적으로 구현
 
@@ -84,7 +84,7 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 
 <br>
 
-#### 2. 데이터베이스 관리
+#### 데이터베이스 관리
 
 > Oracle DB와 MyBatis를 사용하여 대용량 데이터의 효율적인 처리와 보안을 보장
 
@@ -103,7 +103,7 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 
 <br>
 
-#### 3. 보안 구현
+#### 보안 구현
 
 > Spring Security와 JWT를 사용하여 사용자 인증 및 권한 부여를 구현
 
@@ -117,13 +117,13 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 
 <br>
 
-#### 4. 롬복 사용
+#### 롬복 사용
 
 > Lombok을 활용하여 Getter, Setter, ToString 등의 메서드를 자동 생성함으로써 **코드의 가독성을 높이고 유지보수를 용이하게 개발**
 
 <br>
 
-#### 5. CI/CD 설정
+#### CI/CD 설정
 
 1. **CI**: 개발 주기의 효율성을 극대화하고 코드 품질을 보장하기 위해 **Jenkins**를 사용하여 코드 변경 시 자동으로 빌드 및 테스트가 이루어지도록 CI 파이프라인을 구축  
 2. **CD**: **Docker**와 **AWS**를 활용하여 애플리케이션을 컨테이너화하고 자동 배포 환경을 설정
@@ -139,7 +139,7 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 
 ## 🔍 테스트
 
-### 유닛 테스트
+### 테스트
 
 - **JUnit을 사용하여 모듈별 유닛 테스트를 작성**
 - 주요 기능에 대한 테스트 커버리지를 확보하여 코드 안정성을 검증
