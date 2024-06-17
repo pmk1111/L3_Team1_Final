@@ -1,12 +1,13 @@
 # WidUs Project
 
-[📺 Preview]<iframe width="560" height="315" src="https://www.youtube.com/embed/crBx-FLHPOk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[📺 Preview](https://youtu.be/crBx-FLHPOk)
 
 ## 📖 개발 목적
 
-Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 회사 단위의 대규모 프로젝트 관리를 가능하게 하는 ERP & 협업 툴 프로그램을 구현하는 것을 목표로 합니다.
+Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 회사 단위의 대규모 프로젝트 관리를 가능하게 하는 ERP & 협업 툴을 구현하는 것을 목표로 합니다.
 
 각 회사별 프로젝트 및 직원 관리, 이슈 트래킹이 가능한 웹사이트를 개발하는 것이 주요 목적입니다.
+
 
 ## 🚀 WidUs 주요 기능
 
@@ -32,15 +33,15 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 - **데이터베이스**: <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> <img src="https://img.shields.io/badge/mybatis-000000?style=for-the-badge&logo=mybatis&logoColor=white">
 - **보안**: <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=jwt&logoColor=white">
 
+
 ### 기타 도구
 
 - **CI/CD**: <img src="https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white">
 - **버전 관리 시스템**: <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 - **클라우드 서비스**: <img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
 
-## 🔧 주요 역할 및 기여
 
-![주요 작업 페이지](https://prod-files-secure.s3.us-west-2.amazonaws.com/77c1259d-f307-4f03-a178-dfd4effccf50/9c5e59d1-10eb-491d-bdcf-3d261afac731/Untitled.png)
+## 🔧 주요 작업
 
 ### 백엔드
 
