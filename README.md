@@ -1,10 +1,10 @@
 # WidUs Project
 
-[📺 Preview](https://youtu.be/crBx-FLHPOk)
+[📺 Preview]<iframe width="560" height="315" src="https://www.youtube.com/embed/crBx-FLHPOk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## 📖 개발 목적
 
-Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 회사 단위의 대규모 프로젝트 관리를 가능하게 하는 협업 툴 프로그램을 구현하는 것을 목표로 합니다.
+Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 회사 단위의 대규모 프로젝트 관리를 가능하게 하는 ERP & 협업 툴 프로그램을 구현하는 것을 목표로 합니다.
 
 각 회사별 프로젝트 및 직원 관리, 이슈 트래킹이 가능한 웹사이트를 개발하는 것이 주요 목적입니다.
 
@@ -26,17 +26,17 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 ## 📚 주요 기술 스택
 
 - **설계 패턴**: SpringBoot MVC
-- **프로그래밍 언어**: Java
-- **프레임워크**: Spring Framework
-- **웹 화면**: JSP, JS(jQuery, Ajax)
-- **데이터베이스**: Oracle Database, MyBatis
-- **보안**: Spring Security와 JWT
+- **프로그래밍 언어**: <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+- **프레임워크**: <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+- **웹 화면**: <img src="https://img.shields.io/badge/jsp-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white"> <img src="https://img.shields.io/badge/ajax-2E77BC?style=for-the-badge&logo=ajax&logoColor=white">
+- **데이터베이스**: <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> <img src="https://img.shields.io/badge/mybatis-000000?style=for-the-badge&logo=mybatis&logoColor=white">
+- **보안**: <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=jwt&logoColor=white">
 
 ### 기타 도구
 
-- CI/CD: Jenkins
-- 버전 관리 시스템: Git
-- 클라우드 서비스: AWS
+- **CI/CD**: <img src="https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white">
+- **버전 관리 시스템**: <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+- **클라우드 서비스**: <img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
 
 ## 🔧 주요 역할 및 기여
 
