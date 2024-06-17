@@ -1,7 +1,6 @@
 ## 📺 Preview
 
 ### [![Youtube Preview](https://img.shields.io/badge/Youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/crBx-FLHPOk)
-
 <br>
 
 ## 목차
@@ -15,8 +14,6 @@
 5. [테스트](#테스트)
 6. [리팩토링](#리팩토링)
 7. [기타 사항](#기타-사항)
-
-<br>
 <br>
 
 ## 📖 개발 목적
@@ -24,8 +21,6 @@
 Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 회사 단위의 대규모 프로젝트 관리를 가능하게 하는 ERP & 협업 툴을 구현하는 것을 목표로 합니다.
 
 각 회사별 프로젝트 및 직원 관리, 이슈 트래킹이 가능한 웹사이트를 개발하는 것이 주요 목적입니다.
-
-<br>
 <br>
 
 ## 🚀 WidUs 주요 기능
@@ -42,8 +37,6 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 
 - 프로젝트와 직원, 이슈 간의 관계 관리.
 - 실시간 알림 및 업데이트 기능 구현.
-
-<br>
 <br>
 
 ## 📚 주요 기술 스택
@@ -60,8 +53,6 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 - **CI/CD**: <img src="https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white">
 - **버전 관리 시스템**: <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 - **클라우드 서비스**: <img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
-
-<br>
 <br>
 
 ## 🔧 주요 작업
@@ -138,7 +129,6 @@ Lombok을 활용하여 Getter, Setter, ToString 등의 메서드를 자동 생�
 1. **사용자 인터페이스 설계**: 메인이 되는 주요 화면들을 **JSP, HTML, CSS**를 활용하여 직관적이고 사용자 친화적인 UX/UI를 갖춘 웹 인터페이스로 개발
 2. **동적 기능 구현**: JavaScript와 **jQuery / Ajax** 등을 사용하여 실시간 데이터 업데이트 및 사용자 인터랙션을 구현
 3. **차트 및 그래프 구현**: **Chart.js**를 사용하여 프로젝트 진행 상황과 이슈 현황을 시각적으로 표시
-
 <br>
 
 ## 🔍 테스트
@@ -156,7 +146,6 @@ Lombok을 활용하여 Getter, Setter, ToString 등의 메서드를 자동 생�
 ### 자동화 테스트
 
 - Jenkins를 활용한 CI 파이프라인에 유닛 테스트 및 통합 테스트를 **자동화하여 빌드 시점마다 테스트를 수행**
-
 <br>
 
 ## 🔄 리팩토링
@@ -199,8 +188,6 @@ Lombok을 활용하여 Getter, Setter, ToString 등의 메서드를 자동 생�
 - 팀원들과의 원활한 소통과 협업을 위해 Agile 방법론을 적용하여 주간 스프린트 회의를 진행하였고, 지속적인 코드 리뷰를 통해 코드 품질을 유지함
 
     - **스프린트 회의**: Github, JIRA, Notion 등을 사용하여 백로그를 작성하고, 매 주 월요일 스프린트 플래닝, 리뷰, 회고를 진행하여 프로젝트를 체계적으로 관리
- 
-<br>
 
 ### 버전 관리
 
