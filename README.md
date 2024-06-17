@@ -1,7 +1,7 @@
 ## 📺 Preview
 
 ### [![Youtube Preview](https://img.shields.io/badge/Youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/crBx-FLHPOk)
-<br>
+
 
 ## 목차
 
@@ -21,6 +21,7 @@
 Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 회사 단위의 대규모 프로젝트 관리를 가능하게 하는 ERP & 협업 툴을 구현하는 것을 목표로 합니다.
 
 각 회사별 프로젝트 및 직원 관리, 이슈 트래킹이 가능한 웹사이트를 개발하는 것이 주요 목적입니다.
+
 <br>
 
 ## 🚀 WidUs 주요 기능
@@ -188,6 +189,7 @@ Lombok을 활용하여 Getter, Setter, ToString 등의 메서드를 자동 생�
 - 팀원들과의 원활한 소통과 협업을 위해 Agile 방법론을 적용하여 주간 스프린트 회의를 진행하였고, 지속적인 코드 리뷰를 통해 코드 품질을 유지함
 
     - **스프린트 회의**: Github, JIRA, Notion 등을 사용하여 백로그를 작성하고, 매 주 월요일 스프린트 플래닝, 리뷰, 회고를 진행하여 프로젝트를 체계적으로 관리
+<br>
 
 ### 버전 관리
 
