@@ -1,5 +1,7 @@
 # WidUs Project
 
+📺 Preview
+
 [![Youtube Preview](https://img.shields.io/badge/Youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/crBx-FLHPOk)
 
 ## 📖 개발 목적
