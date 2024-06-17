@@ -4,7 +4,6 @@
 
 ### [![Youtube Preview](https://img.shields.io/badge/Youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/crBx-FLHPOk)
 
-
 ## 목차
 
 1. [개발 목적](#개발-목적)
@@ -23,7 +22,6 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 
 각 회사별 프로젝트 및 직원 관리, 이슈 트래킹이 가능한 웹사이트를 개발하는 것이 주요 목적입니다.
 
-
 ## 🚀 WidUs 주요 기능
 
 ### 핵심 기능
@@ -41,20 +39,18 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 
 ## 📚 주요 기술 스택
 
-- **설계 패턴**: SpringBoot MVC
+- **설계 패턴**: <img src="https://img.shields.io/badge/SpringBoot%20MVC-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
 - **프로그래밍 언어**: <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
 - **프레임워크**: <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
 - **웹 화면**: <img src="https://img.shields.io/badge/jsp-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white"> <img src="https://img.shields.io/badge/ajax-2E77BC?style=for-the-badge&logo=ajax&logoColor=white">
 - **데이터베이스**: <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> <img src="https://img.shields.io/badge/mybatis-000000?style=for-the-badge&logo=mybatis&logoColor=white">
 - **보안**: <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=jwt&logoColor=white">
 
-
 ### 기타 도구
 
 - **CI/CD**: <img src="https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white">
 - **버전 관리 시스템**: <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 - **클라우드 서비스**: <img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
-
 
 ## 🔧 주요 작업
 
@@ -64,13 +60,13 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 
 Spring Framework와 JSP를 활용하여 전통적인 MVC 아키텍처로 복잡한 비즈니스 로직을 효율적으로 구현
 
-1. **복잡한 로직 처리**: 대규모 프로젝트와 이슈 관리에서 발생하는 복잡한 로직을 처리하기 위해, Spring Framework의 <span style="color:orange; font-weight:bold;">트랜잭션 기능을 활용하여 데이터 일관성을 유지</span>
+1. **복잡한 로직 처리**: 대규모 프로젝트와 이슈 관리에서 발생하는 복잡한 로직을 처리하기 위해, Spring Framework의 **트랜잭션 기능을 활용하여 데이터 일관성을 유지**
 
     - **개발 방법**: Spring의 @Transactional 어노테이션을 사용하여 트랜잭션 경계를 설정하고, 트랜잭션이 성공적으로 완료될 때까지 데이터베이스 변경 사항을 보류하여 데이터 일관성을 보장
 
 2. **효율적인 데이터 처리**: MyBatis를 사용하여 데이터베이스와의 효율적인 연동을 구현
 
-    - **개발 방법**: SQL 매퍼 파일을 활용하여 복잡한 쿼리를 분리하고, <span style="color:orange; font-weight:bold;">MyBatis의 캐싱 기능을 사용</span>하여 반복적인 데이터베이스 호출을 최소화
+    - **개발 방법**: SQL 매퍼 파일을 활용하여 복잡한 쿼리를 분리하고, **MyBatis의 캐싱 기능을 사용**하여 반복적인 데이터베이스 호출을 최소화
 
 #### 구체적인 성과
 
@@ -178,7 +174,6 @@ Lombok을 활용하여 Getter, Setter, ToString 등의 메서드를 자동 생�
 
 - Git을 사용하여 버전 관리를 수행하였으며, 주요 기능 개발 시 브랜치 전략을 적용하여 안정적인 코드 관리를 유지
 
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/77c1259d-f307-4f03-a178-dfd4effccf50/c61b1f1b-fde4-47f4-8efc-e6f843ab48be/Untitled.png)
+    ![Untitled (1)](https://github.com/pmk1111/Widus/assets/133585698/b04a3094-d97b-4b6c-991e-5f649e4afee3)
 
     **안정적인 브랜치 관리**: 체계적인 브랜치 관리를 위해 Git Flow 방식을 활용, release 브랜치를 활용하여 안정성과 품질을 동시에 확보하는 개발 프로세스를 구현
-
