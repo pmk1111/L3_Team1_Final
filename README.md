@@ -1,8 +1,8 @@
-# WidUs Project
-
 ## 📺 Preview
 
 ### [![Youtube Preview](https://img.shields.io/badge/Youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/crBx-FLHPOk)
+
+<br>
 
 ## 목차
 
@@ -16,11 +16,17 @@
 6. [리팩토링](#리팩토링)
 7. [기타 사항](#기타-사항)
 
+<br>
+<br>
+
 ## 📖 개발 목적
 
 Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 회사 단위의 대규모 프로젝트 관리를 가능하게 하는 ERP & 협업 툴을 구현하는 것을 목표로 합니다.
 
 각 회사별 프로젝트 및 직원 관리, 이슈 트래킹이 가능한 웹사이트를 개발하는 것이 주요 목적입니다.
+
+<br>
+<br>
 
 ## 🚀 WidUs 주요 기능
 
@@ -37,6 +43,9 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 - 프로젝트와 직원, 이슈 간의 관계 관리.
 - 실시간 알림 및 업데이트 기능 구현.
 
+<br>
+<br>
+
 ## 📚 주요 기술 스택
 
 - **설계 패턴**: <img src="https://img.shields.io/badge/SpringBoot%20MVC-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
@@ -51,6 +60,9 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 - **CI/CD**: <img src="https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white">
 - **버전 관리 시스템**: <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 - **클라우드 서비스**: <img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
+
+<br>
+<br>
 
 ## 🔧 주요 작업
 
@@ -73,6 +85,8 @@ Spring Framework와 JSP를 활용하여 전통적인 MVC 아키텍처로 복잡�
 - **성능 향상**: JMeter를 사용하여 성능 최적화 전후의 쿼리 실행 시간을 측정하고 비교한 결과, 쿼리 최적화와 캐싱작업을 통해 **데이터베이스 응답을 30% 이상 단축**
 - **안정성 확보**: 트랜잭션 관리를 통해 데이터베이스의 무결성을 유지하며, **다중 사용자 환경에서도 안정적인 성능을 보장**
 
+<br>
+
 #### 데이터베이스 관리
 
 Oracle DB와 MyBatis를 사용하여 대용량 데이터의 효율적인 처리와 보안을 보장
@@ -90,6 +104,8 @@ Oracle DB와 MyBatis를 사용하여 대용량 데이터의 효율적인 처리�
 - **데이터 정합성 유지**: 정규화된 데이터베이스 구조를 통해 **데이터의 정합성을 유지**
 - **응답 시간 단축**: 쿼리 성능 테스트를 통해 인덱스 최적화를 적용한 전후의 응답 시간을 측정하여, **쿼리 응답 시간을 20% 이상 단축**
 
+<br>
+
 #### 보안 구현
 
 Spring Security와 JWT를 사용하여 사용자 인증 및 권한 부여를 구현
@@ -102,20 +118,28 @@ Spring Security와 JWT를 사용하여 사용자 인증 및 권한 부여를 구
 
 - **보안 강화**: 인증 관련 보안 사고를 예방하기 위해 JWT 기반의 인증 시스템을 도입하여 세션 관리를 효율화하고, **사용자 데이터를 안전하게 보호**
 
+<br>
+
 #### 롬복 사용
 
 Lombok을 활용하여 Getter, Setter, ToString 등의 메서드를 자동 생성함으로써 **코드의 가독성을 높이고 유지보수를 용이하게 개발**
+
+<br>
 
 #### CI/CD 설정
 
 1. **CI**: 개발 주기의 효율성을 극대화하고 코드 품질을 보장하기 위해 **Jenkins**를 사용하여 코드 변경 시 자동으로 빌드 및 테스트가 이루어지도록 CI 파이프라인을 구축
 2. **CD**: **Docker**와 **AWS**를 활용하여 애플리케이션을 컨테이너화하고 자동 배포 환경을 설정
 
+<br>
+
 ### 프론트엔드
 
 1. **사용자 인터페이스 설계**: 메인이 되는 주요 화면들을 **JSP, HTML, CSS**를 활용하여 직관적이고 사용자 친화적인 UX/UI를 갖춘 웹 인터페이스로 개발
 2. **동적 기능 구현**: JavaScript와 **jQuery / Ajax** 등을 사용하여 실시간 데이터 업데이트 및 사용자 인터랙션을 구현
 3. **차트 및 그래프 구현**: **Chart.js**를 사용하여 프로젝트 진행 상황과 이슈 현황을 시각적으로 표시
+
+<br>
 
 ## 🔍 테스트
 
@@ -133,6 +157,8 @@ Lombok을 활용하여 Getter, Setter, ToString 등의 메서드를 자동 생�
 
 - Jenkins를 활용한 CI 파이프라인에 유닛 테스트 및 통합 테스트를 **자동화하여 빌드 시점마다 테스트를 수행**
 
+<br>
+
 ## 🔄 리팩토링
 
 ### 리팩토링
@@ -149,6 +175,8 @@ Lombok을 활용하여 Getter, Setter, ToString 등의 메서드를 자동 생�
         - **유지보수성 향상**: 모듈화를 통해 코드의 재사용성을 높이고, 유지보수성을 향상
         - **개발 효율성 증대**: 재사용 가능한 컴포넌트를 분리함으로써 개발 효율성을 높임
 
+<br>
+
 ### 프로젝트 종료 후 관리
 
 1. **문서화**: 프로젝트의 주요 기능과 사용법을 문서화하여 신규 사용자와 개발자가 쉽게 이해할 수 있도록 문서화
@@ -161,6 +189,8 @@ Lombok을 활용하여 Getter, Setter, ToString 등의 메서드를 자동 생�
     - **구체적인 성과**
         - **코드 품질 향상**: 정기적인 코드 리뷰를 통해 코드의 품질을 지속적으로 향상
         - **성능 개선**: 주기적인 성능 점검을 통해 시스템 성능을 지속적으로 개선
+     
+<br>
 
 ## 👥 기타 사항
 
@@ -169,6 +199,8 @@ Lombok을 활용하여 Getter, Setter, ToString 등의 메서드를 자동 생�
 - 팀원들과의 원활한 소통과 협업을 위해 Agile 방법론을 적용하여 주간 스프린트 회의를 진행하였고, 지속적인 코드 리뷰를 통해 코드 품질을 유지함
 
     - **스프린트 회의**: Github, JIRA, Notion 등을 사용하여 백로그를 작성하고, 매 주 월요일 스프린트 플래닝, 리뷰, 회고를 진행하여 프로젝트를 체계적으로 관리
+ 
+<br>
 
 ### 버전 관리
 
