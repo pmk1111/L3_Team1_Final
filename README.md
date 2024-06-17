@@ -1,10 +1,11 @@
-# WidUs Project
 
 ## 📺 Preview
 
-### [![Youtube Preview](https://your-image-link.com/your-image.png)](https://youtu.be/crBx-FLHPOk)
 
 ###### *이미지를 클릭하면 유튜브로 이동합니다.*
+
+### [![Youtube Preview](https://github.com/pmk1111/Widus/assets/133585698/348c205d-a191-45cf-8d6b-1ac752de5825)](https://youtu.be/crBx-FLHPOk)
+
 
 ## 목차
 
@@ -17,6 +18,7 @@
 ##### 5. [테스트](#테스트)
 ##### 6. [리팩토링](#리팩토링)
 ##### 7. [기타 사항](#기타-사항)
+
 <br>
 
 ## 📖 개발 목적
@@ -36,12 +38,14 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 - **이슈 트래킹**: 프로젝트 이슈 생성 및 트래킹 기능.
 - **대시보드**: 프로젝트와 이슈 현황을 한눈에 볼 수 있는 대시보드 제공.
 - **실시간 협업**: 실시간 업데이트, 알림, 채팅 기능 제공.
+
 <br>
 
 ### 비즈니스 로직
 
 - 프로젝트와 직원, 이슈 간의 관계 관리.
 - 실시간 알림 및 업데이트 기능 구현.
+
 <br>
 
 ## 📚 주요 기술 스택
@@ -200,6 +204,6 @@ Widus 프로젝트는 JIRA와 Flow와 같은 협업 툴을 벤치마킹하여 �
 
 - Git을 사용하여 버전 관리를 수행하였으며, 주요 기능 개발 시 브랜치 전략을 적용하여 안정적인 코드 관리를 유지
 
-    ![Untitled (1)](https://github.com/pmk1111/Widus/assets/133585698/b04a3094-d97b-4b6c-991e-5f649e4afee3)
+    ![Git Branch](https://github.com/pmk1111/Widus/assets/133585698/b04a3094-d97b-4b6c-991e-5f649e4afee3)
 
     **안정적인 브랜치 관리**: 체계적인 브랜치 관리를 위해 Git Flow 방식을 활용, release 브랜치를 활용하여 안정성과 품질을 동시에 확보하는 개발 프로세스를 구현
